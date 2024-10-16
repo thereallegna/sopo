@@ -10,17 +10,29 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "incremental": true,
     "plugins": [
       {
         "name": "next"
       }
     ],
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"]
+      "react": ["./node_modules/@types/react"],
+      "@testing-library*": ["./node_modules/@testing-library*"],
+      "@emotion*": ["./node_modules/@emotion*"],
+      "@*": ["./*"],
+      "@components/*": ["components/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "jest.config.js",
+    "./setup-jest.ts"
+  ],
   "exclude": ["node_modules"]
 }
