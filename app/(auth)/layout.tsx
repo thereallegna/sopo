@@ -17,9 +17,13 @@ export default function AuthBackground({
                 />
             </div>
 
-            <div>
+            <div className="flex-grow">
                 {children}
             </div>
+
+            <footer className="w-full p-4 text-[12px] text-white text-center">
+                <p>RUN System Inc.   Version 8.007</p>
+            </footer>
         </main>
     );
 }
