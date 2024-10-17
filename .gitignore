@@ -40,3 +40,4 @@ next-env.d.ts
 
 # ignore yarn.lock
 yarn.lock
+./yarn.lock
