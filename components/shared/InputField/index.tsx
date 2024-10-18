@@ -58,6 +58,12 @@ export interface InputFieldProps
   className?: string;
   labelProps?: LabelProps;
   inputProps?: InputProps;
+  placeholder?: string;
+  type?: React.HTMLInputTypeAttribute;
+  value?: string;
+  start_icon?: React.ElementType;
+  end_icon?: React.ElementType;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
 }
 
 const InputField = (props: InputFieldProps) => {
@@ -71,6 +77,12 @@ const InputField = (props: InputFieldProps) => {
     className,
     inputProps,
     labelProps,
+    value,
+    type,
+    placeholder,
+    start_icon,
+    end_icon,
+    onChange,
   } = props;
 
   return (
@@ -82,8 +94,14 @@ const InputField = (props: InputFieldProps) => {
         disabled={disabled}
         required={required}
         sizes={size}
-        {...inputProps}
+        value={value}
+        type={type}
+        placeholder={placeholder}
+        onChange={onChange}
         theme={message?.type}
+        start_icon={start_icon}
+        end_icon={end_icon}
+        {...inputProps}
       />
       {message && (
         <span
