@@ -18,7 +18,7 @@ import { IconBuildingSkyscraper } from '@tabler/icons-react';
 // Icon: building-skyscraper
 
 const LoginPage = () => (
-  <div className="flex justify-center items-center min-h-screen p-32 gap-[16px]">
+  <div className="flex  justify-center items-center min-h-screen p-32 gap-[16px]">
     <Card size="default" variant="default">
       <CardHeader />
       <CardTitle title="Welcome to RUN System" />
@@ -28,26 +28,30 @@ const LoginPage = () => (
           label="Company ID"
           inputProps={{
             placeholder: 'Input your company ID',
-            start_icon: <IconBuildingSkyscraper />,
           }}
         />
         <InputField
           label="Usercode"
           inputProps={{
             placeholder: 'Input your usercode',
-            start_icon: <IconBuildingSkyscraper />,
+            start_icon: IconBuildingSkyscraper,
           }}
         />
         <InputField
           label="Password"
           inputProps={{
             placeholder: 'Input your password',
-            start_icon: <IconBuildingSkyscraper />,
+            start_icon: IconBuildingSkyscraper,
           }}
         />
       </CardContent>
       <CardFooter>
-        <Button variant="primary" size="normal" icon={IconBuildingSkyscraper}>
+        <Button
+          variant="outlined"
+          size="normal"
+          icon={IconBuildingSkyscraper}
+          iconSize="large"
+        >
           Login
         </Button>
       </CardFooter>
