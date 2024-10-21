@@ -12,7 +12,11 @@ import {
   CardHeader,
   CardTitle,
 } from '@components/ui/Card';
-import { IconBuildingSkyscraper } from '@tabler/icons-react';
+import {
+  IconBuildingSkyscraper,
+  IconLock,
+  IconUser,
+} from '@tabler/icons-react';
 
 // icon from tabler
 // Icon: building-skyscraper
@@ -26,23 +30,19 @@ const LoginPage = () => (
       <CardContent>
         <InputField
           label="Company ID"
-          inputProps={{
-            placeholder: 'Input your company ID',
-          }}
+          placeholder="Input your company ID"
+          start_icon={IconBuildingSkyscraper}
         />
         <InputField
           label="Usercode"
-          inputProps={{
-            placeholder: 'Input your usercode',
-            start_icon: IconBuildingSkyscraper,
-          }}
+          placeholder="Input your usercode'"
+          start_icon={IconUser}
         />
         <InputField
           label="Password"
-          inputProps={{
-            placeholder: 'Input your password',
-            start_icon: IconBuildingSkyscraper,
-          }}
+          type="password"
+          start_icon={IconLock}
+          placeholder="Input your password"
         />
       </CardContent>
       <CardFooter>
