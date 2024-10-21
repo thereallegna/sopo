@@ -18,12 +18,13 @@ import {
   IconUser,
 } from '@tabler/icons-react';
 import Image from 'next/image';
+import { Checkbox } from '@components/ui/Checkbox';
 
 // icon from tabler
 // Icon: building-skyscraper
 
 const LoginPage = () => (
-  <div className="flex justify-center items-center min-h-screen p-32">
+  <div className="flex justify-center items-center min-h-screen">
     <Card size="login" variant="default">
       <CardHeader className="items-center">
         <Image
@@ -40,7 +41,7 @@ const LoginPage = () => (
       <CardDescription className="text-[12px]">
         Enter your credentials to access your account
       </CardDescription>
-      <CardContent>
+      <CardContent className="mt-5 flex flex-col gap-[10px]">
         <InputField
           label="Company ID"
           placeholder="Input your company ID"
@@ -48,7 +49,7 @@ const LoginPage = () => (
         />
         <InputField
           label="Usercode"
-          placeholder="Input your usercode'"
+          placeholder="Input your usercode"
           start_icon={IconUser}
         />
         <InputField
@@ -57,16 +58,10 @@ const LoginPage = () => (
           start_icon={IconLock}
           placeholder="Input your password"
         />
+        <Checkbox label="Keep User ID" />
       </CardContent>
-      <CardFooter>
-        <Button
-          variant="outlined"
-          size="normal"
-          icon={IconBuildingSkyscraper}
-          iconSize="large"
-        >
-          Login
-        </Button>
+      <CardFooter className="mt-5">
+        <Button>Login</Button>
       </CardFooter>
     </Card>
   </div>

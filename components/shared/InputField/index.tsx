@@ -86,8 +86,8 @@ const InputField = (props: InputFieldProps) => {
   } = props;
 
   return (
-    <div className={cn(inputFieldVariant({ className, right }))}>
-      <Label required={required} sizes={size} {...labelProps}>
+    <div className={`${cn(inputFieldVariant({ className, right }))} w-full`}>
+      <Label required={required} font="semibold" sizes={size} {...labelProps}>
         {label}
       </Label>
       <Input
