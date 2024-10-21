@@ -17,6 +17,7 @@ import {
   IconLock,
   IconUser,
 } from '@tabler/icons-react';
+import Image from 'next/image';
 
 // icon from tabler
 // Icon: building-skyscraper
@@ -35,9 +36,7 @@ const LoginPage = () => (
           quality={100}
         />
       </CardHeader>
-      <CardTitle className="text-[20px]">
-        Welcome to RUN System
-      </CardTitle>
+      <CardTitle className="text-[20px]">Welcome to RUN System</CardTitle>
       <CardDescription className="text-[12px]">
         Enter your credentials to access your account
       </CardDescription>
