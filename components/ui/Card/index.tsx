@@ -1,8 +1,7 @@
 import * as React from "react";
-import Image from "next/image";
 import { cva, type VariantProps } from "class-variance-authority";
 
-import { cn } from "@/lib/utils";
+import { cn } from '@libs/classNames';
 
 const cardVariants =cva(
   "rounded-xl bg-white shadow-lg max-w-[600px]",
@@ -60,7 +59,9 @@ const CardTitle = React.forwardRef<
       className
     )}
     {...props}
-  />
+  >
+    {props.children || "Default Heading"}
+  </h3>
 ))
 CardTitle.displayName = "CardTitle"
 
