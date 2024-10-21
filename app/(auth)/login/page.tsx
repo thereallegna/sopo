@@ -22,11 +22,25 @@ import {
 // Icon: building-skyscraper
 
 const LoginPage = () => (
-  <div className="flex  justify-center items-center min-h-screen p-32 gap-[16px]">
-    <Card size="default" variant="default">
-      <CardHeader />
-      <CardTitle title="Welcome to RUN System" />
-      <CardDescription description="Enter your credentials to access your account" />
+  <div className="flex justify-center items-center min-h-screen p-32">
+    <Card size="login" variant="default">
+      <CardHeader className="items-center">
+        <Image
+          src="/images/logo-runsystem.png"
+          alt="Run System Logo"
+          className="max-w-[130px] h-auto"
+          width={200}
+          height={200}
+          layout="responsive"
+          quality={100}
+        />
+      </CardHeader>
+      <CardTitle className="text-[20px]">
+        Welcome to RUN System
+      </CardTitle>
+      <CardDescription className="text-[12px]">
+        Enter your credentials to access your account
+      </CardDescription>
       <CardContent>
         <InputField
           label="Company ID"
