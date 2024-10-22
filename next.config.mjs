@@ -12,7 +12,7 @@ const nextConfig = {
     // ignore during commit
     // ignoreDuringCommit: true,
   },
-  //   output: 'standalone',
+    output: 'standalone',
   compiler: {
     removeConsole: !process.env.SHOW_CONSOLE_LOG,
   },
