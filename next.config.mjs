@@ -14,7 +14,7 @@ const nextConfig = {
   },
     output: 'standalone',
   compiler: {
-    // removeConsole: !process.env.SHOW_CONSOLE_LOG,
+    removeConsole: !process.env.SHOW_CONSOLE_LOG,
   },
   //   images: {
   //     // add trusted pattern for external url using next/image
