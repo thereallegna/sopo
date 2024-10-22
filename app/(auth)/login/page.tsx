@@ -22,11 +22,13 @@ import { Checkbox } from '@components/ui/Checkbox';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import loginSchema from '@constants/schemas/LoginSchema';
-import { useMutation } from 'react-query';
+import { useMutation } from '@tanstack/react-query';
 import { login } from '@services/fetcher/auth/login';
 import { useRouter } from 'next/navigation';
 
 const LoginPage = () => {
+  const [isLoading, setIsLoading] = React.useState(false); // Loading state
+
   const {
     register,
     handleSubmit,
@@ -41,12 +43,17 @@ const LoginPage = () => {
   const router = useRouter();
 
   // make mutation here
-  const { mutate: mutationLogin, isLoading } = useMutation({
+  const { mutate: mutationLogin } = useMutation({
     mutationFn: login,
-    // ketika berhasil login
+    onMutate: () => {
+      setIsLoading(true);
+    },
     onSuccess: (data) => {
       console.log('Login success', data);
-      router.push('/dashboard');
+      setIsLoading(false);
+    },
+    onError: () => {
+      setIsLoading(false);
     },
   });
 

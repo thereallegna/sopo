@@ -13,7 +13,7 @@ WORKDIR /app/build
 COPY . .
 
 # Run npmrc generator
-RUN npx npmrc-replace-env
+#RUN npx npmrc-replace-env
 
 # Install dependencies
 RUN yarn install
@@ -29,7 +29,7 @@ RUN yarn build
 # ####################################
 # ### Stage 2: Run the application ###
 # ####################################
-FROM node:20 AS runner
+FROM node:20-slim AS runner
 
 # Add Maintainer Info
 LABEL maintainer="devops@runsystem.id"
@@ -41,8 +41,8 @@ WORKDIR /app/standalone
 COPY --from=builder /app/build/.next/standalone /app/standalone
 COPY --from=builder /app/build/public /app/standalone/public
 COPY --from=builder /app/build/.next/static /app/standalone/.next/static
-COPY --from=builder /app/build/next.config.js /app/standalone/next.config.js
-COPY --from=builder /app/build/package.json /app/standalone/package.json
+#COPY --from=builder /app/build/next.config.js /app/standalone/next.config.js
+#COPY --from=builder /app/build/package.json /app/standalone/package.json
 COPY --from=builder /app/build/version.txt /app/standalone/version.txt
 
 # Expose the port the app runs on
