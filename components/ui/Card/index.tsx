@@ -6,8 +6,8 @@ import { cn } from '@libs/classNames';
 const cardVariants = cva('rounded-xl bg-white shadow-lg max-w-[600px]', {
   variants: {
     size: {
-      login: 'p-[32px] w-[340px] h-[500px]',
-      master_data: 'p-[20px] w-[960px] h-[294px]',
+      login: 'p-[32px] w-[340px] ',
+      master_data: 'p-[20px] w-[960px]',
     },
     variant: {
       default: 'bg-white',

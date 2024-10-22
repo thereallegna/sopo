@@ -26,12 +26,13 @@
     "!./**/*.{ts,tsx,js,jsx}": "prettier --write"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.9.0",
     "@radix-ui/react-checkbox": "^1.1.2",
     "@radix-ui/react-label": "^2.1.0",
     "@radix-ui/react-slot": "^1.1.0",
     "@tabler/icons-react": "^3.19.0",
-    "@types/axios": "^0.14.0",
-    "axios": "^1.7.7",
+    "@types/react-query": "^1.2.9",
+    "axios": "^1.6.8",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "iron-session": "^8.0.3",
@@ -40,9 +41,11 @@
     "next": "14.2.15",
     "react": "^18",
     "react-dom": "^18",
+    "react-hook-form": "^7.51.0",
     "react-query": "^3.39.3",
     "tailwind-merge": "^2.5.4",
     "tailwindcss-animate": "^1.0.7",
+    "yup": "^1.4.0",
     "zustand": "^5.0.0"
   },
   "devDependencies": {

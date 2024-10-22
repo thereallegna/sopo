@@ -66,54 +66,59 @@ export interface InputFieldProps
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
 }
 
-const InputField = (props: InputFieldProps) => {
-  const {
-    label,
-    message,
-    required,
-    disabled,
-    size,
-    right,
-    className,
-    inputProps,
-    labelProps,
-    value,
-    type,
-    placeholder,
-    start_icon,
-    end_icon,
-    onChange,
-  } = props;
+const InputField = React.forwardRef<HTMLInputElement, InputFieldProps>(
+  (props, ref) => {
+    const {
+      label,
+      message,
+      required,
+      disabled,
+      size,
+      right,
+      className,
+      inputProps,
+      labelProps,
+      value,
+      type,
+      placeholder,
+      start_icon,
+      end_icon,
+      onChange,
+      ...rest
+    } = props;
 
-  return (
-    <div className={`${cn(inputFieldVariant({ className, right }))} w-full`}>
-      <Label required={required} font="semibold" sizes={size} {...labelProps}>
-        {label}
-      </Label>
-      <Input
-        disabled={disabled}
-        required={required}
-        sizes={size}
-        value={value}
-        type={type}
-        placeholder={placeholder}
-        onChange={onChange}
-        theme={message?.type}
-        start_icon={start_icon}
-        end_icon={end_icon}
-        {...inputProps}
-      />
-      {message && (
-        <span
-          className={cn(
-            messageInputFieldVariant({ variant: message.type, sizes: size })
-          )}
-        >
-          {message.text}
-        </span>
-      )}
-    </div>
-  );
-};
+    return (
+      <div className={cn(inputFieldVariant({ className, right }))}>
+        <Label required={required} sizes={size} {...labelProps}>
+          {label}
+        </Label>
+        <Input
+          ref={ref} // Pass ref to the Input component
+          {...rest}
+          disabled={disabled}
+          required={required}
+          sizes={size}
+          value={value}
+          type={type}
+          placeholder={placeholder}
+          onChange={onChange}
+          theme={message?.type}
+          start_icon={start_icon}
+          end_icon={end_icon}
+          {...inputProps}
+        />
+        {message && (
+          <span
+            className={cn(
+              messageInputFieldVariant({ variant: message.type, sizes: size })
+            )}
+          >
+            {message.text}
+          </span>
+        )}
+      </div>
+    );
+  }
+);
 
 export default InputField;

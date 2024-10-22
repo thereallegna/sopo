@@ -1,15 +1,13 @@
-// this file is a wrapper with defaults to be used in both API routes and `getServerSideProps` functions
 import { COOKIE_NAME } from '@constants/cookie';
 import { IronSessionData, SessionOptions, getIronSession } from 'iron-session';
-import { NextRequest, NextResponse } from 'next/server';
+import { cookies } from 'next/headers';
 
 export const sessionOptions: SessionOptions = {
   cookieName: COOKIE_NAME,
   password: process.env.SECRET_COOKIE_PASSWORD as string,
   cookieOptions: {
-    // httpOnly: true,
+    httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
-    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
   },
 };
 
@@ -20,13 +18,8 @@ declare module 'iron-session' {
   }
 }
 
-export const getServerSideSession = (
-  cookies: any,
-  req: NextRequest,
-  res: NextResponse,
-  cookieOptions?: any
-) => {
-  const withDomainSessionOptions: SessionOptions = {
+export const getServerSideSession = (cookieOptions?: any) => {
+  const withSessionOptions: SessionOptions = {
     ...sessionOptions,
     cookieOptions: {
       ...sessionOptions.cookieOptions,
@@ -34,5 +27,5 @@ export const getServerSideSession = (
     },
   };
 
-  return getIronSession<IronSessionData>(cookies, withDomainSessionOptions);
+  return getIronSession<IronSessionData>(cookies(), withSessionOptions);
 };
