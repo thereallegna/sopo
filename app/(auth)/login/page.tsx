@@ -24,6 +24,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import loginSchema from '@constants/schemas/LoginSchema';
 import { useMutation } from 'react-query';
 import { login } from '@services/fetcher/auth/login';
+import { useRouter } from 'next/navigation';
 
 const LoginPage = () => {
   const {
@@ -37,12 +38,15 @@ const LoginPage = () => {
     resolver: yupResolver(loginSchema),
   });
 
+  const router = useRouter();
+
   // make mutation here
   const { mutate: mutationLogin, isLoading } = useMutation({
     mutationFn: login,
     // ketika berhasil login
     onSuccess: (data) => {
       console.log('Login success', data);
+      router.push('/dashboard');
     },
   });
 
@@ -109,7 +113,7 @@ const LoginPage = () => {
               }
             />
 
-            <Checkbox label="Keep User ID" />
+            <Checkbox label="Keep User ID" {...register('keepUserId')} />
           </CardContent>
           <CardFooter className="mt-5">
             <Button type="submit" className="w-full" disabled={isLoading}>

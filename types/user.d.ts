@@ -1,7 +1,6 @@
 interface UserData {
-  id: string;
   companyId?: string;
-  usercode: string;
+  usercode?: string;
   authorization?: UserAuthorization;
   imageUrl?: string;
 }
