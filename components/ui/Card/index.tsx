@@ -6,8 +6,8 @@ import { cn } from '@libs/classNames';
 const cardVariants = cva('rounded-xl bg-white shadow-lg max-w-[600px]', {
   variants: {
     size: {
-      login: 'p-[32px] w-[340px] h-[500px]',
-      master_data: 'p-[20px] w-[960px] h-[294px]',
+      login: 'p-[32px] w-[340px] ',
+      master_data: 'p-[20px] w-[960px]',
     },
     variant: {
       default: 'bg-white',
@@ -76,7 +76,7 @@ const CardContent = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn('p-6 pt-0', className)} {...props} />
+  <div ref={ref} className={cn('pt-0', className)} {...props} />
 ));
 CardContent.displayName = 'CardContent';
 
@@ -86,7 +86,7 @@ const CardFooter = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn('flex items-center p-6 pt-0', className)}
+    className={cn('flex items-center pt-0', className)}
     {...props}
   />
 ));

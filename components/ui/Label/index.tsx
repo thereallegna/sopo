@@ -8,9 +8,14 @@ import { cn } from '@libs/classNames';
 import { IconInfoCircle } from '@tabler/icons-react';
 
 const labelVariants = cva(
-  'flex gap-[4px] items-center text-base text-neutral-600 font-semibold',
+  'flex gap-[4px] items-center text-base text-neutral-600',
   {
     variants: {
+      font: {
+        normal: 'font-normal',
+        semibold: 'font-semibold',
+        bold: 'font-bold',
+      },
       sizes: {
         small: 'text-base',
         medium: 'text-md',
@@ -18,6 +23,7 @@ const labelVariants = cva(
       },
     },
     defaultVariants: {
+      font: 'normal',
       sizes: 'small',
     },
   }
@@ -32,9 +38,9 @@ export interface LabelProps
 }
 
 const Label = React.forwardRef<HTMLLabelElement, LabelProps>(
-  ({ className, info, sizes, required, children, ...props }, ref) => (
+  ({ className, info, sizes, font, required, children, ...props }, ref) => (
     <label
-      className={cn(labelVariants({ className, sizes }))}
+      className={cn(labelVariants({ className, sizes, font }))}
       ref={ref}
       {...props}
     >
