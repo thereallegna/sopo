@@ -72,12 +72,14 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           icon={IconEyeClosed}
           className={cn('text-current cursor-pointer', iconClassName)}
           onClick={handleTogglePassword}
+          data-testid="password-icon"
         />
       ) : (
         <IconComponent
           icon={IconEye}
           className={cn('text-current cursor-pointer', iconClassName)}
           onClick={handleTogglePassword}
+          data-testid="password-icon"
         />
       );
     }
@@ -93,6 +95,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           <IconComponent
             icon={StartIcon}
             className={cn('text-current', iconClassName)}
+            data-testid="start-icon"
           />
         )}
         <input
@@ -107,6 +110,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           <IconComponent
             icon={EndIcon}
             className={cn('text-current', iconClassName)}
+            data-testid="end-icon"
           />
         )}
       </div>

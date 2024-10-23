@@ -47,6 +47,7 @@ const IconComponent: FC<IconProps> = ({
   <IconElement
     className={cn(iconVariants({ size, color, className }))}
     onClick={onClick}
+    data-testid="mock-icon"
     {...props}
   />
 );
