@@ -50,6 +50,7 @@ const LoginPage = () => {
     },
     onSuccess: (data) => {
       console.log('Login success', data);
+      router.push('/dashboard');
       setIsLoading(false);
     },
     onError: () => {
