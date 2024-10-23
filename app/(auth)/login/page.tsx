@@ -88,7 +88,7 @@ const LoginPage = () => {
             <InputField
               label="Company ID"
               placeholder="Input your company ID"
-              start_icon={IconBuildingSkyscraper}
+              start_icon={{ icon: IconBuildingSkyscraper }}
               {...register('companyId')}
               message={
                 errors.companyId
@@ -99,7 +99,7 @@ const LoginPage = () => {
             <InputField
               label="Usercode"
               placeholder="Input your usercode"
-              start_icon={IconUser}
+              start_icon={{ icon: IconUser }}
               {...register('usercode')}
               message={
                 errors.usercode
@@ -111,7 +111,7 @@ const LoginPage = () => {
             <InputField
               label="Password"
               type="password"
-              start_icon={IconLock}
+              start_icon={{ icon: IconLock }}
               placeholder="Input your password"
               {...register('password')}
               message={

@@ -29,7 +29,7 @@ const iconVariants = cva('cursor-pointer', {
 });
 
 // Define props for the icon component
-interface IconProps extends VariantProps<typeof iconVariants> {
+export interface IconProps extends VariantProps<typeof iconVariants> {
   icon: ElementType;
   className?: string;
   onClick?: () => void;

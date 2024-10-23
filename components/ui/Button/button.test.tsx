@@ -15,7 +15,7 @@ describe('Button Component', () => {
 
   it('renders Button with an icon', () => {
     const MockIcon = () => <span data-testid="mock-icon">🔍</span>;
-    render(<Button icon={MockIcon}>Search</Button>);
+    render(<Button icon={{ icon: MockIcon }}>Search</Button>);
 
     const buttonElement = screen.getByRole('button', { name: /search/i });
     expect(buttonElement).toBeInTheDocument();
