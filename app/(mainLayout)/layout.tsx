@@ -4,7 +4,7 @@ import Sidebar from '@components/module/Sidebar';
 import React, { PropsWithChildren } from 'react';
 
 const MainLayout = ({ children }: PropsWithChildren) => (
-  <main className="w-full h-screen overflow-hidden bg-Neutral-white">
+  <main className="w-full h-screen overflow-hidden">
     <Navbar />
     <div className="flex">
       <Sidebar />

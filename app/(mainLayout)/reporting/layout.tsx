@@ -11,12 +11,6 @@ export const metadata: Metadata = {
 };
 
 // ?======================================================//
-const ReportingLayout = ({ children }: Props) => (
-  <>
-    <main className="lg:pb-14 pb-10 box-border relative w-full">
-      {children}
-    </main>
-  </>
-);
+const ReportingLayout = ({ children }: Props) => <>{children}</>;
 
 export default ReportingLayout;
