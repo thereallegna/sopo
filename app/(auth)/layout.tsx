@@ -8,7 +8,7 @@ const AuthBackground = ({
 }: Readonly<{
   children: React.ReactNode;
 }>) => (
-  <main className="flex flex-col items-center justify-between min-h-screen relative">
+  <main className="flex flex-col items-center justify-between overflow-hidden h-screen relative">
     <div className="absolute inset-0 -z-10">
       <Image
         src="/images/background.png"
