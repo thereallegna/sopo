@@ -45,7 +45,7 @@ const Label = React.forwardRef<HTMLLabelElement, LabelProps>(
       {...props}
     >
       {children} {required && <span className="text-red-500">*</span>}
-      {info && <IconInfoCircle size={12} />}
+      {info && <IconInfoCircle size={12} data-testid="icon-info" />}
     </label>
   )
 );
