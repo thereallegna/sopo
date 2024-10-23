@@ -2,7 +2,7 @@ module.exports = {
   preset: 'ts-jest', // Use ts-jest for TypeScript files
   testEnvironment: 'jsdom', // For testing React components
   transform: {
-    '^.+\\.tsx?$': 'ts-jest', // Transform TypeScript files using ts-jest
+    '^.+\\.tsx?$': ['ts-jest', { tsconfig: 'tsconfig.jest.json' }], // Transform TypeScript files using ts-jest
     '^.+\\.(js|jsx)$': 'babel-jest',
   },
   moduleNameMapper: {

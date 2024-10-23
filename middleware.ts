@@ -4,12 +4,12 @@ import type { NextRequest } from 'next/server';
 
 export async function middleware(request: NextRequest) {
   if (request.nextUrl.pathname.startsWith('/login')) {
-    return NextResponse.next();
+    // return NextResponse.next();
   }
 
   const session = await getServerSideSession(request);
   if (!session || !session.user?.isLoggedIn) {
-    return NextResponse.redirect(new URL('/login', request.url));
+    // return NextResponse.redirect(new URL('/login', request.url));
   }
 
   return NextResponse.next();

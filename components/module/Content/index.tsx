@@ -1,7 +1,7 @@
 import React, { PropsWithChildren } from 'react';
 
 const Content = ({ children }: PropsWithChildren) => (
-  <div className="w-full h-full flex-1 flex-grow p-5 flex flex-col gap-5">
+  <div className="w-full h-full flex-1 flex-grow m-5 flex flex-col gap-5">
     {children}
   </div>
 );

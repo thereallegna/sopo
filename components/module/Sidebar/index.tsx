@@ -1,8 +1,13 @@
 import React from 'react';
+import SidebarHeader from './SidebarHeader';
+import SidebarContent from './SidebarContent';
+import SidebarFooter from './SidebarFooter';
 
-const Sidebar = () => (
-  <div className="h-full p-3 overflow-y-scroll w-[240px]">
-    <p>Sidebar</p>
+const Sidebar: React.FC = () => (
+  <div className="w-[240px] sidebar-height p-3 bg-emerald-500 text-white flex flex-col ">
+    <SidebarHeader />
+    <SidebarContent />
+    <SidebarFooter />
   </div>
 );
 
