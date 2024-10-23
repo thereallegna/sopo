@@ -5,6 +5,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@libs/classNames';
 import Input, { InputProps } from '@components/ui/Input';
 import Label, { LabelProps } from '@components/ui/Label';
+import { IconProps } from '@components/ui/Icon';
 
 const inputFieldVariant = cva('flex', {
   variants: {
@@ -61,8 +62,8 @@ export interface InputFieldProps
   placeholder?: string;
   type?: React.HTMLInputTypeAttribute;
   value?: string;
-  start_icon?: React.ElementType;
-  end_icon?: React.ElementType;
+  start_icon?: IconProps;
+  end_icon?: IconProps;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
 }
 

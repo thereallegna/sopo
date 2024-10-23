@@ -3,11 +3,11 @@
 import * as React from 'react';
 import { cn } from '@libs/classNames';
 import { cva, VariantProps } from 'class-variance-authority';
-import IconComponent from '@components/ui/Icon';
+import IconComponent, { IconProps } from '@components/ui/Icon';
 import { IconEye, IconEyeClosed } from '@tabler/icons-react';
 
 const inputVariant = cva(
-  'flex items-center px-[12px] gap-[8px] border-[1px] rounded-[6px] shadow-sm focus-within:outline-none focus-within:ring-[2px]',
+  'flex items-center px-3 gap-[8px] border-[1px] rounded-[6px] shadow-sm focus-within:outline-none focus-within:ring-[2px]',
   {
     variants: {
       theme: {
@@ -32,9 +32,9 @@ const inputVariant = cva(
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement>,
     VariantProps<typeof inputVariant> {
-  start_icon?: React.ElementType;
-  end_icon?: React.ElementType;
-  iconClassName?: string; // Optional custom icon styling
+  start_icon?: IconProps;
+  end_icon?: IconProps;
+  iconClassName?: string;
 }
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
@@ -91,28 +91,16 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           disabled ? 'bg-Neutral-100' : ''
         )}
       >
-        {StartIcon && (
-          <IconComponent
-            icon={StartIcon}
-            className={cn('text-current', iconClassName)}
-            data-testid="start-icon"
-          />
-        )}
+        {StartIcon && <IconComponent data-testid="start-icon" {...StartIcon} />}
         <input
           type={inputType}
-          className={cn('outline-none bg-transparent flex-1', className)}
+          className={cn('w-full outline-none bg-transparent', className)}
           ref={ref}
           disabled={disabled}
           {...props}
         />
         {passwordIcon}
-        {EndIcon && (
-          <IconComponent
-            icon={EndIcon}
-            className={cn('text-current', iconClassName)}
-            data-testid="end-icon"
-          />
-        )}
+        {EndIcon && <IconComponent data-testid="end-icon" {...EndIcon} />}
       </div>
     );
   }

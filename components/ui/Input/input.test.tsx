@@ -15,8 +15,8 @@ describe('Input Component', () => {
   it('renders start and end icons correctly', () => {
     render(
       <Input
-        start_icon={IconUser}
-        end_icon={IconBuildingSkyscraper}
+        start_icon={{ icon: IconUser }}
+        end_icon={{ icon: IconBuildingSkyscraper }}
         placeholder="Input with icons"
       />
     );
