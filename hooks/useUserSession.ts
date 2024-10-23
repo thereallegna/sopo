@@ -1,4 +1,4 @@
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { SESSION_USER } from '@constants/queryKey';
 import { fetchUserSession } from '@services/fetcher/auth/session';
 
