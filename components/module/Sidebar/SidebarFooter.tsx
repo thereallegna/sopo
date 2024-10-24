@@ -1,7 +1,7 @@
 import React from 'react';
 
 const SidebarFooter: React.FC = () => (
-  <div className="sticky bottom-0  h-12 w-full">
+  <div className="px-[20px] py-[10px] w-full">
     <p>SidebarFooter </p>
   </div>
 );

@@ -4,9 +4,9 @@ import Sidebar from '@components/module/Sidebar';
 import React, { PropsWithChildren } from 'react';
 
 const MainLayout = ({ children }: PropsWithChildren) => (
-  <main className="w-full h-screen overflow-hidden">
+  <main className="flex flex-col h-screen">
     <Navbar />
-    <div className="flex">
+    <div className="flex flex-1 overflow-hidden">
       <Sidebar />
       <Content>{children}</Content>
     </div>

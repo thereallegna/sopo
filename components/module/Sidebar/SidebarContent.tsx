@@ -1,10 +1,12 @@
+'use client';
+
 import React from 'react';
+import { sidebarConstant } from '@constants/sidebarConstant';
+import SidebarItems from './SidebarItems';
 
 const SidebarContent: React.FC = () => (
-  <div className="overflow-y-scroll custom-scrollbar ">
-    {Array.from({ length: 50 }, (_, i) => (
-      <p key={i}>SidebarContent {i + 1}</p>
-    ))}{' '}
+  <div className="flex-1 overflow-y-auto px-3 custom-scrollbar">
+    <SidebarItems items={sidebarConstant} />
   </div>
 );
 
