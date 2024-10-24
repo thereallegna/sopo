@@ -8,7 +8,7 @@ export async function POST(req: Request) {
     const body = (await req.json()) as LoginFormBody;
 
     const response = await axios.post(
-      `${process.env.API_BASE_URL}/user/login`,
+      `${process.env.API_BASE_URL}/login`,
       body
     );
     const responseData = response.data as ApiResponse<UserAuthorization>;
@@ -25,8 +25,10 @@ export async function POST(req: Request) {
 
     await session.save();
     return NextResponse.json(response.data);
-  } catch (error) {
-    console.log(error);
+  } catch (error: any) {
+    if (error?.response?.data) {
+      return NextResponse.json(error?.response?.data, { status: 400 });
+    }
     return NextResponse.json(
       { message: 'Internal server error' },
       { status: 500 }

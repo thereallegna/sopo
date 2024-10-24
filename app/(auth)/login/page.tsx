@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-
 import InputField from '@components/shared/InputField';
 import { Button } from '@components/ui/Button';
 import {
@@ -12,11 +11,6 @@ import {
   CardHeader,
   CardTitle,
 } from '@components/ui/Card';
-import {
-  IconBuildingSkyscraper,
-  IconLock,
-  IconUser,
-} from '@tabler/icons-react';
 import Image from 'next/image';
 import { Checkbox } from '@components/ui/Checkbox';
 import { useForm, SubmitHandler } from 'react-hook-form';
@@ -25,6 +19,7 @@ import loginSchema from '@constants/schemas/LoginSchema';
 import { useMutation } from '@tanstack/react-query';
 import { login } from '@services/fetcher/auth/login';
 import { useRouter } from 'next/navigation';
+import { authConstant } from '@constants/authConstant';
 
 const LoginPage = () => {
   const [isLoading, setIsLoading] = React.useState(false);
@@ -33,7 +28,8 @@ const LoginPage = () => {
     handleSubmit,
     reset,
     watch,
-
+    setValue,
+    setError,
     formState: { errors },
   } = useForm<LoginFormBody>({
     mode: 'onChange',
@@ -42,28 +38,46 @@ const LoginPage = () => {
 
   const router = useRouter();
 
+  React.useEffect(() => {
+    const savedUsercode = localStorage.getItem('usercode');
+    if (savedUsercode) {
+      setValue('usercode', savedUsercode);
+    }
+  }, [setValue]);
+
+  // make mutation here
   const { mutate: mutationLogin } = useMutation({
     mutationFn: login,
     onMutate: () => {
       setIsLoading(true);
     },
-    onSuccess: (data) => {
-      console.log('Login success', data);
+    onSuccess: () => {
+      reset();
       router.push('/dashboard');
       setIsLoading(false);
     },
-    onError: () => {
+    onError: (error: any) => {
       setIsLoading(false);
+
+      if (error?.response?.data) {
+        const { errorField, message } = error.response.data;
+
+        if (errorField === 'usercode') {
+          setError('usercode', { type: 'server', message });
+        } else if (errorField === 'password') {
+          setError('password', { type: 'server', message });
+        }
+      }
     },
   });
 
   const handleFormSubmit: SubmitHandler<LoginFormBody> = (data) => {
-    console.log('Form Submitted');
+    if (watch('keepUserId')) {
+      localStorage.setItem('usercode', watch('usercode'));
+    }
     mutationLogin(data);
-    reset();
   };
 
-  console.log(watch('usercode'), watch('password'), watch('companyId'));
   return (
     <div className="flex justify-center items-center min-h-screen">
       <Card size="login" variant="default">
@@ -85,9 +99,7 @@ const LoginPage = () => {
         <form onSubmit={handleSubmit(handleFormSubmit)}>
           <CardContent className="mt-5 flex flex-col gap-[10px]">
             <InputField
-              label="Company ID"
-              placeholder="Input your company ID"
-              start_icon={{ icon: IconBuildingSkyscraper }}
+              {...authConstant.inputField[0]}
               {...register('companyId')}
               message={
                 errors.companyId
@@ -96,9 +108,7 @@ const LoginPage = () => {
               }
             />
             <InputField
-              label="Usercode"
-              placeholder="Input your usercode"
-              start_icon={{ icon: IconUser }}
+              {...authConstant.inputField[1]}
               {...register('usercode')}
               message={
                 errors.usercode
@@ -106,12 +116,8 @@ const LoginPage = () => {
                   : undefined
               }
             />
-
             <InputField
-              label="Password"
-              type="password"
-              start_icon={{ icon: IconLock }}
-              placeholder="Input your password"
+              {...authConstant.inputField[2]}
               {...register('password')}
               message={
                 errors.password
@@ -119,8 +125,7 @@ const LoginPage = () => {
                   : undefined
               }
             />
-
-            <Checkbox label="Keep User ID" {...register('keepUserId')} />
+            <Checkbox {...authConstant.checkbox} {...register('keepUserId')} />
           </CardContent>
           <CardFooter className="mt-5">
             <Button type="submit" className="w-full" disabled={isLoading}>
