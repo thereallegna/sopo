@@ -22,8 +22,7 @@ import { useRouter } from 'next/navigation';
 import { authConstant } from '@constants/authConstant';
 
 const LoginPage = () => {
-  const [isLoading, setIsLoading] = React.useState(false); // Loading state
-
+  const [isLoading, setIsLoading] = React.useState(false);
   const {
     register,
     handleSubmit,
