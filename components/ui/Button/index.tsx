@@ -7,7 +7,7 @@ import { cn } from '@libs/classNames';
 import IconComponent, { IconProps } from '@components/ui/Icon';
 
 const buttonVariants = cva(
-  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-sm shadow-Shadow/s px-3 py-2 ring-offset-white focus:ring-offset-0 focus:ring-Blue-200 focus:ring-[3px] w-full',
+  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-sm shadow-Shadow/s px-3 py-2 ring-offset-white focus:ring-offset-0 focus:ring-Blue-200 focus:ring-[3px] w-full ',
   {
     variants: {
       variant: {
@@ -15,6 +15,8 @@ const buttonVariants = cva(
         outlined:
           'border border-Blue-700 text-Blue-600 bg-white hover:text-Blue-700',
         danger: 'bg-Red-500 text-white hover:bg-Red-700',
+        sidebar:
+          'rounded-sm bg-transparent shadow-none text-Neutral-600 hover:bg-Neutral-100 focus:text-Blue-500 focus:bg-Blue-50 focus:ring-transparent ',
       },
       size: {
         small: 'font-semibold text-base',
@@ -35,6 +37,7 @@ export interface ButtonProps
     VariantProps<typeof buttonVariants> {
   asChild?: boolean;
   icon?: IconProps;
+  end_icon?: IconProps;
   iconClassName?: string;
   iconSize?: 'small' | 'medium' | 'large' | null;
 }
@@ -48,6 +51,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       size,
       asChild = false,
       icon: Icon,
+      end_icon: EndIcon,
       children,
       ...props
     },
@@ -57,12 +61,22 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
     return (
       <Comp
-        className={cn(buttonVariants({ variant, size, className }))}
+        className={cn(
+          'flex items-center justify-between w-full',
+          buttonVariants({ variant, size, className })
+        )}
         ref={ref}
         {...props}
       >
-        {Icon && <IconComponent {...Icon} />}
-        {children}
+        <div className="flex items-center">
+          {Icon && <IconComponent {...Icon} />}
+          {children}
+        </div>
+        {EndIcon && (
+          <div className="flex items-center">
+            <IconComponent {...EndIcon} />
+          </div>
+        )}
       </Comp>
     );
   }

@@ -6,9 +6,8 @@ import { IconChevronsLeft, IconSearch } from '@tabler/icons-react';
 import React from 'react';
 
 const SidebarHeader: React.FC = () => (
-  <div className="sticky top-0  pb-3 flex flex-row gap-[10px] ">
+  <div className="sticky top-0 p-3 flex flex-row gap-[10px] ">
     <Input
-      className="flex"
       placeholder="Search menu.."
       end_icon={{
         icon: IconSearch,

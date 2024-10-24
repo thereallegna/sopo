@@ -10,9 +10,6 @@ body {
   .text-balance {
     text-wrap: balance;
   }
-  .sidebar-height {
-    height: calc(100vh - 48px); /* Menyesuaikan dengan tinggi navbar */
-  }
   .custom-scrollbar::-webkit-scrollbar {
     width: 8px; /* Lebar scrollbar */
   }

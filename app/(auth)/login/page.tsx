@@ -27,13 +27,13 @@ import { login } from '@services/fetcher/auth/login';
 import { useRouter } from 'next/navigation';
 
 const LoginPage = () => {
-  const [isLoading, setIsLoading] = React.useState(false); // Loading state
-
+  const [isLoading, setIsLoading] = React.useState(false);
   const {
     register,
     handleSubmit,
     reset,
     watch,
+
     formState: { errors },
   } = useForm<LoginFormBody>({
     mode: 'onChange',
@@ -42,7 +42,6 @@ const LoginPage = () => {
 
   const router = useRouter();
 
-  // make mutation here
   const { mutate: mutationLogin } = useMutation({
     mutationFn: login,
     onMutate: () => {
