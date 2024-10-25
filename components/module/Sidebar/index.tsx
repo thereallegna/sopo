@@ -9,6 +9,7 @@ import SidebarFooter from './SidebarFooter';
 
 const Sidebar: React.FC = () => {
   const { isOpen } = useSidebar();
+
   return (
     <div
       className={cn(
