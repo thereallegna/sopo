@@ -9,7 +9,6 @@ import SidebarFooter from './SidebarFooter';
 
 const Sidebar: React.FC = () => {
   const { isOpen } = useSidebar();
-
   return (
     <div
       className={cn(
@@ -17,11 +16,8 @@ const Sidebar: React.FC = () => {
         isOpen ? 'w-[240px]' : 'w-[56px]'
       )}
     >
-      <div className="flex-1 p-3">
-        <SidebarHeader />
-        <SidebarContent />
-      </div>
-
+      <SidebarHeader />
+      <SidebarContent />
       <SidebarFooter />
     </div>
   );
