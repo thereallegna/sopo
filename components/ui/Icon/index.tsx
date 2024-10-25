@@ -16,6 +16,7 @@ const iconVariants = cva('cursor-pointer', {
       primary: 'text-Neutral-500',
       secondary: 'text-Blue-500',
       teriary: 'text-Blue-600',
+      quaternary: 'text-Blue-700',
       light: 'text-Neutral-400',
       danger: 'text-Red-500',
       dark: 'text-Neutral-black',
