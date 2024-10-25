@@ -16,7 +16,7 @@ const buttonVariants = cva(
           'border border-Blue-700 text-Blue-600 bg-white hover:text-Blue-700',
         danger: 'bg-Red-500 text-white hover:bg-Red-700',
         sidebar:
-          'rounded-sm bg-transparent shadow-none text-Neutral-600 hover:bg-Neutral-100 focus:text-Blue-500 focus:bg-Blue-50 focus:ring-transparent ',
+          'rounded-sm bg-transparent shadow-none text-Neutral-600 hover:bg-Neutral-100 focus:ring-transparent ',
       },
       size: {
         small: 'font-semibold text-base',
@@ -52,6 +52,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       asChild = false,
       icon: Icon,
       end_icon: EndIcon,
+      iconClassName, // Custom class untuk ikon
       children,
       ...props
     },
@@ -69,7 +70,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {...props}
       >
         <div className="flex items-center">
-          {Icon && <IconComponent {...Icon} />}
+          {Icon && <IconComponent {...Icon} className={cn(iconClassName)} />}{' '}
           {children}
         </div>
         {EndIcon && (

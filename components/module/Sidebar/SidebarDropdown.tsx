@@ -5,63 +5,80 @@ import { IconChevronDown } from '@tabler/icons-react';
 import Link from 'next/link';
 import React from 'react';
 import { cn } from '@libs/classNames';
+import { useSidebar } from '@hooks/useSidebar';
+import { usePathname } from 'next/navigation';
 import { SidebarItem } from '../../../types/sidebar';
 
-interface SidebarDropdownProps {
+type SidebarDropdownProps = {
   item: SidebarItem;
-}
+};
 
 const SidebarDropdown: React.FC<SidebarDropdownProps> = ({
   item: { title, icon: Icon, children },
 }) => {
-  const [isOpen, setIsOpen] = React.useState(false);
+  const pathname = usePathname();
+  const { toggleDropdown, openDropdowns } = useSidebar();
+  const dropdownOpen = openDropdowns[title] || false;
 
   return (
     <>
       <Button
         type="button"
-        className="flex items-center justify-between p-2 "
-        onClick={() => setIsOpen(!isOpen)}
+        className="flex items-center justify-between p-2"
+        onClick={() => toggleDropdown(title)}
         icon={Icon}
         variant="sidebar"
         end_icon={{
           icon: IconChevronDown,
           className: cn(
             'transition-transform duration-200',
-            isOpen && 'rotate-180'
+            dropdownOpen && 'rotate-180'
           ),
         }}
       >
         <h1
           className={cn(
             'leading-[18px] text-start overflow-hidden ml-2 whitespace-pre-line',
-            isOpen ? 'font-semibold' : 'font-normal'
+            dropdownOpen ? 'font-semibold' : 'font-normal'
           )}
         >
           {title}
         </h1>
       </Button>
 
-      {isOpen && children && (
+      {dropdownOpen && children && (
         <div className="ml-4 mt-1 space-y-1">
-          {children.map((child) => (
-            <div key={child.path || child.title}>
-              {child.path ? (
-                <Link href={child.path}>
-                  <Button
-                    type="button"
-                    className="flex items-center justify-between p-2"
-                    variant="sidebar"
-                    icon={child.icon}
-                  >
-                    <h1 className="ml-2 font-normal">{child.title}</h1>
-                  </Button>
-                </Link>
-              ) : (
-                <SidebarDropdown item={child} />
-              )}
-            </div>
-          ))}
+          {children.map((child) => {
+            const isActive = pathname === child.path;
+            return (
+              <div key={child.path || child.title}>
+                {child.path ? (
+                  <Link href={child.path}>
+                    <Button
+                      type="button"
+                      className={cn(
+                        'flex items-center justify-between p-2',
+                        isActive ? 'bg-blue-50 text-blue-500' : ''
+                      )}
+                      variant="sidebar"
+                      icon={child.icon}
+                    >
+                      <h1
+                        className={cn(
+                          'ml-2 font-normal',
+                          isActive ? 'font-semibold' : 'font-normal'
+                        )}
+                      >
+                        {child.title}
+                      </h1>
+                    </Button>
+                  </Link>
+                ) : (
+                  <SidebarDropdown item={child} />
+                )}
+              </div>
+            );
+          })}
         </div>
       )}
     </>
