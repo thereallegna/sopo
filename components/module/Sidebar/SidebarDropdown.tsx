@@ -17,8 +17,13 @@ const SidebarDropdown: React.FC<SidebarDropdownProps> = ({
   item: { title, icon: Icon, children, path },
 }) => {
   const pathname = usePathname();
-  const { dropdownOpen, visibleChildren, shouldRender, handleDropdownToggle } =
-    useSidebar({ title, children, path });
+  const {
+    dropdownOpen,
+    visibleChildren,
+    shouldRender,
+    handleDropdownToggle,
+    isOpen,
+  } = useSidebar({ title, children, path });
 
   if (!shouldRender) {
     return null;
@@ -36,14 +41,16 @@ const SidebarDropdown: React.FC<SidebarDropdownProps> = ({
           icon: IconChevronDown,
           className: cn(
             'transition-transform duration-200',
-            dropdownOpen && 'rotate-180'
+            dropdownOpen && 'rotate-180',
+            isOpen ? 'block' : 'hidden'
           ),
         }}
       >
         <h1
           className={cn(
             'leading-[18px] text-start overflow-hidden ml-2 whitespace-pre-line',
-            dropdownOpen ? 'font-semibold' : 'font-normal'
+            dropdownOpen ? 'font-semibold' : 'font-normal',
+            isOpen ? 'block' : 'hidden'
           )}
         >
           {title}
@@ -71,7 +78,8 @@ const SidebarDropdown: React.FC<SidebarDropdownProps> = ({
                       <h1
                         className={cn(
                           'ml-2 font-normal',
-                          isActive ? 'font-semibold' : 'font-normal'
+                          isActive ? 'font-semibold' : 'font-normal',
+                          isOpen ? 'block' : 'hidden'
                         )}
                       >
                         {child.title}

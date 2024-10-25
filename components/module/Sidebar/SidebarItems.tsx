@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Button } from '@components/ui/Button';
 import { usePathname } from 'next/navigation';
 import { cn } from '@libs/classNames';
+import { useSidebar } from '@hooks/useSidebar';
 import { useSidebarStore } from '@stores/useSidebarStore';
 import SidebarDropdown from './SidebarDropdown';
 import { SidebarItem } from '../../../types/sidebar';
@@ -18,6 +19,7 @@ const SidebarItems: React.FC<SidebarItemsProps> = ({ items }) => {
   const searchQuery = useSidebarStore((state) =>
     state.searchQuery.toLowerCase()
   );
+  const { isOpen } = useSidebar();
 
   // Fungsi untuk memfilter item berdasarkan searchQuery
   const filterItems = (item: SidebarItem): boolean => {
@@ -57,7 +59,8 @@ const SidebarItems: React.FC<SidebarItemsProps> = ({ items }) => {
                     <h1
                       className={cn(
                         'ml-2 font-normal ',
-                        isActive ? 'font-semibold' : 'font-normal'
+                        isActive ? 'font-semibold' : 'font-normal',
+                        isOpen ? 'block' : 'hidden'
                       )}
                     >
                       {item.title}

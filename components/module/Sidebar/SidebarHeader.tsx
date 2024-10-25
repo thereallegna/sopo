@@ -13,8 +13,10 @@ const SidebarHeader: React.FC = () => {
   const { isOpen } = useSidebar();
   const setSearchQuery = useSidebarStore((state) => state.setSearchQuery);
 
+  console.log('Sidebar isOpen:', isOpen); // Check state value
+
   return (
-    <div className="sticky top-0 flex flex-row gap-[10px] pb-3">
+    <div className="sticky p-3 top-0 flex flex-row gap-[10px]">
       <Input
         className={cn(isOpen ? '' : 'hidden transition-all duration-300')}
         placeholder="Search menu.."
@@ -28,7 +30,13 @@ const SidebarHeader: React.FC = () => {
       <Button
         size="icon"
         className="flex-1 bg-Neutral-100 hover:bg-Neutral-200 focus:bg-Neutral-300"
-        icon={{ icon: IconChevronsLeft, size: 'large', className: 'p-0' }}
+        iconClassName={`transition-transform duration-200 ${
+          isOpen ? '' : 'rotate-180'
+        }`}
+        icon={{
+          icon: IconChevronsLeft,
+          size: 'large',
+        }}
         onClick={() => toggleSidebar()}
       />
     </div>
