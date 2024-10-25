@@ -10,18 +10,15 @@ body {
   .text-balance {
     text-wrap: balance;
   }
-  .sidebar-height {
-    height: calc(100vh - 48px); /* Menyesuaikan dengan tinggi navbar */
-  }
   .custom-scrollbar::-webkit-scrollbar {
-    width: 8px; /* Lebar scrollbar */
+    width: 4px;
   }
   .custom-scrollbar::-webkit-scrollbar-thumb {
-    background-color: #3b82f6; /* Warna scrollbar (blue-500) */
-    border-radius: 4px; /* Sudut melengkung */
+    background-color: #3b82f6;
+    border-radius: 4px;
   }
   .custom-scrollbar::-webkit-scrollbar-track {
-    background-color: #e5e7eb; /* Warna track (gray-200) */
+    background-color: #e5e7eb;
   }
 }
 
