@@ -11,17 +11,18 @@ import { useSidebarStore } from '@stores/useSidebarStore';
 const SidebarHeader: React.FC = () => {
   const toggleSidebar = useSidebarStore((state) => state.toggleSidebar);
   const { isOpen } = useSidebar();
+  const setSearchQuery = useSidebarStore((state) => state.setSearchQuery);
 
   return (
-    <div className="sticky top-0  flex flex-row gap-[10px] pb-3">
+    <div className="sticky top-0 flex flex-row gap-[10px] pb-3">
       <Input
-        // jika menutup maka hidden
         className={cn(isOpen ? '' : 'hidden transition-all duration-300')}
         placeholder="Search menu.."
         end_icon={{
           icon: IconSearch,
           className: 'text-[#354052]',
         }}
+        onChange={(e) => setSearchQuery(e.target.value)} // Menambahkan onChange
       />
 
       <Button

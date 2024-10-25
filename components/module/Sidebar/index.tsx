@@ -17,13 +17,11 @@ const Sidebar: React.FC = () => {
         isOpen ? 'w-[240px]' : 'w-[56px]'
       )}
     >
-      {/* Wrapper for Header and Content with padding */}
       <div className="flex-1 p-3">
         <SidebarHeader />
         <SidebarContent />
       </div>
 
-      {/* Footer without padding */}
       <SidebarFooter />
     </div>
   );
