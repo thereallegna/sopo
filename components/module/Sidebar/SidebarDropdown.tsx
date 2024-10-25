@@ -14,18 +14,22 @@ type SidebarDropdownProps = {
 };
 
 const SidebarDropdown: React.FC<SidebarDropdownProps> = ({
-  item: { title, icon: Icon, children },
+  item: { title, icon: Icon, children, path },
 }) => {
   const pathname = usePathname();
-  const { toggleDropdown, openDropdowns } = useSidebar();
-  const dropdownOpen = openDropdowns[title] || false;
+  const { dropdownOpen, visibleChildren, shouldRender, handleDropdownToggle } =
+    useSidebar({ title, children, path });
+
+  if (!shouldRender) {
+    return null;
+  }
 
   return (
     <>
       <Button
         type="button"
         className="flex items-center justify-between p-2"
-        onClick={() => toggleDropdown(title)}
+        onClick={handleDropdownToggle}
         icon={Icon}
         variant="sidebar"
         end_icon={{
@@ -46,10 +50,11 @@ const SidebarDropdown: React.FC<SidebarDropdownProps> = ({
         </h1>
       </Button>
 
-      {dropdownOpen && children && (
+      {dropdownOpen && visibleChildren && visibleChildren.length > 0 && (
         <div className="ml-4 mt-1 space-y-1">
-          {children.map((child) => {
+          {visibleChildren.map((child) => {
             const isActive = pathname === child.path;
+
             return (
               <div key={child.path || child.title}>
                 {child.path ? (
@@ -74,7 +79,7 @@ const SidebarDropdown: React.FC<SidebarDropdownProps> = ({
                     </Button>
                   </Link>
                 ) : (
-                  <SidebarDropdown item={child} />
+                  <SidebarDropdown item={child} key={child.title} />
                 )}
               </div>
             );
