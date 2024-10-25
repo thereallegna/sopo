@@ -8,8 +8,14 @@ type UseSidebarProps = {
 
 export const useSidebar = ({ path }: UseSidebarProps = {}) => {
   const pathname = usePathname();
-  const { activePathId, isOpen, openDropdowns, setActivePath, toggleDropdown } =
-    useSidebarStore();
+  const {
+    activePathId,
+    isOpen,
+    openDropdowns,
+    setActivePath,
+    toggleDropdown,
+    toggleSidebar,
+  } = useSidebarStore();
 
   useEffect(() => {
     // Update active path when pathname changes
@@ -27,5 +33,6 @@ export const useSidebar = ({ path }: UseSidebarProps = {}) => {
     isOpen,
     openDropdowns,
     toggleDropdown,
+    toggleSidebar,
   };
 };

@@ -17,15 +17,21 @@ const SidebarDropdown: React.FC<SidebarDropdownProps> = ({
   item: { title, icon: Icon, children },
 }) => {
   const pathname = usePathname();
-  const { toggleDropdown, openDropdowns } = useSidebar();
+  const { toggleDropdown, openDropdowns, isOpen, toggleSidebar } = useSidebar();
   const dropdownOpen = openDropdowns[title] || false;
+
+  // Wrapper function untuk handle link click dan toggle dropdown
+  const handleButtonClick = () => {
+    if (!isOpen) toggleSidebar(); // Buka sidebar jika tertutup
+    toggleDropdown(title); // Toggle dropdown
+  };
 
   return (
     <>
       <Button
         type="button"
         className="flex items-center justify-between p-2"
-        onClick={() => toggleDropdown(title)}
+        onClick={handleButtonClick}
         icon={Icon}
         variant="sidebar"
         end_icon={{
@@ -50,6 +56,7 @@ const SidebarDropdown: React.FC<SidebarDropdownProps> = ({
         <div className="ml-4 mt-1 space-y-1">
           {children.map((child) => {
             const isActive = pathname === child.path;
+
             return (
               <div key={child.path || child.title}>
                 {child.path ? (
