@@ -14,42 +14,54 @@ type SidebarDropdownProps = {
 };
 
 const SidebarDropdown: React.FC<SidebarDropdownProps> = ({
-  item: { title, icon: Icon, children },
+  item: { title, icon: Icon, children, path },
 }) => {
   const pathname = usePathname();
-  const { toggleDropdown, openDropdowns } = useSidebar();
-  const dropdownOpen = openDropdowns[title] || false;
+  const {
+    dropdownOpen,
+    visibleChildren,
+    shouldRender,
+    handleDropdownToggle,
+    isOpen,
+  } = useSidebar({ title, children, path });
+
+  if (!shouldRender) {
+    return null;
+  }
 
   return (
     <>
       <Button
         type="button"
         className="flex items-center justify-between p-2"
-        onClick={() => toggleDropdown(title)}
+        onClick={handleDropdownToggle}
         icon={Icon}
         variant="sidebar"
         end_icon={{
           icon: IconChevronDown,
           className: cn(
             'transition-transform duration-200',
-            dropdownOpen && 'rotate-180'
+            dropdownOpen && 'rotate-180',
+            isOpen ? 'block' : 'hidden'
           ),
         }}
       >
         <h1
           className={cn(
             'leading-[18px] text-start overflow-hidden ml-2 whitespace-pre-line',
-            dropdownOpen ? 'font-semibold' : 'font-normal'
+            dropdownOpen ? 'font-semibold' : 'font-normal',
+            isOpen ? 'block' : 'hidden'
           )}
         >
           {title}
         </h1>
       </Button>
 
-      {dropdownOpen && children && (
+      {dropdownOpen && visibleChildren && visibleChildren.length > 0 && (
         <div className="ml-4 mt-1 space-y-1">
-          {children.map((child) => {
+          {visibleChildren.map((child) => {
             const isActive = pathname === child.path;
+
             return (
               <div key={child.path || child.title}>
                 {child.path ? (
@@ -66,7 +78,8 @@ const SidebarDropdown: React.FC<SidebarDropdownProps> = ({
                       <h1
                         className={cn(
                           'ml-2 font-normal',
-                          isActive ? 'font-semibold' : 'font-normal'
+                          isActive ? 'font-semibold' : 'font-normal',
+                          isOpen ? 'block' : 'hidden'
                         )}
                       >
                         {child.title}
@@ -74,7 +87,7 @@ const SidebarDropdown: React.FC<SidebarDropdownProps> = ({
                     </Button>
                   </Link>
                 ) : (
-                  <SidebarDropdown item={child} />
+                  <SidebarDropdown item={child} key={child.title} />
                 )}
               </div>
             );
