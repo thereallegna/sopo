@@ -1,4 +1,3 @@
-// useSidebar.ts
 import { usePathname } from 'next/navigation';
 import { useEffect } from 'react';
 import { useSidebarStore } from '@stores/useSidebarStore';
@@ -25,7 +24,6 @@ export const useSidebar = ({ path, title, children }: UseSidebarProps = {}) => {
   const dropdownOpen = title ? openDropdowns[title] || false : false;
   const currentSearchQuery = searchQuery.toLowerCase();
 
-  // Function to check if there are matching children
   const hasVisibleChildren = (items: SidebarItem[]): boolean =>
     items.some((child) => {
       if (child.title.toLowerCase().includes(currentSearchQuery)) {
@@ -37,7 +35,6 @@ export const useSidebar = ({ path, title, children }: UseSidebarProps = {}) => {
       return false;
     });
 
-  // Filter visible children based on search query
   const getVisibleChildren = (childrenItems?: SidebarItem[]) => {
     if (!childrenItems) return [];
 
@@ -50,13 +47,11 @@ export const useSidebar = ({ path, title, children }: UseSidebarProps = {}) => {
 
   const visibleChildren = getVisibleChildren(children);
 
-  // Handle dropdown toggle
   const handleDropdownToggle = () => {
     if (!isOpen) toggleSidebar();
     if (title) toggleDropdown(title);
   };
 
-  // Set active path effect
   useEffect(() => {
     if (path) {
       setActivePath(path);
@@ -65,7 +60,6 @@ export const useSidebar = ({ path, title, children }: UseSidebarProps = {}) => {
     }
   }, [pathname, path, setActivePath]);
 
-  // Auto-open dropdown when there are matching children
   useEffect(() => {
     if (currentSearchQuery && children && title) {
       const hasMatches =
