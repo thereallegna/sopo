@@ -14,32 +14,62 @@ import {
   flexRender,
   getCoreRowModel,
   getPaginationRowModel,
+  OnChangeFn,
   useReactTable,
 } from '@tanstack/react-table';
 import TableAction from '@components/ui/Table/TableAction';
+import TablePagination from '@components/ui/Table/TablePagination';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
-export interface TableContentProps {
+export type TableContentProps = {
   data: unknown[];
   columns: AccessorKeyColumnDef<any, any>[] | ColumnDef<any, any>[];
-}
+  pagination: PaginationState;
+  total_records?: number;
+  total_pages?: number;
+  onPaginationChange: OnChangeFn<PaginationState>;
+};
 
 export interface PaginationState {
   pageIndex: number;
   pageSize: number;
 }
 
-const TableContent = ({ data, columns }: TableContentProps) => {
-  const [pagination, setPagination] = React.useState<PaginationState>({
-    pageIndex: 0,
-    pageSize: 10,
-  });
+const TableContent = ({
+  data,
+  columns,
+  pagination,
+  total_records,
+  total_pages,
+  onPaginationChange,
+}: TableContentProps) => {
+  const router = useRouter();
+  const pathname = usePathname();
+  const params = useSearchParams();
+  const defaultData = React.useMemo(() => [], []);
 
   const table = useReactTable({
-    data,
+    data: data ?? defaultData,
     columns,
+    manualPagination: true,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-    onPaginationChange: setPagination,
+    onPaginationChange: (newPagination) => {
+      const paginationState =
+        typeof newPagination === 'function'
+          ? newPagination(pagination)
+          : newPagination;
+
+      onPaginationChange(paginationState);
+
+      console.log(paginationState);
+
+      const { pageIndex, pageSize } = paginationState;
+      const url = new URLSearchParams(params);
+      url.set('current_page', pageIndex.toString());
+      url.set('page_size', pageSize.toString());
+      router.replace(`${pathname}?${url.toString()}`);
+    },
     state: {
       pagination,
     },
@@ -82,6 +112,13 @@ const TableContent = ({ data, columns }: TableContentProps) => {
           ))}
         </TableBody>
       </Table>
+      <TablePagination
+        page_size={pagination.pageSize}
+        total_records={total_records}
+        total_pages={total_pages}
+        onNext={table.nextPage}
+        onPrev={table.previousPage}
+      />
     </div>
   );
 };

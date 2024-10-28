@@ -1,49 +1,26 @@
 'use client';
 
-import TableContent from '@components/shared/TableContent';
-import ToDetail from '@components/shared/TableContent/ToDetail';
-import { createColumnHelper } from '@tanstack/react-table';
 import React from 'react';
+import TableContent from '@components/shared/TableContent';
+import useCountry, { countryColumns } from '@hooks/module/useCountry';
 
-const columnHelper = createColumnHelper<any>();
-
-const columns = [
-  columnHelper.accessor('country_code', {
-    id: 'number',
-    header: '#',
-    cell: (props) => props.row.index + 1,
-    enableGrouping: true,
-  }),
-  columnHelper.accessor('country_code', {
-    header: 'Country Code',
-    cell: (props) => props.renderValue(),
-    enableGrouping: true,
-  }),
-  columnHelper.accessor('country_name', {
-    header: 'Country Name',
-    cell: (props) => props.renderValue(),
-    enableGrouping: true,
-  }),
-  columnHelper.accessor('create_date', {
-    header: 'Create Date',
-    cell: (props) => props.renderValue(),
-    enableGrouping: true,
-  }),
-  columnHelper.display({
-    id: 'action',
-    cell: (props) => (
-      <ToDetail href={`/${props.row.getValue('country_code')}`} />
-    ),
-  }),
-];
-
-const page = () => (
-  <div>
-    <div>Country</div>
+const Country = () => {
+  const { data, pagination, setPagination } = useCountry();
+  return (
     <div>
-      <TableContent data={[]} columns={columns} />
+      <div>Country</div>
+      <div>
+        <TableContent
+          data={data?.results as ICountry[]}
+          columns={countryColumns}
+          total_pages={data?.total_pages}
+          total_records={data?.total_records}
+          pagination={pagination}
+          onPaginationChange={setPagination}
+        />
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
-export default page;
+export default Country;

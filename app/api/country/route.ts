@@ -1,0 +1,32 @@
+import { NextRequest, NextResponse } from 'next/server';
+import { getServerSideSession } from '@utils/session';
+import axios from 'axios';
+import { PATH_COUNTRY_BE } from '@constants/routes';
+
+export async function GET(req: NextRequest) {
+  try {
+    const params = req.nextUrl.searchParams;
+
+    const session = await getServerSideSession();
+
+    const url = `${PATH_COUNTRY_BE}?page_size=${
+      params.get('page_size') || ''
+    }&page=${params.get('current_page') || ''}`;
+
+    const response = await axios.get(url.toString(), {
+      headers: {
+        Authorization: `Bearer ${session.user?.data?.authorization?.access_token}`,
+      },
+    });
+
+    return NextResponse.json(response.data);
+  } catch (error: any) {
+    if (error?.response?.data) {
+      return NextResponse.json(error?.response?.data, { status: 400 });
+    }
+    return NextResponse.json(
+      { message: 'Internal server error', error },
+      { status: 500 }
+    );
+  }
+}

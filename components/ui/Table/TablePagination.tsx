@@ -9,7 +9,8 @@ import { Button } from '../Button';
 
 export interface TablePaginationProps {
   page_size: number;
-  total_records: number;
+  total_records?: number;
+  total_pages?: number;
   onNext: () => void;
   onPrev: () => void;
 }
@@ -17,6 +18,7 @@ export interface TablePaginationProps {
 const TablePagination = ({
   total_records,
   page_size,
+  total_pages,
   onNext,
   onPrev,
 }: TablePaginationProps) => (
@@ -29,8 +31,9 @@ const TablePagination = ({
           type="number"
           value={page_size}
           placeholder="0"
+          onChange={() => {}}
         />{' '}
-        from {total_records} entries.
+        from {total_records} entries {total_pages} Pages.
       </span>
     </div>
     <div className="flex">
