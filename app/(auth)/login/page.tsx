@@ -41,7 +41,7 @@ const LoginPage = () => {
   React.useEffect(() => {
     const savedUsercode = localStorage.getItem('usercode');
     if (savedUsercode) {
-      setValue('usercode', savedUsercode);
+      setValue('user_code', savedUsercode);
     }
   }, [setValue]);
 
@@ -63,7 +63,7 @@ const LoginPage = () => {
         const { errorField, message } = error.response.data;
 
         if (errorField === 'usercode') {
-          setError('usercode', { type: 'server', message });
+          setError('user_code', { type: 'server', message });
         } else if (errorField === 'password') {
           setError('password', { type: 'server', message });
         }
@@ -73,7 +73,7 @@ const LoginPage = () => {
 
   const handleFormSubmit: SubmitHandler<LoginFormBody> = (data) => {
     if (watch('keepUserId')) {
-      localStorage.setItem('usercode', watch('usercode'));
+      localStorage.setItem('usercode', watch('user_code'));
     }
     mutationLogin(data);
   };
@@ -109,10 +109,10 @@ const LoginPage = () => {
             />
             <InputField
               {...authConstant.inputField[1]}
-              {...register('usercode')}
+              {...register('user_code')}
               message={
-                errors.usercode
-                  ? { text: errors.usercode.message!, type: 'danger' }
+                errors.user_code
+                  ? { text: errors.user_code.message!, type: 'danger' }
                   : undefined
               }
             />

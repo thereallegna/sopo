@@ -6,11 +6,7 @@ interface UserData {
 }
 
 interface UserAuthorization {
-  tokenType: string;
-  accessToken: string;
-  expiredAt: number;
-  refreshToken: string;
-  refreshTokenExpiredAt: number;
+  access_token: string;
 }
 
 interface IUser {

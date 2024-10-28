@@ -1,6 +1,6 @@
 type LoginFormBody = {
   companyId?: string;
-  usercode: string;
+  user_code: string;
   password: string;
   keepUserId?: boolean;
 };
