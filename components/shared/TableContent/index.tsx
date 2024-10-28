@@ -47,7 +47,7 @@ const TableContent = ({ data, columns }: TableContentProps) => {
 
   return (
     <div className="flex flex-col gap-[10px]">
-      <TableAction />
+      <TableAction data={data} />
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
