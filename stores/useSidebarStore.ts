@@ -3,9 +3,11 @@ import { create } from 'zustand';
 type SidebarState = {
   activePathId: string;
   isOpen: boolean;
-  openDropdowns: Record<string, boolean>; // Menyimpan status dropdown untuk setiap item
+  openDropdowns: Record<string, boolean>;
+  searchQuery: string;
+  setSearchQuery: (query: string) => void;
   setActivePath: (path: string) => void;
-  toggleDropdown: (path: string) => void; // Menambahkan parameter untuk path
+  toggleDropdown: (path: string) => void;
   toggleSidebar: (forceClose?: boolean) => void;
 };
 
@@ -13,6 +15,7 @@ const initialSidebarState = {
   activePathId: '',
   isOpen: true,
   openDropdowns: {},
+  searchQuery: '',
 };
 
 export const useSidebarStore = create<SidebarState>((set, get) => ({
@@ -24,10 +27,12 @@ export const useSidebarStore = create<SidebarState>((set, get) => ({
     set((state) => ({
       openDropdowns: {
         ...state.openDropdowns,
-        [path]: !state.openDropdowns[path], // Toggle status dropdown untuk item tertentu
+        [path]: !state.openDropdowns[path],
       },
     })),
 
   toggleSidebar: (forceClose = false) =>
     set({ isOpen: forceClose ? false : !get().isOpen }),
+
+  setSearchQuery: (query: string) => set({ searchQuery: query }),
 }));
