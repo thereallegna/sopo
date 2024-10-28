@@ -1,12 +1,11 @@
-// useSidebarStore.ts
 import { create } from 'zustand';
 
 type SidebarState = {
   activePathId: string;
   isOpen: boolean;
   openDropdowns: Record<string, boolean>;
-  searchQuery: string; // Menyimpan query pencarian
-  setSearchQuery: (query: string) => void; // Fungsi untuk mengubah searchQuery
+  searchQuery: string;
+  setSearchQuery: (query: string) => void;
   setActivePath: (path: string) => void;
   toggleDropdown: (path: string) => void;
   toggleSidebar: (forceClose?: boolean) => void;
@@ -16,7 +15,7 @@ const initialSidebarState = {
   activePathId: '',
   isOpen: true,
   openDropdowns: {},
-  searchQuery: '', // Default kosong
+  searchQuery: '',
 };
 
 export const useSidebarStore = create<SidebarState>((set, get) => ({
@@ -35,5 +34,5 @@ export const useSidebarStore = create<SidebarState>((set, get) => ({
   toggleSidebar: (forceClose = false) =>
     set({ isOpen: forceClose ? false : !get().isOpen }),
 
-  setSearchQuery: (query: string) => set({ searchQuery: query }), // Fungsi baru
+  setSearchQuery: (query: string) => set({ searchQuery: query }),
 }));
