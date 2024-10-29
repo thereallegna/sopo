@@ -1,5 +1,5 @@
-'use client';
-
+import { Button, ButtonProps } from '@components/ui/Button';
+import { IconPlus } from '@tabler/icons-react';
 import React from 'react';
 import { useDrawerStore } from '@stores/useDrawerStore';
 
@@ -10,18 +10,32 @@ const HeaderContent = () => {
     openDrawer('CREATE_COUNTRY');
   };
 
-  return (
-    <div className="flex items-center justify-between p-4 bg-red-500">
-      <h1 className="text-xl font-bold">Header Conaowdjoiawjdoitent</h1>
-      <button
-        type="button"
-        onClick={handleOpenDrawer}
-        className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-      >
-        Open Create Country Modal
-      </button>
-    </div>
-  );
+export type HeaderContentProps = {
+  title: string;
+  onAdd?: () => void;
+  onAddButtonProps?: ButtonProps;
 };
+
+const HeaderContent = ({
+  title,
+  onAdd,
+  onAddButtonProps,
+}: HeaderContentProps) => (
+  <div className="p-5 border-b border-Neutral-200 flex justify-between items-center">
+    <p className="text-[20px] text-Neutral-Black font-bold">{title}</p>
+    <div>
+      <Button
+        icon={{
+          icon: IconPlus,
+          color: 'White',
+        }}
+        onClick={onAdd}
+        {...onAddButtonProps}
+      >
+        Add
+      </Button>
+    </div>
+  </div>
+);
 
 export default HeaderContent;
