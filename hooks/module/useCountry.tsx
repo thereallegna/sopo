@@ -1,7 +1,7 @@
 import React from 'react';
 import ToDetail from '@components/shared/TableContent/ToDetail';
 import { createColumnHelper } from '@tanstack/react-table';
-import { getCountry } from '@services/fetcher/configuration/general/country';
+import { getCountry } from '@services/fetcher/configuration/general';
 import { useTableStore } from '@stores/useTableStore';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { GET_COUNTRY } from '@constants/queryKey';
