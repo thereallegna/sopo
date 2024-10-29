@@ -1,8 +1,8 @@
-import React, { PropsWithChildren } from 'react';
+import React, { PropsWithChildren, Suspense } from 'react';
 
 const Content = ({ children }: PropsWithChildren) => (
   <div className="w-full h-full flex-1 flex-grow m-5 flex flex-col gap-5">
-    {children}
+    <Suspense>{children}</Suspense>
   </div>
 );
 

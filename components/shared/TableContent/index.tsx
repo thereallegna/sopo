@@ -22,7 +22,7 @@ import TablePagination from '@components/ui/Table/TablePagination';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 export type TableContentProps = {
-  data: unknown[];
+  data?: unknown[];
   columns: AccessorKeyColumnDef<any, any>[] | ColumnDef<any, any>[];
   pagination: PaginationState;
   total_records?: number;
@@ -77,7 +77,7 @@ const TableContent = ({
 
   return (
     <div className="flex flex-col gap-[10px]">
-      <TableAction data={data} />
+      <TableAction data={data ?? defaultData} />
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -118,6 +118,8 @@ const TableContent = ({
         total_pages={total_pages}
         onNext={table.nextPage}
         onPrev={table.previousPage}
+        page_index={pagination.pageIndex}
+        onChangePageSize={(size: number) => table.setPageSize(size)}
       />
     </div>
   );

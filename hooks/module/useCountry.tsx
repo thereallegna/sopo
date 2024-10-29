@@ -6,48 +6,48 @@ import { useTableStore } from '@stores/useTableStore';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { GET_COUNTRY } from '@constants/queryKey';
 
-const columnHelper = createColumnHelper<ICountry>();
+// const columnHelper = createColumnHelper<ICountry>();
 
-export const countryColumns = [
-  columnHelper.accessor('country_code', {
-    id: 'number',
-    header: '#',
-    cell: (props) => props.row.index + 1,
-    enableGrouping: true,
-  }),
-  columnHelper.accessor('country_code', {
-    header: 'Country Code',
-    cell: (props) => props.renderValue(),
-    enableGrouping: true,
-  }),
-  columnHelper.accessor('country_name', {
-    header: 'Country Name',
-    cell: (props) => props.renderValue(),
-    enableGrouping: true,
-  }),
-  columnHelper.accessor('create_date', {
-    header: 'Create Date',
-    cell: (props) => props.renderValue(),
-    enableGrouping: true,
-  }),
-  columnHelper.display({
-    id: 'action',
-    cell: (props) => (
-      <ToDetail href={`/${props.row.getValue('country_code')}`} />
-    ),
-  }),
-];
+// export const countryColumns = [
+//   columnHelper.accessor('country_code', {
+//     id: 'number',
+//     header: '#',
+//     cell: (props) => props.row.index + 1,
+//     enableGrouping: true,
+//   }),
+//   columnHelper.accessor('country_code', {
+//     header: 'Country Code',
+//     cell: (props) => props.renderValue(),
+//     enableGrouping: true,
+//   }),
+//   columnHelper.accessor('country_name', {
+//     header: 'Country Name',
+//     cell: (props) => props.renderValue(),
+//     enableGrouping: true,
+//   }),
+//   columnHelper.accessor('create_date', {
+//     header: 'Create Date',
+//     cell: (props) => props.renderValue(),
+//     enableGrouping: true,
+//   }),
+//   columnHelper.display({
+//     id: 'action',
+//     cell: (props) => (
+//       <ToDetail href={`/${props.row.getValue('country_code')}`} />
+//     ),
+//   }),
+// ];
 
-const useCountry = () => {
-  const { pagination, setPagination } = useTableStore();
+// const useCountry = () => {
+//   const { pagination, setPagination } = useTableStore();
 
-  const { data: queryData } = useQuery({
-    queryKey: [GET_COUNTRY, pagination],
-    queryFn: () => getCountry(pagination),
-    placeholderData: keepPreviousData,
-  });
+//   const { data: queryData } = useQuery({
+//     queryKey: [GET_COUNTRY, pagination],
+//     queryFn: () => getCountry(pagination),
+//     placeholderData: keepPreviousData,
+//   });
 
-  return { data: queryData?.data.data, pagination, setPagination };
-};
+//   return { data: queryData?.data.data, pagination, setPagination };
+// };
 
-export default useCountry;
+// export default useCountry;
