@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic';
 import React from 'react';
 import { useDrawerStore } from '@stores/useDrawerStore';
 
-const CreateCountryDrawer = dynamic(
+const CreateCountryModal = dynamic(
   // eslint-disable-next-line import/extensions
   () => import('@components/shared/Drawer/Create/CreateCountry'),
   {
@@ -17,6 +17,6 @@ const DrawerProvider = () => {
 
   if (!isOpen) return null;
 
-  return <>{drawerType === 'CREATE_COUNTRY' && <CreateCountryDrawer />}</>;
+  return <>{drawerType === 'CREATE_COUNTRY' && <CreateCountryModal />}</>;
 };
 export default DrawerProvider;
