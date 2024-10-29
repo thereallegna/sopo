@@ -1,5 +1,9 @@
-import React from 'react';
+import React, { PropsWithChildren, Suspense } from 'react';
 
-const BodyContent = () => <div>BodyContent</div>;
+const BodyContent = ({ children }: PropsWithChildren) => (
+  <div className="p-5">
+    <Suspense>{children}</Suspense>
+  </div>
+);
 
 export default BodyContent;
