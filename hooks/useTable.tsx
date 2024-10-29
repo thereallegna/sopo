@@ -9,10 +9,9 @@ import { useSearchParams } from 'next/navigation';
 const columnHelper = createColumnHelper<ICountry>();
 
 export const countryColumns = [
-  columnHelper.accessor('country_code', {
-    id: 'number',
+  columnHelper.accessor('number', {
     header: '#',
-    cell: (props) => props.row.index + 1,
+    cell: (props) => props.renderValue(),
     enableGrouping: true,
   }),
   columnHelper.accessor('country_code', {
