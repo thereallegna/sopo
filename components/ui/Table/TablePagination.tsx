@@ -8,17 +8,21 @@ import {
 import { Button } from '../Button';
 
 export interface TablePaginationProps {
+  page_index: number;
   page_size: number;
   total_records?: number;
   total_pages?: number;
   onNext: () => void;
   onPrev: () => void;
+  onChangePageSize: (size: number) => void;
 }
 
 const TablePagination = ({
+  page_index,
   total_records,
   page_size,
   total_pages,
+  onChangePageSize,
   onNext,
   onPrev,
 }: TablePaginationProps) => (
@@ -31,24 +35,31 @@ const TablePagination = ({
           type="number"
           value={page_size}
           placeholder="0"
-          onChange={() => {}}
+          onChange={(e) => onChangePageSize(parseInt(e.target.value, 10))}
         />{' '}
-        from {total_records} entries {total_pages} Pages.
+        from {total_records} entries.
       </span>
     </div>
-    <div className="flex">
-      <Button
-        variant="outlined"
-        onClick={onPrev}
-        icon={{ icon: IconChevronCompactLeft }}
-        className="rounded-none rounded-s-rounded-1 px-[7px] py-[6px]"
-      />
-      <Button
-        variant="outlined"
-        onClick={onNext}
-        icon={{ icon: IconChevronCompactRight }}
-        className="rounded-none rounded-e-rounded-1 px-[7px] py-[6px]"
-      />
+    <div className="flex items-center gap-[10px]">
+      <div className="flex">
+        <Button
+          size="icon"
+          variant="secondary"
+          onClick={onPrev}
+          icon={{ icon: IconChevronCompactLeft }}
+          className="rounded-none rounded-s-rounded-1 px-[7px] py-[6px]"
+        />
+        <Button
+          size="icon"
+          variant="secondary"
+          onClick={onNext}
+          icon={{ icon: IconChevronCompactRight }}
+          className="rounded-none rounded-e-rounded-1 px-[7px] py-[6px]"
+        />
+      </div>
+      <p className="text-base text-Neutral-500 font-normal">
+        Page {page_index + 1} of {total_pages}{' '}
+      </p>
     </div>
   </div>
 );

@@ -1,27 +1,55 @@
+import { GET_COUNTRY } from '@constants/queryKey';
 import { PaginationState } from '@tanstack/react-table';
 import { create } from 'zustand';
 
-type TableState = {
+type PaginationStoreState = {
   pagination: PaginationState;
+};
+
+type TableState = {
+  paginations: Record<string, PaginationStoreState>;
   setPagination: (
+    key: string,
     pagination: PaginationState | ((prev: PaginationState) => PaginationState)
   ) => void;
 };
 
 const initialTableState = {
-  pagination: {
-    pageIndex: 1,
-    pageSize: 10,
-  } as PaginationState,
+  paginations: {
+    [GET_COUNTRY]: {
+      pagination: {
+        pageIndex: 1,
+        pageSize: 10,
+      },
+    },
+  } as Record<string, PaginationStoreState>,
 };
 
 export const useTableStore = create<TableState>((set) => ({
   ...initialTableState,
-  setPagination: (pagination) =>
-    set((state) => ({
-      pagination:
+  setPagination: (key, pagination) => {
+    set((state) => {
+      const currentPaginations = state.paginations[key] || {
+        pagination: {
+          pageIndex: 1,
+          pageSize: 10,
+        },
+      };
+
+      const newPagination =
         typeof pagination === 'function'
-          ? pagination(state.pagination)
-          : pagination,
-    })),
+          ? pagination(currentPaginations.pagination)
+          : pagination;
+
+      return {
+        paginations: {
+          ...state.paginations,
+          [key]: {
+            ...currentPaginations,
+            pagination: newPagination,
+          },
+        },
+      };
+    });
+  },
 }));

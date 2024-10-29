@@ -2,22 +2,27 @@
 
 import React, { Suspense } from 'react';
 import TableContent from '@components/shared/TableContent';
-import useCountry, { countryColumns } from '@hooks/module/useCountry';
+import useTable, { countryColumns } from '@hooks/useTable';
+import { GET_COUNTRY } from '@constants/queryKey';
+import { getCountry } from '@services/fetcher/configuration/general/country';
 
 const Country = () => {
-  const { data, pagination, setPagination } = useCountry();
+  const { data, pagination, onPaginationChange } = useTable<ICountry[]>({
+    queryKey: GET_COUNTRY,
+    queryFn: getCountry,
+  });
   return (
     <div>
       <div>Country</div>
       <div>
         <Suspense>
           <TableContent
-            data={data?.results as ICountry[]}
+            data={data?.results}
             columns={countryColumns}
             total_pages={data?.total_pages}
             total_records={data?.total_records}
             pagination={pagination}
-            onPaginationChange={setPagination}
+            onPaginationChange={onPaginationChange}
           />
         </Suspense>
       </div>
