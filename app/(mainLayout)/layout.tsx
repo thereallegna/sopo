@@ -1,6 +1,7 @@
 import Content from '@components/module/Content';
 import Navbar from '@components/module/Navbar';
 import Sidebar from '@components/module/Sidebar';
+import DrawerProvider from '@components/shared/DrawerProvider';
 import React, { PropsWithChildren } from 'react';
 
 const MainLayout = ({ children }: PropsWithChildren) => (
@@ -8,7 +9,10 @@ const MainLayout = ({ children }: PropsWithChildren) => (
     <Navbar />
     <div className="flex flex-1 overflow-hidden">
       <Sidebar />
-      <Content>{children}</Content>
+      <Content className="relative w-full h-full flex-1 flex-grow flex flex-col gap-[10px]">
+        {children}
+        <DrawerProvider />
+      </Content>
     </div>
   </main>
 );

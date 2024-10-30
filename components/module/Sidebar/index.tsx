@@ -11,7 +11,7 @@ const Sidebar: React.FC = () => {
   const { isOpen } = useSidebar();
 
   return (
-    <div
+    <aside
       className={cn(
         'flex flex-col border border-Neutral-200 border-solid transition-all duration-300 overflow-hidden',
         isOpen ? 'w-[240px]' : 'w-[56px]'
@@ -20,7 +20,7 @@ const Sidebar: React.FC = () => {
       <SidebarHeader />
       <SidebarContent />
       <SidebarFooter />
-    </div>
+    </aside>
   );
 };
 

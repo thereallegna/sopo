@@ -4,8 +4,8 @@ import React from 'react';
 import { Button } from '@components/ui/Button';
 import {
   Drawer,
-  DrawerBody,
-  DrawerButtonHeader,
+  DrawerClose,
+  DrawerContent,
   DrawerFooter,
   DrawerHeader,
   DrawerTitle,
@@ -14,19 +14,15 @@ import {
 import { useDrawerStore } from '@stores/useDrawerStore';
 
 const CreateCountry = () => {
-  const isOpen = useDrawerStore((state) => state.isOpen);
-  const closeDrawer = useDrawerStore((state) => state.closeDrawer);
+  const { isOpen, closeDrawer } = useDrawerStore();
 
   return (
-    <Drawer open={isOpen}>
-      <DrawerBody>
+    <Drawer onClose={closeDrawer} open={isOpen}>
+      <DrawerContent>
         <DrawerHeader>
           <DrawerTitle>Create Country</DrawerTitle>
-          <DrawerButtonHeader>
-            <h1>adwokawod</h1>
-            <h1>adwokawod</h1>
-          </DrawerButtonHeader>
         </DrawerHeader>
+
         <label htmlFor="country" className="block mb-2">
           Country Name
         </label>
@@ -35,13 +31,30 @@ const CreateCountry = () => {
           type="text"
           className="w-full border rounded px-2 py-1"
         />
+
         <DrawerFooter>
-          <Button onClick={closeDrawer} variant="outlined" className="mr-2">
-            Cancel
+          <DrawerClose asChild>
+            <Button
+              onClick={() => {
+                closeDrawer();
+              }}
+              variant="outlined"
+            >
+              Cancel
+            </Button>
+          </DrawerClose>
+
+          <Button
+            type="submit"
+            onClick={() => {
+              console.log('Submitting...');
+              closeDrawer(); // Tutup saat submit
+            }}
+          >
+            Submit
           </Button>
-          <Button type="submit">Submit</Button>
         </DrawerFooter>
-      </DrawerBody>
+      </DrawerContent>
     </Drawer>
   );
 };

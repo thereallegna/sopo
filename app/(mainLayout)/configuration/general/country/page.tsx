@@ -8,15 +8,27 @@ import { getCountry } from '@services/fetcher/configuration/general';
 import Content from '@components/module/Content';
 import HeaderContent from '@components/module/Content/HeaderContent';
 import BodyContent from '@components/module/Content/BodyContent';
+import { useDrawerStore } from '@stores/useDrawerStore';
 
 const Country = () => {
+  const { openDrawer } = useDrawerStore();
+
+  const handleOpenDrawer = () => {
+    openDrawer('CREATE_COUNTRY');
+  };
+
   const { data, pagination, onPaginationChange } = useTable<ICountry[]>({
     queryKey: GET_COUNTRY,
     queryFn: getCountry,
   });
   return (
     <Content>
-      <HeaderContent title="Country" onAdd={() => {}} />
+      <HeaderContent
+        title="Country"
+        onAdd={() => {
+          handleOpenDrawer();
+        }}
+      />
       <BodyContent>
         <TableContent
           data={data?.results}

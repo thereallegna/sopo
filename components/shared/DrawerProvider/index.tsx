@@ -1,22 +1,18 @@
 'use client';
 
+import { useCloseDrawerOnPathChange } from '@hooks/useDrawer';
 import dynamic from 'next/dynamic';
 import React from 'react';
-import { useDrawerStore } from '@stores/useDrawerStore';
 
 const CreateCountryModal = dynamic(
-  // eslint-disable-next-line import/extensions
   () => import('@components/shared/Drawer/Create/CreateCountry'),
-  {
-    ssr: false,
-  }
+  { ssr: false }
 );
 
 const DrawerProvider = () => {
-  const { drawerType, isOpen } = useDrawerStore();
+  useCloseDrawerOnPathChange();
 
-  if (!isOpen) return null;
-
-  return <>{drawerType === 'CREATE_COUNTRY' && <CreateCountryModal />}</>;
+  return <CreateCountryModal />;
 };
+
 export default DrawerProvider;
