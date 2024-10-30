@@ -1,37 +1,35 @@
 import { GET_COUNTRY } from '@constants/queryKey';
 import { PaginationState } from '@tanstack/react-table';
 import { create } from 'zustand';
-
-type PaginationStoreState = {
-  pagination: PaginationState;
-};
+import { TableOptionState } from '../types/client/table';
 
 type TableState = {
-  paginations: Record<string, PaginationStoreState>;
+  options: Record<string, TableOptionState>;
   setPagination: (
     key: string,
     pagination: PaginationState | ((prev: PaginationState) => PaginationState)
   ) => void;
+  setSearch: (key: string, keyword: string) => void;
 };
 
 const initialTableState = {
-  paginations: {
+  options: {
     [GET_COUNTRY]: {
       pagination: {
-        pageIndex: 1,
+        pageIndex: 0,
         pageSize: 10,
       },
     },
-  } as Record<string, PaginationStoreState>,
+  },
 };
 
 export const useTableStore = create<TableState>((set) => ({
   ...initialTableState,
   setPagination: (key, pagination) => {
     set((state) => {
-      const currentPaginations = state.paginations[key] || {
+      const currentPaginations = state.options[key] || {
         pagination: {
-          pageIndex: 1,
+          pageIndex: 0,
           pageSize: 10,
         },
       };
@@ -42,11 +40,25 @@ export const useTableStore = create<TableState>((set) => ({
           : pagination;
 
       return {
-        paginations: {
-          ...state.paginations,
+        options: {
+          ...state.options,
           [key]: {
             ...currentPaginations,
             pagination: newPagination,
+          },
+        },
+      };
+    });
+  },
+  setSearch: (key, keyword) => {
+    set((state) => {
+      const currentOption = state.options[key];
+      return {
+        options: {
+          ...state.options,
+          [key]: {
+            ...currentOption,
+            search: keyword,
           },
         },
       };
