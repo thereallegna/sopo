@@ -3,11 +3,12 @@ import { cva, type VariantProps } from 'class-variance-authority';
 
 import { cn } from '@libs/classNames';
 
-const cardVariants = cva('rounded-xl bg-white shadow-lg max-w-[600px]', {
+const cardVariants = cva('rounded-xl bg-white shadow-lg w-full', {
   variants: {
     size: {
-      login: 'p-[32px] w-[340px] ',
+      login: 'max-w-[600px] p-[32px] w-[340px] ',
       master_data: 'p-[20px] w-[960px]',
+      drawer: 'w-full p-5',
     },
     variant: {
       default: 'bg-white',

@@ -9,11 +9,8 @@ import React from 'react';
 import { useSidebarStore } from '@stores/useSidebarStore';
 
 const SidebarHeader: React.FC = () => {
-  const toggleSidebar = useSidebarStore((state) => state.toggleSidebar);
   const { isOpen } = useSidebar();
-  const setSearchQuery = useSidebarStore((state) => state.setSearchQuery);
-
-  console.log('Sidebar isOpen:', isOpen); // Check state value
+  const { setSearchQuery, toggleSidebar } = useSidebarStore();
 
   return (
     <div className="sticky p-3 top-0 flex flex-row gap-[10px]">

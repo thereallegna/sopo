@@ -21,6 +21,7 @@ const iconVariants = cva('cursor-pointer', {
       danger: 'text-Red-500',
       dark: 'text-Neutral-black',
       White: 'text-Neutral-White',
+      drawer: 'text-Neutral-50',
     },
   },
   defaultVariants: {

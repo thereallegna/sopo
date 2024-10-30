@@ -17,7 +17,7 @@ const Country = () => {
     openDrawer('CREATE_COUNTRY');
   };
 
-  const { data, pagination, onPaginationChange } = useTable<ICountry[]>({
+  const tableProps = useTable<ICountry[]>({
     queryKey: GET_COUNTRY,
     queryFn: getCountry,
     columns: countryColumns,

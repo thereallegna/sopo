@@ -10,7 +10,7 @@ import { IconProps } from '@components/ui/Icon';
 const inputFieldVariant = cva('flex', {
   variants: {
     right: {
-      true: 'flex-row justify-between items-center gap-[8px] self-stretch',
+      true: 'flex-row  items-center gap-[8px] self-stretch',
       false: 'flex-col gap-[4px]',
     },
   },
