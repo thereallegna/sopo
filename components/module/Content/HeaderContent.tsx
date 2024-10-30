@@ -1,14 +1,6 @@
 import { Button, ButtonProps } from '@components/ui/Button';
 import { IconPlus } from '@tabler/icons-react';
 import React from 'react';
-import { useDrawerStore } from '@stores/useDrawerStore';
-
-const HeaderContent = () => {
-  const openDrawer = useDrawerStore((state) => state.openDrawer);
-
-  const handleOpenDrawer = () => {
-    openDrawer('CREATE_COUNTRY');
-  };
 
 export type HeaderContentProps = {
   title: string;

@@ -1,4 +1,4 @@
-interface ApiResponse<T> {
+interface BasicResponse<T> {
   status?: string;
   message?: string;
   data: T;
@@ -16,3 +16,5 @@ interface ApiPaginationResponse {
 interface ApiResultResponse<T> extends ApiPaginationResponse {
   results: T;
 }
+
+type ApiResponse<T> = BasicResponse<ApiResultResponse<T>>;

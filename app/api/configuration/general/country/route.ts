@@ -11,7 +11,9 @@ export async function GET(req: NextRequest) {
 
     const url = `${PATH_COUNTRY_BE}?page_size=${
       params.get('page_size') || ''
-    }&page=${params.get('current_page') || ''}`;
+    }&page=${params.get('current_page') || ''}&search=${
+      params.get('search') || ''
+    }`;
 
     const response = await axios.get(url.toString(), {
       headers: {

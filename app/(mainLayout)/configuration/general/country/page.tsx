@@ -10,22 +10,16 @@ import HeaderContent from '@components/module/Content/HeaderContent';
 import BodyContent from '@components/module/Content/BodyContent';
 
 const Country = () => {
-  const { data, pagination, onPaginationChange } = useTable<ICountry[]>({
+  const tableProps = useTable<ICountry>({
     queryKey: GET_COUNTRY,
     queryFn: getCountry,
+    columns: countryColumns,
   });
   return (
     <Content>
       <HeaderContent title="Country" onAdd={() => {}} />
       <BodyContent>
-        <TableContent
-          data={data?.results}
-          columns={countryColumns}
-          total_pages={data?.total_pages}
-          total_records={data?.total_records}
-          pagination={pagination}
-          onPaginationChange={onPaginationChange}
-        />
+        <TableContent {...tableProps} />
       </BodyContent>
     </Content>
   );
