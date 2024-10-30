@@ -9,75 +9,76 @@ import Table, {
   TableCell,
 } from '@components/ui/Table';
 import {
-  AccessorKeyColumnDef,
-  ColumnDef,
   flexRender,
   getCoreRowModel,
   getPaginationRowModel,
-  OnChangeFn,
   useReactTable,
 } from '@tanstack/react-table';
 import TableAction from '@components/ui/Table/TableAction';
 import TablePagination from '@components/ui/Table/TablePagination';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { TableContentProps } from '../../../types/client/table';
 
-export type TableContentProps = {
-  data?: unknown[];
-  columns: AccessorKeyColumnDef<any, any>[] | ColumnDef<any, any>[];
-  pagination: PaginationState;
-  total_records?: number;
-  total_pages?: number;
-  onPaginationChange: OnChangeFn<PaginationState>;
-};
+// export type TableContentProps = {
+//   data?: unknown[];
+//   columns: AccessorKeyColumnDef<any, any>[] | ColumnDef<any, any>[];
+//   pagination: PaginationState;
+//   total_records?: number;
+//   total_pages?: number;
+//   onPaginationChange: OnChangeFn<PaginationState>;
+//   onSearchChange: (keyword: string) => void
+// };
 
 export interface PaginationState {
   pageIndex: number;
   pageSize: number;
 }
 
-const TableContent = ({
+const TableContent = <T,>({
   data,
   columns,
-  pagination,
-  total_records,
-  total_pages,
-  onPaginationChange,
-}: TableContentProps) => {
+  option,
+  onPagination,
+  onSearch,
+}: TableContentProps<T>) => {
   const router = useRouter();
   const pathname = usePathname();
   const params = useSearchParams();
   const defaultData = React.useMemo(() => [], []);
 
   const table = useReactTable({
-    data: data ?? defaultData,
+    data: data?.results ?? defaultData,
     columns,
     manualPagination: true,
+    pageCount: data?.total_pages,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     onPaginationChange: (newPagination) => {
       const paginationState =
         typeof newPagination === 'function'
-          ? newPagination(pagination)
+          ? newPagination(option.pagination)
           : newPagination;
 
-      onPaginationChange(paginationState);
-
-      console.log(paginationState);
+      onPagination(paginationState);
 
       const { pageIndex, pageSize } = paginationState;
       const url = new URLSearchParams(params);
-      url.set('current_page', pageIndex.toString());
+      url.set('page_index', (pageIndex + 1).toString());
       url.set('page_size', pageSize.toString());
       router.replace(`${pathname}?${url.toString()}`);
     },
     state: {
-      pagination,
+      pagination: option.pagination,
     },
   });
 
   return (
     <div className="flex flex-col gap-[10px]">
-      <TableAction data={data ?? defaultData} />
+      <TableAction
+        data={data?.results ?? defaultData}
+        // columns={columns}
+        onSearch={onSearch}
+      />
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -113,12 +114,18 @@ const TableContent = ({
         </TableBody>
       </Table>
       <TablePagination
-        page_size={pagination.pageSize}
-        total_records={total_records}
-        total_pages={total_pages}
+        page_size={option.pagination.pageSize}
+        total_records={data?.total_records}
+        total_pages={data?.total_pages}
         onNext={table.nextPage}
+        nextButtonProps={{
+          disabled: !table.getCanNextPage(),
+        }}
         onPrev={table.previousPage}
-        page_index={pagination.pageIndex}
+        prevButtonProps={{
+          disabled: !table.getCanPreviousPage(),
+        }}
+        page_index={table.getState().pagination.pageIndex + 1}
         onChangePageSize={(size: number) => table.setPageSize(size)}
       />
     </div>

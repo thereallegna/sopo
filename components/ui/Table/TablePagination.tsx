@@ -5,13 +5,15 @@ import {
   IconChevronCompactLeft,
   IconChevronCompactRight,
 } from '@tabler/icons-react';
-import { Button } from '../Button';
+import { Button, ButtonProps } from '../Button';
 
 export interface TablePaginationProps {
   page_index: number;
   page_size: number;
   total_records?: number;
   total_pages?: number;
+  nextButtonProps?: ButtonProps;
+  prevButtonProps?: ButtonProps;
   onNext: () => void;
   onPrev: () => void;
   onChangePageSize: (size: number) => void;
@@ -25,6 +27,8 @@ const TablePagination = ({
   onChangePageSize,
   onNext,
   onPrev,
+  nextButtonProps,
+  prevButtonProps,
 }: TablePaginationProps) => (
   <div className="flex justify-between items-center">
     <div>
@@ -48,6 +52,7 @@ const TablePagination = ({
           onClick={onPrev}
           icon={{ icon: IconChevronCompactLeft }}
           className="rounded-none rounded-s-rounded-1 px-[7px] py-[6px]"
+          {...prevButtonProps}
         />
         <Button
           size="icon"
@@ -55,10 +60,11 @@ const TablePagination = ({
           onClick={onNext}
           icon={{ icon: IconChevronCompactRight }}
           className="rounded-none rounded-e-rounded-1 px-[7px] py-[6px]"
+          {...nextButtonProps}
         />
       </div>
       <p className="text-base text-Neutral-500 font-normal">
-        Page {page_index + 1} of {total_pages}{' '}
+        Page {page_index} of {total_pages}{' '}
       </p>
     </div>
   </div>

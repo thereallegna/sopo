@@ -1,10 +1,19 @@
 import React, { useEffect } from 'react';
 import ToDetail from '@components/shared/TableContent/ToDetail';
-import { createColumnHelper, PaginationState } from '@tanstack/react-table';
+import {
+  AccessorKeyColumnDef,
+  ColumnDef,
+  createColumnHelper,
+} from '@tanstack/react-table';
 import { useTableStore } from '@stores/useTableStore';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 import { useSearchParams } from 'next/navigation';
+import {
+  TableOptionState,
+  TableContentProps,
+  PaginationPartial,
+} from '../types/client/table';
 
 const columnHelper = createColumnHelper<ICountry>();
 
@@ -40,48 +49,64 @@ export const countryColumns = [
 type UseTableProps<T> = {
   queryKey: string;
   queryFn: (
-    pagination: PaginationState
-  ) => Promise<AxiosResponse<ApiResponse<ApiResultResponse<T>>>>;
+    options: TableOptionState
+  ) => Promise<AxiosResponse<ApiResponse<T[]>>>;
+  columns: AccessorKeyColumnDef<any, any>[] | ColumnDef<any, any>[];
 };
 
-const useTable = <T,>({ queryKey, queryFn }: UseTableProps<T>) => {
+const useTable = <T,>({
+  queryKey,
+  columns,
+  queryFn,
+}: UseTableProps<T>): TableContentProps<T> => {
   const params = useSearchParams();
   const setPagination = useTableStore((state) => state.setPagination);
-  const { pagination } = useTableStore((state) => state.paginations[queryKey]);
+  const setSearch = useTableStore((state) => state.setSearch);
 
-  const onPaginationChange = (
-    paginationFn: PaginationState | ((prev: PaginationState) => PaginationState)
-  ) => {
+  const option = useTableStore((state) => state.options[queryKey]);
+
+  const onPagination = (paginationFn: PaginationPartial) => {
     setPagination(queryKey, paginationFn);
   };
 
+  const onSearch = (keyword: string) => {
+    setSearch(queryKey, keyword);
+  };
+
   const initPagination = () => {
-    const pgState: PaginationState = { ...pagination }; // Clone pagination state
+    const pgState = { ...option.pagination };
     const pageSize = params.get('page_size');
     const pageIndex = params.get('page_index');
     if (pageSize) {
       pgState.pageSize = parseFloat(pageSize);
     }
     if (pageIndex) {
-      pgState.pageIndex = parseFloat(pageIndex);
+      pgState.pageIndex = parseFloat(pageIndex) - 1;
     }
-    onPaginationChange(pgState);
+    onPagination(pgState);
   };
 
   useEffect(() => {
     initPagination();
   }, []);
 
-  const { data: queryData } = useQuery<
-    AxiosResponse<ApiResponse<ApiResultResponse<T>>>
-  >({
-    queryKey: [queryKey, pagination],
-    queryFn: () => queryFn(pagination),
+  const { data: queryData } = useQuery<AxiosResponse<ApiResponse<T[]>>>({
+    queryKey: [queryKey, option],
+    queryFn: () => queryFn(option),
     placeholderData: keepPreviousData,
     staleTime: 5 * 1000,
   });
 
-  return { data: queryData?.data.data, pagination, onPaginationChange };
+  const response = queryData?.data;
+  const responseData = response?.data;
+
+  return {
+    data: responseData,
+    columns,
+    option,
+    onPagination,
+    onSearch,
+  };
 };
 
 export default useTable;
