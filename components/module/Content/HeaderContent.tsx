@@ -1,3 +1,5 @@
+'use client';
+
 import { Button, ButtonProps } from '@components/ui/Button';
 import { IconPlus } from '@tabler/icons-react';
 import React from 'react';

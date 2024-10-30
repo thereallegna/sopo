@@ -6,7 +6,7 @@ type DrawerState = {
   drawerType: DrawerType;
   isOpen: boolean;
   initialValues: Record<string, any> | null;
-  openDrawer: (type: DrawerType, values?: Record<string, any>) => void;
+  openDrawer: (type?: DrawerType, values?: Record<string, any>) => void;
   closeDrawer: () => void;
 };
 
@@ -19,9 +19,12 @@ const initialDrawerState = {
 export const useDrawerStore = create<DrawerState>((set) => ({
   ...initialDrawerState,
 
-  openDrawer: (type, values = undefined) =>
-    set({ drawerType: type, isOpen: true, initialValues: values }),
+  openDrawer: (type, values) =>
+    set({
+      drawerType: type,
+      isOpen: true,
+      initialValues: values || null,
+    }),
 
-  closeDrawer: () =>
-    set({ drawerType: null, isOpen: false, initialValues: null }),
+  closeDrawer: () => set({ ...initialDrawerState }),
 }));
