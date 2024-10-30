@@ -94,7 +94,6 @@ const useTable = <T,>({
     queryKey: [queryKey, option],
     queryFn: () => queryFn(option),
     placeholderData: keepPreviousData,
-    staleTime: 5 * 1000,
   });
 
   const response = queryData?.data;
