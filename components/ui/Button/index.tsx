@@ -7,17 +7,19 @@ import { cn } from '@libs/classNames';
 import IconComponent, { IconProps } from '@components/ui/Icon';
 
 const buttonVariants = cva(
-  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-sm shadow-Shadow/s px-3 py-2 ring-offset-white focus:ring-offset-0 focus:ring-Blue-200 focus:ring-[3px] w-full ',
+  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-sm shadow-Shadow/s px-3 py-2 ring-offset-white focus:ring-offset-0 focus:ring-Blue-200 focus:ring-[3px] w-full capitalize',
   {
     variants: {
       variant: {
-        primary: 'bg-Blue-500 text-white hover:bg-Blue-700',
+        primary: 'bg-Blue-500 text-Neutral-50 hover:bg-Blue-700',
         secondary: 'border border-Neutral-200 bg-White text-Neutral-600',
         outlined:
           'border border-Blue-700 text-Blue-600 bg-white hover:text-Blue-700',
         danger: 'bg-Red-500 text-white hover:bg-Red-700',
         sidebar:
           'rounded-sm bg-transparent shadow-none text-Neutral-600 hover:bg-Neutral-100 focus:ring-transparent ',
+        backDrawer:
+          'bg-White text-Neutral-600 hover:bg-Neutral-100 shadow-none px-2 py-1',
       },
       size: {
         small: 'font-semibold text-base',
@@ -70,7 +72,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         {...props}
       >
-        <div className="flex items-center">
+        <div className="flex items-center gap-1">
           {Icon && <IconComponent {...Icon} className={cn(iconClassName)} />}{' '}
           {children}
         </div>

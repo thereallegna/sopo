@@ -2,12 +2,15 @@
 
 import * as React from 'react';
 import { Drawer as DrawerPrimitive } from 'vaul';
-
+import { IconProps } from '@components/ui/Icon';
 import { cn } from '@libs/classNames';
+import { IconArrowLeft } from '@node_modules/@tabler/icons-react/dist/esm/tabler-icons-react';
+import { Button } from '@components/ui/Button';
+import { useDrawerStore } from '@stores/useDrawerStore';
 
 const Drawer = ({
   shouldScaleBackground = false,
-  // dismissible = false,
+  dismissible = false,
   // noBodyStyles = true,
   // handleOnly = true,
   modal = false,
@@ -15,7 +18,7 @@ const Drawer = ({
 }: React.ComponentProps<typeof DrawerPrimitive.Root>) => (
   <DrawerPrimitive.Root
     modal={modal}
-    // dismissible={dismissible}
+    dismissible={dismissible}
     // handleOnly={handleOnly}
     // noBodyStyles={noBodyStyles}
     shouldScaleBackground={shouldScaleBackground}
@@ -36,7 +39,7 @@ const DrawerOverlay = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <DrawerPrimitive.Overlay
     ref={ref}
-    className={cn('absolute inset-0 z-50 bg-black/80 ', className)}
+    className={cn('absolute  inset-0 z-50 bg-black/80 ', className)}
     {...props}
   />
 ));
@@ -51,39 +54,49 @@ const DrawerContent = React.forwardRef<
     <DrawerPrimitive.Content
       ref={ref}
       className={cn(
-        'absolute h-full inset-x-0 bottom-0 z-50 mt-24 flex  flex-col rounded-t-[10px] border bg-red-500',
+        'absolute h-full inset-x-0 bottom-0 z-50  flex  flex-col rounded-t-[10px] border bg-white',
         className
       )}
       {...props}
     >
-      <div className="mx-auto mt-4 h-2 w-[100px] rounded-full bg-muted" />
+      <div className="mx-auto  w-[100px] rounded-full bg-muted" />
       {children}
     </DrawerPrimitive.Content>
   </>
 ));
 DrawerContent.displayName = 'DrawerContent';
 
-const DrawerHeader = ({
-  className,
-  ...props
-}: React.HTMLAttributes<HTMLDivElement>) => (
-  <div
-    className={cn('grid gap-1.5 p-4 text-center sm:text-left', className)}
-    {...props}
-  />
-);
-DrawerHeader.displayName = 'DrawerHeader';
+const DrawerBack = React.forwardRef<React.ElementRef<typeof Button>, IconProps>(
+  ({ className }) => {
+    const { closeDrawer } = useDrawerStore();
 
-const DrawerFooter = ({
+    return (
+      <Button
+        className={cn('rounded-md w-1/6', className)}
+        onClick={closeDrawer}
+        size="icon"
+        variant="backDrawer"
+        icon={{
+          size: 'large',
+          icon: IconArrowLeft,
+          color: 'dark',
+        }}
+      />
+    );
+  }
+);
+DrawerBack.displayName = 'DrawerBack';
+
+const DrawerBody = ({
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
-    className={cn('mt-auto flex flex-col gap-2 p-4', className)}
+    className={cn('w-full flex flex-col justify-between p-5 gap-5', className)}
     {...props}
   />
 );
-DrawerFooter.displayName = 'DrawerFooter';
+DrawerBody.displayName = 'DrawerBody';
 
 const DrawerTitle = React.forwardRef<
   React.ElementRef<typeof DrawerPrimitive.Title>,
@@ -92,13 +105,61 @@ const DrawerTitle = React.forwardRef<
   <DrawerPrimitive.Title
     ref={ref}
     className={cn(
-      'text-lg font-semibold leading-none tracking-tight',
+      'text-[20px] text-Neutral-Black font-bold leading-none tracking-tight',
       className
     )}
     {...props}
   />
 ));
 DrawerTitle.displayName = DrawerPrimitive.Title.displayName;
+
+const DrawerEndHeader = ({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) => (
+  <div
+    className={cn(
+      'flex flex-row items-center justify-between  gap-2',
+      className
+    )}
+    {...props}
+  />
+);
+DrawerEndHeader.displayName = 'DrawerEndHeader';
+
+const DrawerHeader = ({
+  className,
+  drawerTitle,
+  children,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement> & { drawerTitle: string }) => (
+  <div
+    className={cn(
+      'flex items-center justify-between p-4 border-[#E4E7EC] border-b',
+      className
+    )}
+    {...props}
+  >
+    <div className="flex items-center gap-[10px]">
+      <DrawerBack icon={IconArrowLeft} />
+      <DrawerTitle>{drawerTitle}</DrawerTitle>
+    </div>
+
+    {children}
+  </div>
+);
+DrawerHeader.displayName = 'DrawerHeader';
+
+const DrawerFooter = ({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) => (
+  <div
+    className={cn('mt-auto flex flex-col gap-2 p-5', className)}
+    {...props}
+  />
+);
+DrawerFooter.displayName = 'DrawerFooter';
 
 const DrawerDescription = React.forwardRef<
   React.ElementRef<typeof DrawerPrimitive.Description>,
@@ -123,4 +184,6 @@ export {
   DrawerFooter,
   DrawerTitle,
   DrawerDescription,
+  DrawerEndHeader,
+  DrawerBody,
 };

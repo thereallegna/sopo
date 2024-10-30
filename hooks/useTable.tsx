@@ -100,7 +100,6 @@ const useTable = <T,>({
       return queryFn({ ...option, pagination: nextPagination });
     },
     placeholderData: keepPreviousData,
-    staleTime: 5 * 1000,
   });
 
   const response = queryData?.data;

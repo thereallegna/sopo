@@ -4,14 +4,16 @@ import React from 'react';
 import { Button } from '@components/ui/Button';
 import {
   Drawer,
-  DrawerClose,
+  DrawerBody,
   DrawerContent,
-  DrawerFooter,
+  DrawerEndHeader,
   DrawerHeader,
-  DrawerTitle,
 } from '@components/ui/Drawer';
+import { Card, CardContent } from '@components/ui/Card';
+import InputField from '@components/shared/InputField';
 
 import { useDrawerStore } from '@stores/useDrawerStore';
+import { IconDeviceFloppy } from '@node_modules/@tabler/icons-react/dist/esm/tabler-icons-react';
 
 const CreateCountry = () => {
   const { isOpen, closeDrawer } = useDrawerStore();
@@ -19,41 +21,53 @@ const CreateCountry = () => {
   return (
     <Drawer onClose={closeDrawer} open={isOpen}>
       <DrawerContent>
-        <DrawerHeader>
-          <DrawerTitle>Create Country</DrawerTitle>
-        </DrawerHeader>
-
-        <label htmlFor="country" className="block mb-2">
-          Country Name
-        </label>
-        <input
-          id="country"
-          type="text"
-          className="w-full border rounded px-2 py-1"
-        />
-
-        <DrawerFooter>
-          <DrawerClose asChild>
+        <DrawerHeader drawerTitle="Create Country">
+          <DrawerEndHeader>
+            {/* button save */}
             <Button
-              onClick={() => {
-                closeDrawer();
+              icon={{
+                size: 'large',
+                icon: IconDeviceFloppy,
+                color: 'drawer',
               }}
-              variant="outlined"
+              onClick={() => {
+                console.log('Save');
+              }}
             >
-              Cancel
+              save
             </Button>
-          </DrawerClose>
-
-          <Button
-            type="submit"
-            onClick={() => {
-              console.log('Submitting...');
-              closeDrawer(); // Tutup saat submit
-            }}
-          >
-            Submit
-          </Button>
-        </DrawerFooter>
+          </DrawerEndHeader>
+        </DrawerHeader>
+        <DrawerBody>
+          <Card size="drawer">
+            <CardContent className="flex-wrap flex flex-row gap-6 items-center">
+              <InputField
+                label="Country Code"
+                placeholder="Country Code"
+                right
+                type="text"
+              />
+              <InputField
+                label="Country Name"
+                placeholder="Country Name"
+                right
+                type="text"
+              />
+              <InputField
+                label="Country Name"
+                placeholder="Country Name"
+                right
+                type="text"
+              />
+              <InputField
+                label="Country Name"
+                placeholder="Country Name"
+                right
+                type="text"
+              />
+            </CardContent>
+          </Card>
+        </DrawerBody>
       </DrawerContent>
     </Drawer>
   );

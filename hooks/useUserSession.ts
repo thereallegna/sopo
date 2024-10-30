@@ -7,7 +7,6 @@ export const useUserSession = () => {
   const data = useQuery({
     queryKey: [SESSION_USER],
     queryFn: fetchUserSession,
-    staleTime: 5 * 1000,
   });
 
   return data;
