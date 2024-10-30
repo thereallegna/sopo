@@ -20,13 +20,12 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { TableContentProps } from '../../../types/client/table';
 
 // export type TableContentProps = {
-//   data?: unknown[];
+//   data: unknown[];
 //   columns: AccessorKeyColumnDef<any, any>[] | ColumnDef<any, any>[];
 //   pagination: PaginationState;
 //   total_records?: number;
 //   total_pages?: number;
 //   onPaginationChange: OnChangeFn<PaginationState>;
-//   onSearchChange: (keyword: string) => void
 // };
 
 export interface PaginationState {
@@ -76,7 +75,7 @@ const TableContent = <T,>({
     <div className="flex flex-col gap-[10px]">
       <TableAction
         data={data?.results ?? defaultData}
-        // columns={columns}
+        columns={columns}
         onSearch={onSearch}
       />
       <Table>
