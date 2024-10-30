@@ -92,7 +92,13 @@ const useTable = <T,>({
 
   const { data: queryData } = useQuery<AxiosResponse<ApiResponse<T[]>>>({
     queryKey: [queryKey, option],
-    queryFn: () => queryFn(option),
+    queryFn: () => {
+      const nextPagination = {
+        ...option.pagination,
+        pageIndex: option.pagination.pageIndex + 1,
+      };
+      return queryFn({ ...option, pagination: nextPagination });
+    },
     placeholderData: keepPreviousData,
     staleTime: 5 * 1000,
   });
