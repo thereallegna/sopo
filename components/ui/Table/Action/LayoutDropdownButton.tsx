@@ -10,7 +10,6 @@ import IconComponent from '@components/ui/Icon';
 
 const LayoutDropdownButton: React.FC = () => {
   const labels = ['Normal', 'Compact', 'Narrow'];
-  labels.forEach((label) => console.log(label));
 
   return (
     <DropdownMenu>

@@ -1,0 +1,27 @@
+'use client';
+
+import React from 'react';
+import { Drawer, DrawerContent, DrawerBody } from '@components/ui/Drawer';
+
+import { useDrawerStore } from '@stores/useDrawerStore';
+import FilterDrawerHeader from '@components/ui/Drawer/FilterDrawerHeader';
+import InputField from '@components/shared/InputField';
+
+const FilterCountry = () => {
+  const { isOpenFilter, closeDrawer } = useDrawerStore();
+
+  return (
+    <Drawer onClose={closeDrawer} open={isOpenFilter} direction="right">
+      <DrawerContent fixed className="flex h-screen p-3 w-[240px]">
+        <div className="flex flex-col gap-[10px]">
+          <FilterDrawerHeader title="Filter Country" />
+          <DrawerBody className="p-0">
+            <InputField label="Country Code" />
+          </DrawerBody>
+        </div>
+      </DrawerContent>
+    </Drawer>
+  );
+};
+
+export default FilterCountry;
