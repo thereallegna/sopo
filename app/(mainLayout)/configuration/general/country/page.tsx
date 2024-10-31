@@ -13,29 +13,19 @@ import Image from 'next/image';
 import FilterButton from '@components/ui/Table/Action/FilterButton';
 
 const Country = () => {
-  const { openFilterDrawer, openDrawer } = useDrawerStore();
-
-  const handleOpenDrawer = () => {
-    openDrawer('CREATE_COUNTRY');
-  };
+  const { openFilterDrawer, openTableDrawer } = useDrawerStore();
 
   const handleOpenFilter = () => {
     openFilterDrawer('FILTER_COUNTRY');
   };
 
-  // const tableProps = useTable<ICountry[]>({
-  //   queryKey: GET_COUNTRY,
-  //   queryFn: getCountry,
-  //   columns: countryColumns,
-  // });
+  const handleOpenTable = () => {
+    openTableDrawer('GET_COUNTRY');
+  };
+
   return (
     <Content>
-      <HeaderContent
-        title="Country"
-        onAdd={() => {
-          handleOpenDrawer();
-        }}
-      />
+      <HeaderContent title="Country" />
       <BodyContent>
         <div className="flex flex-col gap-4 py-2 items-center">
           <Image
@@ -52,7 +42,7 @@ const Country = () => {
           </div>
           <button
             type="button"
-            onClick={() => console.log('skdskd')}
+            onClick={handleOpenTable}
             className="underline text-base text-Blue-500"
           >
             Show latest data

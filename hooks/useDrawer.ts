@@ -4,7 +4,8 @@ import { useDrawerStore } from '@stores/useDrawerStore';
 import useFormStore from '@stores/useFormStore';
 
 export const useCloseDrawerOnPathChange = () => {
-  const { isOpen } = useDrawerStore();
+  const { isOpenFilter, closeDrawer, isOpen } = useDrawerStore();
+
   const pathname = usePathname();
   const { changeStatus, setIsAlertOpen } = useFormStore();
 
@@ -19,7 +20,7 @@ export const useCloseDrawerOnPathChange = () => {
   useEffect(() => {
     let timer: NodeJS.Timeout;
 
-    if (isOpen) {
+    if (isOpen || isOpenFilter) {
       timer = setTimeout(() => {
         document.body.style.pointerEvents = 'auto';
       }, 500);
@@ -31,5 +32,5 @@ export const useCloseDrawerOnPathChange = () => {
       clearTimeout(timer);
       document.body.style.pointerEvents = '';
     };
-  }, [isOpen]);
+  }, [isOpen, isOpenFilter]);
 };
