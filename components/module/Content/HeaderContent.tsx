@@ -17,18 +17,20 @@ const HeaderContent = ({
 }: HeaderContentProps) => (
   <div className="p-5 border-b border-Neutral-200 flex justify-between items-center">
     <p className="text-[20px] text-Neutral-Black font-bold">{title}</p>
-    <div>
-      <Button
-        icon={{
-          icon: IconPlus,
-          color: 'White',
-        }}
-        onClick={onAdd}
-        {...onAddButtonProps}
-      >
-        Add
-      </Button>
-    </div>
+    {onAdd && (
+      <div>
+        <Button
+          icon={{
+            icon: IconPlus,
+            color: 'White',
+          }}
+          onClick={onAdd}
+          {...onAddButtonProps}
+        >
+          Add
+        </Button>
+      </div>
+    )}
   </div>
 );
 
