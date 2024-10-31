@@ -8,7 +8,7 @@ export async function POST(req: Request) {
     const body = (await req.json()) as LoginFormBody;
 
     const response = await axios.post(PATH_AUTH_LOGIN_BE, body);
-    const responseData = response.data as ApiResponse<UserAuthorization>;
+    const responseData = response.data as BasicResponse<UserAuthorization>;
 
     const session = await getServerSideSession();
     session.user = {

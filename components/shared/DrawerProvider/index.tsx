@@ -9,10 +9,19 @@ const CreateCountryModal = dynamic(
   { ssr: false }
 );
 
+const FilterCountryMOdal = dynamic(
+  () => import('@components/shared/Drawer/Filter/CountryFilter')
+);
+
 const DrawerProvider = () => {
   useCloseDrawerOnPathChange();
 
-  return <CreateCountryModal />;
+  return (
+    <>
+      <FilterCountryMOdal />
+      <CreateCountryModal />
+    </>
+  );
 };
 
 export default DrawerProvider;
