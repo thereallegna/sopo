@@ -17,22 +17,20 @@ const ExportButton: React.FC<ExportButtonProps> = ({ data, columns }) => {
     }
 
     const headers = [...columns.map((col) => col.header || col.accessorKey)];
-    const exportData = data.map((item, index) => {
-      const rowData: any = { '#': index };
-      columns.forEach((col) => {
-        rowData[col.accessorKey] =
-          item[col.accessorKey] !== undefined ? item[col.accessorKey] : '';
-      });
-      return rowData;
-    });
+
+    const exportData = data.map((item) => [
+      ...columns.map((col) => item[col.accessorKey]),
+    ]);
 
     const ws = XLSX.utils.json_to_sheet(exportData, { skipHeader: true });
+
     headers.forEach((header, index) => {
       ws[XLSX.utils.encode_cell({ r: 0, c: index })] = { v: header, t: 's' };
     });
 
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Exported Data');
+
     XLSX.writeFile(wb, 'Exported_Data.xlsx');
   };
 

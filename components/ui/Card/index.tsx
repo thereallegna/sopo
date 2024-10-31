@@ -6,7 +6,9 @@ import { cn } from '@libs/classNames';
 const cardVariants = cva('rounded-xl bg-white shadow-lg w-full', {
   variants: {
     size: {
-      login: 'max-w-[600px] p-[32px] w-[340px] ',
+      login: 'max-w-[600px] p-[20px] w-[340px] ',
+      password: 'p-[20px] w-[280px] h-auto',
+      modal: 'p-[10px] w-[400px] h-auto',
       master_data: 'p-[20px] w-[960px]',
       drawer: 'w-full p-5',
     },
@@ -38,7 +40,7 @@ const CardHeader = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn('flex flex-col space-y-1.5 p-6', className)}
+    className={cn('flex flex-col space-y-1.5', className)}
     {...props}
   />
 ));
@@ -50,10 +52,7 @@ const CardTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <h3
     ref={ref}
-    className={cn(
-      'text-2xl font-semibold leading-none tracking-tight',
-      className
-    )}
+    className={cn('leading-none tracking-tight', className)}
     {...props}
   >
     {props.children || 'Default Heading'}
@@ -67,7 +66,7 @@ const CardDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn('text-sm text-neutral-500 dark:text-neutral-400', className)}
+    className={cn('text-sm text-black dark:text-neutral-400', className)}
     {...props}
   />
 ));

@@ -20,6 +20,7 @@ import { useMutation } from '@tanstack/react-query';
 import { login } from '@services/fetcher/auth/login';
 import { useRouter } from 'next/navigation';
 import { authConstant } from '@constants/authConstant';
+import Link from 'next/link';
 
 const LoginPage = () => {
   const [isLoading, setIsLoading] = React.useState(false);
@@ -79,7 +80,7 @@ const LoginPage = () => {
 
   return (
     <div className="flex justify-center items-center min-h-screen">
-      <Card size="login" variant="default">
+      <Card size="login">
         <CardHeader className="items-center">
           <Image
             src="/images/logo-runsystem.png"
@@ -91,8 +92,10 @@ const LoginPage = () => {
             quality={100}
           />
         </CardHeader>
-        <CardTitle className="text-[20px]">Welcome to RUN System</CardTitle>
-        <CardDescription className="text-[12px]">
+        <CardTitle className="text-lg font-bold mt-5">
+          Welcome to RUN System
+        </CardTitle>
+        <CardDescription className="text-[11px] mt-1">
           Enter your credentials to access your account
         </CardDescription>
         <form onSubmit={handleSubmit(handleFormSubmit)}>
@@ -124,7 +127,18 @@ const LoginPage = () => {
                   : undefined
               }
             />
-            <Checkbox {...authConstant.checkbox} {...register('keepUserId')} />
+            <div className="flex justify-between">
+              <Checkbox
+                {...authConstant.checkbox}
+                {...register('keepUserId')}
+              />
+              <Link
+                href="/password"
+                className="text-blue-500 font-normal text-[11px] justify-end"
+              >
+                Forgot Password?
+              </Link>
+            </div>
           </CardContent>
           <CardFooter className="mt-5">
             <Button type="submit" className="w-full" disabled={isLoading}>
