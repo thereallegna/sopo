@@ -32,3 +32,28 @@ export async function GET(req: NextRequest) {
     );
   }
 }
+
+// create
+export async function POST(req: Request) {
+  try {
+    const session = await getServerSideSession();
+
+    const body = (await req.json()) as CountryFormBody;
+
+    const response = await axios.post(PATH_COUNTRY_BE, body, {
+      headers: {
+        Authorization: `Bearer ${session.user?.data?.authorization?.access_token}`,
+      },
+    });
+
+    return NextResponse.json(response.data);
+  } catch (error: any) {
+    if (error?.response?.data) {
+      return NextResponse.json(error?.response?.data, { status: 400 });
+    }
+    return NextResponse.json(
+      { message: 'Internal server error', error },
+      { status: 500 }
+    );
+  }
+}

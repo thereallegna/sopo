@@ -12,4 +12,14 @@ const getCountry = async (option: TableOptionState) => {
   return res;
 };
 
-export { getCountry };
+const createCountry = async (country: CountryFormBody) => {
+  try {
+    const res = await axios.post(PATH_COUNTRY, country);
+    return res.data;
+  } catch (error) {
+    console.error('Error creating country:', error);
+    throw error;
+  }
+};
+
+export { getCountry, createCountry };
