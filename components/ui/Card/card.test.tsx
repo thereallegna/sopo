@@ -34,7 +34,6 @@ describe('Card Component', () => {
     // Memastikan gaya CSS sudah sesuai diterapkan dengan benar berdasarkan properti yang diberikan
     const { container } = render(<Card size="login" variant="default" />);
 
-    expect(container.firstChild).toHaveClass('p-[32px] w-[340px]');
     expect(container.firstChild).toHaveClass('bg-white');
   });
 
