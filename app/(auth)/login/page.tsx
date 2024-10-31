@@ -45,7 +45,6 @@ const LoginPage = () => {
     }
   }, [setValue]);
 
-  // make mutation here
   const { mutate: mutationLogin } = useMutation({
     mutationFn: login,
     onMutate: () => {
