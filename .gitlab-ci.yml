@@ -1,7 +1,7 @@
 variables:
-#   AWS_DEFAULT_REGION: ap-southeast-1
-#   DOCKER_REGISTRY: 280459132327.dkr.ecr.ap-southeast-1.amazonaws.com
-#   DOCKER_TLS_CERTDIR: "/certs"
+  AWS_DEFAULT_REGION: ap-southeast-1
+  DOCKER_REGISTRY: 280459132327.dkr.ecr.ap-southeast-1.amazonaws.com
+  DOCKER_TLS_CERTDIR: "/certs"
 
 
 stages:
