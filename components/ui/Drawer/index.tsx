@@ -6,7 +6,6 @@ import { IconProps } from '@components/ui/Icon';
 import { cn } from '@libs/classNames';
 import { IconArrowLeft } from '@node_modules/@tabler/icons-react/dist/esm/tabler-icons-react';
 import { Button } from '@components/ui/Button';
-import { useDrawerStore } from '@stores/useDrawerStore';
 
 const Drawer = ({
   shouldScaleBackground = false,
@@ -67,23 +66,19 @@ const DrawerContent = React.forwardRef<
 DrawerContent.displayName = 'DrawerContent';
 
 const DrawerBack = React.forwardRef<React.ElementRef<typeof Button>, IconProps>(
-  ({ className }) => {
-    const { closeDrawer } = useDrawerStore();
-
-    return (
-      <Button
-        className={cn('rounded-md w-1/6', className)}
-        onClick={closeDrawer}
-        size="icon"
-        variant="backDrawer"
-        icon={{
-          size: 'large',
-          icon: IconArrowLeft,
-          color: 'dark',
-        }}
-      />
-    );
-  }
+  ({ className, onClick }) => (
+    <Button
+      className={cn('rounded-md w-1/6', className)}
+      onClick={onClick}
+      size="icon"
+      variant="backDrawer"
+      icon={{
+        size: 'large',
+        icon: IconArrowLeft,
+        color: 'dark',
+      }}
+    />
+  )
 );
 DrawerBack.displayName = 'DrawerBack';
 
@@ -131,8 +126,12 @@ const DrawerHeader = ({
   className,
   drawerTitle,
   children,
+  onClick,
   ...props
-}: React.HTMLAttributes<HTMLDivElement> & { drawerTitle: string }) => (
+}: React.HTMLAttributes<HTMLDivElement> & {
+  drawerTitle: string;
+  onClick?: () => void;
+}) => (
   <div
     className={cn(
       'flex items-center justify-between p-4 border-[#E4E7EC] border-b',
@@ -141,7 +140,7 @@ const DrawerHeader = ({
     {...props}
   >
     <div className="flex items-center gap-[10px]">
-      <DrawerBack icon={IconArrowLeft} />
+      <DrawerBack onClick={onClick} icon={IconArrowLeft} />
       <DrawerTitle>{drawerTitle}</DrawerTitle>
     </div>
 

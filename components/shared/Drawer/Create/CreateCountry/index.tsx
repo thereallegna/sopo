@@ -31,6 +31,7 @@ const CreateCountry = () => {
     reset,
     watch,
     setError,
+    clearErrors,
     formState: { errors },
   } = useForm<CountryFormBody>({
     mode: 'onChange',
@@ -102,11 +103,20 @@ const CreateCountry = () => {
     };
   }, [changeStatus]);
 
+  // reset ketika isOpen false dan inClose true
+  const handleCloseDrawer = () => {
+    clearErrors();
+    reset();
+  };
+
   return (
-    <Drawer onClose={closeDrawer} open={isOpen}>
+    <Drawer onClose={handleCloseDrawer} open={isOpen}>
       <DrawerContent>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <DrawerHeader drawerTitle="Create Country">
+          <DrawerHeader
+            onClick={handleCloseDrawer}
+            drawerTitle="Create Country"
+          >
             <DrawerEndHeader>
               <Button
                 icon={{
