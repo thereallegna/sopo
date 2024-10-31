@@ -3,11 +3,11 @@ import { usePathname } from 'next/navigation';
 import { useDrawerStore } from '@stores/useDrawerStore';
 
 export const useCloseDrawerOnPathChange = () => {
-  const { closeDrawer, isOpen } = useDrawerStore();
+  const { isOpenFilter, closeDrawer, isOpen } = useDrawerStore();
   const pathname = usePathname();
 
   useEffect(() => {
-    if (isOpen) {
+    if (isOpen || isOpenFilter) {
       closeDrawer();
     }
   }, [pathname, closeDrawer]);
@@ -15,7 +15,7 @@ export const useCloseDrawerOnPathChange = () => {
   useEffect(() => {
     let timer: NodeJS.Timeout;
 
-    if (isOpen) {
+    if (isOpen || isOpenFilter) {
       timer = setTimeout(() => {
         document.body.style.pointerEvents = 'auto';
       }, 500); // 2-second delay
@@ -27,5 +27,5 @@ export const useCloseDrawerOnPathChange = () => {
       clearTimeout(timer);
       document.body.style.pointerEvents = '';
     };
-  }, [isOpen]);
+  }, [isOpen, isOpenFilter]);
 };

@@ -9,8 +9,14 @@ const CreateCountryModal = dynamic(
   { ssr: false }
 );
 
-const FilterCountryMOdal = dynamic(
-  () => import('@components/shared/Drawer/Filter/CountryFilter')
+const FilterCountryModal = dynamic(
+  () => import('@components/shared/Drawer/Filter/CountryFilter'),
+  { ssr: false }
+);
+
+const TableCountryModal = dynamic(
+  () => import('@components/shared/Drawer/Table/TableCountryDrawer'),
+  { ssr: false }
 );
 
 const DrawerProvider = () => {
@@ -18,7 +24,8 @@ const DrawerProvider = () => {
 
   return (
     <>
-      <FilterCountryMOdal />
+      <TableCountryModal />
+      <FilterCountryModal />
       <CreateCountryModal />
     </>
   );
