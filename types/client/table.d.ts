@@ -1,7 +1,8 @@
-import { PaginationState } from '@tanstack/react-table';
+import { PaginationState, VisibilityState } from '@tanstack/react-table';
 
 type TableOptionState = {
   search?: string;
+  columnVisibility: VisibilityState;
   pagination: PaginationState;
 };
 
@@ -14,6 +15,7 @@ type TableContentProps<T> = {
   ) => void;
   onSearch: (keyword: string) => void;
   onFilter?: () => void;
+  onColumnVisibility: (column: VisibilityState) => void;
 };
 
 type PaginationPartial =

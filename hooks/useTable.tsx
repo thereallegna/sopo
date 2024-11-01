@@ -4,6 +4,7 @@ import {
   AccessorKeyColumnDef,
   ColumnDef,
   createColumnHelper,
+  VisibilityState,
 } from '@tanstack/react-table';
 import { useTableStore } from '@stores/useTableStore';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
@@ -19,27 +20,31 @@ const columnHelper = createColumnHelper<ICountry>();
 
 export const countryColumns = [
   columnHelper.accessor('number', {
+    id: 'Number',
     header: '#',
     cell: (props) => props.renderValue(),
     enableGrouping: true,
   }),
   columnHelper.accessor('country_code', {
+    id: 'Country Code',
     header: 'Country Code',
     cell: (props) => props.renderValue(),
     enableGrouping: true,
   }),
   columnHelper.accessor('country_name', {
+    id: 'Country Name',
     header: 'Country Name',
     cell: (props) => props.renderValue(),
     enableGrouping: true,
   }),
   columnHelper.accessor('create_date', {
+    id: 'Create Date',
     header: 'Create Date',
     cell: (props) => props.renderValue(),
     enableGrouping: true,
   }),
   columnHelper.display({
-    id: 'action',
+    id: 'Action',
     cell: (props) => (
       <ToDetail href={`/${props.row.getValue('country_code')}`} />
     ),
@@ -64,6 +69,9 @@ const useTable = <T,>({
   const params = useSearchParams();
   const setPagination = useTableStore((state) => state.setPagination);
   const setSearch = useTableStore((state) => state.setSearch);
+  const setColumnVisibility = useTableStore(
+    (state) => state.setColumnVisibility
+  );
 
   const option = useTableStore((state) => state.options[queryKey]);
 
@@ -73,6 +81,10 @@ const useTable = <T,>({
 
   const onSearch = (keyword: string) => {
     setSearch(queryKey, keyword);
+  };
+
+  const onColumnVisibility = (column: VisibilityState) => {
+    setColumnVisibility(queryKey, column);
   };
 
   const initPagination = () => {
@@ -114,6 +126,7 @@ const useTable = <T,>({
     onPagination,
     onSearch,
     onFilter,
+    onColumnVisibility,
   };
 };
 
