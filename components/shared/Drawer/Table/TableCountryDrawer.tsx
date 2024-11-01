@@ -22,6 +22,7 @@ const TableCountryFilter = () => {
   const handleOpenAdd = () => {
     openDrawer('CREATE_COUNTRY');
   };
+
   const tableProps = useTable<ICountry[]>({
     queryKey: GET_COUNTRY,
     queryFn: getCountry,
@@ -29,9 +30,9 @@ const TableCountryFilter = () => {
   });
 
   return (
-    <Drawer onClose={closeTableDrawer} open={isOpenTable}>
+    <Drawer open={isOpenTable} onClose={closeTableDrawer}>
       <DrawerContent>
-        <DrawerHeader drawerTitle="Find Country">
+        <DrawerHeader drawerTitle="Find Country" onClick={closeTableDrawer}>
           <DrawerEndHeader>
             {/* button save */}
             <Button

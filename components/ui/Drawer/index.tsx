@@ -72,7 +72,7 @@ const DrawerContent = React.forwardRef<
 DrawerContent.displayName = 'DrawerContent';
 
 const DrawerBack = React.forwardRef<React.ElementRef<typeof Button>, IconProps>(
-  ({ className, onClick }) => (
+  ({ icon, className, onClick }) => (
     <Button
       className={cn('rounded-md w-1/6', className)}
       onClick={onClick}
@@ -80,7 +80,7 @@ const DrawerBack = React.forwardRef<React.ElementRef<typeof Button>, IconProps>(
       variant="backDrawer"
       icon={{
         size: 'large',
-        icon: IconArrowLeft,
+        icon: icon || IconArrowLeft,
         color: 'dark',
       }}
     />

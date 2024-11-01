@@ -107,6 +107,7 @@ const CreateCountry = () => {
   const handleCloseDrawer = () => {
     clearErrors();
     reset();
+    closeDrawer();
   };
 
   return (

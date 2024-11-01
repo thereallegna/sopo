@@ -4,7 +4,7 @@ import React, { ElementType, FC } from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@libs/classNames';
 
-const iconVariants = cva('cursor-pointer', {
+export const iconVariants = cva('cursor-pointer', {
   variants: {
     size: {
       small: 'w-3 h-3',
