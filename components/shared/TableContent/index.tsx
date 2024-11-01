@@ -39,6 +39,7 @@ const TableContent = <T,>({
   option,
   onPagination,
   onSearch,
+  onFilter,
 }: TableContentProps<T>) => {
   const router = useRouter();
   const pathname = usePathname();
@@ -77,6 +78,7 @@ const TableContent = <T,>({
         data={data?.results ?? defaultData}
         columns={columns}
         onSearch={onSearch}
+        onFilter={onFilter}
       />
       <Table>
         <TableHeader>

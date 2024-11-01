@@ -9,13 +9,15 @@ import Image from 'next/image';
 import FilterButton from '@components/ui/Table/Action/FilterButton';
 
 const Country = () => {
-  const { openFilterDrawer, openTableDrawer } = useDrawerStore();
+  const { openFilterDrawer, openTableDrawer, closeFilterDrawer } =
+    useDrawerStore();
 
   const handleOpenFilter = () => {
     openFilterDrawer('FILTER_COUNTRY');
   };
 
   const handleOpenTable = () => {
+    closeFilterDrawer();
     openTableDrawer('GET_COUNTRY');
   };
 

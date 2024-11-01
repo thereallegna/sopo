@@ -52,12 +52,14 @@ type UseTableProps<T> = {
     options: TableOptionState
   ) => Promise<AxiosResponse<ApiResponse<T[]>>>;
   columns: AccessorKeyColumnDef<any, any>[] | ColumnDef<any, any>[];
+  onFilter?: () => void;
 };
 
 const useTable = <T,>({
   queryKey,
   columns,
   queryFn,
+  onFilter,
 }: UseTableProps<T>): TableContentProps<T> => {
   const params = useSearchParams();
   const setPagination = useTableStore((state) => state.setPagination);
@@ -111,6 +113,7 @@ const useTable = <T,>({
     option,
     onPagination,
     onSearch,
+    onFilter,
   };
 };
 

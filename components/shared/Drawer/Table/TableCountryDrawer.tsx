@@ -18,7 +18,8 @@ import { getCountry } from '@services/fetcher/configuration/general';
 import TableContent from '@components/shared/TableContent';
 
 const TableCountryFilter = () => {
-  const { isOpenTable, openDrawer, closeTableDrawer } = useDrawerStore();
+  const { isOpenTable, openDrawer, openFilterDrawer, closeTableDrawer } =
+    useDrawerStore();
   const handleOpenAdd = () => {
     openDrawer('CREATE_COUNTRY');
   };
@@ -27,6 +28,7 @@ const TableCountryFilter = () => {
     queryKey: GET_COUNTRY,
     queryFn: getCountry,
     columns: countryColumns,
+    onFilter: openFilterDrawer,
   });
 
   return (
