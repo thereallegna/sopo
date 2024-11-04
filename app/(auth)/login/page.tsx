@@ -134,7 +134,7 @@ const LoginPage = () => {
                 {...register('keepUserId')}
               />
               <Link
-                href="/password"
+                href="/forgot-password"
                 className="text-blue-500 font-normal text-[11px] justify-end"
               >
                 Forgot Password?
@@ -142,7 +142,7 @@ const LoginPage = () => {
             </div>
           </CardContent>
           <CardFooter className="mt-5">
-            <Button type="submit" className="w-full" disabled={isLoading}>
+            <Button type="submit" className="w-full h-6" disabled={isLoading}>
               {isLoading ? 'Logging in...' : 'Login'}
             </Button>
           </CardFooter>

@@ -20,6 +20,8 @@ const buttonVariants = cva(
           'rounded-sm bg-transparent shadow-none text-Neutral-600 hover:bg-Neutral-100 focus:ring-transparent ',
         backDrawer:
           'bg-White text-Neutral-600 hover:bg-Neutral-100 shadow-none px-2 py-1',
+        navbarSettings:
+          'bg-transparent shadow-none border-none hover-none focus:ring-transparent',
       },
       size: {
         small: 'font-semibold text-base',

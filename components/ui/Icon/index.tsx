@@ -23,6 +23,7 @@ const iconVariants = cva('cursor-pointer', {
       dark: 'text-Neutral-black',
       White: 'text-Neutral-White',
       drawer: 'text-Neutral-50',
+      custom: 'text-gray-blue-800',
     },
   },
   defaultVariants: {
