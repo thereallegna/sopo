@@ -1,22 +1,11 @@
+// hooks/useCloseDrawerOnPathChange.ts
 import { useEffect } from 'react';
-import { usePathname } from 'next/navigation';
 import { useDrawerStore } from '@stores/useDrawerStore';
-import useFormStore from '@stores/useFormStore';
 
 export const useCloseDrawerOnPathChange = () => {
-  const { isOpenFilter, closeDrawer, isOpen } = useDrawerStore();
+  const { isOpenFilter, isOpen } = useDrawerStore();
 
-  const pathname = usePathname();
-  const { changeStatus, setIsAlertOpen } = useFormStore();
-
-  // Membuka AlertDialog jika `changeStatus dan pathname berubah`
-  useEffect(() => {
-    if (changeStatus) {
-      setIsAlertOpen(true);
-    }
-  }, [pathname]);
-
-  // Mengatur delay untuk pointer events saat drawer terbuka
+  // Mengatur pointer events
   useEffect(() => {
     let timer: NodeJS.Timeout;
 

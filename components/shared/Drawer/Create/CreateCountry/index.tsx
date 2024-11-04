@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useMemo } from 'react';
+import React from 'react';
 import { Button } from '@components/ui/Button';
 import {
   Drawer,
@@ -12,30 +12,32 @@ import {
 import { Card, CardContent } from '@components/ui/Card';
 import InputField from '@components/shared/InputField';
 import { useDrawerStore } from '@stores/useDrawerStore';
-import { IconDeviceFloppy } from '@node_modules/@tabler/icons-react/dist/esm/tabler-icons-react';
+import { IconDeviceFloppy } from '@tabler/icons-react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation } from '@tanstack/react-query';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { countrySchema } from '@constants/schemas/ConfigurationSchema/general';
 import { createCountry } from '@services/fetcher/configuration/general';
-import bindCurrentValueAndChangeValue from '@hooks/useBindCurrentValAndChangeVal';
-import useFormStore from '@stores/useFormStore';
+import useFormStore from '@stores/useFormStore'; // Import useFormStore
 
 const CreateCountry = () => {
   const { isOpen, closeDrawer } = useDrawerStore();
-  const { setChangeStatus, changeStatus } = useFormStore();
+  const { setIsDirty } = useFormStore(); // Ambil setIsDirty dari useFormStore
   const [isLoading, setIsLoading] = React.useState(false);
+
   const {
     register,
     handleSubmit,
     reset,
-    watch,
     setError,
-    clearErrors,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = useForm<CountryFormBody>({
-    mode: 'onChange',
+    mode: 'onSubmit',
     resolver: yupResolver(countrySchema),
+    defaultValues: {
+      country_code: '',
+      country_name: '',
+    },
   });
 
   const { mutate: mutationCreateCountry } = useMutation({
@@ -47,83 +49,53 @@ const CreateCountry = () => {
       reset();
       closeDrawer();
       setIsLoading(false);
+      setIsDirty(false); // Reset status dirty setelah berhasil menyimpan
     },
     onError: (error: any) => {
       setIsLoading(false);
       if (error?.response?.data) {
         const { errorField, message } = error.response.data;
 
-        if (errorField === 'usercode') {
+        if (errorField === 'country_code') {
           setError('country_code', { type: 'server', message });
-        } else if (errorField === 'password') {
+        } else if (errorField === 'country_name') {
           setError('country_name', { type: 'server', message });
         }
       }
     },
   });
 
-  const watchCountryCode = watch('country_code');
-  const watchCountryName = watch('country_name');
-
-  const currentValue = useMemo(
-    () => ({
-      country_code: '',
-      country_name: '',
-    }),
-    []
-  );
-
-  const changeValue = useMemo(
-    () => ({
-      country_code: watchCountryCode,
-      country_name: watchCountryName,
-    }),
-    [watchCountryCode, watchCountryName]
-  );
-
-  useEffect(() => {
-    setChangeStatus(bindCurrentValueAndChangeValue(currentValue, changeValue));
-  }, [currentValue, changeValue, setChangeStatus]);
-
   const onSubmit: SubmitHandler<CountryFormBody> = (data) => {
     mutationCreateCountry(data);
   };
 
-  useEffect(() => {
-    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
-      if (changeStatus === true) {
-        event.preventDefault();
-      }
-    };
+  // Trigger perubahan status dirty saat ada perubahan input
+  React.useEffect(() => {
+    setIsDirty(isDirty); // Update state isDirty di useFormStore berdasarkan form state
+  }, [isDirty, setIsDirty]);
 
-    window.addEventListener('beforeunload', handleBeforeUnload);
-
-    return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload);
-    };
-  }, [changeStatus]);
-
-  // reset ketika isOpen false dan inClose true
   const handleCloseDrawer = () => {
-    clearErrors();
-    reset();
+    if (isDirty) {
+      // Jika ada perubahan, tampilkan konfirmasi sebelum menutup drawer
+      closeDrawer();
+    } else {
+      closeDrawer();
+      reset();
+      setIsDirty(false); // Reset status dirty saat drawer ditutup tanpa perubahan
+    }
   };
 
   return (
     <Drawer onClose={handleCloseDrawer} open={isOpen}>
       <DrawerContent>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)} noValidate>
           <DrawerHeader
             onClick={handleCloseDrawer}
             drawerTitle="Create Country"
           >
             <DrawerEndHeader>
               <Button
-                icon={{
-                  size: 'large',
-                  icon: IconDeviceFloppy,
-                  color: 'drawer',
-                }}
+                icon={{ size: 'large', icon: IconDeviceFloppy }}
                 type="submit"
                 disabled={isLoading}
               >
