@@ -1,6 +1,23 @@
-import { PaginationState, VisibilityState } from '@tanstack/react-table';
+import {
+  GroupingState,
+  PaginationState,
+  Updater,
+  VisibilityState,
+} from '@tanstack/react-table';
+
+type TableState = {
+  options: Record<string, TableOptionState>;
+  setPagination: (
+    key: string,
+    pagination: PaginationState | ((prev: PaginationState) => PaginationState)
+  ) => void;
+  setSearch: (key: string, keyword: string) => void;
+  setColumnVisibility: (key: string, val: VisibilityState) => void;
+  setGrouping: (key: string, val: GroupingState) => void;
+};
 
 type TableOptionState = {
+  grouping: GroupingState;
   search?: string;
   columnVisibility: VisibilityState;
   pagination: PaginationState;
@@ -15,7 +32,8 @@ type TableContentProps<T> = {
   ) => void;
   onSearch: (keyword: string) => void;
   onFilter?: () => void;
-  onColumnVisibility: (column: VisibilityState) => void;
+  onColumnVisibility: (column: Updater<VisibilityState>) => void;
+  onGrouping?: (group: Updater<GroupingState>) => void;
 };
 
 type PaginationPartial =

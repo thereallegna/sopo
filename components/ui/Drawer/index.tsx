@@ -38,7 +38,10 @@ const DrawerOverlay = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <DrawerPrimitive.Overlay
     ref={ref}
-    className={cn('absolute  inset-0 z-50 bg-black/80 ', className)}
+    className={cn(
+      'absolute  inset-0 z-50 bg-slate-800/5 backdrop-blur-[1px]',
+      className
+    )}
     {...props}
   />
 ));
@@ -93,7 +96,10 @@ const DrawerBody = ({
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
-    className={cn('w-full flex flex-col justify-between p-5 gap-5', className)}
+    className={cn(
+      'w-full flex flex-col justify-between p-5 gap-5 overflow-auto',
+      className
+    )}
     {...props}
   />
 );

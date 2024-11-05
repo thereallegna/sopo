@@ -11,12 +11,17 @@ import Table, {
 import {
   flexRender,
   getCoreRowModel,
+  getExpandedRowModel,
+  getFilteredRowModel,
+  getGroupedRowModel,
   getPaginationRowModel,
   useReactTable,
 } from '@tanstack/react-table';
 import TableAction from '@components/ui/Table/TableAction';
 import TablePagination from '@components/ui/Table/TablePagination';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { IconChevronDown } from '@tabler/icons-react';
+import { cn } from '@libs/classNames';
+import IconComponent from '@components/ui/Icon';
 import { TableContentProps } from '../../../types/client/table';
 
 export interface PaginationState {
@@ -32,45 +37,29 @@ const TableContent = <T,>({
   onSearch,
   onFilter,
   onColumnVisibility,
+  onGrouping,
 }: TableContentProps<T>) => {
-  const router = useRouter();
-  const pathname = usePathname();
-  const params = useSearchParams();
   const defaultData = React.useMemo(() => [], []);
 
   const table = useReactTable({
     data: data?.results ?? defaultData,
     columns,
-    manualPagination: true,
+    // manualPagination: !(option.grouping.length > 0),
+    manualPagination: false,
     pageCount: data?.total_pages,
     state: {
+      grouping: option.grouping,
       pagination: option.pagination,
       columnVisibility: option.columnVisibility,
     },
+    getGroupedRowModel: getGroupedRowModel(),
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-    onColumnVisibilityChange: (newVisibility) => {
-      const visibilityState =
-        typeof newVisibility === 'function'
-          ? newVisibility(option.columnVisibility)
-          : newVisibility;
-
-      onColumnVisibility(visibilityState);
-    },
-    onPaginationChange: (newPagination) => {
-      const paginationState =
-        typeof newPagination === 'function'
-          ? newPagination(option.pagination)
-          : newPagination;
-
-      onPagination(paginationState);
-
-      const { pageIndex, pageSize } = paginationState;
-      const url = new URLSearchParams(params);
-      url.set('page_index', (pageIndex + 1).toString());
-      url.set('page_size', pageSize.toString());
-      router.replace(`${pathname}?${url.toString()}`);
-    },
+    getFilteredRowModel: getFilteredRowModel(),
+    getExpandedRowModel: getExpandedRowModel(),
+    onColumnVisibilityChange: onColumnVisibility,
+    onPaginationChange: onPagination,
+    onGroupingChange: onGrouping,
   });
 
   return (
@@ -93,7 +82,12 @@ const TableContent = <T,>({
               {headerGroup.headers.map((header) => (
                 <TableHead
                   key={header.id}
-                  onGroup={header.column.getCanGroup() ? () => {} : undefined}
+                  activeGroup={header.column.getIsGrouped()}
+                  onGroup={
+                    header.column.getCanGroup()
+                      ? header.column.getToggleGroupingHandler()
+                      : undefined
+                  }
                 >
                   {header.isPlaceholder
                     ? null
@@ -109,13 +103,71 @@ const TableContent = <T,>({
         <TableBody>
           {table.getRowModel().rows.map((row) => (
             <TableRow key={row.id}>
-              {row.getVisibleCells().map((cell) => (
-                <TableCell key={cell.id}>
-                  {cell.getIsPlaceholder()
-                    ? null
-                    : flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </TableCell>
-              ))}
+              {row.getVisibleCells().map((cell) => {
+                if (cell.getIsGrouped()) {
+                  return (
+                    <TableCell
+                      key={cell.id}
+                      onClick={row.getToggleExpandedHandler()}
+                      className={`${
+                        row.getCanExpand() ? 'cursor-pointer' : ''
+                      }`}
+                    >
+                      <div className="flex items-center gap-[10px]">
+                        {cell.getIsGrouped() && (
+                          <IconComponent
+                            icon={IconChevronDown}
+                            color="secondary"
+                            className={cn(
+                              'transition-transform duration-200',
+                              row.getIsExpanded() && 'rotate-180'
+                            )}
+                          />
+                        )}
+                        <div className="flex flex-col text-base">
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext()
+                          )}
+                          <p
+                            className={`${
+                              row.getIsExpanded()
+                                ? 'text-Neutral-Black'
+                                : 'text-Neutral-500'
+                            }`}
+                          >
+                            ({row.subRows.length})
+                          </p>
+                        </div>
+                      </div>
+                    </TableCell>
+                  );
+                }
+                if (cell.getIsAggregated()) {
+                  return (
+                    <TableCell key={cell.id}>
+                      {/* {
+                          flexRender(
+                            cell.column.columnDef.aggregatedCell ??
+                              cell.column.columnDef.cell,
+                            cell.getContext()
+                          )
+                        } */}
+                    </TableCell>
+                  );
+                }
+                return (
+                  <TableCell key={cell.id}>
+                    {cell.getIsPlaceholder()
+                      ? null
+                      : flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                    {/* </div> */}
+                  </TableCell>
+                );
+              })}
             </TableRow>
           ))}
         </TableBody>
