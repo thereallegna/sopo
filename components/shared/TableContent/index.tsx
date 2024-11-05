@@ -38,14 +38,15 @@ const TableContent = <T,>({
   onFilter,
   onColumnVisibility,
   onGrouping,
+  onRowSizeChange,
 }: TableContentProps<T>) => {
   const defaultData = React.useMemo(() => [], []);
 
   const table = useReactTable({
     data: data?.results ?? defaultData,
     columns,
-    // manualPagination: !(option.grouping.length > 0),
-    manualPagination: false,
+    manualPagination: !(option.grouping.length > 0),
+    // manualPagination: false,
     pageCount: data?.total_pages,
     state: {
       grouping: option.grouping,
@@ -65,10 +66,12 @@ const TableContent = <T,>({
   return (
     <div className="flex flex-col gap-[10px]">
       <TableAction
+        rowSize={option.rowSize}
         data={data?.results ?? defaultData}
         columns={columns}
         onSearch={onSearch}
         onFilter={onFilter}
+        onRowSizeChange={onRowSizeChange}
         columnSelector={{
           isAllColumnsVisible: table.getIsAllColumnsVisible(),
           onSelectAll: table.getToggleAllColumnsVisibilityHandler(),
@@ -108,6 +111,7 @@ const TableContent = <T,>({
                   return (
                     <TableCell
                       key={cell.id}
+                      size={option.rowSize}
                       onClick={row.getToggleExpandedHandler()}
                       className={`${
                         row.getCanExpand() ? 'cursor-pointer' : ''
@@ -145,7 +149,7 @@ const TableContent = <T,>({
                 }
                 if (cell.getIsAggregated()) {
                   return (
-                    <TableCell key={cell.id}>
+                    <TableCell key={cell.id} size={option.rowSize}>
                       {/* {
                           flexRender(
                             cell.column.columnDef.aggregatedCell ??
@@ -157,7 +161,7 @@ const TableContent = <T,>({
                   );
                 }
                 return (
-                  <TableCell key={cell.id}>
+                  <TableCell key={cell.id} size={option.rowSize}>
                     {cell.getIsPlaceholder()
                       ? null
                       : flexRender(

@@ -16,6 +16,7 @@ import {
   TableOptionState,
   TableContentProps,
   PaginationPartial,
+  RowSizeType,
 } from '../types/client/table';
 
 const columnHelper = createColumnHelper<ICountry>();
@@ -74,6 +75,7 @@ const useTable = <T,>({
   const setPagination = useTableStore((state) => state.setPagination);
   const setSearch = useTableStore((state) => state.setSearch);
   const setGrouping = useTableStore((state) => state.setGrouping);
+  const setRowSize = useTableStore((state) => state.setRowSize);
   const setColumnVisibility = useTableStore(
     (state) => state.setColumnVisibility
   );
@@ -110,6 +112,10 @@ const useTable = <T,>({
         ? visibility(option.columnVisibility)
         : visibility;
     setColumnVisibility(queryKey, visibilityState);
+  };
+
+  const onRowSizeChange = (size: RowSizeType) => {
+    setRowSize(queryKey, size);
   };
 
   const initPagination = () => {
@@ -153,6 +159,7 @@ const useTable = <T,>({
     onFilter,
     onColumnVisibility,
     onGrouping,
+    onRowSizeChange,
   };
 };
 

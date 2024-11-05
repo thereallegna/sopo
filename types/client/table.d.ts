@@ -14,13 +14,15 @@ type TableState = {
   setSearch: (key: string, keyword: string) => void;
   setColumnVisibility: (key: string, val: VisibilityState) => void;
   setGrouping: (key: string, val: GroupingState) => void;
+  setRowSize: (key: string, size: RowSizeType) => void;
 };
 
 type TableOptionState = {
   grouping: GroupingState;
-  search?: string;
-  columnVisibility: VisibilityState;
   pagination: PaginationState;
+  columnVisibility: VisibilityState;
+  search?: string;
+  rowSize: RowSizeType;
 };
 
 type TableContentProps<T> = {
@@ -34,8 +36,11 @@ type TableContentProps<T> = {
   onFilter?: () => void;
   onColumnVisibility: (column: Updater<VisibilityState>) => void;
   onGrouping?: (group: Updater<GroupingState>) => void;
+  onRowSizeChange: (size: RowSizeType) => void;
 };
 
 type PaginationPartial =
   | PaginationState
   | ((prev: PaginationState) => PaginationState);
+
+type RowSizeType = 'normal' | 'compact' | 'narrow' | null | undefined;
