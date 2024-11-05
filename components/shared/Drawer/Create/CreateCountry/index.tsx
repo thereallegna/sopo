@@ -19,6 +19,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { countrySchema } from '@constants/schemas/ConfigurationSchema/general';
 import { createCountry } from '@services/fetcher/configuration/general';
 import useFormStore from '@stores/useFormStore'; // Import useFormStore
+import { useDrawer } from '@hooks/useDrawer';
 
 const CreateCountry = () => {
   const { isOpen, closeDrawer } = useDrawerStore();
@@ -40,6 +41,8 @@ const CreateCountry = () => {
     },
   });
 
+  const { handleCloseDrawer } = useDrawer({ isDirty, reset });
+
   const { mutate: mutationCreateCountry } = useMutation({
     mutationFn: createCountry,
     onMutate: () => {
@@ -49,7 +52,7 @@ const CreateCountry = () => {
       reset();
       closeDrawer();
       setIsLoading(false);
-      setIsDirty(false); // Reset status dirty setelah berhasil menyimpan
+      setIsDirty(false);
     },
     onError: (error: any) => {
       setIsLoading(false);
@@ -67,22 +70,6 @@ const CreateCountry = () => {
 
   const onSubmit: SubmitHandler<CountryFormBody> = (data) => {
     mutationCreateCountry(data);
-  };
-
-  // Trigger perubahan status dirty saat ada perubahan input
-  React.useEffect(() => {
-    setIsDirty(isDirty); // Update state isDirty di useFormStore berdasarkan form state
-  }, [isDirty, setIsDirty]);
-
-  const handleCloseDrawer = () => {
-    if (isDirty) {
-      // Jika ada perubahan, tampilkan konfirmasi sebelum menutup drawer
-      closeDrawer();
-    } else {
-      closeDrawer();
-      reset();
-      setIsDirty(false); // Reset status dirty saat drawer ditutup tanpa perubahan
-    }
   };
 
   return (
