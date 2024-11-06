@@ -6,6 +6,7 @@ import {
   IconChevronCompactRight,
 } from '@tabler/icons-react';
 import { Button, ButtonProps } from '../Button';
+import PageSizeInput from './PageSizeInput';
 
 export interface TablePaginationProps {
   page_index: number;
@@ -32,14 +33,14 @@ const TablePagination = ({
 }: TablePaginationProps) => (
   <div className="flex justify-between items-center">
     <div>
-      <span className="text-base text-Neutral-500 font-normal">
+      <span className="text-base text-Neutral-500 font-normal flex items-center">
         Showing{' '}
-        <input
-          className="w-[28px] h-[28px] border-[1px] border-Neutral-200 rounded-rounded-1 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none text-center"
+        <PageSizeInput
+          helperValues={[10, 20, 40, 80]}
           type="number"
           value={page_size}
           placeholder="0"
-          onChange={(e) => onChangePageSize(parseInt(e.target.value, 10))}
+          onChangePageSize={(val) => onChangePageSize(val)}
         />{' '}
         from {total_records} entries.
       </span>

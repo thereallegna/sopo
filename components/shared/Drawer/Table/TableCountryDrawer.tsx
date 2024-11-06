@@ -49,7 +49,7 @@ const TableCountryFilter = () => {
             </Button>
           </DrawerEndHeader>
         </DrawerHeader>
-        <DrawerBody>
+        <DrawerBody className="h-full">
           <TableContent {...tableProps} />
         </DrawerBody>
       </DrawerContent>
