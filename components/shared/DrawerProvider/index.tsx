@@ -2,7 +2,6 @@
 
 import dynamic from 'next/dynamic';
 import React from 'react';
-import { useDrawer } from '@hooks/useDrawer';
 import PreventNavigationDialog from '../Alert';
 
 const CreateCountryModal = dynamic(
@@ -20,20 +19,16 @@ const TableCountryModal = dynamic(
   { ssr: false }
 );
 
-const DrawerProvider = () => {
-  useDrawer();
+const DrawerProvider = () => (
+  <>
+    {/* Komponen Drawer */}
+    <FilterCountryModal />
+    <TableCountryModal />
+    <CreateCountryModal />
 
-  return (
-    <>
-      {/* Komponen Drawer */}
-      <FilterCountryModal />
-      <TableCountryModal />
-      <CreateCountryModal />
-
-      {/* Dialog konfirmasi navigasi */}
-      <PreventNavigationDialog />
-    </>
-  );
-};
+    {/* Dialog konfirmasi navigasi */}
+    <PreventNavigationDialog />
+  </>
+);
 
 export default DrawerProvider;
