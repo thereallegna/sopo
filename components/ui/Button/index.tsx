@@ -20,6 +20,8 @@ const buttonVariants = cva(
           'rounded-sm bg-transparent shadow-none text-Neutral-600 hover:bg-Neutral-100 focus:ring-transparent ',
         backDrawer:
           'bg-White text-Neutral-600 hover:bg-Neutral-100 shadow-none px-2 py-1',
+        disabled:
+          'bg-Blue-200 text-Neutral-50 pointer-events-none	 border border-solid border-Blue-300',
       },
       size: {
         small: 'font-semibold text-base',
