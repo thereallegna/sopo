@@ -10,6 +10,7 @@ const iconVariants = cva('cursor-pointer', {
       small: 'w-3 h-3',
       medium: 'w-[14px] h-[14px]',
       large: 'w-4 h-4',
+      x_large: 'w-6 h-6',
     },
     color: {
       default: 'text-Neutral-600',
