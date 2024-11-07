@@ -71,7 +71,11 @@ const ForgotPasswordPage = () => {
           />
         </CardContent>
         <CardFooter className="mt-[10px]">
-          <Button type="submit" className="w-full" onClick={handleSendEmail}>
+          <Button
+            type="submit"
+            className="w-full h-6"
+            onClick={handleSendEmail}
+          >
             Send
           </Button>
         </CardFooter>
