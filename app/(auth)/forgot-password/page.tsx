@@ -16,6 +16,7 @@ import IconComponent from '@components/ui/Icon';
 import { IconArrowLeft, IconX } from '@tabler/icons-react';
 import { useRouter } from 'next/navigation';
 import { forgotPasswordConstant } from '@constants/forgotPasswordConstant';
+import { forgotPassword } from '@services/fetcher/password/forgot-password';
 
 const ForgotPasswordPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -40,21 +41,13 @@ const ForgotPasswordPage = () => {
     setError('');
 
     try {
-      const response = await fetch('/api/forgot-password', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email }),
-      });
-
-      if (response.ok) {
+      const response = await forgotPassword(email);
+      if (response.status === 200) {
         setEmailSent(true);
         console.log('Email sent successfully');
       } else {
         setEmailSent(false);
-        const result = await response.json();
-        setError(result.error || 'Failed to send email. Please try again.');
+        setError('Failed to send email. Please try again.');
         console.log('Failed to send email');
         setCooldown(60);
       }

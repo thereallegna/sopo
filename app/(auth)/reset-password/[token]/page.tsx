@@ -14,44 +14,34 @@ import {
 import Image from 'next/image';
 import { IconArrowLeft } from '@tabler/icons-react';
 import IconComponent from '@components/ui/Icon';
-import { useRouter, useSearchParams } from 'next/navigation';
-
+import { useRouter } from 'next/navigation';
+import { resetPassword } from '@services/fetcher/password/reset-password';
 import { resetPasswordConstant } from '@constants/resetPasswordConstant';
 
-const ResetPasswordPage = () => {
+const ResetPasswordPage = ({ params }: { params: { token: string } }) => {
   const router = useRouter();
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
 
-  const searchParams = useSearchParams();
-  const resetToken = searchParams.get('token');
-
   const handleResetPassword = async () => {
     if (newPassword !== confirmPassword) {
-      setError('Password do not match.');
+      setError('Password do not match');
       return;
     }
     setError('');
-    try {
-      const response = await fetch('/api/reset-password', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ newPassword, token: resetToken }),
-      });
 
-      if (response.ok) {
+    try {
+      const response = await resetPassword(params.token, newPassword);
+      if (response.status === 200) {
         setSuccess(true);
         router.push('/login');
       } else {
-        const result = await response.json();
-        setError(result.error || 'Failed to reset password. Please try again.');
+        setError('Failed to reset password. Please try again.');
       }
     } catch (err) {
-      setError('An error occurred. Please try again');
+      setError('An Error occured. Please try again.');
     }
   };
 
@@ -111,6 +101,11 @@ const ResetPasswordPage = () => {
             type="submit"
             className="w-full h-6"
             onClick={handleResetPassword}
+            disabled={
+              newPassword !== confirmPassword ||
+              !newPassword ||
+              !confirmPassword
+            }
           >
             Reset Password
           </Button>
