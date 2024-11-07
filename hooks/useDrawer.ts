@@ -1,34 +1,31 @@
-import { useEffect } from 'react';
-import { usePathname } from 'next/navigation';
+import { useEffect, useCallback } from 'react';
 import { useDrawerStore } from '@stores/useDrawerStore';
 import useFormStore from '@stores/useFormStore';
 
-export const useCloseDrawerOnPathChange = () => {
-  const {
-    isOpenFilter,
-    isOpenTable,
-    isOpen,
-    closeFilterDrawer,
-    closeTableDrawer,
-  } = useDrawerStore();
+type UseDrawerOptions = {
+  isDirty?: boolean;
+  reset?: () => void;
+};
 
-  const pathname = usePathname();
-  const { changeStatus, setIsAlertOpen } = useFormStore();
+export const useDrawer = ({
+  isDirty = false,
+  reset = () => {},
+}: UseDrawerOptions = {}) => {
+  const { isOpen, isOpenFilter, closeDrawer, isOpenTable } = useDrawerStore();
+  const { setIsDirty } = useFormStore();
 
-  // Membuka AlertDialog jika `changeStatus dan pathname berubah`
-  useEffect(() => {
-    if (changeStatus) {
-      setIsAlertOpen(true);
+  // Function to handle closing the drawer, considering unsaved changes
+  const handleCloseDrawer = useCallback(() => {
+    if (isDirty) {
+      closeDrawer();
+      reset();
+    } else {
+      closeDrawer();
+      reset();
+      setIsDirty(false);
     }
-    if (isOpenFilter) {
-      closeFilterDrawer();
-    }
-    if (isOpenTable) {
-      closeTableDrawer();
-    }
-  }, [pathname]);
+  }, [isDirty, closeDrawer, reset, setIsDirty]);
 
-  // Mengatur delay untuk pointer events saat drawer terbuka
   useEffect(() => {
     let timer: NodeJS.Timeout;
 
@@ -45,4 +42,11 @@ export const useCloseDrawerOnPathChange = () => {
       document.body.style.pointerEvents = '';
     };
   }, [isOpen, isOpenFilter, isOpenTable]);
+
+  // Update the global store with the current dirty state whenever it changes
+  useEffect(() => {
+    setIsDirty(isDirty);
+  }, [isDirty, setIsDirty]);
+
+  return { handleCloseDrawer, isOpen, isOpenFilter, isOpenTable };
 };

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useMemo } from 'react';
+import React from 'react';
 import { Button } from '@components/ui/Button';
 import {
   Drawer,
@@ -12,31 +12,37 @@ import {
 import { Card, CardContent } from '@components/ui/Card';
 import InputField from '@components/shared/InputField';
 import { useDrawerStore } from '@stores/useDrawerStore';
-import { IconDeviceFloppy } from '@node_modules/@tabler/icons-react/dist/esm/tabler-icons-react';
+import { IconDeviceFloppy } from '@tabler/icons-react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation } from '@tanstack/react-query';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { countrySchema } from '@constants/schemas/ConfigurationSchema/general';
 import { createCountry } from '@services/fetcher/configuration/general';
-import bindCurrentValueAndChangeValue from '@hooks/useBindCurrentValAndChangeVal';
-import useFormStore from '@stores/useFormStore';
+import useFormStore from '@stores/useFormStore'; // Import useFormStore
+import { useDrawer } from '@hooks/useDrawer';
+import { countryDefaultValues } from '@constants/defaultValues';
+import { useFormChanges } from '@hooks/useFormChanges';
 
 const CreateCountry = () => {
   const { isOpen, closeDrawer } = useDrawerStore();
-  const { setChangeStatus, changeStatus } = useFormStore();
+  const { setIsDirty } = useFormStore();
   const [isLoading, setIsLoading] = React.useState(false);
+
   const {
     register,
     handleSubmit,
     reset,
-    watch,
     setError,
-    clearErrors,
-    formState: { errors },
+    control,
+    formState: { errors, isDirty },
   } = useForm<CountryFormBody>({
-    mode: 'onChange',
+    mode: 'onSubmit',
     resolver: yupResolver(countrySchema),
+    defaultValues: countryDefaultValues,
   });
+
+  const { handleCloseDrawer } = useDrawer({ isDirty, reset });
+  const { hasChanged } = useFormChanges(countryDefaultValues, control);
 
   const { mutate: mutationCreateCountry } = useMutation({
     mutationFn: createCountry,
@@ -47,84 +53,38 @@ const CreateCountry = () => {
       reset();
       closeDrawer();
       setIsLoading(false);
+      setIsDirty(false);
     },
     onError: (error: any) => {
       setIsLoading(false);
       if (error?.response?.data) {
-        const { errorField, message } = error.response.data;
+        const { errorList, message } = error.response.data;
 
-        if (errorField === 'usercode') {
+        if (errorList === 'country_code') {
           setError('country_code', { type: 'server', message });
-        } else if (errorField === 'password') {
+        } else if (errorList === 'country_name') {
           setError('country_name', { type: 'server', message });
         }
       }
     },
   });
 
-  const watchCountryCode = watch('country_code');
-  const watchCountryName = watch('country_name');
-
-  const currentValue = useMemo(
-    () => ({
-      country_code: '',
-      country_name: '',
-    }),
-    []
-  );
-
-  const changeValue = useMemo(
-    () => ({
-      country_code: watchCountryCode,
-      country_name: watchCountryName,
-    }),
-    [watchCountryCode, watchCountryName]
-  );
-
-  useEffect(() => {
-    setChangeStatus(bindCurrentValueAndChangeValue(currentValue, changeValue));
-  }, [currentValue, changeValue, setChangeStatus]);
-
   const onSubmit: SubmitHandler<CountryFormBody> = (data) => {
     mutationCreateCountry(data);
-  };
-
-  useEffect(() => {
-    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
-      if (changeStatus === true) {
-        event.preventDefault();
-      }
-    };
-
-    window.addEventListener('beforeunload', handleBeforeUnload);
-
-    return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload);
-    };
-  }, [changeStatus]);
-
-  // reset ketika isOpen false dan inClose true
-  const handleCloseDrawer = () => {
-    clearErrors();
-    reset();
-    closeDrawer();
   };
 
   return (
     <Drawer onClose={handleCloseDrawer} open={isOpen}>
       <DrawerContent>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)} noValidate>
           <DrawerHeader
             onClick={handleCloseDrawer}
             drawerTitle="Create Country"
           >
             <DrawerEndHeader>
               <Button
-                icon={{
-                  size: 'large',
-                  icon: IconDeviceFloppy,
-                  color: 'drawer',
-                }}
+                variant={!hasChanged ? 'disabled' : 'primary'}
+                icon={{ size: 'large', icon: IconDeviceFloppy, color: 'White' }}
                 type="submit"
                 disabled={isLoading}
               >
