@@ -11,7 +11,13 @@ const FilterCountry = () => {
   const { isOpenFilter, closeFilterDrawer } = useDrawerStore();
 
   return (
-    <Drawer onClose={closeFilterDrawer} open={isOpenFilter} direction="right">
+    <Drawer
+      onClose={closeFilterDrawer}
+      open={isOpenFilter}
+      direction="right"
+      modal
+      dismissible
+    >
       <DrawerContent fixed className="flex h-screen p-3 w-[240px]">
         <div className="flex flex-col gap-[10px]">
           <FilterDrawerHeader

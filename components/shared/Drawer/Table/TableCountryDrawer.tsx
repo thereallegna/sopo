@@ -10,31 +10,54 @@ import {
   DrawerHeader,
 } from '@components/ui/Drawer';
 
-import { useDrawerStore } from '@stores/useDrawerStore';
+import {
+  DrawerType,
+  FilterDrawerType,
+  TableDrawerType,
+  useDrawerStore,
+} from '@stores/useDrawerStore';
 import { IconPlus } from '@node_modules/@tabler/icons-react/dist/esm/tabler-icons-react';
-import useTable, { countryColumns } from '@hooks/useTable';
-import { GET_COUNTRY } from '@constants/queryKey';
-import { getCountry } from '@services/fetcher/configuration/general';
+import useTable from '@hooks/useTable';
 import TableContent from '@components/shared/TableContent';
+import { AxiosResponse } from 'axios';
+import {
+  GenerateColumnsOption,
+  TableOptionState,
+} from '../../../../types/client/table';
 
-const TableCountryFilter = () => {
+export type TableDrawerProps = {
+  title: string;
+  columns: GenerateColumnsOption;
+  queryFn: (option?: TableOptionState) => Promise<AxiosResponse<any, any>>;
+  keyTableDrawer: TableDrawerType;
+  keyCreateDrawer: DrawerType;
+  keyFilterDrawer?: FilterDrawerType;
+};
+
+const TableDrawer = ({
+  title,
+  columns,
+  queryFn,
+  keyTableDrawer,
+  keyCreateDrawer,
+}: TableDrawerProps) => {
   const { isOpenTable, openDrawer, openFilterDrawer, closeTableDrawer } =
     useDrawerStore();
   const handleOpenAdd = () => {
-    openDrawer('CREATE_COUNTRY');
+    openDrawer(keyCreateDrawer);
   };
 
   const tableProps = useTable<ICountry[]>({
-    queryKey: GET_COUNTRY,
-    queryFn: getCountry,
-    columns: countryColumns,
+    queryFn,
+    columns,
+    queryKey: keyTableDrawer || '',
     onFilter: openFilterDrawer,
   });
 
   return (
     <Drawer open={isOpenTable} onClose={closeTableDrawer}>
       <DrawerContent>
-        <DrawerHeader drawerTitle="Find Country" onClick={closeTableDrawer}>
+        <DrawerHeader drawerTitle={title} onClick={closeTableDrawer}>
           <DrawerEndHeader>
             {/* button save */}
             <Button
@@ -49,7 +72,7 @@ const TableCountryFilter = () => {
             </Button>
           </DrawerEndHeader>
         </DrawerHeader>
-        <DrawerBody>
+        <DrawerBody className="h-full">
           <TableContent {...tableProps} />
         </DrawerBody>
       </DrawerContent>
@@ -57,4 +80,4 @@ const TableCountryFilter = () => {
   );
 };
 
-export default TableCountryFilter;
+export default TableDrawer;

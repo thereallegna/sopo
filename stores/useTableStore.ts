@@ -1,17 +1,6 @@
 import { GET_COUNTRY } from '@constants/queryKey';
-import { PaginationState, VisibilityState } from '@tanstack/react-table';
 import { create } from 'zustand';
-import { TableOptionState } from '../types/client/table';
-
-type TableState = {
-  options: Record<string, TableOptionState>;
-  setPagination: (
-    key: string,
-    pagination: PaginationState | ((prev: PaginationState) => PaginationState)
-  ) => void;
-  setSearch: (key: string, keyword: string) => void;
-  setColumnVisibility: (key: string, val: VisibilityState) => void;
-};
+import { TableState } from '../types/client/table';
 
 const initialTableState = {
   options: {
@@ -21,6 +10,8 @@ const initialTableState = {
         pageIndex: 0,
         pageSize: 10,
       },
+      grouping: [],
+      rowSize: undefined,
     },
   },
 };
@@ -75,6 +66,34 @@ export const useTableStore = create<TableState>((set) => ({
           [key]: {
             ...currentOption,
             columnVisibility: val,
+          },
+        },
+      };
+    });
+  },
+  setGrouping: (key, group) => {
+    set((state) => {
+      const currentOption = state.options[key];
+      return {
+        options: {
+          ...state.options,
+          [key]: {
+            ...currentOption,
+            grouping: group,
+          },
+        },
+      };
+    });
+  },
+  setRowSize: (key, size) => {
+    set((state) => {
+      const currentOption = state.options[key];
+      return {
+        options: {
+          ...state.options,
+          [key]: {
+            ...currentOption,
+            rowSize: size,
           },
         },
       };

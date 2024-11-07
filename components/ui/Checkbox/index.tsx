@@ -36,7 +36,12 @@ const Checkbox = React.forwardRef<
       {preChecked && <div className="bg-blue-500 w-[8px] h-[8px]" />}
     </CheckboxPrimitive.Root>
     {label && (
-      <Label htmlFor={id} sizes="small" {...labelProps}>
+      <Label
+        htmlFor={id}
+        sizes="small"
+        className="cursor-pointer"
+        {...labelProps}
+      >
         {label}
       </Label>
     )}

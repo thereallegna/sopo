@@ -24,7 +24,7 @@ const FilterCountryModal = dynamic(
   { ssr: false }
 );
 
-const TableCountryModal = dynamic(
+const TableModal = dynamic(
   () => import('@components/shared/Drawer/Table/TableCountryDrawer'),
   { ssr: false }
 );
@@ -32,11 +32,12 @@ const TableCountryModal = dynamic(
 const DrawerProvider = () => {
   useCloseDrawerOnPathChange();
   const { isAlertOpen, setIsAlertOpen } = useFormStore();
-  const { closeDrawer } = useDrawerStore();
+  const { closeDrawer, tableSetting } = useDrawerStore();
 
   return (
     <>
-      <TableCountryModal />
+      {tableSetting && <TableModal {...tableSetting} />}
+
       <FilterCountryModal />
       <CreateCountryModal />
 

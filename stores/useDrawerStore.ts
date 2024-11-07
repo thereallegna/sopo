@@ -1,21 +1,30 @@
+import { TableDrawerProps } from '@components/shared/Drawer/Table/TableCountryDrawer';
 import { create } from 'zustand';
 
-type DrawerType = 'CREATE_COUNTRY' | 'EDIT_COUNTRY' | 'DELETE_COUNTRY' | null;
-type FilterDrawerType = 'FILTER_COUNTRY' | null;
-type TableDrawerType = 'GET_COUNTRY' | null;
+export type DrawerType =
+  | 'createCountry'
+  | 'editCountry'
+  | 'deleteCountry'
+  | null;
+export type FilterDrawerType = 'filterCountry' | null;
+export type TableDrawerType = 'getCountry' | null;
 
 type DrawerState = {
   drawerType: DrawerType;
   filterDrawerType: FilterDrawerType;
-  tableDrawerType: TableDrawerType;
   isOpen: boolean;
   isOpenFilter: boolean;
-  isOpenTable: boolean;
   openDrawer: (type?: DrawerType) => void;
   openFilterDrawer: (type?: FilterDrawerType) => void;
-  openTableDrawer: (type?: TableDrawerType) => void;
   closeDrawer: () => void;
   closeFilterDrawer: () => void;
+
+  // Table Drawer
+  isOpenTable: boolean;
+  tableDrawerType: TableDrawerType;
+  tableSetting?: TableDrawerProps;
+  setTableDrawer: (setting: TableDrawerProps) => void;
+  openTableDrawer: () => void;
   closeTableDrawer: () => void;
 };
 
@@ -40,10 +49,14 @@ export const useDrawerStore = create<DrawerState>((set) => ({
       isOpenFilter: true,
       filterDrawerType: type,
     }),
-  openTableDrawer: (type) =>
+  setTableDrawer: (setting) => {
+    set({
+      tableSetting: setting,
+    });
+  },
+  openTableDrawer: () =>
     set({
       isOpenTable: true,
-      tableDrawerType: type,
     }),
   closeDrawer: () =>
     set((state) => ({
@@ -59,5 +72,6 @@ export const useDrawerStore = create<DrawerState>((set) => ({
     set((state) => ({
       ...state,
       isOpenTable: false,
+      // tableSetting: undefined
     })),
 }));

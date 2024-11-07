@@ -1,6 +1,6 @@
 import React from 'react';
 import { cn } from '@libs/classNames';
-import { IconLayersLinked } from '@tabler/icons-react';
+import { IconLayersLinked, IconXboxX } from '@tabler/icons-react';
 import IconComponent from '../Icon';
 
 export interface TableHeadProps
@@ -20,9 +20,9 @@ const TableHead = React.forwardRef<HTMLTableCellElement, TableHeadProps>(
       >
         {onGroup && (
           <IconComponent
-            icon={IconLayersLinked}
+            icon={activeGroup ? IconXboxX : IconLayersLinked}
             size="large"
-            color={activeGroup ? 'secondary' : 'light'}
+            color={activeGroup ? 'danger' : 'light'}
             onClick={onGroup}
             className="cursor-pointer"
           />
