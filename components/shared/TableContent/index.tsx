@@ -23,6 +23,7 @@ import { IconChevronDown } from '@tabler/icons-react';
 import { cn } from '@libs/classNames';
 import IconComponent from '@components/ui/Icon';
 import { TableContentProps } from '../../../types/client/table';
+import { generateColumns } from '../../../utils/generateColumn';
 
 export interface PaginationState {
   pageIndex: number;
@@ -42,9 +43,11 @@ const TableContent = <T,>({
 }: TableContentProps<T>) => {
   const defaultData = React.useMemo(() => [], []);
 
+  const generatedColumns = generateColumns(columns);
+
   const table = useReactTable({
     data: data?.results ?? defaultData,
-    columns,
+    columns: generatedColumns,
     manualPagination: !(option.grouping.length > 0),
     // manualPagination: false,
     pageCount: data?.total_pages,
@@ -68,7 +71,7 @@ const TableContent = <T,>({
       <TableAction
         rowSize={option.rowSize}
         data={data?.results ?? defaultData}
-        columns={columns}
+        columns={generatedColumns}
         onSearch={onSearch}
         onFilter={onFilter}
         onRowSizeChange={onRowSizeChange}

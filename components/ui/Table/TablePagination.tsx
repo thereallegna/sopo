@@ -33,7 +33,7 @@ const TablePagination = ({
 }: TablePaginationProps) => (
   <div className="flex justify-between items-center">
     <div>
-      <span className="text-base text-Neutral-500 font-normal flex items-center">
+      <span className="text-base text-Neutral-500 font-normal flex items-center gap-1">
         Showing{' '}
         <PageSizeInput
           helperValues={[10, 20, 40, 80]}

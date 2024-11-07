@@ -36,7 +36,7 @@ const PageSizeInput = ({
   }, []);
 
   return (
-    <div className="relative w-64">
+    <div className="relative">
       {/* Input Field */}
       <input
         ref={inputRef}

@@ -1,13 +1,5 @@
-import React, { useEffect } from 'react';
-import ToDetail from '@components/shared/TableContent/ToDetail';
-import {
-  AccessorKeyColumnDef,
-  ColumnDef,
-  createColumnHelper,
-  GroupingState,
-  Updater,
-  VisibilityState,
-} from '@tanstack/react-table';
+import { useEffect } from 'react';
+import { GroupingState, Updater, VisibilityState } from '@tanstack/react-table';
 import { useTableStore } from '@stores/useTableStore';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
@@ -17,53 +9,19 @@ import {
   TableContentProps,
   PaginationPartial,
   RowSizeType,
+  GenerateColumnsOption,
 } from '../types/client/table';
-
-const columnHelper = createColumnHelper<ICountry>();
-
-export const countryColumns = [
-  columnHelper.accessor('number', {
-    id: 'Number',
-    header: '#',
-    cell: (props) => props.renderValue(),
-    enableGrouping: true,
-  }),
-  columnHelper.accessor('country_code', {
-    id: 'Country Code',
-    header: 'Country Code',
-    cell: (props) => props.renderValue(),
-    enableGrouping: true,
-  }),
-  columnHelper.accessor('country_name', {
-    id: 'Country Name',
-    header: 'Country Name',
-    cell: (props) => props.renderValue(),
-    enableGrouping: true,
-  }),
-  columnHelper.accessor('create_date', {
-    id: 'Create Date',
-    header: 'Create Date',
-    cell: (props) => props.renderValue(),
-    enableGrouping: true,
-  }),
-  columnHelper.display({
-    id: 'Action',
-    cell: (props) => (
-      <ToDetail href={`/${props.row.getValue('Country Code')}`} />
-    ),
-  }),
-];
 
 type UseTableProps<T> = {
   queryKey: string;
   queryFn: (
     options?: TableOptionState
   ) => Promise<AxiosResponse<ApiResponse<T[]>>>;
-  columns: AccessorKeyColumnDef<any, any>[] | ColumnDef<any, any>[];
+  columns: GenerateColumnsOption;
   onFilter?: () => void;
 };
 
-const useTable = <T,>({
+const useTable = <T>({
   queryKey,
   columns,
   queryFn,

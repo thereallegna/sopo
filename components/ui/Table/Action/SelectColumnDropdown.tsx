@@ -56,7 +56,11 @@ const SelectColumnDropdown: React.FC<SelectColumnDropdownProps> = ({
             <Checkbox
               key={column.id}
               // id={column.id}
-              label={column.id}
+              label={
+                column.id === 'action'
+                  ? 'Action'
+                  : (column.columnDef.header as string)
+              }
               className="text-base font-normal flex items-center"
               checked={column.getIsVisible()}
               onClick={column.getToggleVisibilityHandler()}

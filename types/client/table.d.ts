@@ -5,6 +5,17 @@ import {
   VisibilityState,
 } from '@tanstack/react-table';
 
+type ColumnKey = {
+  accessor: string;
+  header: string;
+};
+
+type GenerateColumnsOption = {
+  columns: ColumnKey[];
+  id: string;
+  hasAction?: boolean;
+};
+
 type TableState = {
   options: Record<string, TableOptionState>;
   setPagination: (
@@ -27,7 +38,7 @@ type TableOptionState = {
 
 type TableContentProps<T> = {
   data?: ApiResultResponse<T[]>;
-  columns: AccessorKeyColumnDef<any, any>[] | ColumnDef<any, any>[];
+  columns: GenerateColumnsOption;
   option: TableOptionState;
   onPagination: (
     pg: PaginationState | ((prev: PaginationState) => PaginationState)
