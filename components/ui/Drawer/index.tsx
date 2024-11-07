@@ -141,7 +141,7 @@ const DrawerHeader = ({
   onClick,
   ...props
 }: React.HTMLAttributes<HTMLDivElement> & {
-  drawerTitle: string;
+  drawerTitle?: string;
   onClick?: () => void;
 }) => (
   <div

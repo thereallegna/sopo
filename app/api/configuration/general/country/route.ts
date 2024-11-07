@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSideSession } from '@utils/session';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { PATH_COUNTRY_BE } from '@constants/routes';
 
 export async function GET(req: NextRequest) {
@@ -23,8 +23,11 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json(response.data);
   } catch (error: any) {
+    const axiosError = error as AxiosError;
     if (error?.response?.data) {
-      return NextResponse.json(error?.response?.data, { status: 400 });
+      return NextResponse.json(error?.response?.data, {
+        status: axiosError.response?.status,
+      });
     }
     return NextResponse.json(
       { message: 'Internal server error', error },

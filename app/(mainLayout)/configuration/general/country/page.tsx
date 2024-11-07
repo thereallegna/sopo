@@ -4,7 +4,6 @@ import React from 'react';
 import Content from '@components/module/Content';
 import HeaderContent from '@components/module/Content/HeaderContent';
 import BodyContent from '@components/module/Content/BodyContent';
-import { useDrawerStore } from '@stores/useDrawerStore';
 import Image from 'next/image';
 import FilterButton from '@components/ui/Table/Action/FilterButton';
 import { getCountry } from '@services/fetcher/configuration/general';
@@ -12,45 +11,36 @@ import { GET_COUNTRY } from '@constants/queryKey';
 import useSetTableState from '@hooks/useSetTableState';
 
 const Country = () => {
-  useSetTableState({
-    title: 'Find Country',
-    columns: {
-      columns: [
-        {
-          accessor: 'number',
-          header: '#',
-        },
-        {
-          accessor: 'country_code',
-          header: 'Country Code',
-        },
-        {
-          accessor: 'country_name',
-          header: 'Country Name',
-        },
-        {
-          accessor: 'create_date',
-          header: 'Create Date',
-        },
-      ],
-      id: 'country_code',
+  const { handleOpenFilter, handleOpenTable } = useSetTableState(
+    {
+      title: 'Find Country',
+      columns: {
+        columns: [
+          {
+            accessor: 'number',
+            header: '#',
+          },
+          {
+            accessor: 'country_code',
+            header: 'Country Code',
+          },
+          {
+            accessor: 'country_name',
+            header: 'Country Name',
+          },
+          {
+            accessor: 'create_date',
+            header: 'Create Date',
+          },
+        ],
+        id: 'country_code',
+      },
+      queryFn: getCountry,
+      keyTableDrawer: GET_COUNTRY,
+      keyCreateDrawer: 'createCountry',
     },
-    queryFn: getCountry,
-    keyTableDrawer: GET_COUNTRY,
-    keyCreateDrawer: 'createCountry',
-  });
-
-  const { openFilterDrawer, openTableDrawer, closeFilterDrawer } =
-    useDrawerStore();
-
-  const handleOpenFilter = () => {
-    openFilterDrawer('filterCountry');
-  };
-
-  const handleOpenTable = () => {
-    closeFilterDrawer();
-    openTableDrawer();
-  };
+    'filterCountry'
+  );
 
   return (
     <Content>

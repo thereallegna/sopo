@@ -34,30 +34,33 @@ export type TableDrawerProps = {
   keyFilterDrawer?: FilterDrawerType;
 };
 
-const TableDrawer = ({
-  title,
-  columns,
-  queryFn,
-  keyTableDrawer,
-  keyCreateDrawer,
-}: TableDrawerProps) => {
-  const { isOpenTable, openDrawer, openFilterDrawer, closeTableDrawer } =
-    useDrawerStore();
+const TableDrawer = () => {
+  const {
+    isOpenTable,
+    openDrawer,
+    openFilterDrawer,
+    closeTableDrawer,
+    tableSetting,
+  } = useDrawerStore();
+
   const handleOpenAdd = () => {
-    openDrawer(keyCreateDrawer);
+    openDrawer(tableSetting?.keyCreateDrawer);
   };
 
   const tableProps = useTable<ICountry[]>({
-    queryFn,
-    columns,
-    queryKey: keyTableDrawer || '',
+    queryFn: tableSetting?.queryFn as any,
+    columns: tableSetting?.columns as any,
+    queryKey: tableSetting?.keyTableDrawer as any,
     onFilter: openFilterDrawer,
   });
 
   return (
     <Drawer open={isOpenTable} onClose={closeTableDrawer}>
       <DrawerContent>
-        <DrawerHeader drawerTitle={title} onClick={closeTableDrawer}>
+        <DrawerHeader
+          drawerTitle={tableSetting?.title}
+          onClick={closeTableDrawer}
+        >
           <DrawerEndHeader>
             {/* button save */}
             <Button

@@ -2,8 +2,8 @@
 
 import dynamic from 'next/dynamic';
 import React from 'react';
-import { useDrawer } from '@hooks/useDrawer';
-import PreventNavigationDialog from '../Alert';
+import { useDrawerStore } from '@stores/useDrawerStore';
+import useFormStore from '@stores/useFormStore';
 
 const CreateCountryModal = dynamic(
   () => import('@components/shared/Drawer/Create/CreateCountry'),
@@ -20,18 +20,32 @@ const TableModal = dynamic(
   { ssr: false }
 );
 
-const DrawerProvider = () => {
-  const {tableSetting } = useDrawerStore();
+const PreventNavigationDialog = dynamic(() => import('../Alert'), {
+  ssr: false,
+});
 
+const DrawerProvider = () => {
+  const {
+    tableSetting,
+    isOpenFilter,
+    isOpen,
+    drawerType,
+    filterDrawerType,
+    isOpenTable,
+  } = useDrawerStore();
+  const { leavingPage } = useFormStore();
   return (
     <>
-      {tableSetting && <TableModal {...tableSetting} />}
+      {isOpenTable && tableSetting && <TableModal />}
 
-      <FilterCountryModal />
-      <CreateCountryModal />
+      {isOpenFilter && filterDrawerType === 'filterCountry' && (
+        <FilterCountryModal />
+      )}
+
+      {isOpen && drawerType === 'createCountry' && <CreateCountryModal />}
 
       {/* Dialog konfirmasi navigasi */}
-      <PreventNavigationDialog />
+      {leavingPage && <PreventNavigationDialog />}
     </>
   );
 };
