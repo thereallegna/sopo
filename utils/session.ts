@@ -29,3 +29,23 @@ export const getServerSideSession = (cookieOptions?: any) => {
 
   return getIronSession<IronSessionData>(cookies(), withSessionOptions);
 };
+
+export const clearServerSideSession = async (cookieOptions?: any) => {
+  const withSessionOptions: SessionOptions = {
+    ...sessionOptions,
+    cookieOptions: {
+      ...sessionOptions.cookieOptions,
+      ...cookieOptions,
+    },
+  };
+
+  const session = await getIronSession<IronSessionData>(
+    cookies(),
+    withSessionOptions
+  );
+
+  session.user = undefined;
+  session.token = '';
+
+  await session.save();
+};

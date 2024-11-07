@@ -51,7 +51,7 @@ const FilterDropdownButton: React.FC = () => {
           <IconComponent icon={IconChevronDown} size="large" />
         </div>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="bg-white shadow-md rounded-md w-[140px] h-full border border-neutral-200 p-2 mt-2">
+      <DropdownMenuContent className="bg-white shadow-md rounded-md w-[140px] h-full border border-neutral-200 p-2 mt-1">
         {checkboxItems.map(({ label, key }) => (
           <DropdownMenuCheckboxItem
             key={String(key)}

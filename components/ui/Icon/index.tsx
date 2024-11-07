@@ -4,12 +4,13 @@ import React, { ElementType, FC } from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@libs/classNames';
 
-const iconVariants = cva('cursor-pointer', {
+export const iconVariants = cva('cursor-pointer', {
   variants: {
     size: {
       small: 'w-3 h-3',
       medium: 'w-[14px] h-[14px]',
       large: 'w-4 h-4',
+      x_large: 'w-6 h-6',
     },
     color: {
       default: 'text-Neutral-600',
@@ -22,6 +23,7 @@ const iconVariants = cva('cursor-pointer', {
       dark: 'text-Neutral-black',
       White: 'text-Neutral-White',
       drawer: 'text-Neutral-50',
+      custom: 'text-gray-blue-800',
     },
   },
   defaultVariants: {

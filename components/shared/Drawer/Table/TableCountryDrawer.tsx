@@ -18,20 +18,23 @@ import { getCountry } from '@services/fetcher/configuration/general';
 import TableContent from '@components/shared/TableContent';
 
 const TableCountryFilter = () => {
-  const { isOpenTable, openDrawer, closeTableDrawer } = useDrawerStore();
+  const { isOpenTable, openDrawer, openFilterDrawer, closeTableDrawer } =
+    useDrawerStore();
   const handleOpenAdd = () => {
     openDrawer('CREATE_COUNTRY');
   };
+
   const tableProps = useTable<ICountry[]>({
     queryKey: GET_COUNTRY,
     queryFn: getCountry,
     columns: countryColumns,
+    onFilter: openFilterDrawer,
   });
 
   return (
-    <Drawer onClose={closeTableDrawer} open={isOpenTable}>
+    <Drawer open={isOpenTable} onClose={closeTableDrawer}>
       <DrawerContent>
-        <DrawerHeader drawerTitle="Find Country">
+        <DrawerHeader drawerTitle="Find Country" onClick={closeTableDrawer}>
           <DrawerEndHeader>
             {/* button save */}
             <Button

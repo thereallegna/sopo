@@ -3,13 +3,35 @@ import { useEffect } from 'react';
 import { useDrawerStore } from '@stores/useDrawerStore';
 
 export const useCloseDrawerOnPathChange = () => {
-  const { isOpenFilter, isOpen } = useDrawerStore();
+  const {
+    isOpenFilter,
+    isOpenTable,
+    isOpen,
+    closeFilterDrawer,
+    closeTableDrawer,
+  } = useDrawerStore();
 
-  // Mengatur pointer events
+  const pathname = usePathname();
+  const { changeStatus, setIsAlertOpen } = useFormStore();
+
+  // Membuka AlertDialog jika `changeStatus dan pathname berubah`
+  useEffect(() => {
+    if (changeStatus) {
+      setIsAlertOpen(true);
+    }
+    if (isOpenFilter) {
+      closeFilterDrawer();
+    }
+    if (isOpenTable) {
+      closeTableDrawer();
+    }
+  }, [pathname]);
+
+  // Mengatur delay untuk pointer events saat drawer terbuka
   useEffect(() => {
     let timer: NodeJS.Timeout;
 
-    if (isOpen || isOpenFilter) {
+    if (isOpen || isOpenFilter || isOpenTable) {
       timer = setTimeout(() => {
         document.body.style.pointerEvents = 'auto';
       }, 500);
@@ -21,5 +43,5 @@ export const useCloseDrawerOnPathChange = () => {
       clearTimeout(timer);
       document.body.style.pointerEvents = '';
     };
-  }, [isOpen, isOpenFilter]);
+  }, [isOpen, isOpenFilter, isOpenTable]);
 };

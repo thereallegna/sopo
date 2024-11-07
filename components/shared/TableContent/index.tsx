@@ -19,15 +19,6 @@ import TablePagination from '@components/ui/Table/TablePagination';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { TableContentProps } from '../../../types/client/table';
 
-// export type TableContentProps = {
-//   data: unknown[];
-//   columns: AccessorKeyColumnDef<any, any>[] | ColumnDef<any, any>[];
-//   pagination: PaginationState;
-//   total_records?: number;
-//   total_pages?: number;
-//   onPaginationChange: OnChangeFn<PaginationState>;
-// };
-
 export interface PaginationState {
   pageIndex: number;
   pageSize: number;
@@ -39,6 +30,8 @@ const TableContent = <T,>({
   option,
   onPagination,
   onSearch,
+  onFilter,
+  onColumnVisibility,
 }: TableContentProps<T>) => {
   const router = useRouter();
   const pathname = usePathname();
@@ -50,8 +43,20 @@ const TableContent = <T,>({
     columns,
     manualPagination: true,
     pageCount: data?.total_pages,
+    state: {
+      pagination: option.pagination,
+      columnVisibility: option.columnVisibility,
+    },
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    onColumnVisibilityChange: (newVisibility) => {
+      const visibilityState =
+        typeof newVisibility === 'function'
+          ? newVisibility(option.columnVisibility)
+          : newVisibility;
+
+      onColumnVisibility(visibilityState);
+    },
     onPaginationChange: (newPagination) => {
       const paginationState =
         typeof newPagination === 'function'
@@ -66,9 +71,6 @@ const TableContent = <T,>({
       url.set('page_size', pageSize.toString());
       router.replace(`${pathname}?${url.toString()}`);
     },
-    state: {
-      pagination: option.pagination,
-    },
   });
 
   return (
@@ -77,6 +79,12 @@ const TableContent = <T,>({
         data={data?.results ?? defaultData}
         columns={columns}
         onSearch={onSearch}
+        onFilter={onFilter}
+        columnSelector={{
+          isAllColumnsVisible: table.getIsAllColumnsVisible(),
+          onSelectAll: table.getToggleAllColumnsVisibilityHandler(),
+          columnVisible: table.getAllLeafColumns(),
+        }}
       />
       <Table>
         <TableHeader>

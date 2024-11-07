@@ -3,8 +3,9 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import IconComponent from '@components/ui/Icon';
-import { IconNews, IconBell, IconUser } from '@tabler/icons-react';
+import { IconNews, IconBell } from '@tabler/icons-react';
 import { useUserSession } from '@hooks/useUserSession';
+import NavbarSettings from './NavbarSetting';
 
 const Navbar = () => {
   const { isLoading, data } = useUserSession();
@@ -51,8 +52,8 @@ const Navbar = () => {
             Hello, {isLoading ? 'loading...' : data?.usercode || 'Guest'}
           </span>
         </div>
-        <div className="rounded-full bg-gray-200 p-2 w-7 h-7 flex items-center justify-center">
-          <IconComponent icon={IconUser} size="medium" color="primary" />
+        <div>
+          <NavbarSettings />
         </div>
       </div>
     </nav>
