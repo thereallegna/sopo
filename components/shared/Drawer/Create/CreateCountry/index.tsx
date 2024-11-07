@@ -19,10 +19,13 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { countrySchema } from '@constants/schemas/ConfigurationSchema/general';
 import { createCountry } from '@services/fetcher/configuration/general';
 import useFormStore from '@stores/useFormStore'; // Import useFormStore
+import { useDrawer } from '@hooks/useDrawer';
+import { countryDefaultValues } from '@constants/defaultValues';
+import { useFormChanges } from '@hooks/useFormChanges';
 
 const CreateCountry = () => {
   const { isOpen, closeDrawer } = useDrawerStore();
-  const { setIsDirty } = useFormStore(); // Ambil setIsDirty dari useFormStore
+  const { setIsDirty } = useFormStore();
   const [isLoading, setIsLoading] = React.useState(false);
 
   const {
@@ -30,15 +33,16 @@ const CreateCountry = () => {
     handleSubmit,
     reset,
     setError,
+    control,
     formState: { errors, isDirty },
   } = useForm<CountryFormBody>({
     mode: 'onSubmit',
     resolver: yupResolver(countrySchema),
-    defaultValues: {
-      country_code: '',
-      country_name: '',
-    },
+    defaultValues: countryDefaultValues,
   });
+
+  const { handleCloseDrawer } = useDrawer({ isDirty, reset });
+  const { hasChanged } = useFormChanges(countryDefaultValues, control);
 
   const { mutate: mutationCreateCountry } = useMutation({
     mutationFn: createCountry,
@@ -49,16 +53,16 @@ const CreateCountry = () => {
       reset();
       closeDrawer();
       setIsLoading(false);
-      setIsDirty(false); // Reset status dirty setelah berhasil menyimpan
+      setIsDirty(false);
     },
     onError: (error: any) => {
       setIsLoading(false);
       if (error?.response?.data) {
-        const { errorField, message } = error.response.data;
+        const { errorList, message } = error.response.data;
 
-        if (errorField === 'country_code') {
+        if (errorList === 'country_code') {
           setError('country_code', { type: 'server', message });
-        } else if (errorField === 'country_name') {
+        } else if (errorList === 'country_name') {
           setError('country_name', { type: 'server', message });
         }
       }
@@ -67,22 +71,6 @@ const CreateCountry = () => {
 
   const onSubmit: SubmitHandler<CountryFormBody> = (data) => {
     mutationCreateCountry(data);
-  };
-
-  // Trigger perubahan status dirty saat ada perubahan input
-  React.useEffect(() => {
-    setIsDirty(isDirty); // Update state isDirty di useFormStore berdasarkan form state
-  }, [isDirty, setIsDirty]);
-
-  const handleCloseDrawer = () => {
-    if (isDirty) {
-      // Jika ada perubahan, tampilkan konfirmasi sebelum menutup drawer
-      closeDrawer();
-    } else {
-      closeDrawer();
-      reset();
-      setIsDirty(false); // Reset status dirty saat drawer ditutup tanpa perubahan
-    }
   };
 
   return (
@@ -95,7 +83,8 @@ const CreateCountry = () => {
           >
             <DrawerEndHeader>
               <Button
-                icon={{ size: 'large', icon: IconDeviceFloppy }}
+                variant={!hasChanged ? 'disabled' : 'primary'}
+                icon={{ size: 'large', icon: IconDeviceFloppy, color: 'White' }}
                 type="submit"
                 disabled={isLoading}
               >

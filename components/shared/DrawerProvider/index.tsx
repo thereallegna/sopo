@@ -2,8 +2,7 @@
 
 import dynamic from 'next/dynamic';
 import React from 'react';
-import { useCloseDrawerOnPathChange } from '@hooks/useDrawer';
-import { usePreventNavigation } from '@hooks/usePreventNavigation';
+import { useDrawer } from '@hooks/useDrawer';
 import PreventNavigationDialog from '../Alert';
 
 const CreateCountryModal = dynamic(
@@ -22,9 +21,7 @@ const TableCountryModal = dynamic(
 );
 
 const DrawerProvider = () => {
-  usePreventNavigation();
-
-  useCloseDrawerOnPathChange();
+  useDrawer();
 
   return (
     <>
