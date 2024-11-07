@@ -1,30 +1,31 @@
-import { useEffect, useCallback } from 'react';
+// hooks/useDrawer.ts
+import { useCallback, useEffect } from 'react';
 import { useDrawerStore } from '@stores/useDrawerStore';
 import useFormStore from '@stores/useFormStore';
+import { UseFormReset } from 'react-hook-form';
 
-type UseDrawerOptions = {
-  isDirty?: boolean;
-  reset?: () => void;
-};
+export const useDrawer = (isDirty?: boolean, reset?: UseFormReset<any>) => {
+  // Accept reset as a parameter
+  const { isOpen, isOpenFilter, isOpenTable, closeDrawer } = useDrawerStore();
+  const { setIsDirty, setReset, isReset } = useFormStore();
 
-export const useDrawer = ({
-  isDirty = false,
-  reset = () => {},
-}: UseDrawerOptions = {}) => {
-  const { isOpen, isOpenFilter, closeDrawer, isOpenTable } = useDrawerStore();
-  const { setIsDirty } = useFormStore();
+  useEffect(() => {
+    if (typeof isDirty !== 'undefined') {
+      setIsDirty(isDirty);
+    }
+  }, [isDirty, setIsDirty]);
 
-  // Function to handle closing the drawer, considering unsaved changes
   const handleCloseDrawer = useCallback(() => {
     if (isDirty) {
       closeDrawer();
-      reset();
+      setReset(true);
+      if (reset) reset(); // Call reset if it's passed
     } else {
       closeDrawer();
-      reset();
       setIsDirty(false);
+      setReset(false);
     }
-  }, [isDirty, closeDrawer, reset, setIsDirty]);
+  }, [isDirty, closeDrawer, setIsDirty, setReset, reset]);
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
@@ -43,10 +44,13 @@ export const useDrawer = ({
     };
   }, [isOpen, isOpenFilter, isOpenTable]);
 
-  // Update the global store with the current dirty state whenever it changes
+  // useEffect for resetForm reset if isReset is true
   useEffect(() => {
-    setIsDirty(isDirty);
-  }, [isDirty, setIsDirty]);
+    if (isReset) {
+      setReset(false);
+      if (reset) reset();
+    }
+  }, [isReset, reset, setReset]);
 
   return { handleCloseDrawer, isOpen, isOpenFilter, isOpenTable };
 };
