@@ -1,10 +1,6 @@
 'use client';
 
 import React from 'react';
-// import TableContent from '@components/shared/TableContent';
-// import useTable, { countryColumns } from '@hooks/useTable';
-// import { GET_COUNTRY } from '@constants/queryKey';
-// import { getCountry } from '@services/fetcher/configuration/general';
 import Content from '@components/module/Content';
 import HeaderContent from '@components/module/Content/HeaderContent';
 import BodyContent from '@components/module/Content/BodyContent';
@@ -13,13 +9,15 @@ import Image from 'next/image';
 import FilterButton from '@components/ui/Table/Action/FilterButton';
 
 const Country = () => {
-  const { openFilterDrawer, openTableDrawer } = useDrawerStore();
+  const { openFilterDrawer, openTableDrawer, closeFilterDrawer } =
+    useDrawerStore();
 
   const handleOpenFilter = () => {
     openFilterDrawer('FILTER_COUNTRY');
   };
 
   const handleOpenTable = () => {
+    closeFilterDrawer();
     openTableDrawer('GET_COUNTRY');
   };
 
@@ -38,7 +36,11 @@ const Country = () => {
             Filter to find data Master Vendor
           </p>
           <div className="pb-[10px]">
-            <FilterButton variant="outlined" onClick={handleOpenFilter} />
+            <FilterButton
+              iconColor="secondary"
+              variant="outlined"
+              onClick={handleOpenFilter}
+            />
           </div>
           <button
             type="button"

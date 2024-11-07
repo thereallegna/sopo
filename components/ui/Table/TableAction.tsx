@@ -12,12 +12,14 @@ interface TableActionProps {
   data: any[];
   columns: AccessorKeyColumnDef<any, any>[] | ColumnDef<any, any>[];
   onSearch: (keyword: string) => void;
+  onFilter?: () => void;
 }
 
 const TableAction: React.FC<TableActionProps> = ({
   data,
   columns,
   onSearch,
+  onFilter,
 }) => (
   <div className="flex justify-between gap-2">
     <div className="flex gap-2 flex-1 w-full">
@@ -29,8 +31,7 @@ const TableAction: React.FC<TableActionProps> = ({
         }}
         onChange={(e) => onSearch(e.target.value)}
       />
-
-      <FilterButton />
+      {onFilter && <FilterButton onClick={onFilter} />}
       <LayoutDropdownButton />
       <FilterDropdownButton />
       <div className="flex items-center justify-end w-full gap-2">

@@ -13,6 +13,7 @@ type TableContentProps<T> = {
     pg: PaginationState | ((prev: PaginationState) => PaginationState)
   ) => void;
   onSearch: (keyword: string) => void;
+  onFilter?: () => void;
 };
 
 type PaginationPartial =
