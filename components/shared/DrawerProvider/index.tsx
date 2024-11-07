@@ -14,7 +14,7 @@ const FilterCountryModal = dynamic(
   { ssr: false }
 );
 
-const TableCountryModal = dynamic(
+const TableModal = dynamic(
   () => import('@components/shared/Drawer/Table/TableCountryDrawer'),
   { ssr: false }
 );

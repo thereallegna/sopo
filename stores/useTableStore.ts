@@ -11,6 +11,7 @@ const initialTableState = {
         pageSize: 10,
       },
       grouping: [],
+      rowSize: undefined,
     },
   },
 };
@@ -79,6 +80,20 @@ export const useTableStore = create<TableState>((set) => ({
           [key]: {
             ...currentOption,
             grouping: group,
+          },
+        },
+      };
+    });
+  },
+  setRowSize: (key, size) => {
+    set((state) => {
+      const currentOption = state.options[key];
+      return {
+        options: {
+          ...state.options,
+          [key]: {
+            ...currentOption,
+            rowSize: size,
           },
         },
       };

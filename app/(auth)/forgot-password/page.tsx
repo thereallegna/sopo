@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import InputField from '@components/shared/InputField';
 import { Button } from '@components/ui/Button';
 import {
@@ -15,26 +15,50 @@ import Image from 'next/image';
 import IconComponent from '@components/ui/Icon';
 import { IconArrowLeft, IconX } from '@tabler/icons-react';
 import { useRouter } from 'next/navigation';
+import { forgotPasswordConstant } from '@constants/forgotPasswordConstant';
+import { forgotPassword } from '@services/fetcher/password/forgot-password';
 
 const ForgotPasswordPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [emailSent, setEmailSent] = useState(false);
   const [email, setEmail] = useState('');
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [cooldown, setCooldown] = useState(0);
   const router = useRouter();
 
-  const handleSendEmail = () => {
-    console.log('Sending Email...');
+  useEffect(() => {
+    if (cooldown > 0) {
+      const timer = setTimeout(() => setCooldown(cooldown - 1), 1000);
+      return () => clearTimeout(timer);
+    }
+    return undefined;
+  }, [cooldown]);
 
-    const isEmailSent = true;
+  const handleSendEmail = async () => {
+    if (cooldown > 0) return;
+    setIsLoading(true);
+    setError('');
 
-    if (isEmailSent) {
-      setEmailSent(true);
-      console.log('Email sent successfully');
-    } else {
+    try {
+      const response = await forgotPassword(email);
+      if (response.status === 200) {
+        setEmailSent(true);
+        console.log('Email sent successfully');
+      } else {
+        setEmailSent(false);
+        setError('Failed to send email. Please try again.');
+        console.log('Failed to send email');
+        setCooldown(60);
+      }
+    } catch (err) {
       setEmailSent(false);
-      console.log('Failed to send email');
+      setError('Network error, please try again.');
+      console.log('Error:', err);
+      setCooldown(60);
     }
 
+    setIsLoading(false);
     setIsModalOpen(true);
   };
 
@@ -61,11 +85,11 @@ const ForgotPasswordPage = () => {
           Forgot Password?
         </CardTitle>
         <CardDescription className="text-[11px] font-normal mt-1">
-          No worries, we will send you reset instruction
+          No worries, we will send you reset instructions
         </CardDescription>
         <CardContent className="mt-5">
           <InputField
-            placeholder="Input your email"
+            {...forgotPasswordConstant.inputField[0]}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
@@ -75,8 +99,9 @@ const ForgotPasswordPage = () => {
             type="submit"
             className="w-full h-6"
             onClick={handleSendEmail}
+            disabled={isLoading || cooldown > 0}
           >
-            Send
+            {isLoading ? 'Sending...' : 'Send'}
           </Button>
         </CardFooter>
       </Card>
@@ -98,7 +123,7 @@ const ForgotPasswordPage = () => {
             <p className="p-[10px] text-[11px]">
               {emailSent
                 ? 'Email has been sent. Follow the instructions we sent to your email to reset your password.'
-                : 'Failed to send email. Please try again.'}
+                : error || 'Failed to send email. Please try again.'}
             </p>
             <div className="flex justify-end">
               <Button

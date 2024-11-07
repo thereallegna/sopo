@@ -2,28 +2,33 @@ import React from 'react';
 import { IconSearch } from '@tabler/icons-react';
 import Input from '@components/ui/Input';
 import FilterButton from '@components/ui/Table/Action/FilterButton';
-import LayoutDropdownButton from '@components/ui/Table/Action/LayoutDropdownButton';
+import RowSizeDropdown from '@components/ui/Table/Action/RowSizeDropdown';
 import SelectColumnDropdown, {
   SelectColumnDropdownProps,
 } from '@components/ui/Table/Action/SelectColumnDropdown';
 import ExportButton from '@components/ui/Table/Action/ExportButton';
 import PrintButton from '@components/ui/Table/Action/PrintButton';
 import { AccessorKeyColumnDef, ColumnDef } from '@tanstack/react-table';
+import { RowSizeType } from '../../../types/client/table';
 
 interface TableActionProps {
   data: any[];
   columns: AccessorKeyColumnDef<any, any>[] | ColumnDef<any, any>[];
+  columnSelector: SelectColumnDropdownProps;
+  rowSize: RowSizeType;
   onSearch: (keyword: string) => void;
   onFilter?: () => void;
-  columnSelector: SelectColumnDropdownProps;
+  onRowSizeChange: (size: RowSizeType) => void;
 }
 
 const TableAction: React.FC<TableActionProps> = ({
   data,
   columns,
   columnSelector,
+  rowSize,
   onSearch,
   onFilter,
+  onRowSizeChange,
 }) => (
   <div className="flex justify-between gap-2">
     <div className="flex gap-2 flex-1 w-full">
@@ -36,7 +41,7 @@ const TableAction: React.FC<TableActionProps> = ({
         onChange={(e) => onSearch(e.target.value)}
       />
       {onFilter && <FilterButton onClick={onFilter} />}
-      <LayoutDropdownButton />
+      <RowSizeDropdown active={rowSize} action={onRowSizeChange} />
       <SelectColumnDropdown {...columnSelector} />
       <div className="flex items-center justify-end w-full gap-2">
         <PrintButton data={data} columns={columns as ColumnDef<any>[]} />
