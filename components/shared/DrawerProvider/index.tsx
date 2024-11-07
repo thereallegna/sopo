@@ -3,7 +3,7 @@
 import dynamic from 'next/dynamic';
 import React from 'react';
 import { useDrawerStore } from '@stores/useDrawerStore';
-import useFormStore from '@stores/useFormStore';
+import PreventNavigationDialog from '../Alert';
 
 const CreateCountryModal = dynamic(
   () => import('@components/shared/Drawer/Create/CreateCountry'),
@@ -20,9 +20,9 @@ const TableModal = dynamic(
   { ssr: false }
 );
 
-const PreventNavigationDialog = dynamic(() => import('../Alert'), {
-  ssr: false,
-});
+// const PreventNavigationDialog = dynamic(() => import('../Alert'), {
+//   ssr: false,
+// });
 
 const DrawerProvider = () => {
   const {
@@ -33,7 +33,6 @@ const DrawerProvider = () => {
     filterDrawerType,
     isOpenTable,
   } = useDrawerStore();
-  const { leavingPage } = useFormStore();
   return (
     <>
       {isOpenTable && tableSetting && <TableModal />}
@@ -44,8 +43,7 @@ const DrawerProvider = () => {
 
       {isOpen && drawerType === 'createCountry' && <CreateCountryModal />}
 
-      {/* Dialog konfirmasi navigasi */}
-      {leavingPage && <PreventNavigationDialog />}
+      <PreventNavigationDialog />
     </>
   );
 };
