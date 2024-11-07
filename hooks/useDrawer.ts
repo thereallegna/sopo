@@ -1,7 +1,6 @@
+// hooks/useCloseDrawerOnPathChange.ts
 import { useEffect } from 'react';
-import { usePathname } from 'next/navigation';
 import { useDrawerStore } from '@stores/useDrawerStore';
-import useFormStore from '@stores/useFormStore';
 
 export const useCloseDrawerOnPathChange = () => {
   const {
