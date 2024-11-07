@@ -41,7 +41,7 @@ const CreateCountry = () => {
     defaultValues: countryDefaultValues,
   });
 
-  const { handleCloseDrawer } = useDrawer({ isDirty, reset });
+  const { handleCloseDrawer } = useDrawer(isDirty, reset);
   const { hasChanged } = useFormChanges(countryDefaultValues, control);
 
   const { mutate: mutationCreateCountry } = useMutation({
