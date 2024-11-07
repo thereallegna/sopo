@@ -38,7 +38,10 @@ const DrawerOverlay = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <DrawerPrimitive.Overlay
     ref={ref}
-    className={cn('absolute  inset-0 z-50 bg-black/80 ', className)}
+    className={cn(
+      'absolute  inset-0 z-50 bg-slate-800/5 backdrop-blur-[1px]',
+      className
+    )}
     {...props}
   />
 ));
@@ -72,7 +75,7 @@ const DrawerContent = React.forwardRef<
 DrawerContent.displayName = 'DrawerContent';
 
 const DrawerBack = React.forwardRef<React.ElementRef<typeof Button>, IconProps>(
-  ({ className, onClick }) => (
+  ({ icon, className, onClick }) => (
     <Button
       className={cn('rounded-md w-1/6', className)}
       onClick={onClick}
@@ -80,7 +83,7 @@ const DrawerBack = React.forwardRef<React.ElementRef<typeof Button>, IconProps>(
       variant="backDrawer"
       icon={{
         size: 'large',
-        icon: IconArrowLeft,
+        icon: icon || IconArrowLeft,
         color: 'dark',
       }}
     />
@@ -93,7 +96,10 @@ const DrawerBody = ({
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
-    className={cn('w-full flex flex-col justify-between p-5 gap-5', className)}
+    className={cn(
+      'w-full flex flex-col justify-between p-5 gap-5 overflow-auto',
+      className
+    )}
     {...props}
   />
 );

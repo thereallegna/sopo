@@ -8,13 +8,22 @@ import FilterDrawerHeader from '@components/ui/Drawer/FilterDrawerHeader';
 import InputField from '@components/shared/InputField';
 
 const FilterCountry = () => {
-  const { isOpenFilter, closeDrawer } = useDrawerStore();
+  const { isOpenFilter, closeFilterDrawer } = useDrawerStore();
 
   return (
-    <Drawer onClose={closeDrawer} open={isOpenFilter} direction="right">
+    <Drawer
+      onClose={closeFilterDrawer}
+      open={isOpenFilter}
+      direction="right"
+      modal
+      dismissible
+    >
       <DrawerContent fixed className="flex h-screen p-3 w-[240px]">
         <div className="flex flex-col gap-[10px]">
-          <FilterDrawerHeader title="Filter Country" />
+          <FilterDrawerHeader
+            title="Filter Country"
+            onClick={closeFilterDrawer}
+          />
           <DrawerBody className="p-0">
             <InputField label="Country Code" />
           </DrawerBody>

@@ -14,11 +14,13 @@ import {
 import Image from 'next/image';
 import IconComponent from '@components/ui/Icon';
 import { IconArrowLeft, IconX } from '@tabler/icons-react';
+import { useRouter } from 'next/navigation';
 
 const ForgotPasswordPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [emailSent, setEmailSent] = useState(false);
   const [email, setEmail] = useState('');
+  const router = useRouter();
 
   const handleSendEmail = () => {
     console.log('Sending Email...');
@@ -51,7 +53,11 @@ const ForgotPasswordPage = () => {
           />
         </CardHeader>
         <CardTitle className="flex items-center text-lg font-bold mt-5">
-          <IconComponent icon={IconArrowLeft} className="mr-2" />
+          <IconComponent
+            icon={IconArrowLeft}
+            className="mr-2"
+            onClick={() => router.push('/login')}
+          />
           Forgot Password?
         </CardTitle>
         <CardDescription className="text-[11px] font-normal mt-1">
@@ -65,7 +71,11 @@ const ForgotPasswordPage = () => {
           />
         </CardContent>
         <CardFooter className="mt-[10px]">
-          <Button type="submit" className="w-full" onClick={handleSendEmail}>
+          <Button
+            type="submit"
+            className="w-full h-6"
+            onClick={handleSendEmail}
+          >
             Send
           </Button>
         </CardFooter>

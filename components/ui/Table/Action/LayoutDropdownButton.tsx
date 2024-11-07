@@ -19,7 +19,7 @@ const LayoutDropdownButton: React.FC = () => {
           <IconComponent icon={IconChevronDown} size="large" />
         </div>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="bg-white shadow:md rounded-md w-[124px] h-[96px] border border-neutral-200 p-2 mt-2">
+      <DropdownMenuContent className="bg-white shadow:md rounded-md w-[124px] h-[96px] border border-neutral-200 p-2 mt-1">
         {labels.map((label) => (
           <DropdownMenuCheckboxItem
             key={label}

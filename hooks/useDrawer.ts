@@ -11,7 +11,7 @@ export const useDrawer = ({
   isDirty = false,
   reset = () => {},
 }: UseDrawerOptions = {}) => {
-  const { isOpen, isOpenFilter, closeDrawer } = useDrawerStore();
+  const { isOpen, isOpenFilter, closeDrawer, isOpenTable } = useDrawerStore();
   const { setIsDirty } = useFormStore();
 
   // Function to handle closing the drawer, considering unsaved changes
@@ -29,7 +29,7 @@ export const useDrawer = ({
   useEffect(() => {
     let timer: NodeJS.Timeout;
 
-    if (isOpen || isOpenFilter) {
+    if (isOpen || isOpenFilter || isOpenTable) {
       timer = setTimeout(() => {
         document.body.style.pointerEvents = 'auto';
       }, 500);
@@ -41,12 +41,12 @@ export const useDrawer = ({
       clearTimeout(timer);
       document.body.style.pointerEvents = '';
     };
-  }, [isOpen, isOpenFilter]);
+  }, [isOpen, isOpenFilter, isOpenTable]);
 
   // Update the global store with the current dirty state whenever it changes
   useEffect(() => {
     setIsDirty(isDirty);
   }, [isDirty, setIsDirty]);
 
-  return { handleCloseDrawer, isOpen, isOpenFilter };
+  return { handleCloseDrawer, isOpen, isOpenFilter, isOpenTable };
 };

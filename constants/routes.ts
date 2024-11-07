@@ -8,6 +8,10 @@ export const PATH_CONFIGURATION_GENERAL = `${PATH_API}/configuration/general`;
 export const PATH_AUTH_LOGIN = `${PATH_API}/login`;
 export const PATH_AUTH_LOGIN_BE = `${PATH_BACKEND_URL}/login`;
 
+// Logout
+export const PATH_AUTH_LOGOUT = `${PATH_API}/logout`;
+export const PATH_AUTH_LOGOUT_BE = `${PATH_BACKEND_URL}/logout`;
+
 // country
 export const PATH_COUNTRY = `${PATH_CONFIGURATION_GENERAL}/country`;
 export const PATH_COUNTRY_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/country`;
