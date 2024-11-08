@@ -7,11 +7,14 @@ export type DrawerType =
   | null;
 export type FilterDrawerType = 'filterCountry' | null;
 export type TableDrawerType = 'getCountry' | null;
+export type DetailDataType = ICountry | null;
 
 type DrawerState = {
   drawerType: DrawerType;
   filterDrawerType: FilterDrawerType;
   isOpen: boolean;
+  isOpenDetail: boolean;
+  isOpenEdit: boolean;
   isOpenFilter: boolean;
   openDrawer: () => void;
   openFilterDrawer: (type?: FilterDrawerType) => void;
@@ -23,6 +26,16 @@ type DrawerState = {
   tableDrawerType: TableDrawerType;
   openTableDrawer: () => void;
   closeTableDrawer: () => void;
+
+  // Detail Data Drawer
+  detail_data: DetailDataType;
+  // setDetailData: (data: DetailDataType) => void
+  openDetailDrawer: (data: DetailDataType) => void;
+  closeDetailDrawer: () => void;
+
+  // Edit Data Drawer
+  openEditDrawer: () => void;
+  closeEditDrawer: () => void;
 };
 
 const initialDrawerState = {
@@ -32,10 +45,22 @@ const initialDrawerState = {
   isOpen: false,
   isOpenFilter: false,
   isOpenTable: false,
+  detail_data: null,
+  isOpenDetail: false,
+  isOpenEdit: false,
 };
 
 export const useDrawerStore = create<DrawerState>((set) => ({
   ...initialDrawerState,
+  openEditDrawer: () =>
+    set({
+      isOpenEdit: true,
+    }),
+  openDetailDrawer: (data) =>
+    set({
+      detail_data: data,
+      isOpenDetail: true,
+    }),
   openDrawer: () =>
     set({
       isOpen: true,
@@ -63,5 +88,16 @@ export const useDrawerStore = create<DrawerState>((set) => ({
     set((state) => ({
       ...state,
       isOpenTable: false,
+    })),
+  closeDetailDrawer: () =>
+    set((state) => ({
+      ...state,
+      isOpenDetail: false,
+      detail_data: null,
+    })),
+  closeEditDrawer: () =>
+    set((state) => ({
+      ...state,
+      isOpenEdit: false,
     })),
 }));

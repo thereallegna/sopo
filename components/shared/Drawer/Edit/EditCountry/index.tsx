@@ -1,0 +1,139 @@
+'use client';
+
+import React from 'react';
+import { Button } from '@components/ui/Button';
+import {
+  Drawer,
+  DrawerBody,
+  DrawerContent,
+  DrawerEndHeader,
+  DrawerHeader,
+} from '@components/ui/Drawer';
+import { Card, CardContent } from '@components/ui/Card';
+import InputField from '@components/shared/InputField';
+import { useDrawerStore } from '@stores/useDrawerStore';
+import { IconDeviceFloppy } from '@tabler/icons-react';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useMutation } from '@tanstack/react-query';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { countrySchema } from '@constants/schemas/ConfigurationSchema/general';
+import { createCountry } from '@services/fetcher/configuration/general';
+import useFormStore from '@stores/useFormStore'; // Import useFormStore
+import { useDrawer } from '@hooks/useDrawer';
+import { countryDefaultValues } from '@constants/defaultValues';
+import { useFormChanges } from '@hooks/useFormChanges';
+
+const EditCountry = () => {
+  const { isOpenEdit, closeEditDrawer } = useDrawerStore();
+  const detail_data = useDrawerStore((state) => state.detail_data) as ICountry;
+  const { setIsDirty } = useFormStore();
+  const [isLoading, setIsLoading] = React.useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setError,
+    setValue,
+    control,
+    formState: { errors, isDirty },
+  } = useForm<CountryFormBody>({
+    mode: 'onSubmit',
+    resolver: yupResolver(countrySchema),
+    defaultValues: detail_data,
+  });
+
+  React.useEffect(() => {
+    console.log('Detail Data:', detail_data); // Log the data from the drawer store
+
+    if (detail_data) {
+      setValue('country_code', detail_data.country_code);
+      setValue('country_name', detail_data.country_name);
+    }
+  }, [detail_data, setValue]);
+
+  const { handleCloseDrawer } = useDrawer(isDirty, reset);
+  const { hasChanged } = useFormChanges(countryDefaultValues, control);
+
+  const { mutate: mutationCreateCountry } = useMutation({
+    mutationFn: createCountry,
+    onMutate: () => {
+      setIsLoading(true);
+    },
+    onSuccess: () => {
+      reset();
+      closeEditDrawer();
+      setIsLoading(false);
+      setIsDirty(false);
+    },
+    onError: (error: any) => {
+      setIsLoading(false);
+      if (error?.response?.data) {
+        const { errorList, message } = error.response.data;
+
+        if (errorList === 'country_code') {
+          setError('country_code', { type: 'server', message });
+        } else if (errorList === 'country_name') {
+          setError('country_name', { type: 'server', message });
+        }
+      }
+    },
+  });
+
+  const onSubmit: SubmitHandler<CountryFormBody> = (data) => {
+    mutationCreateCountry(data);
+  };
+
+  return (
+    <Drawer onClose={handleCloseDrawer} open={isOpenEdit}>
+      <DrawerContent>
+        <form onSubmit={handleSubmit(onSubmit)} noValidate>
+          <DrawerHeader onClick={handleCloseDrawer} drawerTitle="Edit Country">
+            <DrawerEndHeader>
+              <Button
+                variant={!hasChanged ? 'disabled' : 'primary'}
+                icon={{ size: 'large', icon: IconDeviceFloppy, color: 'White' }}
+                type="submit"
+                disabled={isLoading}
+              >
+                {isLoading ? 'saving...' : 'save'}
+              </Button>
+            </DrawerEndHeader>
+          </DrawerHeader>
+          <DrawerBody>
+            <Card size="drawer">
+              <CardContent className="flex-wrap flex flex-row gap-6 items-center">
+                <InputField
+                  {...register('country_code')}
+                  message={
+                    errors.country_code
+                      ? { text: errors.country_code.message!, type: 'danger' }
+                      : undefined
+                  }
+                  label="Country Code"
+                  placeholder="Country Code"
+                  right
+                  type="text"
+                />
+                <InputField
+                  {...register('country_name')}
+                  message={
+                    errors.country_name
+                      ? { text: errors.country_name.message!, type: 'danger' }
+                      : undefined
+                  }
+                  label="Country Name"
+                  placeholder="Country Name"
+                  right
+                  type="text"
+                />
+              </CardContent>
+            </Card>
+          </DrawerBody>
+        </form>
+      </DrawerContent>
+    </Drawer>
+  );
+};
+
+export default EditCountry;

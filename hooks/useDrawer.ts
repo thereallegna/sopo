@@ -6,7 +6,14 @@ import { UseFormReset } from 'react-hook-form';
 
 export const useDrawer = (isDirty?: boolean, reset?: UseFormReset<any>) => {
   // Accept reset as a parameter
-  const { isOpen, isOpenFilter, isOpenTable, closeDrawer } = useDrawerStore();
+  const {
+    isOpen,
+    isOpenFilter,
+    isOpenTable,
+    isOpenDetail,
+    isOpenEdit,
+    closeDrawer,
+  } = useDrawerStore();
   const { setIsDirty, setReset, isReset } = useFormStore();
 
   useEffect(() => {
@@ -30,7 +37,7 @@ export const useDrawer = (isDirty?: boolean, reset?: UseFormReset<any>) => {
   useEffect(() => {
     let timer: NodeJS.Timeout;
 
-    if (isOpen || isOpenFilter || isOpenTable) {
+    if (isOpen || isOpenFilter || isOpenTable || isOpenDetail || isOpenEdit) {
       timer = setTimeout(() => {
         document.body.style.pointerEvents = 'auto';
       }, 500);
@@ -40,7 +47,7 @@ export const useDrawer = (isDirty?: boolean, reset?: UseFormReset<any>) => {
       clearTimeout(timer);
       document.body.style.pointerEvents = '';
     };
-  }, [isOpen, isOpenFilter, isOpenTable]);
+  }, [isOpen, isOpenFilter, isOpenTable, isOpenDetail, isOpenEdit]);
 
   // useEffect for resetForm reset if isReset is true
   useEffect(() => {

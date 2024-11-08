@@ -6,12 +6,32 @@ import HeaderContent from '@components/module/Content/HeaderContent';
 import BodyContent from '@components/module/Content/BodyContent';
 import Image from 'next/image';
 import FilterButton from '@components/ui/Table/Action/FilterButton';
+import { useDrawerStore } from '@stores/useDrawerStore';
 import { getCountry } from '@services/fetcher/configuration/general';
 import { GET_COUNTRY } from '@constants/queryKey';
-import FilterCountry from '@components/shared/Drawer/Filter/CountryFilter';
-import TableDrawer from '@components/shared/Drawer/Table/TableDrawer';
-import CreateCountry from '@components/shared/Drawer/Create/CreateCountry';
-import { useDrawerStore } from '@stores/useDrawerStore';
+import dynamic from 'next/dynamic';
+
+// Dynamically import Drawer components
+const FilterCountry = dynamic(
+  () => import('@components/shared/Drawer/Filter/CountryFilter'),
+  { ssr: false }
+);
+const TableDrawer = dynamic(
+  () => import('@components/shared/Drawer/Table/TableDrawer'),
+  { ssr: false }
+);
+const CreateCountry = dynamic(
+  () => import('@components/shared/Drawer/Create/CreateCountry'),
+  { ssr: false }
+);
+const DetailCountry = dynamic(
+  () => import('@components/shared/Drawer/Detail/DetailCountry'),
+  { ssr: false }
+);
+const EditCountry = dynamic(
+  () => import('@components/shared/Drawer/Edit/EditCountry'),
+  { ssr: false }
+);
 
 const Country = () => {
   const { openFilterDrawer, openTableDrawer, closeFilterDrawer, openDrawer } =
@@ -85,11 +105,12 @@ const Country = () => {
               header: 'Create Date',
             },
           ],
-          id: 'country_code',
         }}
         queryFn={getCountry}
       />
       <CreateCountry />
+      <DetailCountry />
+      <EditCountry />
     </>
   );
 };
