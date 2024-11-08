@@ -34,8 +34,6 @@ export const useDrawer = (isDirty?: boolean, reset?: UseFormReset<any>) => {
       timer = setTimeout(() => {
         document.body.style.pointerEvents = 'auto';
       }, 500);
-    } else {
-      document.body.style.pointerEvents = 'none';
     }
 
     return () => {

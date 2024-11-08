@@ -1,7 +1,7 @@
 import Content from '@components/module/Content';
 import Navbar from '@components/module/Navbar';
 import Sidebar from '@components/module/Sidebar';
-import DrawerProvider from '@components/shared/DrawerProvider';
+import PreventNavigationDialog from '@components/shared/Alert';
 import React, { PropsWithChildren } from 'react';
 
 const MainLayout = ({ children }: PropsWithChildren) => (
@@ -11,7 +11,7 @@ const MainLayout = ({ children }: PropsWithChildren) => (
       <Sidebar />
       <Content className="relative w-full h-full flex-1 flex-grow flex flex-col gap-[10px]">
         {children}
-        <DrawerProvider />
+        <PreventNavigationDialog />
       </Content>
     </div>
   </main>

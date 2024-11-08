@@ -86,7 +86,7 @@ const useTable = <T>({
     if (pageIndex) {
       pgState.pageIndex = parseFloat(pageIndex) - 1;
     }
-    onPagination(pgState);
+    setPagination(queryKey, pgState);
   };
 
   useEffect(() => {
