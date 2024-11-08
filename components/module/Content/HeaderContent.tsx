@@ -6,7 +6,7 @@ import React from 'react';
 
 export type HeaderContentProps = {
   title: string;
-  onAdd?: () => void;
+  onAdd: () => void;
   onAddButtonProps?: ButtonProps;
 };
 

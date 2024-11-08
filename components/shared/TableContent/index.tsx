@@ -69,6 +69,7 @@ const TableContent = <T,>({
   return (
     <div className="flex flex-col gap-[10px]">
       <TableAction
+        search={option.search}
         rowSize={option.rowSize}
         data={data?.results ?? defaultData}
         columns={generatedColumns}

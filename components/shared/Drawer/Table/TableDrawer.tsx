@@ -10,12 +10,7 @@ import {
   DrawerHeader,
 } from '@components/ui/Drawer';
 
-import {
-  DrawerType,
-  FilterDrawerType,
-  TableDrawerType,
-  useDrawerStore,
-} from '@stores/useDrawerStore';
+import { FilterDrawerType, useDrawerStore } from '@stores/useDrawerStore';
 import { IconPlus } from '@node_modules/@tabler/icons-react/dist/esm/tabler-icons-react';
 import useTable from '@hooks/useTable';
 import TableContent from '@components/shared/TableContent';
@@ -28,39 +23,35 @@ import {
 export type TableDrawerProps = {
   title: string;
   columns: GenerateColumnsOption;
+  queryKey: string;
   queryFn: (option?: TableOptionState) => Promise<AxiosResponse<any, any>>;
-  keyTableDrawer: TableDrawerType;
-  keyCreateDrawer: DrawerType;
   keyFilterDrawer?: FilterDrawerType;
 };
 
-const TableDrawer = () => {
-  const {
-    isOpenTable,
-    openDrawer,
-    openFilterDrawer,
-    closeTableDrawer,
-    tableSetting,
-  } = useDrawerStore();
+const TableDrawer = ({
+  title,
+  columns,
+  queryKey,
+  queryFn,
+}: TableDrawerProps) => {
+  const { isOpenTable, openDrawer, openFilterDrawer, closeTableDrawer } =
+    useDrawerStore();
 
   const handleOpenAdd = () => {
-    openDrawer(tableSetting?.keyCreateDrawer);
+    openDrawer();
   };
 
-  const tableProps = useTable<ICountry[]>({
-    queryFn: tableSetting?.queryFn as any,
-    columns: tableSetting?.columns as any,
-    queryKey: tableSetting?.keyTableDrawer as any,
+  const tableProps = useTable<any[]>({
+    queryFn,
+    columns,
+    queryKey,
     onFilter: openFilterDrawer,
   });
 
   return (
     <Drawer open={isOpenTable} onClose={closeTableDrawer}>
       <DrawerContent>
-        <DrawerHeader
-          drawerTitle={tableSetting?.title}
-          onClick={closeTableDrawer}
-        >
+        <DrawerHeader drawerTitle={title} onClick={closeTableDrawer}>
           <DrawerEndHeader>
             {/* button save */}
             <Button
