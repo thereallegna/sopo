@@ -33,6 +33,7 @@ const CreateCountry = () => {
     handleSubmit,
     reset,
     setError,
+    setValue,
     control,
     formState: { errors, isDirty },
   } = useForm<CountryFormBody>({
@@ -42,7 +43,12 @@ const CreateCountry = () => {
   });
 
   const { handleCloseDrawer } = useDrawer(isDirty, reset);
-  const { hasChanged } = useFormChanges(countryDefaultValues, control);
+  const { hasChanged } = useFormChanges(
+    countryDefaultValues,
+    control,
+    setValue,
+    'every' // or 'every' depending on your needs
+  );
 
   const { mutate: mutationCreateCountry } = useMutation({
     mutationFn: createCountry,

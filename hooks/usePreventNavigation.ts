@@ -7,10 +7,11 @@ import { useDrawerStore } from '@stores/useDrawerStore';
 export const usePreventNavigation = () => {
   const router = useRouter();
   const pathname = usePathname();
-  const nextPathRef = useRef<string | null>('/dashboard');
+  const nextPathRef = useRef<string | null>(null);
 
-  const { isDirty, leavingPage, setLeavingPage, resetForm } = useFormStore(); // Ambil resetForm dari store
-  const { closeDrawer } = useDrawerStore();
+  const { isDirty, leavingPage, setLeavingPage, resetForm, setChanged } =
+    useFormStore();
+  const { closeDrawer, closeEditDrawer, isOpen, isOpenEdit } = useDrawerStore();
 
   useEffect(() => {
     if (isDirty) {
@@ -73,18 +74,35 @@ export const usePreventNavigation = () => {
     const nextPath = nextPathRef.current;
     console.log('Starting navigation to:', nextPath);
 
-    if (nextPath) {
+    // Conditionally close the active drawer
+    if (isOpenEdit) {
+      closeEditDrawer();
+      setChanged(false);
+      resetForm();
+    } else if (isOpen) {
       closeDrawer();
-      resetForm(); // Panggil resetForm untuk mereset form
-      setLeavingPage(false);
+      resetForm();
+    }
 
+    setLeavingPage(false);
+
+    if (nextPath) {
       try {
         router.push(nextPath);
       } catch (err) {
         console.error('Failed to navigate:', err);
       }
     }
-  }, [closeDrawer, router, resetForm, setLeavingPage]);
+  }, [
+    closeDrawer,
+    closeEditDrawer,
+    router,
+    resetForm,
+    setLeavingPage,
+    isOpen,
+    isOpenEdit,
+    setChanged,
+  ]);
 
   return {
     leavingPage,

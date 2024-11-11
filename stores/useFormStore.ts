@@ -5,6 +5,7 @@ type FormState = {
   leavingPage: boolean;
   isDirty: boolean;
   isReset: boolean;
+  isChanged: boolean;
 };
 
 type FormActions = {
@@ -12,6 +13,7 @@ type FormActions = {
   setIsDirty: (status: boolean) => void;
   setReset: (status: boolean) => void;
   resetForm: () => void; // Fungsi isReset untuk form
+  setChanged: (status: boolean) => void;
 };
 
 type FormStore = FormState & FormActions;
@@ -20,12 +22,14 @@ const initialValues: FormState = {
   leavingPage: false,
   isDirty: false,
   isReset: false,
+  isChanged: false,
 };
 
 const useFormStore = create<FormStore>((set) => ({
   ...initialValues,
   setLeavingPage: (status) => set({ leavingPage: status }),
   setIsDirty: (status) => set({ isDirty: status }),
+  setChanged: (status) => set({ isChanged: status }),
   setReset: (status) => set({ isReset: status }),
   resetForm: () => set({ isReset: true, isDirty: false }), // Reset form
 }));
