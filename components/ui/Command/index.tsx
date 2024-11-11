@@ -48,7 +48,7 @@ const CommandInput = React.forwardRef<
         className
       )}
       {...props}
-      onValueChange={(value) => {
+      onValueChange={(value: any) => {
         if (onChange) {
           onChange({
             target: { value },

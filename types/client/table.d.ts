@@ -12,7 +12,6 @@ type ColumnKey = {
 
 type GenerateColumnsOption = {
   columns: ColumnKey[];
-  id: string;
   hasAction?: boolean;
 };
 
