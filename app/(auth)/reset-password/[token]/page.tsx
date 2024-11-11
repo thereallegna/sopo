@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import InputField from '@components/shared/InputField';
 import { Button } from '@components/ui/Button';
 import {
@@ -23,6 +23,7 @@ import resetPasswordSchema from '@constants/schemas/ResetPasswordSchema';
 import { useMutation } from '@tanstack/react-query';
 
 const ResetPasswordPage = ({ params }: { params: { token: string } }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const router = useRouter();
   const [isLoading, setIsLoading] = React.useState(false);
   const {
@@ -42,8 +43,9 @@ const ResetPasswordPage = ({ params }: { params: { token: string } }) => {
       setIsLoading(true);
     },
     onSuccess: () => {
+      console.log('Password reset successful, opening modal');
       reset();
-      router.push('/login');
+      setIsModalOpen(true);
       setIsLoading(false);
     },
     onError: (error: any) => {
@@ -98,24 +100,6 @@ const ResetPasswordPage = ({ params }: { params: { token: string } }) => {
         </CardDescription>
         <form onSubmit={handleSubmit(handleFormSubmit)}>
           <CardContent className="mt-[10px] flex flex-col gap-y-[10px]">
-            {/* {resetPasswordConstant.inputFields.map((inputField, index) => (
-              <InputField
-                key={inputField.label}
-                label={inputField.label}
-                placeholder={inputField.placeholder}
-                start_icon={inputField.start_icon}
-                type={inputField.type}
-                value={index === 0 ? newPassword : confirmPassword}
-                onChange={(e) => {
-                  if (inputField.label === 'New Password') {
-                    setNewPassword(e.target.value);
-                  } else {
-                    setConfirmPassword(e.target.value);
-                  }
-                }}
-                className={index === 1 ? 'mt-[10px]' : ''}
-              />
-            ))} */}
             <InputField
               {...resetPasswordConstant.inputFields[0]}
               {...register('new_password')}
@@ -134,12 +118,6 @@ const ResetPasswordPage = ({ params }: { params: { token: string } }) => {
                   : undefined
               }
             />
-            {/* {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
-            {success && (
-              <p className="text-green-500 text-sm mt-2">
-                Password reset successfully. Redirecting...
-              </p>
-            )} */}
           </CardContent>
           <CardFooter className="mt-[10px]">
             <Button type="submit" className="w-full h-6" disabled={isLoading}>
@@ -148,6 +126,40 @@ const ResetPasswordPage = ({ params }: { params: { token: string } }) => {
           </CardFooter>
         </form>
       </Card>
+
+      {isModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <Card size="modal">
+            <div className="border-b border-neutral-200">
+              <div className="flex justify-between items-center px-[10px] py-[5px]">
+                <h2 className="text-lg font-bold">Password Reset Successful</h2>
+                <IconComponent
+                  onClick={() => setIsModalOpen(false)}
+                  size="large"
+                  icon={IconArrowLeft}
+                  className="cursor-pointer"
+                />
+              </div>
+            </div>
+            <p className="p-[10px] text-[11px]">
+              Your password has been successfully reset. You can now log in with
+              your new password.
+            </p>
+            <div className="flex justify-end">
+              <Button
+                type="button"
+                className="w-[50px] text-[11px] font-semibold"
+                onClick={() => {
+                  router.push('/login');
+                  setIsModalOpen(false);
+                }}
+              >
+                OK
+              </Button>
+            </div>
+          </Card>
+        </div>
+      )}
     </div>
   );
 };
