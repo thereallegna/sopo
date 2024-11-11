@@ -1,11 +1,13 @@
-// hooks/useDrawer.ts
 import { useCallback, useEffect } from 'react';
 import { useDrawerStore } from '@stores/useDrawerStore';
 import useFormStore from '@stores/useFormStore';
 import { UseFormReset } from 'react-hook-form';
 
-export const useDrawer = (isDirty?: boolean, reset?: UseFormReset<any>) => {
-  // Accept reset as a parameter
+export const useDrawer = (
+  isDirty?: boolean,
+  reset?: UseFormReset<any>,
+  detail_data?: object
+) => {
   const {
     isOpen,
     isOpenFilter,
@@ -13,8 +15,10 @@ export const useDrawer = (isDirty?: boolean, reset?: UseFormReset<any>) => {
     isOpenDetail,
     isOpenEdit,
     closeDrawer,
+    closeEditDrawer,
   } = useDrawerStore();
-  const { setIsDirty, setReset, isReset } = useFormStore();
+  const { setIsDirty, setReset, isReset, setLeavingPage, isChanged } =
+    useFormStore();
 
   useEffect(() => {
     if (typeof isDirty !== 'undefined') {
@@ -24,15 +28,34 @@ export const useDrawer = (isDirty?: boolean, reset?: UseFormReset<any>) => {
 
   const handleCloseDrawer = useCallback(() => {
     if (isDirty) {
-      closeDrawer();
-      setReset(true);
-      if (reset) reset(); // Call reset if it's passed
+      console.log('isDirty (handleCloseDrawer):', isDirty);
+      setLeavingPage(true);
     } else {
+      console.log('Closing drawer without setting leaving page');
       closeDrawer();
       setIsDirty(false);
       setReset(false);
     }
-  }, [isDirty, closeDrawer, setIsDirty, setReset, reset]);
+  }, [isDirty, closeDrawer, setIsDirty, setReset, setLeavingPage]);
+
+  const handleCloseDrawerEdit = useCallback(() => {
+    if (isChanged) {
+      console.log('isDirty (handleCloseDrawerEdit):', isDirty);
+      setLeavingPage(true);
+    } else {
+      console.log('Closing edit drawer without setting leaving page');
+      closeEditDrawer();
+      setIsDirty(false);
+      setReset(false);
+    }
+  }, [
+    closeEditDrawer,
+    setIsDirty,
+    setReset,
+    setLeavingPage,
+    isChanged,
+    isDirty,
+  ]);
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
@@ -49,13 +72,19 @@ export const useDrawer = (isDirty?: boolean, reset?: UseFormReset<any>) => {
     };
   }, [isOpen, isOpenFilter, isOpenTable, isOpenDetail, isOpenEdit]);
 
-  // useEffect for resetForm reset if isReset is true
+  // Reset the form if `isReset` is true
   useEffect(() => {
     if (isReset) {
       setReset(false);
-      if (reset) reset();
+      if (reset) reset(detail_data);
     }
-  }, [isReset, reset, setReset]);
+  }, [isReset, reset, setReset, detail_data]);
 
-  return { handleCloseDrawer, isOpen, isOpenFilter, isOpenTable };
+  return {
+    handleCloseDrawer,
+    isOpen,
+    isOpenFilter,
+    isOpenTable,
+    handleCloseDrawerEdit,
+  };
 };

@@ -17,10 +17,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation } from '@tanstack/react-query';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { countrySchema } from '@constants/schemas/ConfigurationSchema/general';
-import { createCountry } from '@services/fetcher/configuration/general';
+import { editCountry } from '@services/fetcher/configuration/general';
 import useFormStore from '@stores/useFormStore'; // Import useFormStore
 import { useDrawer } from '@hooks/useDrawer';
-import { countryDefaultValues } from '@constants/defaultValues';
 import { useFormChanges } from '@hooks/useFormChanges';
 
 const EditCountry = () => {
@@ -43,20 +42,11 @@ const EditCountry = () => {
     defaultValues: detail_data,
   });
 
-  React.useEffect(() => {
-    console.log('Detail Data:', detail_data); // Log the data from the drawer store
+  const { handleCloseDrawerEdit } = useDrawer(isDirty, reset, detail_data);
+  const { hasChanged } = useFormChanges(detail_data, control, setValue);
 
-    if (detail_data) {
-      setValue('country_code', detail_data.country_code);
-      setValue('country_name', detail_data.country_name);
-    }
-  }, [detail_data, setValue]);
-
-  const { handleCloseDrawer } = useDrawer(isDirty, reset);
-  const { hasChanged } = useFormChanges(countryDefaultValues, control);
-
-  const { mutate: mutationCreateCountry } = useMutation({
-    mutationFn: createCountry,
+  const { mutate: mutationEditCountry } = useMutation({
+    mutationFn: editCountry,
     onMutate: () => {
       setIsLoading(true);
     },
@@ -81,14 +71,18 @@ const EditCountry = () => {
   });
 
   const onSubmit: SubmitHandler<CountryFormBody> = (data) => {
-    mutationCreateCountry(data);
+    mutationEditCountry(data);
+    // console.log('Submitted Data:', data); // Log the submitted data
   };
 
   return (
-    <Drawer onClose={handleCloseDrawer} open={isOpenEdit}>
+    <Drawer onClose={handleCloseDrawerEdit} open={isOpenEdit}>
       <DrawerContent>
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
-          <DrawerHeader onClick={handleCloseDrawer} drawerTitle="Edit Country">
+          <DrawerHeader
+            onClick={handleCloseDrawerEdit}
+            drawerTitle="Edit Country"
+          >
             <DrawerEndHeader>
               <Button
                 variant={!hasChanged ? 'disabled' : 'primary'}
@@ -114,6 +108,7 @@ const EditCountry = () => {
                   placeholder="Country Code"
                   right
                   type="text"
+                  disabled
                 />
                 <InputField
                   {...register('country_name')}
