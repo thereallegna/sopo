@@ -22,4 +22,17 @@ const createCountry = async (country: CountryFormBody) => {
   }
 };
 
-export { getCountry, createCountry };
+const editCountry = async (country: CountryFormBody) => {
+  try {
+    const res = await axios.put(
+      `${PATH_COUNTRY}/${country.country_code}`,
+      country
+    );
+    return res.data;
+  } catch (error) {
+    console.error('Error editing country:', error);
+    throw error;
+  }
+};
+
+export { getCountry, createCountry, editCountry };
