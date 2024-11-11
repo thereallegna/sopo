@@ -4,6 +4,12 @@ interface BasicResponse<T> {
   data: T;
 }
 
+interface ErrorResponse {
+  status?: string;
+  message?: string;
+  errorField: { [string]: string };
+}
+
 interface ApiPaginationResponse {
   current_page: number;
   page_size: number;
