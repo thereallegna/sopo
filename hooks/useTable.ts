@@ -30,13 +30,13 @@ const useTable = <T>({
   const params = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
-  const setPagination = useTableStore((state) => state.setPagination);
-  const setSearch = useTableStore((state) => state.setSearch);
-  const setGrouping = useTableStore((state) => state.setGrouping);
-  const setRowSize = useTableStore((state) => state.setRowSize);
-  const setColumnVisibility = useTableStore(
-    (state) => state.setColumnVisibility
-  );
+  const {
+    setColumnVisibility,
+    setGrouping,
+    setPagination,
+    setSearch,
+    setRowSize,
+  } = useTableStore();
 
   const option = useTableStore((state) => state.options[queryKey]);
 
@@ -52,10 +52,21 @@ const useTable = <T>({
         ? paginationFn(option.pagination)
         : paginationFn;
     setPagination(queryKey, paginationState);
-    const { pageIndex, pageSize } = paginationState;
+    const { pageIndex = 0, pageSize = 10 } = paginationState;
+    const validPageIndex = Number.isNaN(pageIndex) ? 0 : pageIndex;
+    const validPageSize = Number.isNaN(pageSize) ? 10 : pageSize;
+
+    setPagination(queryKey, {
+      ...paginationState,
+      pageIndex: validPageIndex,
+      pageSize: validPageSize,
+    });
+
     const url = new URLSearchParams(params);
-    url.set('page_index', (pageIndex + 1).toString());
-    url.set('page_size', pageSize.toString());
+
+    url.set('page_index', (validPageIndex + 1).toString());
+    url.set('page_size', validPageSize.toString());
+
     router.replace(`${pathname}?${url.toString()}`);
   };
 
