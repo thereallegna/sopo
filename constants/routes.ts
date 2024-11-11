@@ -18,8 +18,8 @@ export const PATH_COUNTRY_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/c
 
 // forgot password
 export const PATH_AUTH_FORGOT_PASSWORD = `${PATH_API}/forgot-password`;
-export const PATH_AUTH_FORGOT_PASSWORD_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/forgot-password`;
+export const PATH_AUTH_FORGOT_PASSWORD_BE = `${PATH_BACKEND_URL}/forgot-password`;
 
 // reset password
 export const PATH_AUTH_RESET_PASSWORD = `${PATH_API}/reset-password`;
-export const PATH_AUTH_RESET_PASSWORD_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/reset-password`;
+export const PATH_AUTH_RESET_PASSWORD_BE = `${PATH_BACKEND_URL}/reset-password`;

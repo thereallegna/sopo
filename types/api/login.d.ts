@@ -4,3 +4,8 @@ type LoginFormBody = {
   password: string;
   keepUserId?: boolean;
 };
+
+type ResetPasswordBody = {
+  new_password: string;
+  confirm_password: string;
+};
