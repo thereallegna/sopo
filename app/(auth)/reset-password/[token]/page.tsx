@@ -43,9 +43,9 @@ const ResetPasswordPage = ({ params }: { params: { token: string } }) => {
       setIsLoading(true);
     },
     onSuccess: () => {
-      console.log('Password reset successful, opening modal');
+      console.log('Password reset successful'); // Tambahkan log untuk debugging
       reset();
-      setIsModalOpen(true);
+      setIsModalOpen(true); // Membuka modal setelah reset berhasil
       setIsLoading(false);
     },
     onError: (error: any) => {
@@ -91,7 +91,7 @@ const ResetPasswordPage = ({ params }: { params: { token: string } }) => {
           <IconComponent
             icon={IconArrowLeft}
             className="mr-2"
-            onClick={() => router.push('/login')}
+            onClick={() => router.push('/forget-password')}
           />
           Reset Password
         </CardTitle>
@@ -149,10 +149,7 @@ const ResetPasswordPage = ({ params }: { params: { token: string } }) => {
               <Button
                 type="button"
                 className="w-[50px] text-[11px] font-semibold"
-                onClick={() => {
-                  router.push('/login');
-                  setIsModalOpen(false);
-                }}
+                onClick={() => setIsModalOpen(false)}
               >
                 OK
               </Button>
