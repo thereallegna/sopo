@@ -26,6 +26,7 @@ import { errorMapping } from '@utils/errorMapping';
 
 const ResetPasswordPage = ({ params }: { params: { token: string } }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const router = useRouter();
   const [isLoading, setIsLoading] = React.useState(false);
   const {
@@ -47,13 +48,17 @@ const ResetPasswordPage = ({ params }: { params: { token: string } }) => {
       setIsLoading(false);
       console.log('Password reset successful');
       setIsModalOpen(true);
+      setErrorMessage(null);
     },
     onError: (error: any) => {
       setIsLoading(false);
       const errorRes = error as AxiosError<ErrorResponse>;
       if (errorRes.response?.data) {
-        const { errorField } = errorRes.response.data;
+        const { errorField, message } = errorRes.response.data;
         errorMapping(errorField, setError);
+        setErrorMessage(
+          message || 'Something went wrong, please try again later'
+        );
       }
     },
   });
@@ -88,6 +93,14 @@ const ResetPasswordPage = ({ params }: { params: { token: string } }) => {
         <CardDescription className="text-[11px] font-normal mt-1">
           Enter a new password below to change your password
         </CardDescription>
+
+        {/* Show global error message if there's an error */}
+        {errorMessage && (
+          <div className="text-red-500 text-sm mb-3">
+            <strong>Error:</strong> {errorMessage}
+          </div>
+        )}
+
         <form onSubmit={handleSubmit(handleFormSubmit)}>
           <CardContent className="mt-[10px] flex flex-col gap-y-[10px]">
             <InputField
