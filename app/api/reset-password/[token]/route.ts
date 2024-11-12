@@ -17,17 +17,6 @@ export async function POST(
       );
     }
 
-    const tokenValidationResponse = await axios.get(
-      `${PATH_AUTH_RESET_PASSWORD_BE}/validate-token/${token}`
-    );
-
-    if (!tokenValidationResponse.data.isValid) {
-      return NextResponse.json(
-        { message: 'Invalid or expired token' },
-        { status: 400 }
-      );
-    }
-
     const response = await axios.put(
       `${PATH_AUTH_RESET_PASSWORD_BE}/${token}`,
       {
@@ -35,10 +24,6 @@ export async function POST(
         confirm_password,
       }
     );
-
-    await axios.post(`${PATH_AUTH_RESET_PASSWORD_BE}/invalid-token`, {
-      token,
-    });
 
     return NextResponse.json(response.data);
   } catch (error: any) {
@@ -48,6 +33,7 @@ export async function POST(
         status: axiosError.response?.status,
       });
     }
+    console.log('ghghg', error);
     return NextResponse.json(
       { message: 'Internal server error', error },
       { status: 500 }
