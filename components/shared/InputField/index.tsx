@@ -19,7 +19,7 @@ const inputFieldVariant = cva('flex', {
   },
 });
 
-const messageInputFieldVariant = cva('', {
+export const messageInputFieldVariant = cva('', {
   variants: {
     variant: {
       normal: 'text-neutral-500',
@@ -97,7 +97,12 @@ const InputField = React.forwardRef<HTMLInputElement, InputFieldProps>(
               : 'flex-col gap-1'
           }`}
         >
-          <Label required={required} sizes={size} {...labelProps}>
+          <Label
+            required={required}
+            sizes={size}
+            className="shrink-0 w-[100px] font-semibold"
+            {...labelProps}
+          >
             {label}
           </Label>
           <Input

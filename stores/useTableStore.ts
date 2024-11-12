@@ -1,10 +1,19 @@
-import { GET_COUNTRY } from '@constants/queryKey';
+import { GET_CITY, GET_COUNTRY } from '@constants/queryKey';
 import { create } from 'zustand';
 import { TableState } from '../types/client/table';
 
 const initialTableState = {
   options: {
     [GET_COUNTRY]: {
+      columnVisibility: {},
+      pagination: {
+        pageIndex: 0,
+        pageSize: 10,
+      },
+      grouping: [],
+      rowSize: undefined,
+    },
+    [GET_CITY]: {
       columnVisibility: {},
       pagination: {
         pageIndex: 0,

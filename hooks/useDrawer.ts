@@ -2,12 +2,14 @@ import { useCallback, useEffect } from 'react';
 import { useDrawerStore } from '@stores/useDrawerStore';
 import useFormStore from '@stores/useFormStore';
 import { UseFormReset } from 'react-hook-form';
+import { usePathname } from 'next/navigation';
 
 export const useDrawer = (
   isDirty?: boolean,
   reset?: UseFormReset<any>,
   detail_data?: object
 ) => {
+  const pathname = usePathname();
   const {
     isOpen,
     isOpenFilter,
@@ -16,9 +18,14 @@ export const useDrawer = (
     isOpenEdit,
     closeDrawer,
     closeEditDrawer,
+    closeAllDrawer,
   } = useDrawerStore();
   const { setIsDirty, setReset, isReset, setLeavingPage, isChanged } =
     useFormStore();
+
+  useEffect(() => {
+    closeAllDrawer();
+  }, [pathname, closeAllDrawer]);
 
   useEffect(() => {
     if (typeof isDirty !== 'undefined') {
