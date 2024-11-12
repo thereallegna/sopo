@@ -10,9 +10,20 @@ export async function POST(
     const { token } = params;
     const { new_password, confirm_password } = await request.json();
 
-    if (!token || !new_password) {
+    if (!token || !new_password || !confirm_password) {
       return NextResponse.json(
-        { message: 'Token and new password are required' },
+        { message: 'Token, new password, and confirmation are required' },
+        { status: 400 }
+      );
+    }
+
+    const tokenValidationResponse = await axios.get(
+      `${PATH_AUTH_RESET_PASSWORD_BE}/validate-token/${token}`
+    );
+
+    if (!tokenValidationResponse.data.isValid) {
+      return NextResponse.json(
+        { message: 'Invalid or expired token' },
         { status: 400 }
       );
     }
@@ -24,6 +35,10 @@ export async function POST(
         confirm_password,
       }
     );
+
+    await axios.post(`${PATH_AUTH_RESET_PASSWORD_BE}/invalid-token`, {
+      token,
+    });
 
     return NextResponse.json(response.data);
   } catch (error: any) {

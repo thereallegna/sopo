@@ -141,7 +141,11 @@ const LoginPage = () => {
             </div>
           </CardContent>
           <CardFooter className="mt-5">
-            <Button type="submit" className="w-full h-6" disabled={isLoading}>
+            <Button
+              type="submit"
+              className="w-full h-[-30px]"
+              disabled={isLoading}
+            >
               {isLoading ? 'Logging in...' : 'Login'}
             </Button>
           </CardFooter>

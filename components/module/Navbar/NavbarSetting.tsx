@@ -41,7 +41,10 @@ const NavbarSettings = () => {
           <IconComponent icon={IconUser} size="medium" color="primary" />
         </div>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="bg-white shadow:md rounded-sm w-[180px] h-auto border border-neutral-200 p-2 mr-2">
+      <DropdownMenuContent
+        className="bg-white shadow:md rounded-sm w-[180px] h-auto border border-neutral-200 p-2 mr-2 z-50"
+        style={{ zIndex: 9999 }}
+      >
         <div className="flex items-center p-1">
           <div className="rounded-full bg-gray-200 p-2 flex items-center justify-center">
             <IconComponent icon={IconUser} size="medium" color="custom" />
@@ -74,7 +77,6 @@ const NavbarSettings = () => {
             <Button
               className="text-[10px] font-normal"
               variant="navbarSettings"
-              // disabled={isLoading}
               onClick={handleLogout}
             >
               {isLoading ? 'Loggin out...' : 'Logout'}
