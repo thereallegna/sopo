@@ -29,7 +29,7 @@ type DrawerState = {
 
   // Detail Data Drawer
   detail_data: DetailDataType;
-  // setDetailData: (data: DetailDataType) => void
+  setDetailData: (data: DetailDataType) => void; // Add this function
   openDetailDrawer: (data: DetailDataType) => void;
   closeDetailDrawer: () => void;
 
@@ -52,6 +52,7 @@ const initialDrawerState = {
 
 export const useDrawerStore = create<DrawerState>((set) => ({
   ...initialDrawerState,
+
   openEditDrawer: () =>
     set({
       isOpenEdit: true,
@@ -61,6 +62,11 @@ export const useDrawerStore = create<DrawerState>((set) => ({
       detail_data: data,
       isOpenDetail: true,
     }),
+  setDetailData: (data) =>
+    set({
+      detail_data: data,
+    }), // This function updates the detail_data without affecting isOpenDetail
+
   openDrawer: () =>
     set({
       isOpen: true,

@@ -14,7 +14,7 @@ import InputField from '@components/shared/InputField';
 import { useDrawerStore } from '@stores/useDrawerStore';
 import { IconDeviceFloppy } from '@tabler/icons-react';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { countrySchema } from '@constants/schemas/ConfigurationSchema/general';
 import { editCountry } from '@services/fetcher/configuration/general';
@@ -23,12 +23,14 @@ import { useDrawer } from '@hooks/useDrawer';
 import { useFormChanges } from '@hooks/useFormChanges';
 import { errorMapping } from '@utils/errorMapping';
 import { AxiosError } from 'axios';
+import { GET_COUNTRY } from '@constants/queryKey';
 
 const EditCountry = () => {
-  const { isOpenEdit, closeEditDrawer } = useDrawerStore();
+  const { isOpenEdit, closeEditDrawer, setDetailData } = useDrawerStore();
   const detail_data = useDrawerStore((state) => state.detail_data) as ICountry;
   const { setIsDirty } = useFormStore();
   const [isLoading, setIsLoading] = React.useState(false);
+  const queryClient = useQueryClient();
 
   const {
     register,
@@ -52,11 +54,14 @@ const EditCountry = () => {
     onMutate: () => {
       setIsLoading(true);
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
       reset();
+      setDetailData(data.data);
+
       closeEditDrawer();
       setIsLoading(false);
       setIsDirty(false);
+      queryClient.invalidateQueries({ queryKey: [GET_COUNTRY] });
     },
     onError: (error: any) => {
       setIsLoading(false);
@@ -70,7 +75,6 @@ const EditCountry = () => {
 
   const onSubmit: SubmitHandler<CountryFormBody> = (data) => {
     mutationEditCountry(data);
-    // console.log('Submitted Data:', data); // Log the submitted data
   };
 
   return (

@@ -13,10 +13,16 @@ import { Card, CardContent } from '@components/ui/Card';
 import InputField from '@components/shared/InputField';
 import { useDrawerStore } from '@stores/useDrawerStore';
 import { IconDeviceFloppy } from '@tabler/icons-react';
+import { useForm } from 'react-hook-form';
+import { useDetailForm } from '@hooks/useFormChanges';
 
 const DetailCountry = () => {
   const { isOpenDetail, closeDetailDrawer, openEditDrawer } = useDrawerStore();
   const detail_data = useDrawerStore((state) => state.detail_data) as ICountry;
+
+  const { register, setValue } = useForm<ICountry>();
+
+  useDetailForm<ICountry>(detail_data, setValue);
 
   return (
     <Drawer onClose={closeDetailDrawer} open={isOpenDetail}>
@@ -43,6 +49,8 @@ const DetailCountry = () => {
                 right
                 type="text"
                 disabled
+                // register
+                {...register('country_code')}
               />
               <InputField
                 value={detail_data?.country_name || ''}
@@ -51,6 +59,8 @@ const DetailCountry = () => {
                 right
                 type="text"
                 disabled
+                // register
+                {...register('country_name')}
               />
             </CardContent>
           </Card>
