@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSideSession } from '@utils/session';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { PATH_COUNTRY_BE } from '@constants/routes';
 
 export async function PUT(
@@ -26,7 +26,8 @@ export async function PUT(
 
     return NextResponse.json(response.data);
   } catch (error: any) {
-    if (error?.response?.data) {
+    const axiosError = error as AxiosError;
+    if (axiosError.response?.data) {
       return NextResponse.json(error?.response?.data, { status: 400 });
     }
     return NextResponse.json(

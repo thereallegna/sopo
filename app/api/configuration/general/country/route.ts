@@ -51,7 +51,8 @@ export async function POST(req: Request) {
 
     return NextResponse.json(response.data);
   } catch (error: any) {
-    if (error?.response?.data) {
+    const axiosError = error as AxiosError;
+    if (axiosError.response?.data) {
       return NextResponse.json(error?.response?.data, { status: 400 });
     }
     return NextResponse.json(

@@ -21,6 +21,8 @@ import { editCountry } from '@services/fetcher/configuration/general';
 import useFormStore from '@stores/useFormStore'; // Import useFormStore
 import { useDrawer } from '@hooks/useDrawer';
 import { useFormChanges } from '@hooks/useFormChanges';
+import { errorMapping } from '@utils/errorMapping';
+import { AxiosError } from 'axios';
 
 const EditCountry = () => {
   const { isOpenEdit, closeEditDrawer } = useDrawerStore();
@@ -58,14 +60,10 @@ const EditCountry = () => {
     },
     onError: (error: any) => {
       setIsLoading(false);
-      if (error?.response?.data) {
-        const { errorList, message } = error.response.data;
-
-        if (errorList === 'country_code') {
-          setError('country_code', { type: 'server', message });
-        } else if (errorList === 'country_name') {
-          setError('country_name', { type: 'server', message });
-        }
+      const errorRes = error as AxiosError<ErrorResponse>;
+      if (errorRes.response?.data) {
+        const { errorField } = errorRes.response.data;
+        errorMapping(errorField, setError);
       }
     },
   });
