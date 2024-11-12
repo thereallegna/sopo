@@ -36,6 +36,9 @@ type DrawerState = {
   // Edit Data Drawer
   openEditDrawer: () => void;
   closeEditDrawer: () => void;
+
+  // Close All
+  closeAllDrawer: () => void;
 };
 
 const initialDrawerState = {
@@ -98,6 +101,15 @@ export const useDrawerStore = create<DrawerState>((set) => ({
   closeEditDrawer: () =>
     set((state) => ({
       ...state,
+      isOpenEdit: false,
+    })),
+  closeAllDrawer: () =>
+    set((state) => ({
+      ...state,
+      isOpen: false,
+      isOpenFilter: false,
+      isOpenTable: false,
+      isOpenDetail: false,
       isOpenEdit: false,
     })),
 }));

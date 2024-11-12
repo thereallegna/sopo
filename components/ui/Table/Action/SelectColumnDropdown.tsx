@@ -8,6 +8,7 @@ import {
 import { Checkbox } from '@components/ui/Checkbox';
 import IconComponent from '@components/ui/Icon';
 import { Column } from '@tanstack/react-table';
+import { Button } from '@components/ui/Button';
 
 export type SelectColumnDropdownProps = {
   isAllColumnsVisible: boolean;
@@ -22,10 +23,10 @@ const SelectColumnDropdown: React.FC<SelectColumnDropdownProps> = ({
 }: SelectColumnDropdownProps) => (
   <DropdownMenu>
     <DropdownMenuTrigger className="w-min">
-      <div className="bg-white border border-neutral-200 rounded-[6px] flex items-center justify-between p-[7px_10px] cursor-pointer">
+      <Button variant="secondary" className="px-[10px]">
         <IconComponent icon={IconTablePlus} size="large" />
         <IconComponent icon={IconChevronDown} size="large" />
-      </div>
+      </Button>
     </DropdownMenuTrigger>
     <DropdownMenuContent
       align="start"

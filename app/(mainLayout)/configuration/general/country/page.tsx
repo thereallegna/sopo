@@ -63,7 +63,7 @@ const Country = () => {
               height={213}
             />
             <p className="text-Neutral-500 text-lg">
-              Filter to find data Master Vendor
+              Filter to find data Country
             </p>
             <div className="pb-[10px]">
               <FilterButton

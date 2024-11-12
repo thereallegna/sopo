@@ -1,4 +1,4 @@
-import { PATH_COUNTRY } from '@constants/routes';
+import { PATH_CITY, PATH_COUNTRY } from '@constants/routes';
 import axios from 'axios';
 import { TableOptionState } from '../../../../types/client/table';
 
@@ -35,4 +35,24 @@ const editCountry = async (country: CountryFormBody) => {
   }
 };
 
-export { getCountry, createCountry, editCountry };
+const getCity = async (option?: TableOptionState) => {
+  const url = `${PATH_CITY}?page_size=${
+    option?.pagination.pageSize || ''
+  }&current_page=${option?.pagination.pageIndex || ''}&search=${
+    option?.search || ''
+  }`;
+  const res = await axios.get(url);
+  return res;
+};
+
+const createCity = async (city: CityFormBody) => {
+  try {
+    const res = await axios.post(PATH_CITY, city);
+    return res.data;
+  } catch (error) {
+    console.error('Error creating city:', error);
+    throw error;
+  }
+};
+
+export { getCountry, createCountry, editCountry, getCity, createCity };

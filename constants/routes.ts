@@ -23,3 +23,7 @@ export const PATH_AUTH_FORGOT_PASSWORD_BE = `${PATH_BACKEND_URL}/forgot-password
 // reset password
 export const PATH_AUTH_RESET_PASSWORD = `${PATH_API}/reset-password`;
 export const PATH_AUTH_RESET_PASSWORD_BE = `${PATH_BACKEND_URL}/reset-password`;
+
+// city
+export const PATH_CITY = `${PATH_CONFIGURATION_GENERAL}/city`;
+export const PATH_CITY_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/city`;
