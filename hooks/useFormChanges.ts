@@ -1,4 +1,4 @@
-import { useWatch } from 'react-hook-form';
+import { useWatch, UseFormSetValue, Path, PathValue } from 'react-hook-form';
 import { useEffect, useRef } from 'react';
 import useFormStore from '@stores/useFormStore';
 
@@ -50,10 +50,6 @@ export const useFormChanges = <T extends DefaultValues>(
   }
 
   useEffect(() => {
-    console.log('hasChanged:', hasChanged);
-    console.log('watchedValues:', watchedValues);
-    console.log('initialValues:', initialValuesRef.current);
-
     // Set isDirty to true if there are changes
     setChanged(hasChanged);
   }, [hasChanged, watchedValues, initialValuesRef, setChanged]);
@@ -62,4 +58,17 @@ export const useFormChanges = <T extends DefaultValues>(
     watchedValues,
     hasChanged,
   };
+};
+
+export const useDetailForm = <T extends Record<string, any>>(
+  detailData: T,
+  setValue: UseFormSetValue<T>
+) => {
+  useEffect(() => {
+    if (detailData) {
+      (Object.keys(detailData) as Array<keyof T>).forEach((key) => {
+        setValue(key as Path<T>, detailData[key] as PathValue<T, Path<T>>);
+      });
+    }
+  }, [detailData, setValue]);
 };

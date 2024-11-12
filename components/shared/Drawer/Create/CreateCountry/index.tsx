@@ -14,7 +14,7 @@ import InputField from '@components/shared/InputField';
 import { useDrawerStore } from '@stores/useDrawerStore';
 import { IconDeviceFloppy } from '@tabler/icons-react';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { countrySchema } from '@constants/schemas/ConfigurationSchema/general';
 import { createCountry } from '@services/fetcher/configuration/general';
@@ -24,11 +24,13 @@ import { countryDefaultValues } from '@constants/defaultValues';
 import { useFormChanges } from '@hooks/useFormChanges';
 import { AxiosError } from 'axios';
 import { errorMapping } from '@utils/errorMapping';
+import { GET_COUNTRY } from '@constants/queryKey';
 
 const CreateCountry = () => {
-  const { isOpen, closeDrawer } = useDrawerStore();
+  const { isOpen, closeDrawer, openDetailDrawer } = useDrawerStore();
   const { setIsDirty } = useFormStore();
   const [isLoading, setIsLoading] = React.useState(false);
+  const queryClient = useQueryClient();
 
   const {
     register,
@@ -57,11 +59,13 @@ const CreateCountry = () => {
     onMutate: () => {
       setIsLoading(true);
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
       reset();
       closeDrawer();
       setIsLoading(false);
       setIsDirty(false);
+      openDetailDrawer(data.data);
+      queryClient.invalidateQueries({ queryKey: [GET_COUNTRY] });
     },
     onError: (error: any) => {
       setIsLoading(false);

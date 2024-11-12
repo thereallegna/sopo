@@ -9,6 +9,7 @@ export async function PUT(
 ) {
   try {
     const session = await getServerSideSession();
+    console.log('session:', session.user?.data?.authorization?.access_token);
 
     const { country_code } = params;
 
