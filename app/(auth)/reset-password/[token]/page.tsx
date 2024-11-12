@@ -12,7 +12,7 @@ import {
   CardTitle,
 } from '@components/ui/Card';
 import Image from 'next/image';
-import { IconArrowLeft } from '@tabler/icons-react';
+import { IconArrowLeft, IconX } from '@tabler/icons-react';
 import IconComponent from '@components/ui/Icon';
 import { useRouter } from 'next/navigation';
 import { resetPassword } from '@services/fetcher/password/reset-password';
@@ -21,6 +21,8 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import resetPasswordSchema from '@constants/schemas/ResetPasswordSchema';
 import { useMutation } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
+import { errorMapping } from '@utils/errorMapping';
 
 const ResetPasswordPage = ({ params }: { params: { token: string } }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -29,7 +31,6 @@ const ResetPasswordPage = ({ params }: { params: { token: string } }) => {
   const {
     register,
     handleSubmit,
-    reset,
     setError,
     formState: { errors },
   } = useForm<ResetPasswordBody>({
@@ -43,33 +44,22 @@ const ResetPasswordPage = ({ params }: { params: { token: string } }) => {
       setIsLoading(true);
     },
     onSuccess: () => {
-      console.log('Password reset successful'); // Tambahkan log untuk debugging
-      reset();
-      setIsModalOpen(true); // Membuka modal setelah reset berhasil
       setIsLoading(false);
+      console.log('Password reset successful');
+      setIsModalOpen(true);
     },
     onError: (error: any) => {
       setIsLoading(false);
-
-      if (error?.response?.data) {
-        const { errorField } = error.response.data;
-
-        if (errorField.new_password) {
-          setError('new_password', {
-            type: 'server',
-            message: errorField.new_password,
-          });
-        } else if (errorField.confirm_password) {
-          setError('confirm_password', {
-            type: 'server',
-            message: errorField.confirm_password,
-          });
-        }
+      const errorRes = error as AxiosError<ErrorResponse>;
+      if (errorRes.response?.data) {
+        const { errorField } = errorRes.response.data;
+        errorMapping(errorField, setError);
       }
     },
   });
 
   const handleFormSubmit: SubmitHandler<ResetPasswordBody> = (data) => {
+    console.log('Submitting password reset', data);
     mutationLogin({ token: params.token, ...data });
   };
 
@@ -136,7 +126,7 @@ const ResetPasswordPage = ({ params }: { params: { token: string } }) => {
                 <IconComponent
                   onClick={() => setIsModalOpen(false)}
                   size="large"
-                  icon={IconArrowLeft}
+                  icon={IconX}
                   className="cursor-pointer"
                 />
               </div>
@@ -149,7 +139,10 @@ const ResetPasswordPage = ({ params }: { params: { token: string } }) => {
               <Button
                 type="button"
                 className="w-[50px] text-[11px] font-semibold"
-                onClick={() => setIsModalOpen(false)}
+                onClick={() => {
+                  setIsModalOpen(false);
+                  router.push('/login');
+                }}
               >
                 OK
               </Button>
