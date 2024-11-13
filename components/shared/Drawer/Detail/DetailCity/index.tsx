@@ -12,7 +12,7 @@ import {
 import { Card, CardContent } from '@components/ui/Card';
 import InputField from '@components/shared/InputField';
 import { useDrawerStore } from '@stores/useDrawerStore';
-import { IconDeviceFloppy } from '@tabler/icons-react';
+import { IconPencil } from '@tabler/icons-react';
 import { useForm } from 'react-hook-form';
 import { useDetailForm } from '@hooks/useFormChanges';
 import Combobox from '@components/ui/Combobox';
@@ -32,7 +32,7 @@ const DetailCity = () => {
           <DrawerEndHeader>
             <Button
               variant="primary"
-              icon={{ size: 'large', icon: IconDeviceFloppy, color: 'White' }}
+              icon={{ size: 'large', icon: IconPencil, color: 'White' }}
               type="submit"
               onClick={openEditDrawer}
             >
@@ -59,7 +59,6 @@ const DetailCity = () => {
                   {...register('city_name')}
                   value={detail_data?.city_name || ''}
                   label="City Name"
-                  placeholder="Text here.."
                   right
                   type="text"
                   required
@@ -81,7 +80,6 @@ const DetailCity = () => {
                 />
                 <InputField
                   label="Ring Area"
-                  placeholder="Text here.."
                   right
                   type="text"
                   className="w-full gap-2"
@@ -93,7 +91,6 @@ const DetailCity = () => {
                   {...register('location')}
                   value={detail_data?.location || ''}
                   label="Location"
-                  placeholder="Text here.."
                   right
                   type="text"
                   className="w-full gap-2"

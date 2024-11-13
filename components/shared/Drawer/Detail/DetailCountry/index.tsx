@@ -12,7 +12,7 @@ import {
 import { Card, CardContent } from '@components/ui/Card';
 import InputField from '@components/shared/InputField';
 import { useDrawerStore } from '@stores/useDrawerStore';
-import { IconDeviceFloppy } from '@tabler/icons-react';
+import { IconPencil } from '@tabler/icons-react';
 import { useForm } from 'react-hook-form';
 import { useDetailForm } from '@hooks/useFormChanges';
 
@@ -31,7 +31,7 @@ const DetailCountry = () => {
           <DrawerEndHeader>
             <Button
               variant="primary"
-              icon={{ size: 'large', icon: IconDeviceFloppy, color: 'White' }}
+              icon={{ size: 'large', icon: IconPencil, color: 'White' }}
               type="submit"
               onClick={openEditDrawer}
             >
