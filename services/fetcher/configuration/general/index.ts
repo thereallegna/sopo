@@ -8,6 +8,7 @@ const getCountry = async (option?: TableOptionState) => {
   }&current_page=${option?.pagination.pageIndex || ''}&search=${
     option?.search || ''
   }`;
+  console.log(option?.grouping.length);
   if (option?.grouping && option.grouping.length > 0) {
     url = PATH_COUNTRY;
   }

@@ -46,7 +46,6 @@ const useTable = <T>({
     const groupingState =
       typeof group === 'function' ? group(option.grouping) : group;
     setGrouping(queryKey, groupingState);
-    router.replace(pathname);
   };
 
   const onPagination = (paginationFn: PaginationPartial) => {
@@ -54,22 +53,29 @@ const useTable = <T>({
       typeof paginationFn === 'function'
         ? paginationFn(option.pagination)
         : paginationFn;
+    setPagination(queryKey, paginationState);
     const { pageIndex = 0, pageSize = 10 } = paginationState;
     const validPageIndex = Number.isNaN(pageIndex) ? 0 : pageIndex;
-    const validPageSize = Number.isNaN(pageSize) ? 10 : pageSize;
+    const validPageSize = Number.isNaN(pageSize) ? -1 : pageSize;
 
+    // Hanya lanjutkan jika validPageSize bukan undefined atau NaN
+    // if (validPageSize !== undefined) {
+    // }
     setPagination(queryKey, {
       ...paginationState,
       pageIndex: validPageIndex,
       pageSize: validPageSize,
     });
 
-    if (!isGrouping) {
-      const url = new URLSearchParams(params);
-      url.set('page_index', (validPageIndex + 1).toString());
+    const url = new URLSearchParams(params);
+    url.set('page_index', (validPageIndex + 1).toString());
+
+    // Hanya set 'page_size' jika validPageSize ada
+    if (validPageSize !== -1) {
       url.set('page_size', validPageSize.toString());
-      router.replace(`${pathname}?${url.toString()}`);
     }
+
+    router.replace(`${pathname}?${url.toString()}`);
   };
 
   const onSearch = (keyword: string) => {
@@ -89,22 +95,21 @@ const useTable = <T>({
     setRowSize(queryKey, size);
   };
 
-  useEffect(() => {
-    const initPagination = () => {
-      const pgState = { ...option.pagination };
-      const pageSize = params.get('page_size');
-      const pageIndex = params.get('page_index');
-      if (pageSize) {
-        pgState.pageSize = parseFloat(pageSize);
-      }
-      if (pageIndex) {
-        pgState.pageIndex = parseFloat(pageIndex) - 1;
-      }
-      setPagination(queryKey, pgState);
-    };
-    if (params.get('page_size') || params.get('page_index')) {
-      initPagination();
+  const initPagination = () => {
+    const pgState = { ...option.pagination };
+    const pageSize = params.get('page_size');
+    const pageIndex = params.get('page_index');
+    if (pageSize) {
+      pgState.pageSize = parseFloat(pageSize);
     }
+    if (pageIndex) {
+      pgState.pageIndex = parseFloat(pageIndex) - 1;
+    }
+    setPagination(queryKey, pgState);
+  };
+
+  useEffect(() => {
+    initPagination();
   }, []);
 
   // Jika terdapat column group maka dependency paginationnya dihilangkan agar pagination otomatisnya menjadi berjalan
@@ -127,6 +132,7 @@ const useTable = <T>({
       return queryFn({ ...option, pagination: nextPagination });
     },
     placeholderData: keepPreviousData,
+    enabled: option.pagination.pageSize !== -1,
   });
 
   const response = queryData?.data;
