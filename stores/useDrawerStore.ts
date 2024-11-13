@@ -7,7 +7,7 @@ export type DrawerType =
   | null;
 export type FilterDrawerType = 'filterCountry' | null;
 export type TableDrawerType = 'getCountry' | null;
-export type DetailDataType = ICountry | null;
+export type DetailDataType = ICountry | ICity | null;
 
 type DrawerState = {
   drawerType: DrawerType;

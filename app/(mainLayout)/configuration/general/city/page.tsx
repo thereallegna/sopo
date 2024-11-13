@@ -24,8 +24,8 @@ const CreateCity = dynamic(
   () => import('@components/shared/Drawer/Create/CreateCity'),
   { ssr: false }
 );
-const DetailCountry = dynamic(
-  () => import('@components/shared/Drawer/Detail/DetailCountry'),
+const DetailCity = dynamic(
+  () => import('@components/shared/Drawer/Detail/DetailCity'),
   { ssr: false }
 );
 const EditCountry = dynamic(
@@ -115,7 +115,7 @@ const Country = () => {
         queryFn={getCity}
       />
       <CreateCity />
-      <DetailCountry />
+      <DetailCity />
       <EditCountry />
     </>
   );

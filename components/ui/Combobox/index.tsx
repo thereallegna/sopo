@@ -37,7 +37,8 @@ interface ComboboxProps {
   value: string;
   placeholder: string;
   message?: MessageInputProps;
-  onChange: (val: string) => void;
+  onChange?: (val: string) => void;
+  disabled?: boolean;
 }
 
 export const Combobox = ({
@@ -48,6 +49,7 @@ export const Combobox = ({
   message,
   placeholder,
   onChange,
+  disabled,
 }: ComboboxProps) => {
   const [open, setOpen] = React.useState(false);
   const [searchQuery, setSearchQuery] = React.useState('');
@@ -76,6 +78,7 @@ export const Combobox = ({
               end_icon={{
                 icon: IconChevronDown,
               }}
+              disabled={disabled}
             >
               <p className="font-normal">{value || placeholder}</p>
             </Button>
@@ -127,7 +130,7 @@ export const Combobox = ({
                         key={item.value}
                         value={item.value}
                         onSelect={(currentValue) => {
-                          onChange(currentValue);
+                          onChange?.(currentValue);
                           setOpen(false);
                         }}
                       >
