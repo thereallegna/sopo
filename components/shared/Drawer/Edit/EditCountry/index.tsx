@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useRef, useCallback } from 'react';
 import { Button } from '@components/ui/Button';
 import {
   Drawer,
@@ -18,7 +18,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { countrySchema } from '@constants/schemas/ConfigurationSchema/general';
 import { editCountry } from '@services/fetcher/configuration/general';
-import useFormStore from '@stores/useFormStore'; // Import useFormStore
+import useFormStore from '@stores/useFormStore';
 import { useDrawer } from '@hooks/useDrawer';
 import { useFormChanges } from '@hooks/useFormChanges';
 import { errorMapping } from '@utils/errorMapping';
@@ -26,6 +26,7 @@ import { AxiosError } from 'axios';
 import { GET_COUNTRY } from '@constants/queryKey';
 
 const EditCountry = () => {
+  const formRef = useRef<HTMLFormElement>(null);
   const { isOpenEdit, closeEditDrawer, setDetailData } = useDrawerStore();
   const detail_data = useDrawerStore((state) => state.detail_data) as ICountry;
   const { setIsDirty } = useFormStore();
@@ -53,17 +54,19 @@ const EditCountry = () => {
     mutationFn: editCountry,
     onMutate: () => {
       setIsLoading(true);
+      console.log('Edit mutation started...');
     },
     onSuccess: (data) => {
+      console.log('Edit mutation successful:', data);
       reset();
       setDetailData(data.data);
-
       closeEditDrawer();
       setIsLoading(false);
       setIsDirty(false);
       queryClient.invalidateQueries({ queryKey: [GET_COUNTRY] });
     },
     onError: (error: any) => {
+      console.log('Edit mutation error:', error);
       setIsLoading(false);
       const errorRes = error as AxiosError<ErrorResponse>;
       if (errorRes.response?.data) {
@@ -74,28 +77,48 @@ const EditCountry = () => {
   });
 
   const onSubmit: SubmitHandler<CountryFormBody> = (data) => {
+    console.log('Edit form submitted with data:', data);
     mutationEditCountry(data);
   };
+
+  const handleSaveClick = () => {
+    console.log('Save button clicked in edit form');
+    formRef.current?.requestSubmit();
+  };
+
+  const handleInputKeyDown = useCallback(
+    (event: React.KeyboardEvent<HTMLInputElement>) => {
+      if (event.key === 'Enter' && !event.shiftKey) {
+        event.preventDefault();
+        console.log('Enter key pressed');
+        if (!isLoading && hasChanged) {
+          formRef.current?.requestSubmit();
+        }
+      }
+    },
+    [isLoading, hasChanged]
+  );
 
   return (
     <Drawer onClose={handleCloseDrawerEdit} open={isOpenEdit}>
       <DrawerContent>
-        <form onSubmit={handleSubmit(onSubmit)} noValidate>
-          <DrawerHeader
-            onClick={handleCloseDrawerEdit}
-            drawerTitle="Edit Country"
-          >
-            <DrawerEndHeader>
-              <Button
-                variant={!hasChanged ? 'disabled' : 'primary'}
-                icon={{ size: 'large', icon: IconDeviceFloppy, color: 'White' }}
-                type="submit"
-                disabled={isLoading}
-              >
-                {isLoading ? 'saving...' : 'save'}
-              </Button>
-            </DrawerEndHeader>
-          </DrawerHeader>
+        <DrawerHeader
+          onClick={handleCloseDrawerEdit}
+          drawerTitle="Edit Country"
+        >
+          <DrawerEndHeader>
+            <Button
+              variant={!hasChanged ? 'disabled' : 'primary'}
+              icon={{ size: 'large', icon: IconDeviceFloppy, color: 'White' }}
+              onClick={handleSaveClick}
+              disabled={isLoading}
+            >
+              {isLoading ? 'saving...' : 'save'}
+            </Button>
+          </DrawerEndHeader>
+        </DrawerHeader>
+
+        <form ref={formRef} onSubmit={handleSubmit(onSubmit)} noValidate>
           <DrawerBody>
             <Card size="drawer">
               <CardContent className="flex-wrap flex flex-row gap-6 items-center">
@@ -111,6 +134,7 @@ const EditCountry = () => {
                   right
                   type="text"
                   disabled
+                  onKeyDown={handleInputKeyDown}
                 />
                 <InputField
                   {...register('country_name')}
@@ -123,6 +147,7 @@ const EditCountry = () => {
                   placeholder="Country Name"
                   right
                   type="text"
+                  onKeyDown={handleInputKeyDown}
                 />
               </CardContent>
             </Card>

@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useCallback, useRef } from 'react';
 import { Button } from '@components/ui/Button';
 import {
   Drawer,
@@ -18,7 +18,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { countrySchema } from '@constants/schemas/ConfigurationSchema/general';
 import { createCountry } from '@services/fetcher/configuration/general';
-import useFormStore from '@stores/useFormStore'; // Import useFormStore
+import useFormStore from '@stores/useFormStore';
 import { useDrawer } from '@hooks/useDrawer';
 import { countryDefaultValues } from '@constants/defaultValues';
 import { useFormChanges } from '@hooks/useFormChanges';
@@ -27,6 +27,7 @@ import { errorMapping } from '@utils/errorMapping';
 import { GET_COUNTRY } from '@constants/queryKey';
 
 const CreateCountry = () => {
+  const formRef = useRef<HTMLFormElement>(null);
   const { isOpen, closeDrawer, openDetailDrawer } = useDrawerStore();
   const { setIsDirty } = useFormStore();
   const [isLoading, setIsLoading] = React.useState(false);
@@ -41,7 +42,7 @@ const CreateCountry = () => {
     control,
     formState: { errors, isDirty },
   } = useForm<CountryFormBody>({
-    mode: 'onSubmit',
+    mode: 'onBlur',
     resolver: yupResolver(countrySchema),
     defaultValues: countryDefaultValues,
   });
@@ -51,15 +52,17 @@ const CreateCountry = () => {
     countryDefaultValues,
     control,
     setValue,
-    'every' // or 'every' depending on your needs
+    'every'
   );
 
   const { mutate: mutationCreateCountry } = useMutation({
     mutationFn: createCountry,
     onMutate: () => {
       setIsLoading(true);
+      console.log('Mutation started...');
     },
     onSuccess: (data) => {
+      console.log('Mutation successful:', data);
       reset();
       closeDrawer();
       setIsLoading(false);
@@ -68,6 +71,7 @@ const CreateCountry = () => {
       queryClient.invalidateQueries({ queryKey: [GET_COUNTRY] });
     },
     onError: (error: any) => {
+      console.log('Mutation error:', error);
       setIsLoading(false);
       const errorRes = error as AxiosError<ErrorResponse>;
       if (errorRes.response?.data) {
@@ -78,28 +82,45 @@ const CreateCountry = () => {
   });
 
   const onSubmit: SubmitHandler<CountryFormBody> = (data) => {
+    console.log('Form submitted with data:', data);
     mutationCreateCountry(data);
   };
+
+  const handleSaveClick = () => {
+    console.log('Save button clicked');
+    formRef.current?.requestSubmit();
+  };
+
+  const handleInputKeyDown = useCallback(
+    (event: React.KeyboardEvent<HTMLInputElement>) => {
+      if (event.key === 'Enter' && !event.shiftKey) {
+        event.preventDefault();
+        console.log('Enter key pressed');
+        if (!isLoading && hasChanged) {
+          formRef.current?.requestSubmit();
+        }
+      }
+    },
+    [isLoading, hasChanged]
+  );
 
   return (
     <Drawer onClose={handleCloseDrawer} open={isOpen}>
       <DrawerContent>
-        <form onSubmit={handleSubmit(onSubmit)} noValidate>
-          <DrawerHeader
-            onClick={handleCloseDrawer}
-            drawerTitle="Create Country"
-          >
-            <DrawerEndHeader>
-              <Button
-                variant={!hasChanged ? 'disabled' : 'primary'}
-                icon={{ size: 'large', icon: IconDeviceFloppy, color: 'White' }}
-                type="submit"
-                disabled={isLoading}
-              >
-                {isLoading ? 'saving...' : 'save'}
-              </Button>
-            </DrawerEndHeader>
-          </DrawerHeader>
+        <DrawerHeader onClick={handleCloseDrawer} drawerTitle="Create Country">
+          <DrawerEndHeader>
+            <Button
+              variant={!hasChanged ? 'disabled' : 'primary'}
+              icon={{ size: 'large', icon: IconDeviceFloppy, color: 'White' }}
+              onClick={handleSaveClick}
+              disabled={isLoading}
+            >
+              {isLoading ? 'saving...' : 'save'}
+            </Button>
+          </DrawerEndHeader>
+        </DrawerHeader>
+
+        <form ref={formRef} onSubmit={handleSubmit(onSubmit)}>
           <DrawerBody>
             <Card size="drawer">
               <CardContent className="flex-wrap flex flex-row gap-6 items-start">
@@ -114,6 +135,7 @@ const CreateCountry = () => {
                   placeholder="Country Code"
                   right
                   type="text"
+                  onKeyDown={handleInputKeyDown}
                 />
                 <InputField
                   {...register('country_name')}
@@ -126,6 +148,7 @@ const CreateCountry = () => {
                   placeholder="Country Name"
                   right
                   type="text"
+                  onKeyDown={handleInputKeyDown}
                 />
               </CardContent>
             </Card>
