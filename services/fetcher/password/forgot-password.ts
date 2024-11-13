@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { PATH_AUTH_FORGOT_PASSWORD } from '@constants/routes';
 
-export const forgotPassword = async (email: string) => {
+export const forgotPassword = async ({ email }: ForgotPasswordBody) => {
   try {
     const res = await axios.post(PATH_AUTH_FORGOT_PASSWORD, { email });
     return res;
