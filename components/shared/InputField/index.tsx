@@ -65,6 +65,7 @@ export interface InputFieldProps
   start_icon?: IconProps;
   end_icon?: IconProps;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  onKeyDown?: React.KeyboardEventHandler<HTMLInputElement>; // Add onKeyDown here
 }
 
 const InputField = React.forwardRef<HTMLInputElement, InputFieldProps>(
