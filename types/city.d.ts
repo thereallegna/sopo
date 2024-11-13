@@ -5,4 +5,5 @@ type ICity = {
   province: string;
   ring_area?: string | null;
   create_date: string;
+  location?: string;
 };

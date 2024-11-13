@@ -49,7 +49,6 @@ const DetailCountry = () => {
                 right
                 type="text"
                 disabled
-                // register
                 {...register('country_code')}
               />
               <InputField
@@ -59,7 +58,6 @@ const DetailCountry = () => {
                 right
                 type="text"
                 disabled
-                // register
                 {...register('country_name')}
               />
             </CardContent>
