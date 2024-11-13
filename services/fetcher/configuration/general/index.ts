@@ -3,11 +3,14 @@ import axios from 'axios';
 import { TableOptionState } from '../../../../types/client/table';
 
 const getCountry = async (option?: TableOptionState) => {
-  const url = `${PATH_COUNTRY}?page_size=${
+  let url = `${PATH_COUNTRY}?page_size=${
     option?.pagination.pageSize || ''
   }&current_page=${option?.pagination.pageIndex || ''}&search=${
     option?.search || ''
   }`;
+  if (option?.grouping && option.grouping.length > 0) {
+    url = PATH_COUNTRY;
+  }
   const res = await axios.get(url);
   return res;
 };
@@ -36,11 +39,14 @@ const editCountry = async (country: CountryFormBody) => {
 };
 
 const getCity = async (option?: TableOptionState) => {
-  const url = `${PATH_CITY}?page_size=${
+  let url = `${PATH_CITY}?page_size=${
     option?.pagination.pageSize || ''
   }&current_page=${option?.pagination.pageIndex || ''}&search=${
     option?.search || ''
   }`;
+  if (option?.grouping && option.grouping.length > 0) {
+    url = PATH_CITY;
+  }
   const res = await axios.get(url);
   return res;
 };

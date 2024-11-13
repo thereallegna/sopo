@@ -40,10 +40,13 @@ const useTable = <T>({
 
   const option = useTableStore((state) => state.options[queryKey]);
 
+  const isGrouping = option.grouping.length > 0;
+
   const onGrouping = (group: Updater<GroupingState>) => {
     const groupingState =
       typeof group === 'function' ? group(option.grouping) : group;
     setGrouping(queryKey, groupingState);
+    router.replace(pathname);
   };
 
   const onPagination = (paginationFn: PaginationPartial) => {
@@ -51,7 +54,6 @@ const useTable = <T>({
       typeof paginationFn === 'function'
         ? paginationFn(option.pagination)
         : paginationFn;
-    setPagination(queryKey, paginationState);
     const { pageIndex = 0, pageSize = 10 } = paginationState;
     const validPageIndex = Number.isNaN(pageIndex) ? 0 : pageIndex;
     const validPageSize = Number.isNaN(pageSize) ? 10 : pageSize;
@@ -62,12 +64,12 @@ const useTable = <T>({
       pageSize: validPageSize,
     });
 
-    const url = new URLSearchParams(params);
-
-    url.set('page_index', (validPageIndex + 1).toString());
-    url.set('page_size', validPageSize.toString());
-
-    router.replace(`${pathname}?${url.toString()}`);
+    if (!isGrouping) {
+      const url = new URLSearchParams(params);
+      url.set('page_index', (validPageIndex + 1).toString());
+      url.set('page_size', validPageSize.toString());
+      router.replace(`${pathname}?${url.toString()}`);
+    }
   };
 
   const onSearch = (keyword: string) => {
@@ -87,25 +89,36 @@ const useTable = <T>({
     setRowSize(queryKey, size);
   };
 
-  const initPagination = () => {
-    const pgState = { ...option.pagination };
-    const pageSize = params.get('page_size');
-    const pageIndex = params.get('page_index');
-    if (pageSize) {
-      pgState.pageSize = parseFloat(pageSize);
-    }
-    if (pageIndex) {
-      pgState.pageIndex = parseFloat(pageIndex) - 1;
-    }
-    setPagination(queryKey, pgState);
-  };
-
   useEffect(() => {
-    initPagination();
+    const initPagination = () => {
+      const pgState = { ...option.pagination };
+      const pageSize = params.get('page_size');
+      const pageIndex = params.get('page_index');
+      if (pageSize) {
+        pgState.pageSize = parseFloat(pageSize);
+      }
+      if (pageIndex) {
+        pgState.pageIndex = parseFloat(pageIndex) - 1;
+      }
+      setPagination(queryKey, pgState);
+    };
+    if (params.get('page_size') || params.get('page_index')) {
+      initPagination();
+    }
   }, []);
 
+  // Jika terdapat column group maka dependency paginationnya dihilangkan agar pagination otomatisnya menjadi berjalan
+  const depnedencyKey = !isGrouping
+    ? [
+        queryKey,
+        option.pagination.pageIndex,
+        option.pagination.pageSize,
+        option.search,
+      ]
+    : [queryKey];
+
   const { data: queryData } = useQuery<AxiosResponse<ApiResponse<T[]>>>({
-    queryKey: [queryKey, option.pagination, option.search],
+    queryKey: depnedencyKey,
     queryFn: () => {
       const nextPagination = {
         ...option.pagination,
