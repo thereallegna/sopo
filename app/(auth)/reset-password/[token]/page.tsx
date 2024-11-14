@@ -19,7 +19,7 @@ import { resetPassword } from '@services/fetcher/password/reset-password';
 import { resetPasswordConstant } from '@constants/resetPasswordConstant';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import resetPasswordSchema from '@constants/schemas/ResetPasswordSchema';
+import { resetPasswordSchema } from '@constants/schemas/AuthSchema';
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { errorMapping } from '@utils/errorMapping';
