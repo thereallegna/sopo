@@ -1,4 +1,4 @@
-import { GET_CITY, GET_COUNTRY, GET_PROVINCE } from '@constants/queryKey';
+import { GET_CITY, GET_COUNTRY, GET_UOM, GET_PROVINCE } from '@constants/queryKey';
 import { create } from 'zustand';
 import { TableState } from '../types/client/table';
 
@@ -23,6 +23,7 @@ const initialTableState = {
       rowSize: undefined,
     },
     [GET_PROVINCE]: {
+    [GET_UOM]: {
       columnVisibility: {},
       pagination: {
         pageIndex: 0,

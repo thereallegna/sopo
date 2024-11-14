@@ -1,13 +1,8 @@
 import { create } from 'zustand';
 
-export type DrawerType =
-  | 'createCountry'
-  | 'editCountry'
-  | 'deleteCountry'
-  | null;
-export type FilterDrawerType = 'filterCountry' | null;
-export type TableDrawerType = 'getCountry' | null;
-export type DetailDataType = ICountry | IProvince | ICity | null;
+export type FilterDrawerType = 'filterCountry' | 'filterUOM' | null;
+export type TableDrawerType = 'getCountry' | 'getUOM' | null;
+export type DetailDataType = ICountry | ICity | IUOM | null;
 
 type DrawerState = {
   filterDrawerType: FilterDrawerType;
@@ -41,7 +36,6 @@ type DrawerState = {
 };
 
 const initialDrawerState = {
-  drawerType: null,
   filterDrawerType: null,
   tableDrawerType: null,
   isOpen: false,
