@@ -94,7 +94,6 @@ const ResetPasswordPage = ({ params }: { params: { token: string } }) => {
           Enter a new password below to change your password
         </CardDescription>
 
-        {/* Show global error message if there's an error */}
         {errorMessage && (
           <div className="text-red-500 text-sm mb-3">
             <strong>Error:</strong> {errorMessage}

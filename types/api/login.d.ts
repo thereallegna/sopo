@@ -5,6 +5,10 @@ type LoginFormBody = {
   keepUserId?: boolean;
 };
 
+type ForgotPasswordBody = {
+  email: string;
+};
+
 type ResetPasswordBody = {
   new_password: string;
   confirm_password: string;
