@@ -6,11 +6,11 @@ type Props = {
 };
 
 export const metadata: Metadata = {
-  title: 'Material Management - RUN System R1',
-  description: 'Material Management page.',
+  title: 'Items UOM - RUN System R1',
+  description: 'Items UOM page.',
 };
 
 // ?======================================================//
-const MaterialManagemenLayout = ({ children }: Props) => <>{children}</>;
+const ItemsUomLayout = ({ children }: Props) => <>{children}</>;
 
-export default MaterialManagemenLayout;
+export default ItemsUomLayout;
