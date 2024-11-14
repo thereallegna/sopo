@@ -120,7 +120,7 @@ const EditProvince = () => {
         <form ref={formRef} onSubmit={handleSubmit(onSubmit)} noValidate>
           <DrawerBody>
             <Card size="drawer">
-              <CardContent className="flex-wrap flex flex-row gap-6">
+              <CardContent className="flex-wrap flex flex-row gap-6 items-center">
                 <InputField
                   {...register('province_code')}
                   message={
