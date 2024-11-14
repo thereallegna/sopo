@@ -77,7 +77,7 @@ const SidebarDropdown: React.FC<SidebarDropdownProps> = ({
                     >
                       <h1
                         className={cn(
-                          'ml-2 font-normal',
+                          'ml-2 font-normal whitespace-pre-line text-start',
                           isActive ? 'font-semibold' : 'font-normal',
                           isOpen ? 'block' : 'hidden'
                         )}

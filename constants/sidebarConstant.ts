@@ -149,11 +149,33 @@ export const sidebarConstant: SidebarItem[] = [
         children: [
           {
             title: 'Material Management',
-            path: '/configuration/inventory-and-material-management/material-management',
+            children: [
+              {
+                title: 'Items Category',
+                path: '/configuration/inventory-and-material-management/material-management/items-category',
+              },
+              {
+                title: 'Master Items',
+                path: '/configuration/inventory-and-material-management/material-management/master-items',
+              },
+              {
+                title: 'Items UOM',
+                path: '/configuration/inventory-and-material-management/material-management/items-uom',
+              },
+            ],
           },
           {
             title: 'Warehouse Management System',
-            path: '/configuration/inventory-and-material-management/warehouse-management-system',
+            children: [
+              {
+                title: "Warehouse's Category",
+                path: '/configuration/inventory-and-material-management/material-management/warehouse-category',
+              },
+              {
+                title: 'Warehouse',
+                path: '/configuration/inventory-and-material-management/material-management/warehouse',
+              },
+            ],
           },
         ],
       },
