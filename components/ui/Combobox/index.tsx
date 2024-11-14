@@ -74,7 +74,7 @@ export const Combobox = ({
             <Button
               variant="secondary"
               type="button"
-              className="justify-between"
+              className={`${disabled ? 'bg-Neutral-100' : ''} justify-between`}
               end_icon={{
                 icon: IconChevronDown,
               }}
@@ -82,19 +82,6 @@ export const Combobox = ({
             >
               <p className="font-normal">{value || placeholder}</p>
             </Button>
-            {/* <InputField
-              // className="w-[196px] h-[30px] bg-transparent border outline-none rounded-sm resize-none text-base font-normal text-neutral-400 pt-1 pl-2"
-              role="combobox"
-              aria-expanded={open}
-              aria-controls={popoverContentId}
-              value={
-                value
-                  ? items.find((item) => item.value === value)?.label
-                  : 'Text here..'
-              }
-              readOnly
-              onFocus={() => setOpen(true)}
-            /> */}
           </PopoverTrigger>
           <PopoverContent
             id={popoverContentId}
