@@ -36,9 +36,9 @@ const TablePagination = ({
       <span className="text-base text-Neutral-500 font-normal flex items-center gap-1">
         Showing{' '}
         <PageSizeInput
-          helperValues={[10, 20, 40, 80]}
+          helperValues={[10, 50, 100, 200]}
           type="number"
-          value={page_size}
+          value={page_size >= 0 ? page_size : undefined}
           placeholder="0"
           onChangePageSize={(val) => onChangePageSize(val)}
         />{' '}
