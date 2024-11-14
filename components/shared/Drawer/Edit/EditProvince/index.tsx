@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useCallback, useRef } from 'react';
+import React, { useRef, useCallback } from 'react';
 import { Button } from '@components/ui/Button';
 import {
   Drawer,
@@ -17,63 +17,58 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { provinceSchema } from '@constants/schemas/ConfigurationSchema/general';
-import { createProvince } from '@services/fetcher/configuration/general';
-import useFormStore from '@stores/useFormStore'; // Import useFormStore
+import { editProvince } from '@services/fetcher/configuration/general';
+import useFormStore from '@stores/useFormStore';
 import { useDrawer } from '@hooks/useDrawer';
-import {
-  cityDefaultValues,
-  provinceDefaultValues,
-} from '@constants/defaultValues';
 import { useFormChanges } from '@hooks/useFormChanges';
-import Combobox from '@components/ui/Combobox';
 import { errorMapping } from '@utils/errorMapping';
 import { AxiosError } from 'axios';
 import { GET_PROVINCE } from '@constants/queryKey';
+import Combobox from '@components/ui/Combobox';
 
-const CreateCity = () => {
+const EditProvince = () => {
   const formRef = useRef<HTMLFormElement>(null);
-  const { isOpen, closeDrawer, openDetailDrawer } = useDrawerStore();
+  const { isOpenEdit, closeEditDrawer, setDetailData } = useDrawerStore();
+  const detail_data = useDrawerStore((state) => state.detail_data) as IProvince;
   const { setIsDirty } = useFormStore();
   const [isLoading, setIsLoading] = React.useState(false);
   const queryClient = useQueryClient();
 
   const {
+    watch,
     register,
     handleSubmit,
     reset,
     setError,
     setValue,
-    watch,
     control,
     formState: { errors, isDirty },
   } = useForm<ProvinceFormBody>({
     mode: 'onSubmit',
     resolver: yupResolver(provinceSchema),
-    defaultValues: provinceDefaultValues,
+    defaultValues: detail_data,
   });
 
-  const { handleCloseDrawer } = useDrawer(isDirty, reset);
-  const { hasChanged } = useFormChanges(
-    cityDefaultValues,
-    control,
-    setValue,
-    'every' // or 'every' depending on your needs
-  );
+  const { handleCloseDrawerEdit } = useDrawer(isDirty, reset, detail_data);
+  const { hasChanged } = useFormChanges(detail_data, control, setValue);
 
-  const { mutate: mutationCreateCity } = useMutation({
-    mutationFn: createProvince,
+  const { mutate: mutationEditProvince } = useMutation({
+    mutationFn: editProvince,
     onMutate: () => {
       setIsLoading(true);
+      console.log('Edit mutation started...');
     },
     onSuccess: (data) => {
+      console.log('Edit mutation successful:', data);
       reset();
-      closeDrawer();
+      setDetailData(data.data);
+      closeEditDrawer();
       setIsLoading(false);
       setIsDirty(false);
-      openDetailDrawer(data.data);
       queryClient.invalidateQueries({ queryKey: [GET_PROVINCE] });
     },
     onError: (error: any) => {
+      console.log('Edit mutation error:', error);
       setIsLoading(false);
       const errorRes = error as AxiosError<ErrorResponse>;
       if (errorRes.response?.data) {
@@ -84,11 +79,12 @@ const CreateCity = () => {
   });
 
   const onSubmit: SubmitHandler<ProvinceFormBody> = (data) => {
-    mutationCreateCity(data);
+    console.log('Edit form submitted with data:', data);
+    mutationEditProvince(data);
   };
 
   const handleSaveClick = () => {
-    console.log('Save button clicked');
+    console.log('Save button clicked in edit form');
     formRef.current?.requestSubmit();
   };
 
@@ -106,14 +102,13 @@ const CreateCity = () => {
   );
 
   return (
-    <Drawer onClose={handleCloseDrawer} open={isOpen}>
+    <Drawer onClose={handleCloseDrawerEdit} open={isOpenEdit}>
       <DrawerContent>
-        <DrawerHeader onClick={handleCloseDrawer} drawerTitle="Add Province">
+        <DrawerHeader onClick={handleCloseDrawerEdit} drawerTitle="Edit City">
           <DrawerEndHeader>
             <Button
               variant={!hasChanged ? 'disabled' : 'primary'}
               icon={{ size: 'large', icon: IconDeviceFloppy, color: 'White' }}
-              type="submit"
               onClick={handleSaveClick}
               disabled={isLoading}
             >
@@ -121,13 +116,11 @@ const CreateCity = () => {
             </Button>
           </DrawerEndHeader>
         </DrawerHeader>
+
         <form ref={formRef} onSubmit={handleSubmit(onSubmit)} noValidate>
           <DrawerBody>
-            <Card
-              size="drawer"
-              className="border border-Neutral-200 shadow-none"
-            >
-              <CardContent className="flex-wrap flex flex-row gap-6 items-center">
+            <Card size="drawer">
+              <CardContent className="flex-wrap flex flex-row gap-6">
                 <InputField
                   {...register('province_code')}
                   message={
@@ -141,6 +134,7 @@ const CreateCity = () => {
                   type="text"
                   required
                   className="flex-1 gap-2"
+                  disabled
                   onKeyDown={handleInputKeyDown}
                 />
                 <InputField
@@ -151,7 +145,6 @@ const CreateCity = () => {
                       : undefined
                   }
                   label="Province Name"
-                  placeholder="Text here.."
                   right
                   type="text"
                   required
@@ -159,24 +152,26 @@ const CreateCity = () => {
                   onKeyDown={handleInputKeyDown}
                 />
                 <Combobox
-                  className="flex-1"
-                  label="Country"
+                  className="flex-1 gap-2"
+                  value={watch('country')}
                   placeholder="Select Country"
-                  items={[
-                    { label: 'Jawir', value: '1' },
-                    { label: 'INDONESIA', value: '2' },
-                    { label: 'Sunda', value: '3' },
-                  ]}
                   message={
                     errors.country
                       ? { text: errors.country.message!, type: 'danger' }
                       : undefined
                   }
-                  value={watch('country')}
-                  onChange={(val) => {
-                    setValue('country', val, { shouldDirty: true });
-                    setError('country', { type: 'disabled' });
-                  }}
+                  label="Country"
+                  items={[
+                    {
+                      label: 'Nanggroe Aceh Darussalam',
+                      value: '11.00.00.0000',
+                    },
+                    { label: 'Jawa Tengah', value: '2' },
+                    { label: 'Jawa Timur', value: '3' },
+                  ]}
+                  onChange={(val) =>
+                    setValue('country', val, { shouldDirty: true })
+                  }
                 />
               </CardContent>
             </Card>
@@ -187,4 +182,4 @@ const CreateCity = () => {
   );
 };
 
-export default CreateCity;
+export default EditProvince;

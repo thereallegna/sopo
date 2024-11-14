@@ -34,11 +34,12 @@ interface ComboboxProps {
   label?: string;
   labelProps?: LabelProps;
   items: FrameworkItem[];
-  value: string;
+  value?: string;
   placeholder: string;
   message?: MessageInputProps;
   onChange?: (val: string) => void;
   disabled?: boolean;
+  className?: string;
 }
 
 export const Combobox = ({
@@ -50,6 +51,7 @@ export const Combobox = ({
   placeholder,
   onChange,
   disabled,
+  className,
 }: ComboboxProps) => {
   const [open, setOpen] = React.useState(false);
   const [searchQuery, setSearchQuery] = React.useState('');
@@ -60,7 +62,7 @@ export const Combobox = ({
   );
 
   return (
-    <div>
+    <div className={className}>
       <div className="w-full flex gap-2">
         <Label
           required

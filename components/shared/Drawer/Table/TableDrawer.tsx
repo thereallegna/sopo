@@ -33,6 +33,7 @@ const TableDrawer = ({
   columns,
   queryKey,
   queryFn,
+  keyFilterDrawer,
 }: TableDrawerProps) => {
   const { isOpenTable, openDrawer, openFilterDrawer, closeTableDrawer } =
     useDrawerStore();
@@ -45,7 +46,7 @@ const TableDrawer = ({
     queryFn,
     columns,
     queryKey,
-    onFilter: openFilterDrawer,
+    onFilter: keyFilterDrawer ? openFilterDrawer : undefined,
   });
 
   return (

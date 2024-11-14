@@ -27,3 +27,7 @@ export const PATH_AUTH_RESET_PASSWORD_BE = `${PATH_BACKEND_URL}/reset-password`;
 // city
 export const PATH_CITY = `${PATH_CONFIGURATION_GENERAL}/city`;
 export const PATH_CITY_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/city`;
+
+// province
+export const PATH_PROVINCE = `${PATH_CONFIGURATION_GENERAL}/province`;
+export const PATH_PROVINCE_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/province`;

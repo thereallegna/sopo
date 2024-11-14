@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useCallback, useRef } from 'react';
+import React, { useRef, useCallback } from 'react';
 import { Button } from '@components/ui/Button';
 import {
   Drawer,
@@ -17,60 +17,58 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { citySchema } from '@constants/schemas/ConfigurationSchema/general';
-import { createCity } from '@services/fetcher/configuration/general';
-import useFormStore from '@stores/useFormStore'; // Import useFormStore
+import { editCity } from '@services/fetcher/configuration/general';
+import useFormStore from '@stores/useFormStore';
 import { useDrawer } from '@hooks/useDrawer';
-import { cityDefaultValues } from '@constants/defaultValues';
 import { useFormChanges } from '@hooks/useFormChanges';
-import Combobox from '@components/ui/Combobox';
 import { errorMapping } from '@utils/errorMapping';
 import { AxiosError } from 'axios';
 import { GET_CITY } from '@constants/queryKey';
+import Combobox from '@components/ui/Combobox';
 
-const CreateCity = () => {
+const EditCity = () => {
   const formRef = useRef<HTMLFormElement>(null);
-  const { isOpen, closeDrawer, openDetailDrawer } = useDrawerStore();
+  const { isOpenEdit, closeEditDrawer, setDetailData } = useDrawerStore();
+  const detail_data = useDrawerStore((state) => state.detail_data) as ICity;
   const { setIsDirty } = useFormStore();
   const [isLoading, setIsLoading] = React.useState(false);
   const queryClient = useQueryClient();
 
   const {
+    watch,
     register,
     handleSubmit,
     reset,
     setError,
     setValue,
-    watch,
     control,
     formState: { errors, isDirty },
   } = useForm<CityFormBody>({
     mode: 'onSubmit',
     resolver: yupResolver(citySchema),
-    defaultValues: cityDefaultValues,
+    defaultValues: detail_data,
   });
 
-  const { handleCloseDrawer } = useDrawer(isDirty, reset);
-  const { hasChanged } = useFormChanges(
-    cityDefaultValues,
-    control,
-    setValue,
-    'every' // or 'every' depending on your needs
-  );
+  const { handleCloseDrawerEdit } = useDrawer(isDirty, reset, detail_data);
+  const { hasChanged } = useFormChanges(detail_data, control, setValue);
 
-  const { mutate: mutationCreateCity } = useMutation({
-    mutationFn: createCity,
+  const { mutate: mutationEditCity } = useMutation({
+    mutationFn: editCity,
     onMutate: () => {
       setIsLoading(true);
+      console.log('Edit mutation started...');
     },
     onSuccess: (data) => {
+      console.log('Edit mutation successful:', data);
       reset();
-      closeDrawer();
+      setDetailData(data.data);
+      closeEditDrawer();
       setIsLoading(false);
       setIsDirty(false);
-      openDetailDrawer(data.data);
       queryClient.invalidateQueries({ queryKey: [GET_CITY] });
     },
     onError: (error: any) => {
+      console.log('Edit mutation error:', error);
       setIsLoading(false);
       const errorRes = error as AxiosError<ErrorResponse>;
       if (errorRes.response?.data) {
@@ -81,11 +79,12 @@ const CreateCity = () => {
   });
 
   const onSubmit: SubmitHandler<CityFormBody> = (data) => {
-    mutationCreateCity(data);
+    console.log('Edit form submitted with data:', data);
+    mutationEditCity(data);
   };
 
   const handleSaveClick = () => {
-    console.log('Save button clicked');
+    console.log('Save button clicked in edit form');
     formRef.current?.requestSubmit();
   };
 
@@ -103,14 +102,13 @@ const CreateCity = () => {
   );
 
   return (
-    <Drawer onClose={handleCloseDrawer} open={isOpen}>
+    <Drawer onClose={handleCloseDrawerEdit} open={isOpenEdit}>
       <DrawerContent>
-        <DrawerHeader onClick={handleCloseDrawer} drawerTitle="Add City">
+        <DrawerHeader onClick={handleCloseDrawerEdit} drawerTitle="Edit City">
           <DrawerEndHeader>
             <Button
               variant={!hasChanged ? 'disabled' : 'primary'}
               icon={{ size: 'large', icon: IconDeviceFloppy, color: 'White' }}
-              type="submit"
               onClick={handleSaveClick}
               disabled={isLoading}
             >
@@ -118,12 +116,10 @@ const CreateCity = () => {
             </Button>
           </DrawerEndHeader>
         </DrawerHeader>
+
         <form ref={formRef} onSubmit={handleSubmit(onSubmit)} noValidate>
           <DrawerBody>
-            <Card
-              size="drawer"
-              className="border border-Neutral-200 shadow-none"
-            >
+            <Card size="drawer">
               <CardContent className="flex-wrap flex flex-row gap-6">
                 <div className="flex flex-col gap-[14px] flex-1">
                   <InputField
@@ -139,6 +135,7 @@ const CreateCity = () => {
                     type="text"
                     required
                     className="w-full gap-2"
+                    disabled
                     onKeyDown={handleInputKeyDown}
                   />
                   <InputField
@@ -149,7 +146,6 @@ const CreateCity = () => {
                         : undefined
                     }
                     label="City Name"
-                    placeholder="Text here.."
                     right
                     type="text"
                     required
@@ -159,8 +155,14 @@ const CreateCity = () => {
                 </div>
                 <div className="flex flex-col gap-[14px] flex-1 h-full justify-between">
                   <Combobox
-                    label="Province"
+                    value={watch('province')}
                     placeholder="Select Province"
+                    message={
+                      errors.province
+                        ? { text: errors.province.message!, type: 'danger' }
+                        : undefined
+                    }
+                    label="Province"
                     items={[
                       {
                         label: 'Nanggroe Aceh Darussalam',
@@ -169,16 +171,9 @@ const CreateCity = () => {
                       { label: 'Jawa Tengah', value: '2' },
                       { label: 'Jawa Timur', value: '3' },
                     ]}
-                    message={
-                      errors.province
-                        ? { text: errors.province.message!, type: 'danger' }
-                        : undefined
+                    onChange={(val) =>
+                      setValue('province', val, { shouldDirty: true })
                     }
-                    value={watch('province')}
-                    onChange={(val) => {
-                      setValue('province', val, { shouldDirty: true });
-                      setError('province', { type: 'disabled' });
-                    }}
                   />
                   <InputField
                     {...register('ring_area')}
@@ -188,7 +183,6 @@ const CreateCity = () => {
                         : undefined
                     }
                     label="Ring Area"
-                    placeholder="Text here.."
                     right
                     type="text"
                     className="w-full gap-2"
@@ -198,13 +192,7 @@ const CreateCity = () => {
                 <div className="flex flex-col gap-[14px] flex-1">
                   <InputField
                     {...register('location')}
-                    message={
-                      errors.location
-                        ? { text: errors.location.message!, type: 'danger' }
-                        : undefined
-                    }
                     label="Location"
-                    placeholder="Text here.."
                     right
                     type="text"
                     className="w-full gap-2"
@@ -220,4 +208,4 @@ const CreateCity = () => {
   );
 };
 
-export default CreateCity;
+export default EditCity;

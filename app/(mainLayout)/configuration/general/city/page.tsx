@@ -28,8 +28,8 @@ const DetailCity = dynamic(
   () => import('@components/shared/Drawer/Detail/DetailCity'),
   { ssr: false }
 );
-const EditCountry = dynamic(
-  () => import('@components/shared/Drawer/Edit/EditCountry'),
+const EditCity = dynamic(
+  () => import('@components/shared/Drawer/Edit/EditCity'),
   { ssr: false }
 );
 
@@ -116,7 +116,7 @@ const Country = () => {
       />
       <CreateCity />
       <DetailCity />
-      <EditCountry />
+      <EditCity />
     </>
   );
 };

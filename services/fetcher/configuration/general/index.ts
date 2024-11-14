@@ -1,4 +1,4 @@
-import { PATH_CITY, PATH_COUNTRY } from '@constants/routes';
+import { PATH_CITY, PATH_COUNTRY, PATH_PROVINCE } from '@constants/routes';
 import axios from 'axios';
 import { TableOptionState } from '../../../../types/client/table';
 
@@ -39,6 +39,39 @@ const editCountry = async (country: CountryFormBody) => {
   }
 };
 
+const getProvince = async (option?: TableOptionState) => {
+  let url = `${PATH_PROVINCE}?page_size=${
+    option?.pagination.pageSize || ''
+  }&current_page=${option?.pagination.pageIndex || ''}&search=${
+    option?.search || ''
+  }`;
+  if (option?.grouping && option.grouping.length > 0) {
+    url = PATH_PROVINCE;
+  }
+  const res = await axios.get(url);
+  return res;
+};
+
+const createProvince = async (body: ProvinceFormBody) => {
+  try {
+    const res = await axios.post(PATH_PROVINCE, body);
+    return res.data;
+  } catch (error) {
+    console.error('Error creating city:', error);
+    throw error;
+  }
+};
+
+const editProvince = async (body: ProvinceFormBody) => {
+  try {
+    const res = await axios.put(`${PATH_COUNTRY}/${body.province_code}`, body);
+    return res.data;
+  } catch (error) {
+    console.error('Error editing country:', error);
+    throw error;
+  }
+};
+
 const getCity = async (option?: TableOptionState) => {
   let url = `${PATH_CITY}?page_size=${
     option?.pagination.pageSize || ''
@@ -62,4 +95,24 @@ const createCity = async (city: CityFormBody) => {
   }
 };
 
-export { getCountry, createCountry, editCountry, getCity, createCity };
+const editCity = async (city: CityFormBody) => {
+  try {
+    const res = await axios.put(`${PATH_CITY}/${city.city_code}`, city);
+    return res.data;
+  } catch (error) {
+    console.error('Error editing country:', error);
+    throw error;
+  }
+};
+
+export {
+  getCountry,
+  createCountry,
+  editCountry,
+  getCity,
+  createCity,
+  editCity,
+  getProvince,
+  createProvince,
+  editProvince,
+};
