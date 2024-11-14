@@ -7,7 +7,7 @@ import IconComponent, { IconProps } from '@components/ui/Icon';
 import { IconEye, IconEyeClosed } from '@tabler/icons-react';
 
 const inputVariant = cva(
-  'flex items-center px-3 gap-[8px] border-[1px] rounded-[6px] shadow-sm focus-within:outline-none focus-within:ring-[2px]',
+  'w-full flex items-center px-3 gap-[8px] border-[1px] rounded-[6px] shadow-sm focus-within:outline-none focus-within:ring-[2px]',
   {
     variants: {
       theme: {

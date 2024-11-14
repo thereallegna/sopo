@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useCallback, useRef } from 'react';
 import { Button } from '@components/ui/Button';
 import {
   Drawer,
@@ -14,87 +14,116 @@ import InputField from '@components/shared/InputField';
 import { useDrawerStore } from '@stores/useDrawerStore';
 import { IconDeviceFloppy } from '@tabler/icons-react';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { countrySchema } from '@constants/schemas/ConfigurationSchema/general';
 import { createCountry } from '@services/fetcher/configuration/general';
-import useFormStore from '@stores/useFormStore'; // Import useFormStore
+import useFormStore from '@stores/useFormStore';
 import { useDrawer } from '@hooks/useDrawer';
 import { countryDefaultValues } from '@constants/defaultValues';
 import { useFormChanges } from '@hooks/useFormChanges';
+import { AxiosError } from 'axios';
+import { errorMapping } from '@utils/errorMapping';
+import { GET_COUNTRY } from '@constants/queryKey';
 
 const CreateCountry = () => {
-  const { isOpen, closeDrawer } = useDrawerStore();
+  const formRef = useRef<HTMLFormElement>(null);
+  const { isOpen, closeDrawer, openDetailDrawer } = useDrawerStore();
   const { setIsDirty } = useFormStore();
   const [isLoading, setIsLoading] = React.useState(false);
+  const queryClient = useQueryClient();
 
   const {
     register,
     handleSubmit,
     reset,
     setError,
+    setValue,
     control,
     formState: { errors, isDirty },
   } = useForm<CountryFormBody>({
-    mode: 'onSubmit',
+    mode: 'onBlur',
     resolver: yupResolver(countrySchema),
     defaultValues: countryDefaultValues,
   });
 
-  const { handleCloseDrawer } = useDrawer({ isDirty, reset });
-  const { hasChanged } = useFormChanges(countryDefaultValues, control);
+  const { handleCloseDrawer } = useDrawer(isDirty, reset);
+  const { hasChanged } = useFormChanges(
+    countryDefaultValues,
+    control,
+    setValue,
+    'every'
+  );
 
   const { mutate: mutationCreateCountry } = useMutation({
     mutationFn: createCountry,
     onMutate: () => {
       setIsLoading(true);
+      console.log('Mutation started...');
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
+      console.log('Mutation successful:', data);
       reset();
       closeDrawer();
       setIsLoading(false);
       setIsDirty(false);
+      openDetailDrawer(data.data);
+      queryClient.invalidateQueries({ queryKey: [GET_COUNTRY] });
     },
     onError: (error: any) => {
+      console.log('Mutation error:', error);
       setIsLoading(false);
-      if (error?.response?.data) {
-        const { errorList, message } = error.response.data;
-
-        if (errorList === 'country_code') {
-          setError('country_code', { type: 'server', message });
-        } else if (errorList === 'country_name') {
-          setError('country_name', { type: 'server', message });
-        }
+      const errorRes = error as AxiosError<ErrorResponse>;
+      if (errorRes.response?.data) {
+        const { errorField } = errorRes.response.data;
+        errorMapping(errorField, setError);
       }
     },
   });
 
   const onSubmit: SubmitHandler<CountryFormBody> = (data) => {
+    console.log('Form submitted with data:', data);
     mutationCreateCountry(data);
   };
+
+  const handleSaveClick = () => {
+    console.log('Save button clicked');
+    formRef.current?.requestSubmit();
+  };
+
+  const handleInputKeyDown = useCallback(
+    (event: React.KeyboardEvent<HTMLInputElement>) => {
+      if (event.key === 'Enter' && !event.shiftKey) {
+        event.preventDefault();
+        console.log('Enter key pressed');
+        if (!isLoading && hasChanged) {
+          formRef.current?.requestSubmit();
+        }
+      }
+    },
+    [isLoading, hasChanged]
+  );
 
   return (
     <Drawer onClose={handleCloseDrawer} open={isOpen}>
       <DrawerContent>
-        <form onSubmit={handleSubmit(onSubmit)} noValidate>
-          <DrawerHeader
-            onClick={handleCloseDrawer}
-            drawerTitle="Create Country"
-          >
-            <DrawerEndHeader>
-              <Button
-                variant={!hasChanged ? 'disabled' : 'primary'}
-                icon={{ size: 'large', icon: IconDeviceFloppy, color: 'White' }}
-                type="submit"
-                disabled={isLoading}
-              >
-                {isLoading ? 'saving...' : 'save'}
-              </Button>
-            </DrawerEndHeader>
-          </DrawerHeader>
+        <DrawerHeader onClick={handleCloseDrawer} drawerTitle="Create Country">
+          <DrawerEndHeader>
+            <Button
+              variant={!hasChanged ? 'disabled' : 'primary'}
+              icon={{ size: 'large', icon: IconDeviceFloppy, color: 'White' }}
+              onClick={handleSaveClick}
+              disabled={isLoading}
+            >
+              {isLoading ? 'saving...' : 'save'}
+            </Button>
+          </DrawerEndHeader>
+        </DrawerHeader>
+
+        <form ref={formRef} onSubmit={handleSubmit(onSubmit)}>
           <DrawerBody>
             <Card size="drawer">
-              <CardContent className="flex-wrap flex flex-row gap-6 items-center">
+              <CardContent className="flex-wrap flex flex-row gap-6 items-start">
                 <InputField
                   {...register('country_code')}
                   message={
@@ -106,6 +135,7 @@ const CreateCountry = () => {
                   placeholder="Country Code"
                   right
                   type="text"
+                  onKeyDown={handleInputKeyDown}
                 />
                 <InputField
                   {...register('country_name')}
@@ -118,6 +148,7 @@ const CreateCountry = () => {
                   placeholder="Country Name"
                   right
                   type="text"
+                  onKeyDown={handleInputKeyDown}
                 />
               </CardContent>
             </Card>

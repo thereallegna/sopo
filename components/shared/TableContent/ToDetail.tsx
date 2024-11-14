@@ -1,18 +1,22 @@
 'use client';
 
 import React from 'react';
-import IconComponent from '@components/ui/Icon';
 import { IconArrowUpRight } from '@tabler/icons-react';
-import Link from 'next/link';
+import { Button } from '@components/ui/Button';
+import { useDrawerStore } from '@stores/useDrawerStore';
 
-export interface ToDetailProps {
-  href: string;
-}
+const GoToDetail = ({ data }: { data: any }) => {
+  const openDetailDrawer = useDrawerStore((state) => state.openDetailDrawer);
+  return (
+    <Button
+      icon={{
+        icon: IconArrowUpRight,
+        color: 'secondary',
+      }}
+      variant="navbarSettings"
+      onClick={() => openDetailDrawer(data)}
+    />
+  );
+};
 
-const ToDetail = ({ href }: ToDetailProps) => (
-  <Link href={href}>
-    <IconComponent icon={IconArrowUpRight} color="secondary" />
-  </Link>
-);
-
-export default ToDetail;
+export default GoToDetail;

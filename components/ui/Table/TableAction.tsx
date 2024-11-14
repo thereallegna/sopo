@@ -13,6 +13,7 @@ import { RowSizeType } from '../../../types/client/table';
 
 interface TableActionProps {
   data: any[];
+  search?: string;
   columns: AccessorKeyColumnDef<any, any>[] | ColumnDef<any, any>[];
   columnSelector: SelectColumnDropdownProps;
   rowSize: RowSizeType;
@@ -26,6 +27,7 @@ const TableAction: React.FC<TableActionProps> = ({
   columns,
   columnSelector,
   rowSize,
+  search,
   onSearch,
   onFilter,
   onRowSizeChange,
@@ -38,7 +40,9 @@ const TableAction: React.FC<TableActionProps> = ({
           icon: IconSearch,
           className: 'text-[#354052]',
         }}
+        value={search}
         onChange={(e) => onSearch(e.target.value)}
+        className="w-min"
       />
       {onFilter && <FilterButton onClick={onFilter} />}
       <RowSizeDropdown active={rowSize} action={onRowSizeChange} />

@@ -15,3 +15,19 @@ export const PATH_AUTH_LOGOUT_BE = `${PATH_BACKEND_URL}/logout`;
 // country
 export const PATH_COUNTRY = `${PATH_CONFIGURATION_GENERAL}/country`;
 export const PATH_COUNTRY_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/country`;
+
+// forgot password
+export const PATH_AUTH_FORGOT_PASSWORD = `${PATH_API}/forgot-password`;
+export const PATH_AUTH_FORGOT_PASSWORD_BE = `${PATH_BACKEND_URL}/forgot-password`;
+
+// reset password
+export const PATH_AUTH_RESET_PASSWORD = `${PATH_API}/reset-password`;
+export const PATH_AUTH_RESET_PASSWORD_BE = `${PATH_BACKEND_URL}/reset-password`;
+
+// city
+export const PATH_CITY = `${PATH_CONFIGURATION_GENERAL}/city`;
+export const PATH_CITY_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/city`;
+
+// province
+export const PATH_PROVINCE = `${PATH_CONFIGURATION_GENERAL}/province`;
+export const PATH_PROVINCE_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/province`;

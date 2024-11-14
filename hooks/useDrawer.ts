@@ -1,52 +1,97 @@
-import { useEffect, useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useDrawerStore } from '@stores/useDrawerStore';
 import useFormStore from '@stores/useFormStore';
+import { UseFormReset } from 'react-hook-form';
+import { usePathname } from 'next/navigation';
 
-type UseDrawerOptions = {
-  isDirty?: boolean;
-  reset?: () => void;
-};
+export const useDrawer = (
+  isDirty?: boolean,
+  reset?: UseFormReset<any>,
+  detail_data?: object
+) => {
+  const pathname = usePathname();
+  const {
+    isOpen,
+    isOpenFilter,
+    isOpenTable,
+    isOpenDetail,
+    isOpenEdit,
+    closeDrawer,
+    closeEditDrawer,
+    closeAllDrawer,
+  } = useDrawerStore();
+  const { setIsDirty, setReset, isReset, setLeavingPage, isChanged } =
+    useFormStore();
 
-export const useDrawer = ({
-  isDirty = false,
-  reset = () => {},
-}: UseDrawerOptions = {}) => {
-  const { isOpen, isOpenFilter, closeDrawer, isOpenTable } = useDrawerStore();
-  const { setIsDirty } = useFormStore();
+  useEffect(() => {
+    closeAllDrawer();
+  }, [pathname, closeAllDrawer]);
 
-  // Function to handle closing the drawer, considering unsaved changes
+  useEffect(() => {
+    if (typeof isDirty !== 'undefined') {
+      setIsDirty(isDirty);
+    }
+  }, [isDirty, setIsDirty]);
+
   const handleCloseDrawer = useCallback(() => {
     if (isDirty) {
-      closeDrawer();
-      reset();
+      console.log('isDirty (handleCloseDrawer):', isDirty);
+      setLeavingPage(true);
     } else {
+      console.log('Closing drawer without setting leaving page');
       closeDrawer();
-      reset();
       setIsDirty(false);
+      setReset(false);
     }
-  }, [isDirty, closeDrawer, reset, setIsDirty]);
+  }, [isDirty, closeDrawer, setIsDirty, setReset, setLeavingPage]);
+
+  const handleCloseDrawerEdit = useCallback(() => {
+    if (isChanged) {
+      console.log('isDirty (handleCloseDrawerEdit):', isDirty);
+      setLeavingPage(true);
+    } else {
+      console.log('Closing edit drawer without setting leaving page');
+      closeEditDrawer();
+      setIsDirty(false);
+      setReset(false);
+    }
+  }, [
+    closeEditDrawer,
+    setIsDirty,
+    setReset,
+    setLeavingPage,
+    isChanged,
+    isDirty,
+  ]);
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
 
-    if (isOpen || isOpenFilter || isOpenTable) {
+    if (isOpen || isOpenFilter || isOpenTable || isOpenDetail || isOpenEdit) {
       timer = setTimeout(() => {
         document.body.style.pointerEvents = 'auto';
       }, 500);
-    } else {
-      document.body.style.pointerEvents = 'none';
     }
 
     return () => {
       clearTimeout(timer);
       document.body.style.pointerEvents = '';
     };
-  }, [isOpen, isOpenFilter, isOpenTable]);
+  }, [isOpen, isOpenFilter, isOpenTable, isOpenDetail, isOpenEdit]);
 
-  // Update the global store with the current dirty state whenever it changes
+  // Reset the form if `isReset` is true
   useEffect(() => {
-    setIsDirty(isDirty);
-  }, [isDirty, setIsDirty]);
+    if (isReset) {
+      setReset(false);
+      if (reset) reset(detail_data);
+    }
+  }, [isReset, reset, setReset, detail_data]);
 
-  return { handleCloseDrawer, isOpen, isOpenFilter, isOpenTable };
+  return {
+    handleCloseDrawer,
+    isOpen,
+    isOpenFilter,
+    isOpenTable,
+    handleCloseDrawerEdit,
+  };
 };

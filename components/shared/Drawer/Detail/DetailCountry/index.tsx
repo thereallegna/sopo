@@ -11,30 +11,31 @@ import {
 } from '@components/ui/Drawer';
 import { Card, CardContent } from '@components/ui/Card';
 import InputField from '@components/shared/InputField';
-
 import { useDrawerStore } from '@stores/useDrawerStore';
-import { IconDeviceFloppy } from '@node_modules/@tabler/icons-react/dist/esm/tabler-icons-react';
+import { IconPencil } from '@tabler/icons-react';
+import { useForm } from 'react-hook-form';
+import { useDetailForm } from '@hooks/useFormChanges';
 
-const CreateCountry = () => {
-  const { isOpen, closeDrawer } = useDrawerStore();
+const DetailCountry = () => {
+  const { isOpenDetail, closeDetailDrawer, openEditDrawer } = useDrawerStore();
+  const detail_data = useDrawerStore((state) => state.detail_data) as ICountry;
+
+  const { register, setValue } = useForm<ICountry>();
+
+  useDetailForm<ICountry>(detail_data, setValue);
 
   return (
-    <Drawer onClose={closeDrawer} open={isOpen}>
+    <Drawer onClose={closeDetailDrawer} open={isOpenDetail}>
       <DrawerContent>
-        <DrawerHeader drawerTitle="Create Country">
+        <DrawerHeader onClick={closeDetailDrawer} drawerTitle="Detail Country">
           <DrawerEndHeader>
-            {/* button save */}
             <Button
-              icon={{
-                size: 'large',
-                icon: IconDeviceFloppy,
-                color: 'drawer',
-              }}
-              onClick={() => {
-                console.log('Save');
-              }}
+              variant="primary"
+              icon={{ size: 'large', icon: IconPencil, color: 'White' }}
+              type="submit"
+              onClick={openEditDrawer}
             >
-              save
+              Edit
             </Button>
           </DrawerEndHeader>
         </DrawerHeader>
@@ -42,28 +43,22 @@ const CreateCountry = () => {
           <Card size="drawer">
             <CardContent className="flex-wrap flex flex-row gap-6 items-center">
               <InputField
+                value={detail_data?.country_code || ''}
                 label="Country Code"
                 placeholder="Country Code"
                 right
                 type="text"
+                disabled
+                {...register('country_code')}
               />
               <InputField
+                value={detail_data?.country_name || ''}
                 label="Country Name"
                 placeholder="Country Name"
                 right
                 type="text"
-              />
-              <InputField
-                label="Country Name"
-                placeholder="Country Name"
-                right
-                type="text"
-              />
-              <InputField
-                label="Country Name"
-                placeholder="Country Name"
-                right
-                type="text"
+                disabled
+                {...register('country_name')}
               />
             </CardContent>
           </Card>
@@ -73,4 +68,4 @@ const CreateCountry = () => {
   );
 };
 
-export default CreateCountry;
+export default DetailCountry;

@@ -1,15 +1,14 @@
 import React from 'react';
-import ToDetail from '@components/shared/TableContent/ToDetail';
 import {
   AccessorKeyColumnDef,
   ColumnDef,
   createColumnHelper,
 } from '@tanstack/react-table';
+import GoToDetail from '@components/shared/TableContent/ToDetail';
 import { GenerateColumnsOption } from '../types/client/table';
 
 export const generateColumns = ({
   columns,
-  id,
   hasAction = true,
 }: GenerateColumnsOption):
   | AccessorKeyColumnDef<any, any>[]
@@ -29,7 +28,7 @@ export const generateColumns = ({
     resultColumns.push(
       columnHelper.display({
         id: 'action',
-        cell: (props) => <ToDetail href={`/${props.row.getValue(id)}`} />,
+        cell: (props) => <GoToDetail data={props.row.original} />,
       })
     );
   }

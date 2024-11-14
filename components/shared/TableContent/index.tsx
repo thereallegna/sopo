@@ -42,15 +42,16 @@ const TableContent = <T,>({
   onRowSizeChange,
 }: TableContentProps<T>) => {
   const defaultData = React.useMemo(() => [], []);
-
   const generatedColumns = generateColumns(columns);
+
+  const isGrouping = option.grouping.length > 0;
 
   const table = useReactTable({
     data: data?.results ?? defaultData,
     columns: generatedColumns,
-    manualPagination: !(option.grouping.length > 0),
-    // manualPagination: false,
-    pageCount: data?.total_pages,
+    // Jika ada grouping, gunakan pagination otomatis; jika tidak, manual
+    manualPagination: !isGrouping,
+    pageCount: !isGrouping ? data?.total_pages : undefined,
     state: {
       grouping: option.grouping,
       pagination: option.pagination,
@@ -69,6 +70,7 @@ const TableContent = <T,>({
   return (
     <div className="flex flex-col gap-[10px]">
       <TableAction
+        search={option.search}
         rowSize={option.rowSize}
         data={data?.results ?? defaultData}
         columns={generatedColumns}
@@ -182,7 +184,7 @@ const TableContent = <T,>({
       <TablePagination
         page_size={option.pagination.pageSize}
         total_records={data?.total_records}
-        total_pages={data?.total_pages}
+        total_pages={table.getPageCount()}
         onNext={table.nextPage}
         nextButtonProps={{
           disabled: !table.getCanNextPage(),

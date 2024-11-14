@@ -10,8 +10,8 @@ import { IconProps } from '@components/ui/Icon';
 const inputFieldVariant = cva('flex', {
   variants: {
     right: {
-      true: 'flex-row  items-center gap-[8px] self-stretch',
-      false: 'flex-col gap-[4px]',
+      true: 'flex-row  items-center gap-2 self-stretch',
+      false: 'flex-col gap-1',
     },
   },
   defaultVariants: {
@@ -19,7 +19,7 @@ const inputFieldVariant = cva('flex', {
   },
 });
 
-const messageInputFieldVariant = cva('', {
+export const messageInputFieldVariant = cva('', {
   variants: {
     variant: {
       normal: 'text-neutral-500',
@@ -65,6 +65,7 @@ export interface InputFieldProps
   start_icon?: IconProps;
   end_icon?: IconProps;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  onKeyDown?: React.KeyboardEventHandler<HTMLInputElement>; // Add onKeyDown here
 }
 
 const InputField = React.forwardRef<HTMLInputElement, InputFieldProps>(
@@ -89,25 +90,39 @@ const InputField = React.forwardRef<HTMLInputElement, InputFieldProps>(
     } = props;
 
     return (
-      <div className={cn(inputFieldVariant({ className, right }))}>
-        <Label required={required} sizes={size} {...labelProps}>
-          {label}
-        </Label>
-        <Input
-          ref={ref} // Pass ref to the Input component
-          {...rest}
-          disabled={disabled}
-          required={required}
-          sizes={size}
-          value={value}
-          type={type}
-          placeholder={placeholder}
-          onChange={onChange}
-          theme={message?.type}
-          start_icon={start_icon}
-          end_icon={end_icon}
-          {...inputProps}
-        />
+      <div className={cn(inputFieldVariant({ className }))}>
+        <div
+          className={`flex ${
+            right
+              ? 'flex-row  items-center gap-2 self-stretch'
+              : 'flex-col gap-1'
+          }`}
+        >
+          <Label
+            required={required}
+            sizes={size}
+            className="shrink-0 w-[100px] font-semibold"
+            {...labelProps}
+          >
+            {label}
+          </Label>
+          <Input
+            ref={ref} // Pass ref to the Input component
+            {...rest}
+            disabled={disabled}
+            required={required}
+            sizes={size}
+            value={value}
+            type={type}
+            placeholder={placeholder}
+            onChange={onChange}
+            theme={message?.type}
+            start_icon={start_icon}
+            end_icon={end_icon}
+            {...inputProps}
+          />
+        </div>
+
         {message && (
           <span
             className={cn(

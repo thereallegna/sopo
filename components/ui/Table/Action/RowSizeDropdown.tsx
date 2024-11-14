@@ -12,6 +12,7 @@ import {
   DropdownMenuTrigger,
 } from '@radix-ui/react-dropdown-menu';
 import IconComponent, { IconProps } from '@components/ui/Icon';
+import { Button } from '@components/ui/Button';
 import { RowSizeType } from '../../../../types/client/table';
 
 export type RowSizeDropdownProps = {
@@ -51,10 +52,10 @@ const RowSizeDropdown: React.FC<RowSizeDropdownProps> = ({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        <div className="bg-white border border-neutral-200 rounded-sm flex items-center justify-between p-[7px_10px] cursor-pointer">
+        <Button variant="secondary" className="px-[10px]">
           <IconComponent icon={IconLayoutNavbar} size="large" />
           <IconComponent icon={IconChevronDown} size="large" />
-        </div>
+        </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
         align="start"

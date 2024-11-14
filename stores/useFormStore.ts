@@ -2,26 +2,36 @@
 import { create } from 'zustand';
 
 type FormState = {
-  leavingPage: boolean; // State untuk konfirmasi navigasi
-  isDirty: boolean; // State untuk mengecek apakah formulir mengalami perubahan
+  leavingPage: boolean;
+  isDirty: boolean;
+  isReset: boolean;
+  isChanged: boolean;
 };
 
 type FormActions = {
-  setLeavingPage: (status: boolean) => void; // Action untuk konfirmasi navigasi
-  setIsDirty: (status: boolean) => void; // Action untuk mengubah status isDirty
+  setLeavingPage: (status: boolean) => void;
+  setIsDirty: (status: boolean) => void;
+  setReset: (status: boolean) => void;
+  resetForm: () => void; // Fungsi isReset untuk form
+  setChanged: (status: boolean) => void;
 };
 
 type FormStore = FormState & FormActions;
 
 const initialValues: FormState = {
-  leavingPage: false, // Inisialisasi state leavingPage
-  isDirty: false, // Inisialisasi state isDirty
+  leavingPage: false,
+  isDirty: false,
+  isReset: false,
+  isChanged: false,
 };
 
 const useFormStore = create<FormStore>((set) => ({
   ...initialValues,
-  setLeavingPage: (status) => set({ leavingPage: status }), // Implementasi action leavingPage
-  setIsDirty: (status) => set({ isDirty: status }), // Implementasi action isDirty
+  setLeavingPage: (status) => set({ leavingPage: status }),
+  setIsDirty: (status) => set({ isDirty: status }),
+  setChanged: (status) => set({ isChanged: status }),
+  setReset: (status) => set({ isReset: status }),
+  resetForm: () => set({ isReset: true, isDirty: false }), // Reset form
 }));
 
 export default useFormStore;

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import InputField from '@components/shared/InputField';
 import { Button } from '@components/ui/Button';
 import {
@@ -16,57 +16,56 @@ import IconComponent from '@components/ui/Icon';
 import { IconArrowLeft, IconX } from '@tabler/icons-react';
 import { useRouter } from 'next/navigation';
 import { forgotPasswordConstant } from '@constants/forgotPasswordConstant';
+import { forgotPassword } from '@services/fetcher/password/forgot-password';
+import { AxiosError } from 'axios';
+import { errorMapping } from '@utils/errorMapping';
+import forgotPasswordSchema from '@constants/schemas/ForgotPasswordSchema';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useMutation } from '@tanstack/react-query';
 
 const ForgotPasswordPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [emailSent, setEmailSent] = useState(false);
-  const [email, setEmail] = useState('');
-  const [error, setError] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [cooldown, setCooldown] = useState(0);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors },
+  } = useForm<ForgotPasswordBody>({
+    mode: 'onChange',
+    resolver: yupResolver(forgotPasswordSchema),
+  });
 
-  useEffect(() => {
-    if (cooldown > 0) {
-      const timer = setTimeout(() => setCooldown(cooldown - 1), 1000);
-      return () => clearTimeout(timer);
-    }
-    return undefined;
-  }, [cooldown]);
-
-  const handleSendEmail = async () => {
-    if (cooldown > 0) return;
-    setIsLoading(true);
-    setError('');
-
-    try {
-      const response = await fetch('/api/forgot-password', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email }),
-      });
-
-      if (response.ok) {
-        setEmailSent(true);
-        console.log('Email sent successfully');
-      } else {
-        setEmailSent(false);
-        const result = await response.json();
-        setError(result.error || 'Failed to send email. Please try again.');
-        console.log('Failed to send email');
-        setCooldown(60);
+  const { mutate: mutationForgotPassword } = useMutation({
+    mutationFn: forgotPassword,
+    onMutate: () => {
+      setIsLoading(true);
+    },
+    onSuccess: () => {
+      setIsLoading(false);
+      console.log('Email sent successful');
+      setIsModalOpen(true);
+      setErrorMessage(null);
+    },
+    onError: (error: any) => {
+      setIsLoading(false);
+      const errorRes = error as AxiosError<ErrorResponse>;
+      if (errorRes.response?.data) {
+        const { errorField, message } = errorRes.response.data;
+        errorMapping(errorField, setError);
+        setErrorMessage(
+          message || 'Something went wrong, please try again later'
+        );
       }
-    } catch (err) {
-      setEmailSent(false);
-      setError('Network error, please try again.');
-      console.log('Error:', err);
-      setCooldown(60);
-    }
+    },
+  });
 
-    setIsLoading(false);
-    setIsModalOpen(true);
+  const handleFormSubmit: SubmitHandler<ForgotPasswordBody> = (data) => {
+    console.log('Submitting password reset', data);
+    mutationForgotPassword(data);
   };
 
   return (
@@ -94,23 +93,31 @@ const ForgotPasswordPage = () => {
         <CardDescription className="text-[11px] font-normal mt-1">
           No worries, we will send you reset instructions
         </CardDescription>
-        <CardContent className="mt-5">
-          <InputField
-            {...forgotPasswordConstant.inputField[0]}
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </CardContent>
-        <CardFooter className="mt-[10px]">
-          <Button
-            type="submit"
-            className="w-full h-6"
-            onClick={handleSendEmail}
-            disabled={isLoading || cooldown > 0}
-          >
-            {isLoading ? 'Sending...' : 'Send'}
-          </Button>
-        </CardFooter>
+
+        {errorMessage && (
+          <div className="text-red-500 text-sm mb-3">
+            <strong>Error:</strong> {errorMessage}
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit(handleFormSubmit)}>
+          <CardContent className="mt-5">
+            <InputField
+              {...forgotPasswordConstant.inputField[0]}
+              {...register('email')}
+              message={
+                errors.email
+                  ? { text: errors.email.message!, type: 'danger' }
+                  : undefined
+              }
+            />
+          </CardContent>
+          <CardFooter className="mt-[10px]">
+            <Button type="submit" className="w-full h-6" disabled={isLoading}>
+              {isLoading ? 'Sending...' : 'Send'}
+            </Button>
+          </CardFooter>
+        </form>
       </Card>
 
       {isModalOpen && (
@@ -128,9 +135,8 @@ const ForgotPasswordPage = () => {
               </div>
             </div>
             <p className="p-[10px] text-[11px]">
-              {emailSent
-                ? 'Email has been sent. Follow the instructions we sent to your email to reset your password.'
-                : error || 'Failed to send email. Please try again.'}
+              Email has been sent. Follow the instructions we sent to your email
+              to reset your password.
             </p>
             <div className="flex justify-end">
               <Button

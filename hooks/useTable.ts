@@ -30,15 +30,17 @@ const useTable = <T>({
   const params = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
-  const setPagination = useTableStore((state) => state.setPagination);
-  const setSearch = useTableStore((state) => state.setSearch);
-  const setGrouping = useTableStore((state) => state.setGrouping);
-  const setRowSize = useTableStore((state) => state.setRowSize);
-  const setColumnVisibility = useTableStore(
-    (state) => state.setColumnVisibility
-  );
+  const {
+    setColumnVisibility,
+    setGrouping,
+    setPagination,
+    setSearch,
+    setRowSize,
+  } = useTableStore();
 
   const option = useTableStore((state) => state.options[queryKey]);
+
+  const isGrouping = option.grouping.length > 0;
 
   const onGrouping = (group: Updater<GroupingState>) => {
     const groupingState =
@@ -52,10 +54,27 @@ const useTable = <T>({
         ? paginationFn(option.pagination)
         : paginationFn;
     setPagination(queryKey, paginationState);
-    const { pageIndex, pageSize } = paginationState;
+    const { pageIndex = 0, pageSize = 10 } = paginationState;
+    const validPageIndex = Number.isNaN(pageIndex) ? 0 : pageIndex;
+    const validPageSize = Number.isNaN(pageSize) ? -1 : pageSize;
+
+    // Hanya lanjutkan jika validPageSize bukan undefined atau NaN
+    // if (validPageSize !== undefined) {
+    // }
+    setPagination(queryKey, {
+      ...paginationState,
+      pageIndex: validPageIndex,
+      pageSize: validPageSize,
+    });
+
     const url = new URLSearchParams(params);
-    url.set('page_index', (pageIndex + 1).toString());
-    url.set('page_size', pageSize.toString());
+    url.set('page_index', (validPageIndex + 1).toString());
+
+    // Hanya set 'page_size' jika validPageSize ada
+    if (validPageSize !== -1) {
+      url.set('page_size', validPageSize.toString());
+    }
+
     router.replace(`${pathname}?${url.toString()}`);
   };
 
@@ -86,15 +105,25 @@ const useTable = <T>({
     if (pageIndex) {
       pgState.pageIndex = parseFloat(pageIndex) - 1;
     }
-    onPagination(pgState);
+    setPagination(queryKey, pgState);
   };
 
   useEffect(() => {
     initPagination();
   }, []);
 
+  // Jika terdapat column group maka dependency paginationnya dihilangkan agar pagination otomatisnya menjadi berjalan
+  const depnedencyKey = !isGrouping
+    ? [
+        queryKey,
+        option.pagination.pageIndex,
+        option.pagination.pageSize,
+        option.search,
+      ]
+    : [queryKey];
+
   const { data: queryData } = useQuery<AxiosResponse<ApiResponse<T[]>>>({
-    queryKey: [queryKey, option.pagination, option.search],
+    queryKey: depnedencyKey,
     queryFn: () => {
       const nextPagination = {
         ...option.pagination,
@@ -103,6 +132,7 @@ const useTable = <T>({
       return queryFn({ ...option, pagination: nextPagination });
     },
     placeholderData: keepPreviousData,
+    enabled: option.pagination.pageSize !== -1,
   });
 
   const response = queryData?.data;

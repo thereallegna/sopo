@@ -10,12 +10,7 @@ import {
   DrawerHeader,
 } from '@components/ui/Drawer';
 
-import {
-  DrawerType,
-  FilterDrawerType,
-  TableDrawerType,
-  useDrawerStore,
-} from '@stores/useDrawerStore';
+import { FilterDrawerType, useDrawerStore } from '@stores/useDrawerStore';
 import { IconPlus } from '@node_modules/@tabler/icons-react/dist/esm/tabler-icons-react';
 import useTable from '@hooks/useTable';
 import TableContent from '@components/shared/TableContent';
@@ -28,30 +23,30 @@ import {
 export type TableDrawerProps = {
   title: string;
   columns: GenerateColumnsOption;
+  queryKey: string;
   queryFn: (option?: TableOptionState) => Promise<AxiosResponse<any, any>>;
-  keyTableDrawer: TableDrawerType;
-  keyCreateDrawer: DrawerType;
   keyFilterDrawer?: FilterDrawerType;
 };
 
 const TableDrawer = ({
   title,
   columns,
+  queryKey,
   queryFn,
-  keyTableDrawer,
-  keyCreateDrawer,
+  keyFilterDrawer,
 }: TableDrawerProps) => {
   const { isOpenTable, openDrawer, openFilterDrawer, closeTableDrawer } =
     useDrawerStore();
+
   const handleOpenAdd = () => {
-    openDrawer(keyCreateDrawer);
+    openDrawer();
   };
 
-  const tableProps = useTable<ICountry[]>({
+  const tableProps = useTable<any[]>({
     queryFn,
     columns,
-    queryKey: keyTableDrawer || '',
-    onFilter: openFilterDrawer,
+    queryKey,
+    onFilter: keyFilterDrawer ? openFilterDrawer : undefined,
   });
 
   return (
