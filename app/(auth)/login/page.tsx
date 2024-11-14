@@ -15,7 +15,7 @@ import Image from 'next/image';
 import { Checkbox } from '@components/ui/Checkbox';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import loginSchema from '@constants/schemas/LoginSchema';
+import { loginSchema } from '@constants/schemas/AuthSchema';
 import { useMutation } from '@tanstack/react-query';
 import { login } from '@services/fetcher/auth/login';
 import { useRouter } from 'next/navigation';

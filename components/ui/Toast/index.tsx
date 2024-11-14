@@ -32,7 +32,7 @@ const toastVariants = cva(
           'destructive group border-red-500 bg-red-500 text-neutral-50 dark:border-red-900 dark:bg-red-900 dark:text-neutral-50',
       },
       size: {
-        default: 'w-[292px] h-[48px]',
+        default: 'w-[300px] h-[48px]',
       },
       sideColor: {
         green: 'border-l-8 border-green-500',
@@ -112,7 +112,7 @@ const ToastDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <ToastPrimitives.Description
     ref={ref}
-    className={cn('text-sm opacity-90', className)}
+    className={cn('opacity-90', className)}
     {...props}
   />
 ));
@@ -127,6 +127,7 @@ export {
   type ToastActionElement,
   ToastProvider,
   ToastViewport,
+  toastVariants,
   Toast,
   ToastTitle,
   ToastDescription,
