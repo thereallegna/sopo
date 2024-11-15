@@ -24,6 +24,7 @@ import { AxiosError } from 'axios';
 import { GET_UOM } from '@constants/queryKey';
 import { editUOM } from '@services/fetcher/configuration/material-management';
 import { UOMSchema } from '@constants/schemas/ConfigurationSchema/InventoryMaterialManagement';
+import useToastStore from '@stores/useToastStore';
 
 const EDitUOM = () => {
   const formRef = useRef<HTMLFormElement>(null);
@@ -31,6 +32,7 @@ const EDitUOM = () => {
   const detail_data = useDrawerStore((state) => state.detail_data) as IUOM;
   const { setIsDirty } = useFormStore();
   const [isLoading, setIsLoading] = React.useState(false);
+  const showToast = useToastStore((state) => state.showToast);
   const queryClient = useQueryClient();
 
   const {
@@ -64,11 +66,15 @@ const EDitUOM = () => {
       setIsLoading(false);
       setIsDirty(false);
       queryClient.invalidateQueries({ queryKey: [GET_UOM] });
+      showToast('UoM successfully edited', 'success');
     },
     onError: (error: any) => {
       console.log('Edit mutation error:', error);
       setIsLoading(false);
       const errorRes = error as AxiosError<ErrorResponse>;
+      if (errorRes.status === 500) {
+        showToast('UoM failed to edited', 'danger');
+      }
       if (errorRes.response?.data) {
         const { errorField } = errorRes.response.data;
         errorMapping(errorField, setError);
@@ -102,7 +108,7 @@ const EDitUOM = () => {
   return (
     <Drawer onClose={handleCloseDrawerEdit} open={isOpenEdit}>
       <DrawerContent>
-        <DrawerHeader onClick={handleCloseDrawerEdit} drawerTitle="Edit UOM">
+        <DrawerHeader onClick={handleCloseDrawerEdit} drawerTitle="Edit UoM">
           <DrawerEndHeader>
             <Button
               variant={!hasChanged ? 'disabled' : 'primary'}
@@ -126,8 +132,8 @@ const EDitUOM = () => {
                       ? { text: errors.uom_code.message!, type: 'danger' }
                       : undefined
                   }
-                  label="UOM Code"
-                  placeholder="UOM Code"
+                  label="UoM Code"
+                  placeholder="UoM Code"
                   right
                   type="text"
                   disabled
@@ -140,8 +146,8 @@ const EDitUOM = () => {
                       ? { text: errors.uom_name.message!, type: 'danger' }
                       : undefined
                   }
-                  label="UOM Name"
-                  placeholder="UOM Name"
+                  label="UoM Name"
+                  placeholder="UoM Name"
                   right
                   type="text"
                   onKeyDown={handleInputKeyDown}

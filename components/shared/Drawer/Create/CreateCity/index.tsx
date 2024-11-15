@@ -26,12 +26,14 @@ import Combobox from '@components/ui/Combobox';
 import { errorMapping } from '@utils/errorMapping';
 import { AxiosError } from 'axios';
 import { GET_CITY } from '@constants/queryKey';
+import useToastStore from '@stores/useToastStore';
 
 const CreateCity = () => {
   const formRef = useRef<HTMLFormElement>(null);
   const { isOpen, closeDrawer, openDetailDrawer } = useDrawerStore();
   const { setIsDirty } = useFormStore();
   const [isLoading, setIsLoading] = React.useState(false);
+  const openToast = useToastStore((state) => state.showToast);
   const queryClient = useQueryClient();
 
   const {
@@ -69,10 +71,14 @@ const CreateCity = () => {
       setIsDirty(false);
       openDetailDrawer(data.data);
       queryClient.invalidateQueries({ queryKey: [GET_CITY] });
+      openToast('City successfuly added', 'warning');
     },
     onError: (error: any) => {
       setIsLoading(false);
       const errorRes = error as AxiosError<ErrorResponse>;
+      if (errorRes.status === 500) {
+        openToast('City failed to added', 'danger');
+      }
       if (errorRes.response?.data) {
         const { errorField } = errorRes.response.data;
         errorMapping(errorField, setError);
@@ -118,7 +124,7 @@ const CreateCity = () => {
             </Button>
           </DrawerEndHeader>
         </DrawerHeader>
-        <form ref={formRef} onSubmit={handleSubmit(onSubmit)} noValidate>
+        <form ref={formRef} onSubmit={handleSubmit(onSubmit)}>
           <DrawerBody>
             <Card
               size="drawer"

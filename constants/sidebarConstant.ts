@@ -159,7 +159,7 @@ export const sidebarConstant: SidebarItem[] = [
                 path: '/configuration/inventory-and-material-management/material-management/master-items',
               },
               {
-                title: 'Items UOM',
+                title: 'Items UoM',
                 path: '/configuration/inventory-and-material-management/material-management/items-uom',
               },
             ],
