@@ -26,7 +26,6 @@ import { useMutation } from '@tanstack/react-query';
 
 const ForgotPasswordPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const {
@@ -48,17 +47,13 @@ const ForgotPasswordPage = () => {
       setIsLoading(false);
       console.log('Email sent successful');
       setIsModalOpen(true);
-      setErrorMessage(null);
     },
     onError: (error: any) => {
       setIsLoading(false);
       const errorRes = error as AxiosError<ErrorResponse>;
       if (errorRes.response?.data) {
-        const { errorField, message } = errorRes.response.data;
+        const { errorField } = errorRes.response.data;
         errorMapping(errorField, setError);
-        setErrorMessage(
-          message || 'Something went wrong, please try again later'
-        );
       }
     },
   });
@@ -93,12 +88,6 @@ const ForgotPasswordPage = () => {
         <CardDescription className="text-[11px] font-normal mt-1">
           No worries, we will send you reset instructions
         </CardDescription>
-
-        {errorMessage && (
-          <div className="text-red-500 text-sm mb-3">
-            <strong>Error:</strong> {errorMessage}
-          </div>
-        )}
 
         <form onSubmit={handleSubmit(handleFormSubmit)}>
           <CardContent className="mt-5">

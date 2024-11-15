@@ -1,8 +1,18 @@
 import { create } from 'zustand';
 
-export type FilterDrawerType = 'filterCountry' | 'filterUOM' | null;
-export type TableDrawerType = 'getCountry' | 'getUOM' | null;
-export type DetailDataType = ICountry | IProvince | ICity | IUOM | null;
+export type FilterDrawerType =
+  | 'filterCountry'
+  | 'filterUOM'
+  | 'filterCategoryMM'
+  | null;
+export type TableDrawerType = 'getCountry' | 'getUOM' | 'getCategoryMM' | null;
+export type DetailDataType =
+  | ICountry
+  | IProvince
+  | ICity
+  | IUOM
+  | ICategoryMM
+  | null;
 
 type DrawerState = {
   filterDrawerType: FilterDrawerType;

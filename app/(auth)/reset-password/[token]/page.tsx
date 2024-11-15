@@ -26,7 +26,7 @@ import { errorMapping } from '@utils/errorMapping';
 
 const ResetPasswordPage = ({ params }: { params: { token: string } }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
   const router = useRouter();
   const [isLoading, setIsLoading] = React.useState(false);
   const {
@@ -48,17 +48,18 @@ const ResetPasswordPage = ({ params }: { params: { token: string } }) => {
       setIsLoading(false);
       console.log('Password reset successful');
       setIsModalOpen(true);
-      setErrorMessage(null);
     },
     onError: (error: any) => {
       setIsLoading(false);
       const errorRes = error as AxiosError<ErrorResponse>;
       if (errorRes.response?.data) {
         const { errorField, message } = errorRes.response.data;
-        errorMapping(errorField, setError);
-        setErrorMessage(
-          message || 'Something went wrong, please try again later'
-        );
+        console.log(errorRes.response.data);
+        if (message === 'Invalid token') {
+          setIsErrorModalOpen(true);
+        } else {
+          errorMapping(errorField, setError);
+        }
       }
     },
   });
@@ -86,19 +87,13 @@ const ResetPasswordPage = ({ params }: { params: { token: string } }) => {
           <IconComponent
             icon={IconArrowLeft}
             className="mr-2"
-            onClick={() => router.push('/forget-password')}
+            onClick={() => router.push('/forgot-password')}
           />
           Reset Password
         </CardTitle>
         <CardDescription className="text-[11px] font-normal mt-1">
           Enter a new password below to change your password
         </CardDescription>
-
-        {errorMessage && (
-          <div className="text-red-500 text-sm mb-3">
-            <strong>Error:</strong> {errorMessage}
-          </div>
-        )}
 
         <form onSubmit={handleSubmit(handleFormSubmit)}>
           <CardContent className="mt-[10px] flex flex-col gap-y-[10px]">
@@ -155,6 +150,37 @@ const ResetPasswordPage = ({ params }: { params: { token: string } }) => {
                   setIsModalOpen(false);
                   router.push('/login');
                 }}
+              >
+                OK
+              </Button>
+            </div>
+          </Card>
+        </div>
+      )}
+
+      {isErrorModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <Card size="modal">
+            <div className="border-b border-neutral-200">
+              <div className="flex justify-between items-center px-[10px] py-[5px]">
+                <h2 className="text-lg font-bold">Token Invalid</h2>
+                <IconComponent
+                  onClick={() => setIsErrorModalOpen(false)}
+                  size="large"
+                  icon={IconX}
+                  className="cursor-pointer"
+                />
+              </div>
+            </div>
+            <p className="p-[10px] text-[11px]">
+              The token used is invalid. Please request a new password reset
+              link.
+            </p>
+            <div className="flex justify-end">
+              <Button
+                type="button"
+                className="w-[50px] text-[11px] font-semibold"
+                onClick={() => setIsErrorModalOpen(false)}
               >
                 OK
               </Button>

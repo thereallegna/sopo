@@ -3,6 +3,7 @@ import {
   GET_COUNTRY,
   GET_UOM,
   GET_PROVINCE,
+  GET_CATEGORY_MATERIAL_MANAGEMENT,
 } from '@constants/queryKey';
 import { create } from 'zustand';
 import { paginationStateDefaultValue } from '@constants/defaultValues';
@@ -14,6 +15,7 @@ const initialTableState = {
     [GET_CITY]: paginationStateDefaultValue,
     [GET_PROVINCE]: paginationStateDefaultValue,
     [GET_UOM]: paginationStateDefaultValue,
+    [GET_CATEGORY_MATERIAL_MANAGEMENT]: paginationStateDefaultValue,
   },
 };
 

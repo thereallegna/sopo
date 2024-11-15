@@ -24,4 +24,9 @@ type UOMFormBody = {
   uom_code: string;
   uom_name: string;
 };
+
+type CategoryMMFormBody = {
+  categoryMM_code: string;
+  categoryMM_name: string;
+};
 /* ======================= Inventory and Material Management End ==================== */
