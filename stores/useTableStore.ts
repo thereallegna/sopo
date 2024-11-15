@@ -5,46 +5,15 @@ import {
   GET_PROVINCE,
 } from '@constants/queryKey';
 import { create } from 'zustand';
+import { paginationStateDefaultValue } from '@constants/defaultValues';
 import { TableState } from '../types/client/table';
 
 const initialTableState = {
   options: {
-    [GET_COUNTRY]: {
-      columnVisibility: {},
-      pagination: {
-        pageIndex: 0,
-        pageSize: 10,
-      },
-      grouping: [],
-      rowSize: undefined,
-    },
-    [GET_CITY]: {
-      columnVisibility: {},
-      pagination: {
-        pageIndex: 0,
-        pageSize: 10,
-      },
-      grouping: [],
-      rowSize: undefined,
-    },
-    [GET_PROVINCE]: {
-      columnVisibility: {},
-      pagination: {
-        pageIndex: 0,
-        pageSize: 10,
-      },
-      grouping: [],
-      rowSize: undefined,
-    },
-    [GET_UOM]: {
-      columnVisibility: {},
-      pagination: {
-        pageIndex: 0,
-        pageSize: 10,
-      },
-      grouping: [],
-      rowSize: undefined,
-    },
+    [GET_COUNTRY]: paginationStateDefaultValue,
+    [GET_CITY]: paginationStateDefaultValue,
+    [GET_PROVINCE]: paginationStateDefaultValue,
+    [GET_UOM]: paginationStateDefaultValue,
   },
 };
 

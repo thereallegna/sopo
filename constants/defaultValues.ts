@@ -23,3 +23,14 @@ export const UOMDefaultValues: UOMFormBody = {
   uom_name: '',
 };
 // Configuration Material Management End
+
+// Zustand Pagination State
+export const paginationStateDefaultValue = {
+  columnVisibility: {},
+  pagination: {
+    pageIndex: 0,
+    pageSize: 10,
+  },
+  grouping: [],
+  rowSize: undefined,
+};
