@@ -5,7 +5,7 @@ type Props = {
   children?: React.ReactNode;
 };
 
-export const metaData: Metadata = {
+export const metadata: Metadata = {
   title: 'Items Category - RUN System R1',
   description: 'Items Category page',
 };
