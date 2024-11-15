@@ -16,9 +16,9 @@ const getUOM = async (option?: TableOptionState) => {
   return res;
 };
 
-const createUOM = async (country: UOMFormBody) => {
+const createUOM = async (body: UOMFormBody) => {
   try {
-    const res = await axios.post(PATH_ITEMS_UOM, country);
+    const res = await axios.post(PATH_ITEMS_UOM, body);
     return res.data;
   } catch (error) {
     console.error('Error creating country:', error);
@@ -26,12 +26,9 @@ const createUOM = async (country: UOMFormBody) => {
   }
 };
 
-const editUOM = async (country: UOMFormBody) => {
+const editUOM = async (body: UOMFormBody) => {
   try {
-    const res = await axios.put(
-      `${PATH_ITEMS_UOM}/${country.uom_code}`,
-      country
-    );
+    const res = await axios.put(`${PATH_ITEMS_UOM}/${body.uom_code}`, body);
     return res.data;
   } catch (error) {
     console.error('Error editing country:', error);
@@ -53,9 +50,9 @@ const getCategoryMM = async (option?: TableOptionState) => {
   return res;
 };
 
-const createCategoryMM = async (country: CategoryMMFormBody) => {
+const createCategoryMM = async (body: CategoryMMFormBody) => {
   try {
-    const res = await axios.post(PATH_ITEMS_CATEGORY, country);
+    const res = await axios.post(PATH_ITEMS_CATEGORY, body);
     return res.data;
   } catch (error) {
     console.error('Error creating country:', error);
@@ -63,11 +60,11 @@ const createCategoryMM = async (country: CategoryMMFormBody) => {
   }
 };
 
-const editCategoryMM = async (country: CategoryMMFormBody) => {
+const editCategoryMM = async (body: CategoryMMFormBody) => {
   try {
     const res = await axios.put(
-      `${PATH_ITEMS_CATEGORY}/${country.category_code}`,
-      country
+      `${PATH_ITEMS_CATEGORY}/${body.categoryMM_code}`,
+      body
     );
     return res.data;
   } catch (error) {

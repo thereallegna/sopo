@@ -16,9 +16,9 @@ const getCountry = async (option?: TableOptionState) => {
   return res;
 };
 
-const createCountry = async (country: CountryFormBody) => {
+const createCountry = async (body: CountryFormBody) => {
   try {
-    const res = await axios.post(PATH_COUNTRY, country);
+    const res = await axios.post(PATH_COUNTRY, body);
     return res.data;
   } catch (error) {
     console.error('Error creating country:', error);
@@ -26,12 +26,9 @@ const createCountry = async (country: CountryFormBody) => {
   }
 };
 
-const editCountry = async (country: CountryFormBody) => {
+const editCountry = async (body: CountryFormBody) => {
   try {
-    const res = await axios.put(
-      `${PATH_COUNTRY}/${country.country_code}`,
-      country
-    );
+    const res = await axios.put(`${PATH_COUNTRY}/${body.country_code}`, body);
     return res.data;
   } catch (error) {
     console.error('Error editing country:', error);
@@ -85,9 +82,9 @@ const getCity = async (option?: TableOptionState) => {
   return res;
 };
 
-const createCity = async (city: CityFormBody) => {
+const createCity = async (body: CityFormBody) => {
   try {
-    const res = await axios.post(PATH_CITY, city);
+    const res = await axios.post(PATH_CITY, body);
     return res.data;
   } catch (error) {
     console.error('Error creating city:', error);
@@ -95,9 +92,9 @@ const createCity = async (city: CityFormBody) => {
   }
 };
 
-const editCity = async (city: CityFormBody) => {
+const editCity = async (body: CityFormBody) => {
   try {
-    const res = await axios.put(`${PATH_CITY}/${city.city_code}`, city);
+    const res = await axios.put(`${PATH_CITY}/${body.city_code}`, body);
     return res.data;
   } catch (error) {
     console.error('Error editing country:', error);
