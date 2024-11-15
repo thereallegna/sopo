@@ -20,7 +20,7 @@ const TableDrawer = dynamic(
   { ssr: false }
 );
 const CreateUOM = dynamic(
-  () => import('@components/shared/Drawer/Create/CreateUOM'),
+  () => import('@components/shared/Drawer/Create/CreateUoM'),
   { ssr: false }
 );
 const DetailUOM = dynamic(
@@ -52,7 +52,7 @@ const Country = () => {
   return (
     <>
       <Content>
-        <HeaderContent title="UOM" onAdd={handleOpenAdd} />
+        <HeaderContent title="UoM" onAdd={handleOpenAdd} />
         <BodyContent>
           <div className="flex flex-col gap-4 py-2 items-center">
             <Image
@@ -83,7 +83,7 @@ const Country = () => {
       </Content>
       <FilterUOM />
       <TableDrawer
-        title="Find UOM"
+        title="Find UoM"
         queryKey={GET_UOM}
         columns={{
           columns: [
@@ -93,11 +93,11 @@ const Country = () => {
             },
             {
               accessor: 'uom_code',
-              header: 'UOM Code',
+              header: 'UoM Code',
             },
             {
               accessor: 'uom_name',
-              header: 'UOM Name',
+              header: 'UoM Name',
             },
             {
               accessor: 'create_date',

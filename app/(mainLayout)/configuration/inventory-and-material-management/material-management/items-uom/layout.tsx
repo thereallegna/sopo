@@ -6,8 +6,8 @@ type Props = {
 };
 
 export const metadata: Metadata = {
-  title: 'Items UOM - RUN System R1',
-  description: 'Items UOM page.',
+  title: 'Items UoM - RUN System R1',
+  description: 'Items UoM page.',
 };
 
 // ?======================================================//

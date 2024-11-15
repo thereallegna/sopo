@@ -27,7 +27,7 @@ const DetailUOM = () => {
   return (
     <Drawer onClose={closeDetailDrawer} open={isOpenDetail}>
       <DrawerContent>
-        <DrawerHeader onClick={closeDetailDrawer} drawerTitle="Detail UOM">
+        <DrawerHeader onClick={closeDetailDrawer} drawerTitle="Detail UoM">
           <DrawerEndHeader>
             <Button
               variant="primary"

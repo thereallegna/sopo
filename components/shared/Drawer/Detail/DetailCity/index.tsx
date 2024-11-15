@@ -79,6 +79,7 @@ const DetailCity = () => {
                   disabled
                 />
                 <InputField
+                  value={detail_data?.ring_area || ''}
                   label="Ring Area"
                   right
                   type="text"

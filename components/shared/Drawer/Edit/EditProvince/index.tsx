@@ -25,6 +25,7 @@ import { errorMapping } from '@utils/errorMapping';
 import { AxiosError } from 'axios';
 import { GET_PROVINCE } from '@constants/queryKey';
 import Combobox from '@components/ui/Combobox';
+import useToastStore from '@stores/useToastStore';
 
 const EditProvince = () => {
   const formRef = useRef<HTMLFormElement>(null);
@@ -32,6 +33,7 @@ const EditProvince = () => {
   const detail_data = useDrawerStore((state) => state.detail_data) as IProvince;
   const { setIsDirty } = useFormStore();
   const [isLoading, setIsLoading] = React.useState(false);
+  const showToast = useToastStore((state) => state.showToast);
   const queryClient = useQueryClient();
 
   const {
@@ -66,11 +68,15 @@ const EditProvince = () => {
       setIsLoading(false);
       setIsDirty(false);
       queryClient.invalidateQueries({ queryKey: [GET_PROVINCE] });
+      showToast('Province successfully edited', 'success');
     },
     onError: (error: any) => {
       console.log('Edit mutation error:', error);
       setIsLoading(false);
       const errorRes = error as AxiosError<ErrorResponse>;
+      if (errorRes.status === 500) {
+        showToast('City failed to edited', 'danger');
+      }
       if (errorRes.response?.data) {
         const { errorField } = errorRes.response.data;
         errorMapping(errorField, setError);
@@ -117,7 +123,7 @@ const EditProvince = () => {
           </DrawerEndHeader>
         </DrawerHeader>
 
-        <form ref={formRef} onSubmit={handleSubmit(onSubmit)} noValidate>
+        <form ref={formRef} onSubmit={handleSubmit(onSubmit)}>
           <DrawerBody>
             <Card size="drawer">
               <CardContent className="flex-wrap flex flex-row gap-6 items-center">

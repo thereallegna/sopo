@@ -20,9 +20,9 @@ const FilterCountry = () => {
     >
       <DrawerContent fixed className="flex h-screen p-3 w-[240px]">
         <div className="flex flex-col gap-[10px]">
-          <FilterDrawerHeader title="Filter UOM" onClick={closeFilterDrawer} />
+          <FilterDrawerHeader title="Filter UoM" onClick={closeFilterDrawer} />
           <DrawerBody className="p-0">
-            <InputField label="UOM Code" />
+            <InputField label="UoM Code" />
           </DrawerBody>
         </div>
       </DrawerContent>
