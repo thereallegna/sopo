@@ -35,9 +35,9 @@ const toastVariants = cva(
         default: 'w-[300px] h-[48px]',
       },
       sideColor: {
-        green: 'border-l-8 border-green-500',
-        red: 'border-l-8 border-red-500',
-        blue: 'border-l-8 border-blue-500',
+        green: 'border-0-8 border-green-500',
+        red: 'border-0-8 border-red-500',
+        blue: 'border-0-8 border-blue-500',
       },
     },
     defaultVariants: {

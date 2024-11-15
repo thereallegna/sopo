@@ -32,4 +32,11 @@ interface IUOM {
   uom_name: string;
   create_date: string;
 }
+
+interface ICategoryMM {
+  number?: number;
+  categoryMM_code: string;
+  categoryMM_name: string;
+  create_date: string;
+}
 /* ======================= Inventory and Material Management End ==================== */

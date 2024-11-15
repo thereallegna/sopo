@@ -3,6 +3,7 @@ import {
   GET_COUNTRY,
   GET_UOM,
   GET_PROVINCE,
+  GET_CATEGORY_MATERIAL_MANAGEMENT,
 } from '@constants/queryKey';
 import { create } from 'zustand';
 import { TableState } from '../types/client/table';
@@ -37,6 +38,15 @@ const initialTableState = {
       rowSize: undefined,
     },
     [GET_UOM]: {
+      columnVisibility: {},
+      pagination: {
+        pageIndex: 0,
+        pageSize: 10,
+      },
+      grouping: [],
+      rowSize: undefined,
+    },
+    [GET_CATEGORY_MATERIAL_MANAGEMENT]: {
       columnVisibility: {},
       pagination: {
         pageIndex: 0,
