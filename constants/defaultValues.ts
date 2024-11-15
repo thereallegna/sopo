@@ -14,6 +14,8 @@ export const cityDefaultValues: CityFormBody = {
   city_code: '',
   city_name: '',
   province: '',
+  ring_area: '',
+  location: '',
 };
 // Configuration General End
 
@@ -28,3 +30,14 @@ export const CategoryMMDefaultValues: CategoryMMFormBody = {
   categoryMM_name: '',
 };
 // Configuration Material Management End
+
+// Zustand Pagination State
+export const paginationStateDefaultValue = {
+  columnVisibility: {},
+  pagination: {
+    pageIndex: 0,
+    pageSize: 10,
+  },
+  grouping: [],
+  rowSize: undefined,
+};

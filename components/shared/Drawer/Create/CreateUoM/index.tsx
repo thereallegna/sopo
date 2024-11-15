@@ -25,12 +25,14 @@ import { errorMapping } from '@utils/errorMapping';
 import { GET_UOM } from '@constants/queryKey';
 import { UOMSchema } from '@constants/schemas/ConfigurationSchema/InventoryMaterialManagement';
 import { createUOM } from '@services/fetcher/configuration/material-management';
+import useToastStore from '@stores/useToastStore';
 
 const CreateUOM = () => {
   const formRef = useRef<HTMLFormElement>(null);
   const { isOpen, closeDrawer, openDetailDrawer } = useDrawerStore();
   const { setIsDirty } = useFormStore();
   const [isLoading, setIsLoading] = React.useState(false);
+  const showToast = useToastStore((state) => state.showToast);
   const queryClient = useQueryClient();
 
   const {
@@ -69,11 +71,15 @@ const CreateUOM = () => {
       setIsDirty(false);
       openDetailDrawer(data.data);
       queryClient.invalidateQueries({ queryKey: [GET_UOM] });
+      showToast('UoM successfully added', 'success');
     },
     onError: (error: any) => {
       console.log('Mutation error:', error);
       setIsLoading(false);
       const errorRes = error as AxiosError<ErrorResponse>;
+      if (errorRes.status === 500) {
+        showToast('UoM failed to added', 'danger');
+      }
       if (errorRes.response?.data) {
         const { errorField } = errorRes.response.data;
         errorMapping(errorField, setError);
@@ -107,7 +113,7 @@ const CreateUOM = () => {
   return (
     <Drawer onClose={handleCloseDrawer} open={isOpen}>
       <DrawerContent>
-        <DrawerHeader onClick={handleCloseDrawer} drawerTitle="Create UOM">
+        <DrawerHeader onClick={handleCloseDrawer} drawerTitle="Create UoM">
           <DrawerEndHeader>
             <Button
               variant={!hasChanged ? 'disabled' : 'primary'}
@@ -120,7 +126,7 @@ const CreateUOM = () => {
           </DrawerEndHeader>
         </DrawerHeader>
 
-        <form ref={formRef} onSubmit={handleSubmit(onSubmit)}>
+        <form ref={formRef} onSubmit={handleSubmit(onSubmit)} noValidate>
           <DrawerBody>
             <Card size="drawer">
               <CardContent className="flex-wrap flex flex-row gap-6 items-start">
@@ -131,8 +137,8 @@ const CreateUOM = () => {
                       ? { text: errors.uom_code.message!, type: 'danger' }
                       : undefined
                   }
-                  label="UOM Code"
-                  placeholder="UOM Code"
+                  label="UoM Code"
+                  placeholder="UoM Code"
                   right
                   type="text"
                   onKeyDown={handleInputKeyDown}
@@ -144,8 +150,8 @@ const CreateUOM = () => {
                       ? { text: errors.uom_name.message!, type: 'danger' }
                       : undefined
                   }
-                  label="UOM Name"
-                  placeholder="UOM Name"
+                  label="UoM Name"
+                  placeholder="UoM Name"
                   right
                   type="text"
                   onKeyDown={handleInputKeyDown}
