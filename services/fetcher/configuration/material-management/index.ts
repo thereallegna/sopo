@@ -47,6 +47,8 @@ const getCategoryMM = async (option?: TableOptionState) => {
     url = PATH_ITEMS_CATEGORY;
   }
   const res = await axios.get(url);
+
+  console.log('res:', res);
   return res;
 };
 
@@ -63,7 +65,7 @@ const createCategoryMM = async (body: CategoryMMFormBody) => {
 const editCategoryMM = async (body: CategoryMMFormBody) => {
   try {
     const res = await axios.put(
-      `${PATH_ITEMS_CATEGORY}/${body.categoryMM_code}`,
+      `${PATH_ITEMS_CATEGORY}/${body.item_category_code}`,
       body
     );
     return res.data;

@@ -52,7 +52,10 @@ const Country = () => {
   return (
     <>
       <Content>
-        <HeaderContent title="CategoryMM" onAdd={handleOpenAdd} />
+        <HeaderContent
+          title="Category Material Management"
+          onAdd={handleOpenAdd}
+        />
         <BodyContent>
           <div className="flex flex-col gap-4 py-2 items-center">
             <Image
@@ -83,7 +86,7 @@ const Country = () => {
       </Content>
       <FilterCategory />
       <TableDrawer
-        title="Find CategoryMM"
+        title="Find Category Material Management"
         queryKey={GET_CATEGORY_MATERIAL_MANAGEMENT}
         columns={{
           columns: [
@@ -92,16 +95,64 @@ const Country = () => {
               header: '#',
             },
             {
-              accessor: 'categoryMM_code',
-              header: 'Category MM Code',
+              accessor: 'item_category_code',
+              header: 'Item Category Code',
             },
             {
-              accessor: 'categoryMM_name',
-              header: 'Category MM Name',
+              accessor: 'item_category_name',
+              header: 'Item Category Name',
+            },
+            {
+              accessor: 'active',
+              header: 'Active',
             },
             {
               accessor: 'create_date',
-              header: 'Create MM Date',
+              header: 'Create Date',
+            },
+            {
+              accessor: 'coa_stock',
+              header: 'Coa Stock',
+            },
+            {
+              accessor: 'coa_stock_description',
+              header: 'Coa Stock Description',
+            },
+            {
+              accessor: 'coa_sales',
+              header: 'Coa Sales',
+            },
+            {
+              accessor: 'coa_sales_description',
+              header: 'Coa Sales Description',
+            },
+            {
+              accessor: 'coa_sales_return',
+              header: 'Coa Sales Return',
+            },
+            {
+              accessor: 'coa_sales_return_description',
+              header: 'Coa Sales Return Description',
+            },
+            {
+              accessor: 'coa_purchase_return',
+              header: 'Coa Purchase Return',
+            },
+            {
+              accessor: 'coa_purchase_return_description',
+              header: 'Coa Purchase Return Description',
+            },
+            {
+              accessor: 'coa_consumption_cost',
+              header: 'Coa Consumption Cost',
+            },
+            {
+              accessor: 'coa_consumption_cost',
+              header: 'Coa Consumption Cost Description',
+            },
+            {
+              accessor: 'active',
+              header: 'Active',
             },
           ],
         }}

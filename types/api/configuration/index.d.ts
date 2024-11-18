@@ -26,7 +26,21 @@ type UOMFormBody = {
 };
 
 type CategoryMMFormBody = {
-  categoryMM_code: string;
-  categoryMM_name: string;
+  item_category_code: string;
+  item_category_name: string;
+  active: string;
+  create_date: string;
+  coa_stock?: string;
+  coa_stock_description?: string;
+  coa_sales?: string;
+  coa_sales_description?: string;
+  coa_cogs?: string;
+  coa_cogs_description?: string;
+  coa_sales_return?: string;
+  coa_sales_return_description?: string;
+  coa_purchase_return?: string;
+  coa_purchase_return_description?: string;
+  coa_consumption_cost?: string;
+  cos_consumption_cost_description?: string;
 };
 /* ======================= Inventory and Material Management End ==================== */
