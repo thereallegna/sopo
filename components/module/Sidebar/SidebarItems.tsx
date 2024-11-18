@@ -21,58 +21,51 @@ const SidebarItems: React.FC<SidebarItemsProps> = ({ items }) => {
   );
   const { isOpen } = useSidebar();
 
-  // Fungsi untuk memfilter item berdasarkan searchQuery
   const filterItems = (item: SidebarItem): boolean => {
     const matchesTitle = item.title.toLowerCase().includes(searchQuery);
 
-    // Jika item cocok dengan judul atau jika ada anak yang cocok
     const childrenMatch =
       item.children?.some((child) => filterItems(child)) ?? false;
 
-    // Kembalikan true jika item cocok atau ada anak yang cocok
     return matchesTitle || childrenMatch;
   };
 
   return (
     <div className="space-y-1 py-1">
-      {items
-        .filter(filterItems) // Menerapkan filter
-        .map((item) => {
-          const isActive = pathname === item.path;
+      {items.filter(filterItems).map((item) => {
+        const isActive = pathname === item.path;
 
-          return (
-            <div key={item.title}>
-              {item.path ? (
-                <Link href={item.path}>
-                  <Button
-                    type="button"
-                    iconClassName={cn(
-                      isActive ? 'text-blue-500 font-bold' : ''
-                    )}
+        return (
+          <div key={item.title}>
+            {item.path ? (
+              <Link href={item.path}>
+                <Button
+                  type="button"
+                  iconClassName={cn(isActive ? 'text-blue-500 font-bold' : '')}
+                  className={cn(
+                    'flex items-center justify-between p-2',
+                    isActive ? 'bg-blue-50 text-blue-500' : ''
+                  )}
+                  variant="sidebar"
+                  icon={item.icon}
+                >
+                  <h1
                     className={cn(
-                      'flex items-center justify-between p-2',
-                      isActive ? 'bg-blue-50 text-blue-500' : ''
+                      'ml-2 font-normal ',
+                      isActive ? 'font-semibold' : 'font-normal',
+                      isOpen ? 'block' : 'hidden'
                     )}
-                    variant="sidebar"
-                    icon={item.icon}
                   >
-                    <h1
-                      className={cn(
-                        'ml-2 font-normal ',
-                        isActive ? 'font-semibold' : 'font-normal',
-                        isOpen ? 'block' : 'hidden'
-                      )}
-                    >
-                      {item.title}
-                    </h1>
-                  </Button>
-                </Link>
-              ) : (
-                <SidebarDropdown item={item} />
-              )}
-            </div>
-          );
-        })}
+                    {item.title}
+                  </h1>
+                </Button>
+              </Link>
+            ) : (
+              <SidebarDropdown item={item} />
+            )}
+          </div>
+        );
+      })}
     </div>
   );
 };
