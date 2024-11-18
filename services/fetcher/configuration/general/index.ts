@@ -1,16 +1,14 @@
 import { PATH_CITY, PATH_COUNTRY, PATH_PROVINCE } from '@constants/routes';
 import axios from 'axios';
-import { TableOptionState } from '../../../../types/client/table';
 
-const getCountry = async (option?: TableOptionState) => {
-  let url = `${PATH_COUNTRY}?page_size=${
-    option?.pagination.pageSize || ''
-  }&current_page=${option?.pagination.pageIndex || ''}&search=${
-    option?.search || ''
-  }`;
-  console.log(option?.grouping.length);
-  if (option?.grouping && option.grouping.length > 0) {
-    url = PATH_COUNTRY;
+const getCountry = async (option?: FetcherOptions) => {
+  let url = PATH_COUNTRY;
+  if (!option?.all) {
+    url = `${PATH_COUNTRY}?page_size=${
+      option?.pagination.pageSize || ''
+    }&current_page=${option?.pagination.pageIndex || ''}&search=${
+      option?.search || ''
+    }`;
   }
   const res = await axios.get(url);
   return res;
@@ -36,14 +34,14 @@ const editCountry = async (body: CountryFormBody) => {
   }
 };
 
-const getProvince = async (option?: TableOptionState) => {
-  let url = `${PATH_PROVINCE}?page_size=${
-    option?.pagination.pageSize || ''
-  }&current_page=${option?.pagination.pageIndex || ''}&search=${
-    option?.search || ''
-  }`;
-  if (option?.grouping && option.grouping.length > 0) {
-    url = PATH_PROVINCE;
+const getProvince = async (option?: FetcherOptions) => {
+  let url = PATH_PROVINCE;
+  if (!option?.all) {
+    url = `${PATH_PROVINCE}?page_size=${
+      option?.pagination.pageSize || ''
+    }&current_page=${option?.pagination.pageIndex || ''}&search=${
+      option?.search || ''
+    }`;
   }
   const res = await axios.get(url);
   return res;
@@ -61,7 +59,7 @@ const createProvince = async (body: ProvinceFormBody) => {
 
 const editProvince = async (body: ProvinceFormBody) => {
   try {
-    const res = await axios.put(`${PATH_COUNTRY}/${body.province_code}`, body);
+    const res = await axios.put(`${PATH_PROVINCE}/${body.province_code}`, body);
     return res.data;
   } catch (error) {
     console.error('Error editing country:', error);
@@ -69,14 +67,14 @@ const editProvince = async (body: ProvinceFormBody) => {
   }
 };
 
-const getCity = async (option?: TableOptionState) => {
-  let url = `${PATH_CITY}?page_size=${
-    option?.pagination.pageSize || ''
-  }&current_page=${option?.pagination.pageIndex || ''}&search=${
-    option?.search || ''
-  }`;
-  if (option?.grouping && option.grouping.length > 0) {
-    url = PATH_CITY;
+const getCity = async (option?: FetcherOptions) => {
+  let url = PATH_CITY;
+  if (!option?.all) {
+    url = `${PATH_CITY}?page_size=${
+      option?.pagination.pageSize || ''
+    }&current_page=${option?.pagination.pageIndex || ''}&search=${
+      option?.search || ''
+    }`;
   }
   const res = await axios.get(url);
   return res;

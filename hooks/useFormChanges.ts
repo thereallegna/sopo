@@ -10,7 +10,8 @@ export const useFormChanges = <T extends DefaultValues>(
   initialValues: T,
   control: any,
   setValue?: any,
-  allField: allField = 'some'
+  allField: allField = 'some',
+  ignoredFields?: string[]
 ) => {
   const watchedValues = useWatch({
     control,
@@ -34,16 +35,23 @@ export const useFormChanges = <T extends DefaultValues>(
   let hasChanged = false;
 
   if (initialValuesRef.current) {
+    const ignored = ignoredFields || [];
+    const fieldsToCheck = Object.keys(initialValuesRef.current).filter(
+      (key) => !ignored.includes(key)
+    );
+
     if (allField === 'some') {
-      hasChanged = Object.keys(initialValuesRef.current).some((key) => {
+      hasChanged = fieldsToCheck.some((key) => {
         const currentValue = watchedValues?.[key];
         const initialValue = initialValuesRef.current![key];
+
         return currentValue !== initialValue;
       });
     } else if (allField === 'every') {
-      hasChanged = Object.keys(initialValuesRef.current).every((key) => {
+      hasChanged = fieldsToCheck.every((key) => {
         const currentValue = watchedValues?.[key];
         const initialValue = initialValuesRef.current![key];
+
         return currentValue !== initialValue;
       });
     }

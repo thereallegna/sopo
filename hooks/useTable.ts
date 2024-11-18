@@ -5,7 +5,7 @@ import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import {
-  TableOptionState,
+  // TableOptionState,
   TableContentProps,
   PaginationPartial,
   RowSizeType,
@@ -15,7 +15,7 @@ import {
 type UseTableProps<T> = {
   queryKey: string;
   queryFn: (
-    options?: TableOptionState
+    options?: FetcherOptions
   ) => Promise<AxiosResponse<ApiResponse<T[]>>>;
   columns: GenerateColumnsOption;
   onFilter?: () => void;
@@ -129,7 +129,11 @@ const useTable = <T>({
         ...option.pagination,
         pageIndex: option.pagination.pageIndex + 1,
       };
-      return queryFn({ ...option, pagination: nextPagination });
+      return queryFn({
+        pagination: nextPagination,
+        search: option.search,
+        all: option?.grouping && option.grouping.length > 0,
+      });
     },
     placeholderData: keepPreviousData,
     enabled: option.pagination.pageSize !== -1,

@@ -11,6 +11,7 @@ interface IProvince {
   province_code: string;
   province_name: string;
   country: string;
+  country_code: string;
   create_date: string;
 }
 
@@ -19,6 +20,7 @@ type ICity = {
   city_code: string;
   city_name: string;
   province: string;
+  province_code: string;
   ring_area?: string;
   create_date: string;
   location?: string;
