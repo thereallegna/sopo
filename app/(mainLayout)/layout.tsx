@@ -2,6 +2,7 @@ import Content from '@components/module/Content';
 import Navbar from '@components/module/Navbar';
 import Sidebar from '@components/module/Sidebar';
 import PreventNavigationDialog from '@components/shared/Alert';
+import HistoryLog from '@components/shared/Drawer/Log';
 import React, { PropsWithChildren } from 'react';
 
 const MainLayout = ({ children }: PropsWithChildren) => (
@@ -12,6 +13,7 @@ const MainLayout = ({ children }: PropsWithChildren) => (
       <Content className="relative w-full h-full flex-1 flex-grow flex flex-col gap-[10px]">
         {children}
         <PreventNavigationDialog />
+        <HistoryLog />
       </Content>
     </div>
   </main>

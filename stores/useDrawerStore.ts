@@ -20,10 +20,12 @@ type DrawerState = {
   isOpenDetail: boolean;
   isOpenEdit: boolean;
   isOpenFilter: boolean;
+  isOpenHistoryLog: boolean;
   openDrawer: () => void;
   openFilterDrawer: (type?: FilterDrawerType) => void;
   closeDrawer: () => void;
   closeFilterDrawer: () => void;
+  closeHistoryLogDrawer: () => void;
 
   // Table Drawer
   isOpenTable: boolean;
@@ -41,6 +43,9 @@ type DrawerState = {
   openEditDrawer: () => void;
   closeEditDrawer: () => void;
 
+  // History Log Drawer
+  openHistoryLogDrawer: () => void;
+
   // Close All
   closeAllDrawer: () => void;
 };
@@ -54,6 +59,7 @@ const initialDrawerState = {
   detail_data: null,
   isOpenDetail: false,
   isOpenEdit: false,
+  isOpenHistoryLog: false,
 };
 
 export const useDrawerStore = create<DrawerState>((set) => ({
@@ -82,6 +88,10 @@ export const useDrawerStore = create<DrawerState>((set) => ({
       isOpenFilter: true,
       filterDrawerType: type,
     }),
+  openHistoryLogDrawer: () =>
+    set({
+      isOpenHistoryLog: true,
+    }),
   openTableDrawer: () =>
     set({
       isOpenTable: true,
@@ -95,6 +105,11 @@ export const useDrawerStore = create<DrawerState>((set) => ({
     set((state) => ({
       ...state,
       isOpenFilter: false,
+    })),
+  closeHistoryLogDrawer: () =>
+    set((state) => ({
+      ...state,
+      isOpenHistoryLog: false,
     })),
   closeTableDrawer: () =>
     set((state) => ({
@@ -120,5 +135,6 @@ export const useDrawerStore = create<DrawerState>((set) => ({
       isOpenTable: false,
       isOpenDetail: false,
       isOpenEdit: false,
+      isOpenHistoryLog: false,
     })),
 }));
