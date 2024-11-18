@@ -86,5 +86,6 @@ export const useSidebar = ({ path, title, children }: UseSidebarProps = {}) => {
     shouldRender,
     handleDropdownToggle,
     toggleSidebar,
+    currentSearchQuery,
   };
 };
