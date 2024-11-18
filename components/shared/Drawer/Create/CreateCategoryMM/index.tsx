@@ -18,13 +18,13 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import useFormStore from '@stores/useFormStore';
 import { useDrawer } from '@hooks/useDrawer';
-import { CategoryMMDefaultValues } from '@constants/defaultValues';
+import { ItemCategoryDefaultValues } from '@constants/defaultValues';
 import { useFormChanges } from '@hooks/useFormChanges';
 import { AxiosError } from 'axios';
 import { errorMapping } from '@utils/errorMapping';
 import { GET_CATEGORY_MATERIAL_MANAGEMENT } from '@constants/queryKey';
-import { CategoryMMSchema } from '@constants/schemas/ConfigurationSchema/InventoryMaterialManagement';
-import { createCategoryMM } from '@services/fetcher/configuration/material-management';
+import { ItemCategorySchema } from '@constants/schemas/ConfigurationSchema/InventoryMaterialManagement';
+import { createItemCategory } from '@services/fetcher/configuration/material-management';
 
 const CreateCategoryMM = () => {
   const formRef = useRef<HTMLFormElement>(null);
@@ -41,22 +41,22 @@ const CreateCategoryMM = () => {
     setValue,
     control,
     formState: { errors, isDirty },
-  } = useForm<CategoryMMFormBody>({
+  } = useForm<ItemCategoryFormBody>({
     mode: 'onBlur',
-    resolver: yupResolver(CategoryMMSchema),
-    defaultValues: CategoryMMDefaultValues,
+    resolver: yupResolver(ItemCategorySchema),
+    defaultValues: ItemCategoryDefaultValues,
   });
 
   const { handleCloseDrawer } = useDrawer(isDirty, reset);
   const { hasChanged } = useFormChanges(
-    CategoryMMDefaultValues,
+    ItemCategoryDefaultValues,
     control,
     setValue,
     'every'
   );
 
   const { mutate: mutationCreateCategoryMM } = useMutation({
-    mutationFn: createCategoryMM,
+    mutationFn: createItemCategory,
     onMutate: () => {
       setIsLoading(true);
       console.log('Mutation started...');
@@ -83,7 +83,7 @@ const CreateCategoryMM = () => {
     },
   });
 
-  const onSubmit: SubmitHandler<CategoryMMFormBody> = (data) => {
+  const onSubmit: SubmitHandler<ItemCategoryFormBody> = (data) => {
     console.log('Form submitted with data:', data);
     mutationCreateCategoryMM(data);
   };
@@ -130,33 +130,49 @@ const CreateCategoryMM = () => {
             <Card size="drawer">
               <CardContent className="flex-wrap flex flex-row gap-6 items-center">
                 <InputField
-                  {...register('categoryMM_code')}
+                  {...register('item_category_code')}
                   message={
-                    errors.categoryMM_code
+                    errors.item_category_code
                       ? {
-                          text: errors.categoryMM_code.message!,
+                          text: errors.item_category_code.message!,
                           type: 'danger',
                         }
                       : undefined
                   }
-                  label="Category MM Code"
-                  placeholder="Category MM Code"
+                  label="Item Category Code"
+                  placeholder="Item Category Code"
                   right
                   type="text"
                   onKeyDown={handleInputKeyDown}
                 />
                 <InputField
-                  {...register('categoryMM_name')}
+                  {...register('item_category_name')}
                   message={
-                    errors.categoryMM_name
+                    errors.item_category_name
                       ? {
-                          text: errors.categoryMM_name.message!,
+                          text: errors.item_category_name.message!,
                           type: 'danger',
                         }
                       : undefined
                   }
-                  label="Category MM Name"
-                  placeholder="Category MM Name"
+                  label="Item Category Name"
+                  placeholder="Item Category Name"
+                  right
+                  type="text"
+                  onKeyDown={handleInputKeyDown}
+                />
+                <InputField
+                  {...register('active')}
+                  message={
+                    errors.active
+                      ? {
+                          text: errors.active.message!,
+                          type: 'danger',
+                        }
+                      : undefined
+                  }
+                  label="Active"
+                  placeholder="Active"
                   right
                   type="text"
                   onKeyDown={handleInputKeyDown}

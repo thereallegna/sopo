@@ -25,11 +25,10 @@ type UOMFormBody = {
   uom_name: string;
 };
 
-type CategoryMMFormBody = {
+type ItemCategoryFormBody = {
   item_category_code: string;
   item_category_name: string;
   active: string;
-  create_date: string;
   coa_stock?: string;
   coa_stock_description?: string;
   coa_sales?: string;

@@ -36,7 +36,7 @@ const editUOM = async (body: UOMFormBody) => {
   }
 };
 
-const getCategoryMM = async (option?: TableOptionState) => {
+const getItemCategory = async (option?: TableOptionState) => {
   let url = `${PATH_ITEMS_CATEGORY}?page_size=${
     option?.pagination.pageSize || ''
   }&current_page=${option?.pagination.pageIndex || ''}&search=${
@@ -52,25 +52,26 @@ const getCategoryMM = async (option?: TableOptionState) => {
   return res;
 };
 
-const createCategoryMM = async (body: CategoryMMFormBody) => {
+const createItemCategory = async (body: ItemCategoryFormBody) => {
   try {
     const res = await axios.post(PATH_ITEMS_CATEGORY, body);
     return res.data;
   } catch (error) {
-    console.error('Error creating country:', error);
+    console.error('Error creating item category:', error);
     throw error;
   }
 };
 
-const editCategoryMM = async (body: CategoryMMFormBody) => {
+const editItemCategory = async (body: ItemCategoryFormBody) => {
   try {
+    console.log(body);
     const res = await axios.put(
       `${PATH_ITEMS_CATEGORY}/${body.item_category_code}`,
       body
     );
     return res.data;
   } catch (error) {
-    console.error('Error editing country:', error);
+    console.error('Error editing item category:', error);
     throw error;
   }
 };
@@ -79,7 +80,7 @@ export {
   getUOM,
   createUOM,
   editUOM,
-  getCategoryMM,
-  createCategoryMM,
-  editCategoryMM,
+  getItemCategory,
+  createItemCategory,
+  editItemCategory,
 };

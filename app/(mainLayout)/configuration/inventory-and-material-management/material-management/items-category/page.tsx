@@ -7,7 +7,7 @@ import BodyContent from '@components/module/Content/BodyContent';
 import Image from 'next/image';
 import FilterButton from '@components/ui/Table/Action/FilterButton';
 import { useDrawerStore } from '@stores/useDrawerStore';
-import { getCategoryMM } from '@services/fetcher/configuration/material-management';
+import { getItemCategory } from '@services/fetcher/configuration/material-management';
 import { GET_CATEGORY_MATERIAL_MANAGEMENT } from '@constants/queryKey';
 import dynamic from 'next/dynamic';
 
@@ -52,10 +52,7 @@ const Country = () => {
   return (
     <>
       <Content>
-        <HeaderContent
-          title="Category Material Management"
-          onAdd={handleOpenAdd}
-        />
+        <HeaderContent title="Item's Category" onAdd={handleOpenAdd} />
         <BodyContent>
           <div className="flex flex-col gap-4 py-2 items-center">
             <Image
@@ -127,6 +124,14 @@ const Country = () => {
               header: 'Coa Sales Description',
             },
             {
+              accessor: 'coa_cogs',
+              header: 'Coa Cogs',
+            },
+            {
+              accessor: 'coa_cogs_description',
+              header: 'Coa Cogs Description',
+            },
+            {
               accessor: 'coa_sales_return',
               header: 'Coa Sales Return',
             },
@@ -150,13 +155,9 @@ const Country = () => {
               accessor: 'coa_consumption_cost',
               header: 'Coa Consumption Cost Description',
             },
-            {
-              accessor: 'active',
-              header: 'Active',
-            },
           ],
         }}
-        queryFn={getCategoryMM}
+        queryFn={getItemCategory}
       />
       <CreateCategory />
       <DetailCategory />
