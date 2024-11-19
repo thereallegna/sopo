@@ -21,6 +21,8 @@ import {
   messageInputFieldVariant,
   MessageInputProps,
 } from '@components/shared/InputField';
+import { AxiosResponse } from 'axios';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import IconComponent from '../Icon';
 import Label, { LabelProps } from '../Label';
 import { Button } from '../Button';
@@ -33,18 +35,24 @@ type FrameworkItem = {
 interface ComboboxProps {
   label?: string;
   labelProps?: LabelProps;
-  items: FrameworkItem[];
-  value?: string;
+  url?: string;
+  items?: FrameworkItem[];
+  value?: FrameworkItem;
   placeholder: string;
   message?: MessageInputProps;
-  onChange?: (val: string) => void;
+  onChange?: (val: FrameworkItem) => void;
   disabled?: boolean;
   className?: string;
+
+  // Query
+  queryKey?: string[];
+  queryFn?: (options: FetcherOptions) => Promise<any>;
+  dataLabel?: string;
+  dataValue?: string;
 }
 
 export const Combobox = ({
   value,
-  items,
   label,
   labelProps,
   message,
@@ -52,14 +60,25 @@ export const Combobox = ({
   onChange,
   disabled,
   className,
+  queryKey,
+  queryFn,
+  dataLabel = 'label', // nilai default jika dataLabel tidak disediakan
+  dataValue = 'value', // nilai default jika dataValue tidak disediakan
 }: ComboboxProps) => {
   const [open, setOpen] = React.useState(false);
-  const [searchQuery, setSearchQuery] = React.useState('');
+  const [searchQuery, setSearchQuery] = React.useState<string>();
 
   const popoverContentId = React.useMemo(
     () => `popover-content-${Math.random().toString(36).substr(2, 9)}`,
     []
   );
+
+  const { data: queryData } = useQuery<AxiosResponse<ApiResponse<any[]>>>({
+    queryKey: queryKey || [],
+    queryFn: queryFn ? () => queryFn({ search: searchQuery }) : undefined,
+    placeholderData: keepPreviousData,
+    enabled: Boolean(queryFn && queryKey), // hanya melakukan query jika queryFn dan queryKey ada
+  });
 
   return (
     <div className={className}>
@@ -82,7 +101,7 @@ export const Combobox = ({
               }}
               disabled={disabled}
             >
-              <p className="font-normal">{value || placeholder}</p>
+              <p className="font-normal">{value?.label || placeholder}</p>
             </Button>
           </PopoverTrigger>
           <PopoverContent
@@ -108,30 +127,29 @@ export const Combobox = ({
               <CommandList>
                 <CommandEmpty>No data found.</CommandEmpty>
                 <CommandGroup>
-                  {items
-                    .filter((item) =>
-                      item.label
-                        .toLowerCase()
-                        .includes(searchQuery.toLowerCase())
-                    )
-                    .map((item) => (
-                      <CommandItem
-                        key={item.value}
-                        value={item.value}
-                        onSelect={(currentValue) => {
-                          onChange?.(currentValue);
-                          setOpen(false);
-                        }}
-                      >
-                        {item.label}
-                        <Check
-                          className={cn(
-                            'ml-auto',
-                            value === item.value ? 'opacity-100' : 'opacity-0'
-                          )}
-                        />
-                      </CommandItem>
-                    ))}
+                  {queryData?.data.data.results.map((item) => (
+                    <CommandItem
+                      key={item[dataValue]}
+                      value={item[dataValue]}
+                      onSelect={(currentValue) => {
+                        onChange?.({
+                          label: item[dataLabel],
+                          value: currentValue,
+                        });
+                        setOpen(false);
+                      }}
+                    >
+                      {item[dataLabel]}
+                      <Check
+                        className={cn(
+                          'ml-auto',
+                          value && value?.value === item[dataValue]
+                            ? 'opacity-100'
+                            : 'opacity-0'
+                        )}
+                      />
+                    </CommandItem>
+                  ))}
                 </CommandGroup>
               </CommandList>
             </Command>

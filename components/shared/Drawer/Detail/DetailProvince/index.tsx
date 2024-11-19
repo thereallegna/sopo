@@ -66,14 +66,12 @@ const DetailProvince = () => {
               />
               <Combobox
                 className="flex-1 gap-2"
-                value={detail_data?.country || ''}
+                value={{
+                  label: detail_data?.country,
+                  value: detail_data?.country_code,
+                }}
                 label="Country"
                 placeholder="Select Country"
-                items={[
-                  { label: 'Jawir', value: '1' },
-                  { label: 'INDONESIA', value: '2' },
-                  { label: 'Sunda', value: '3' },
-                ]}
                 disabled
               />
             </CardContent>

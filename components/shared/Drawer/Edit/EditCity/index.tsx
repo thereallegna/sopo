@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useCallback } from 'react';
+import React, { useRef } from 'react';
 import { Button } from '@components/ui/Button';
 import {
   Drawer,
@@ -17,19 +17,21 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { citySchema } from '@constants/schemas/ConfigurationSchema/general';
-import { editCity } from '@services/fetcher/configuration/general';
+import { editCity, getProvince } from '@services/fetcher/configuration/general';
 import useFormStore from '@stores/useFormStore';
 import { useDrawer } from '@hooks/useDrawer';
 import { useFormChanges } from '@hooks/useFormChanges';
 import { errorMapping } from '@utils/errorMapping';
 import { AxiosError } from 'axios';
-import { GET_CITY } from '@constants/queryKey';
+import { GET_CITY, GET_PROVINCE } from '@constants/queryKey';
 import Combobox from '@components/ui/Combobox';
 import useToastStore from '@stores/useToastStore';
+import { useFormSave } from '@hooks/useFormSave';
 
 const EditCity = () => {
   const formRef = useRef<HTMLFormElement>(null);
-  const { isOpenEdit, closeEditDrawer, setDetailData } = useDrawerStore();
+  const { isOpenEdit, closeEditDrawer, setDetailData, openDetailDrawer } =
+    useDrawerStore();
   const detail_data = useDrawerStore((state) => state.detail_data) as ICity;
   const { setIsDirty } = useFormStore();
   const [isLoading, setIsLoading] = React.useState(false);
@@ -52,7 +54,13 @@ const EditCity = () => {
   });
 
   const { handleCloseDrawerEdit } = useDrawer(isDirty, reset, detail_data);
-  const { hasChanged } = useFormChanges(detail_data, control, setValue);
+  const { hasChanged } = useFormChanges(
+    detail_data,
+    control,
+    setValue,
+    'some', // or 'every' depending on your needs
+    ['ring_area', 'location']
+  );
 
   const { mutate: mutationEditCity } = useMutation({
     mutationFn: editCity,
@@ -61,12 +69,16 @@ const EditCity = () => {
       console.log('Edit mutation started...');
     },
     onSuccess: (data) => {
-      console.log('Edit mutation successful:', data);
-      reset();
       setDetailData(data.data);
       closeEditDrawer();
       setIsLoading(false);
       setIsDirty(false);
+      openDetailDrawer({
+        ...data.data,
+        province: watch('province'),
+        province_code: watch('province_code'),
+      } as ICity);
+      reset();
       queryClient.invalidateQueries({ queryKey: [GET_CITY] });
       showToast('City successfully edited', 'success');
     },
@@ -89,23 +101,11 @@ const EditCity = () => {
     mutationEditCity(data);
   };
 
-  const handleSaveClick = () => {
-    console.log('Save button clicked in edit form');
-    formRef.current?.requestSubmit();
-  };
-
-  const handleInputKeyDown = useCallback(
-    (event: React.KeyboardEvent<HTMLInputElement>) => {
-      if (event.key === 'Enter' && !event.shiftKey) {
-        event.preventDefault();
-        console.log('Enter key pressed');
-        if (!isLoading && hasChanged) {
-          formRef.current?.requestSubmit();
-        }
-      }
-    },
-    [isLoading, hasChanged]
-  );
+  const { handleSaveClick, handleInputKeyDown } = useFormSave({
+    ref: formRef,
+    isLoading,
+    hasChanged,
+  });
 
   return (
     <Drawer onClose={handleCloseDrawerEdit} open={isOpenEdit}>
@@ -161,25 +161,28 @@ const EditCity = () => {
                 </div>
                 <div className="flex flex-col gap-[14px] flex-1 h-full justify-between">
                   <Combobox
-                    value={watch('province')}
+                    label="Province"
                     placeholder="Select Province"
+                    queryKey={[GET_PROVINCE]}
+                    queryFn={() => getProvince()}
+                    dataLabel="province_name"
+                    dataValue="province_code"
                     message={
                       errors.province
                         ? { text: errors.province.message!, type: 'danger' }
                         : undefined
                     }
-                    label="Province"
-                    items={[
-                      {
-                        label: 'Nanggroe Aceh Darussalam',
-                        value: '11.00.00.0000',
-                      },
-                      { label: 'Jawa Tengah', value: '2' },
-                      { label: 'Jawa Timur', value: '3' },
-                    ]}
-                    onChange={(val) =>
-                      setValue('province', val, { shouldDirty: true })
-                    }
+                    value={{
+                      label: watch('province'),
+                      value: watch('province_code'),
+                    }}
+                    onChange={(val) => {
+                      setValue('province', val.label, { shouldDirty: true });
+                      setValue('province_code', val.value, {
+                        shouldDirty: true,
+                      });
+                      setError('province', { type: 'disabled' });
+                    }}
                   />
                   <InputField
                     {...register('ring_area')}

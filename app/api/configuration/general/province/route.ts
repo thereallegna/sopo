@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSideSession } from '@utils/session';
 import axios, { AxiosError } from 'axios';
-import { PATH_CITY_BE } from '@constants/routes';
+import { PATH_PROVINCE_BE } from '@constants/routes';
 
 export async function GET(req: NextRequest) {
   try {
@@ -9,7 +9,7 @@ export async function GET(req: NextRequest) {
 
     const session = await getServerSideSession();
 
-    const url = `${PATH_CITY_BE}?page_size=${
+    const url = `${PATH_PROVINCE_BE}?page_size=${
       params.get('page_size') || ''
     }&page=${params.get('current_page') || ''}&search=${
       params.get('search') || ''
@@ -36,14 +36,15 @@ export async function GET(req: NextRequest) {
   }
 }
 
+// create
 export async function POST(req: Request) {
   try {
     const session = await getServerSideSession();
 
-    const body = (await req.json()) as CityFormBody;
-    body.province = body.province_code;
+    const body = (await req.json()) as ProvinceFormBody;
+    body.country = body.country_code;
 
-    const response = await axios.post(PATH_CITY_BE, body, {
+    const response = await axios.post(PATH_PROVINCE_BE, body, {
       headers: {
         Authorization: `Bearer ${session.user?.data?.authorization?.access_token}`,
       },

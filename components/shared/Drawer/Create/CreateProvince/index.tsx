@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useCallback, useRef } from 'react';
+import React, { useRef } from 'react';
 import { Button } from '@components/ui/Button';
 import {
   Drawer,
@@ -17,7 +17,10 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { provinceSchema } from '@constants/schemas/ConfigurationSchema/general';
-import { createProvince } from '@services/fetcher/configuration/general';
+import {
+  createProvince,
+  getCountry,
+} from '@services/fetcher/configuration/general';
 import useFormStore from '@stores/useFormStore'; // Import useFormStore
 import { useDrawer } from '@hooks/useDrawer';
 import { provinceDefaultValues } from '@constants/defaultValues';
@@ -25,8 +28,9 @@ import { useFormChanges } from '@hooks/useFormChanges';
 import Combobox from '@components/ui/Combobox';
 import { errorMapping } from '@utils/errorMapping';
 import { AxiosError } from 'axios';
-import { GET_PROVINCE } from '@constants/queryKey';
+import { GET_COUNTRY, GET_PROVINCE } from '@constants/queryKey';
 import useToastStore from '@stores/useToastStore';
+import { useFormSave } from '@hooks/useFormSave';
 
 const CreateCity = () => {
   const formRef = useRef<HTMLFormElement>(null);
@@ -65,12 +69,17 @@ const CreateCity = () => {
       setIsLoading(true);
     },
     onSuccess: (data) => {
-      reset();
       closeDrawer();
       setIsLoading(false);
       setIsDirty(false);
-      openDetailDrawer(data.data);
+      openDetailDrawer({
+        ...data.data,
+        country: watch('country'),
+        country_code: watch('country_code'),
+      } as IProvince);
+      reset();
       queryClient.invalidateQueries({ queryKey: [GET_PROVINCE] });
+      showToast('Province successfully added', 'success');
     },
     onError: (error: any) => {
       setIsLoading(false);
@@ -89,23 +98,11 @@ const CreateCity = () => {
     mutationCreateCity(data);
   };
 
-  const handleSaveClick = () => {
-    console.log('Save button clicked');
-    formRef.current?.requestSubmit();
-  };
-
-  const handleInputKeyDown = useCallback(
-    (event: React.KeyboardEvent<HTMLInputElement>) => {
-      if (event.key === 'Enter' && !event.shiftKey) {
-        event.preventDefault();
-        console.log('Enter key pressed');
-        if (!isLoading && hasChanged) {
-          formRef.current?.requestSubmit();
-        }
-      }
-    },
-    [isLoading, hasChanged]
-  );
+  const { handleSaveClick, handleInputKeyDown } = useFormSave({
+    ref: formRef,
+    isLoading,
+    hasChanged,
+  });
 
   return (
     <Drawer onClose={handleCloseDrawer} open={isOpen}>
@@ -164,19 +161,22 @@ const CreateCity = () => {
                   className="flex-1"
                   label="Country"
                   placeholder="Select Country"
-                  items={[
-                    { label: 'Jawir', value: '1' },
-                    { label: 'INDONESIA', value: '2' },
-                    { label: 'Sunda', value: '3' },
-                  ]}
+                  queryKey={[GET_COUNTRY]}
+                  queryFn={() => getCountry({ all: true })}
+                  dataLabel="country_name"
+                  dataValue="country_code"
                   message={
                     errors.country
                       ? { text: errors.country.message!, type: 'danger' }
                       : undefined
                   }
-                  value={watch('country')}
+                  value={{
+                    label: watch('country'),
+                    value: watch('country_code'),
+                  }}
                   onChange={(val) => {
-                    setValue('country', val, { shouldDirty: true });
+                    setValue('country', val.label, { shouldDirty: true });
+                    setValue('country_code', val.value, { shouldDirty: true });
                     setError('country', { type: 'disabled' });
                   }}
                 />
