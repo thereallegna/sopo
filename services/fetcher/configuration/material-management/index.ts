@@ -1,17 +1,30 @@
 import { PATH_ITEMS_UOM, PATH_ITEMS_CATEGORY } from '@constants/routes';
 import axios from 'axios';
-import { TableOptionState } from '../../../../types/client/table';
+// import { TableOptionState } from '../../../../types/client/table';
 
-const getUOM = async (option?: TableOptionState) => {
-  let url = `${PATH_ITEMS_UOM}?page_size=${
-    option?.pagination.pageSize || ''
-  }&current_page=${option?.pagination.pageIndex || ''}&search=${
-    option?.search || ''
-  }`;
-  console.log(option?.grouping.length);
-  if (option?.grouping && option.grouping.length > 0) {
-    url = PATH_ITEMS_UOM;
+const getUOM = async (option?: FetcherOptions) => {
+  let url = PATH_ITEMS_UOM;
+  if (option && !option.all) {
+    // Menggunakan URLSearchParams untuk membangun query string
+    const params = new URLSearchParams();
+
+    // Menambahkan parameter dengan kondisi jika ada nilainya
+    if (option.pagination) {
+      params.append('page_size', option.pagination.pageSize?.toString() || '');
+      params.append(
+        'current_page',
+        option.pagination.pageIndex?.toString() || ''
+      );
+    }
+
+    if (option.search) {
+      params.append('search', option.search);
+    }
+
+    // Menyusun URL lengkap dengan parameter
+    url = `${PATH_ITEMS_UOM}?${params.toString()}`;
   }
+
   const res = await axios.get(url);
   return res;
 };
@@ -36,16 +49,40 @@ const editUOM = async (body: UOMFormBody) => {
   }
 };
 
-const getCategoryMM = async (option?: TableOptionState) => {
-  let url = `${PATH_ITEMS_CATEGORY}?page_size=${
-    option?.pagination.pageSize || ''
-  }&current_page=${option?.pagination.pageIndex || ''}&search=${
-    option?.search || ''
-  }`;
-  console.log(option?.grouping.length);
-  if (option?.grouping && option.grouping.length > 0) {
-    url = PATH_ITEMS_CATEGORY;
+const getCategoryMM = async (option?: FetcherOptions) => {
+  // let url = `${PATH_ITEMS_CATEGORY}?page_size=${
+  //   option?.pagination.pageSize || ''
+  // }&current_page=${option?.pagination.pageIndex || ''}&search=${
+  //   option?.search || ''
+  // }`;
+  // console.log(option?.grouping.length);
+  // if (option?.grouping && option.grouping.length > 0) {
+  //   url = PATH_ITEMS_CATEGORY;
+  // }
+  // const res = await axios.get(url);
+  // return res;
+  let url = PATH_ITEMS_CATEGORY;
+  if (option && !option.all) {
+    // Menggunakan URLSearchParams untuk membangun query string
+    const params = new URLSearchParams();
+
+    // Menambahkan parameter dengan kondisi jika ada nilainya
+    if (option.pagination) {
+      params.append('page_size', option.pagination.pageSize?.toString() || '');
+      params.append(
+        'current_page',
+        option.pagination.pageIndex?.toString() || ''
+      );
+    }
+
+    if (option.search) {
+      params.append('search', option.search);
+    }
+
+    // Menyusun URL lengkap dengan parameter
+    url = `${PATH_ITEMS_CATEGORY}?${params.toString()}`;
   }
+
   const res = await axios.get(url);
   return res;
 };

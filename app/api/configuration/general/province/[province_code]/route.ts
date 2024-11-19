@@ -15,8 +15,6 @@ export async function PUT(
     const body = (await req.json()) as ProvinceFormBody;
     body.country = body.country_code;
 
-    console.log('TEST PUT => ', body);
-
     const response = await axios.put(
       `${PATH_PROVINCE_BE}/${province_code}`,
       body,

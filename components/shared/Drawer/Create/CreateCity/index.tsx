@@ -25,7 +25,7 @@ import useFormStore from '@stores/useFormStore'; // Import useFormStore
 import { useDrawer } from '@hooks/useDrawer';
 import { cityDefaultValues } from '@constants/defaultValues';
 import { useFormChanges } from '@hooks/useFormChanges';
-import Combobox from '@components/ui/Combobox';
+import Combobox from '@components/shared/Combobox';
 import { errorMapping } from '@utils/errorMapping';
 import { AxiosError } from 'axios';
 import { GET_CITY, GET_PROVINCE } from '@constants/queryKey';
@@ -165,7 +165,7 @@ const CreateCity = () => {
                     label="Province"
                     placeholder="Select Province"
                     queryKey={[GET_PROVINCE]}
-                    queryFn={() => getProvince()}
+                    queryFn={getProvince}
                     dataLabel="province_name"
                     dataValue="province_code"
                     message={

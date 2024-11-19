@@ -15,7 +15,7 @@ import { useDrawerStore } from '@stores/useDrawerStore';
 import { IconPencil } from '@tabler/icons-react';
 import { useForm } from 'react-hook-form';
 import { useDetailForm } from '@hooks/useFormChanges';
-import Combobox from '@components/ui/Combobox';
+import Combobox from '@components/shared/Combobox';
 
 const DetailProvince = () => {
   const { isOpenDetail, closeDetailDrawer, openEditDrawer } = useDrawerStore();
@@ -73,6 +73,7 @@ const DetailProvince = () => {
                 label="Country"
                 placeholder="Select Country"
                 disabled
+                queryKey={[]}
               />
             </CardContent>
           </Card>

@@ -25,7 +25,7 @@ import useFormStore from '@stores/useFormStore'; // Import useFormStore
 import { useDrawer } from '@hooks/useDrawer';
 import { provinceDefaultValues } from '@constants/defaultValues';
 import { useFormChanges } from '@hooks/useFormChanges';
-import Combobox from '@components/ui/Combobox';
+import Combobox from '@components/shared/Combobox';
 import { errorMapping } from '@utils/errorMapping';
 import { AxiosError } from 'axios';
 import { GET_COUNTRY, GET_PROVINCE } from '@constants/queryKey';

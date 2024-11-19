@@ -15,7 +15,7 @@ import { useDrawerStore } from '@stores/useDrawerStore';
 import { IconPencil } from '@tabler/icons-react';
 import { useForm } from 'react-hook-form';
 import { useDetailForm } from '@hooks/useFormChanges';
-import Combobox from '@components/ui/Combobox';
+import Combobox from '@components/shared/Combobox';
 import { GET_PROVINCE } from '@constants/queryKey';
 import { getProvince } from '@services/fetcher/configuration/general';
 
