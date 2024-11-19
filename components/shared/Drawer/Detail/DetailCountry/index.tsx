@@ -74,7 +74,12 @@ const DetailCountry = () => {
             variant="primary"
             icon={{ size: 'large', icon: IconPencil, color: 'White' }}
             type="submit"
-            onClick={openHistoryLogDrawer}
+            onClick={() =>
+              openHistoryLogDrawer({
+                code: detail_data?.country_code,
+                category: 'Country',
+              })
+            }
           />
         </DrawerFooter>
       </DrawerContent>

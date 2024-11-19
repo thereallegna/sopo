@@ -1,6 +1,6 @@
 export const SESSION_USER = 'userSession';
 
-// CONFIGURATION GENERAL
+// CONFIGURATION GENERAL START
 export const GET_COUNTRY = 'getCountry';
 export const GET_CITY = 'getCity';
 export const GET_PROVINCE = 'getProvince';
@@ -12,3 +12,7 @@ export const GET_CATEGORY_MATERIAL_MANAGEMENT = 'getCategoryMaterialManagement';
 export const GET_MASTER_ITEM_MATERIAL_MANAGEMENT =
   'getMasterItemMaterialManagement';
 // CONFIGURATION INVENTORY AND MATERIAL MANAGEMENT END
+
+// lOG HISTORY  START
+export const GET_LOG_HISTORY = 'getLogHistory';
+// lOG HISTORY  END

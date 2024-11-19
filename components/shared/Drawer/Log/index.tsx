@@ -25,30 +25,7 @@ const HistoryLog = () => {
             onClick={closeHistoryLogDrawer}
           />
           <DrawerBody className="p-0">
-            <Timeline
-              data={[
-                {
-                  log: 'Adi made changes to this data',
-                  date: '2024-10-10T09:14:00',
-                },
-                {
-                  log: 'Oki created this data',
-                  date: '2024-09-20T08:33:00',
-                },
-                {
-                  log: 'Oki created this data',
-                  date: '2024-09-20T08:33:00',
-                },
-                {
-                  log: 'Adi made changes to this data',
-                  date: '2024-10-10T09:14:00',
-                },
-                {
-                  log: 'Adi made changes to this data',
-                  date: '2024-10-10T09:14:00',
-                },
-              ]}
-            />
+            <Timeline />
           </DrawerBody>
         </div>
       </DrawerContent>
