@@ -20,10 +20,12 @@ type DrawerState = {
   isOpenDetail: boolean;
   isOpenEdit: boolean;
   isOpenFilter: boolean;
+  isOpenHistoryLog: boolean;
   openDrawer: () => void;
   openFilterDrawer: (type?: FilterDrawerType) => void;
   closeDrawer: () => void;
   closeFilterDrawer: () => void;
+  closeHistoryLogDrawer: () => void;
 
   // Table Drawer
   isOpenTable: boolean;
@@ -41,6 +43,14 @@ type DrawerState = {
   openEditDrawer: () => void;
   closeEditDrawer: () => void;
 
+  // History Log Drawer
+  // data query for history log
+  data_log_history_query: {
+    data: TimelineQuery | null;
+  };
+  // data log history
+  openHistoryLogDrawer: (data: TimelineQuery) => void;
+
   // Close All
   closeAllDrawer: () => void;
 };
@@ -52,8 +62,12 @@ const initialDrawerState = {
   isOpenFilter: false,
   isOpenTable: false,
   detail_data: null,
+  data_log_history_query: {
+    data: null,
+  },
   isOpenDetail: false,
   isOpenEdit: false,
+  isOpenHistoryLog: false,
 };
 
 export const useDrawerStore = create<DrawerState>((set) => ({
@@ -71,7 +85,7 @@ export const useDrawerStore = create<DrawerState>((set) => ({
   setDetailData: (data) =>
     set({
       detail_data: data,
-    }), // This function updates the detail_data without affecting isOpenDetail
+    }),
 
   openDrawer: () =>
     set({
@@ -81,6 +95,13 @@ export const useDrawerStore = create<DrawerState>((set) => ({
     set({
       isOpenFilter: true,
       filterDrawerType: type,
+    }),
+  openHistoryLogDrawer: (data: TimelineQuery) =>
+    set({
+      isOpenHistoryLog: true,
+      data_log_history_query: {
+        data,
+      },
     }),
   openTableDrawer: () =>
     set({
@@ -95,6 +116,14 @@ export const useDrawerStore = create<DrawerState>((set) => ({
     set((state) => ({
       ...state,
       isOpenFilter: false,
+    })),
+  closeHistoryLogDrawer: () =>
+    set((state) => ({
+      ...state,
+      isOpenHistoryLog: false,
+      data_log_history_query: {
+        data: null,
+      },
     })),
   closeTableDrawer: () =>
     set((state) => ({
@@ -120,5 +149,6 @@ export const useDrawerStore = create<DrawerState>((set) => ({
       isOpenTable: false,
       isOpenDetail: false,
       isOpenEdit: false,
+      isOpenHistoryLog: false,
     })),
 }));

@@ -7,6 +7,7 @@ import {
   DrawerBody,
   DrawerContent,
   DrawerEndHeader,
+  DrawerFooter,
   DrawerHeader,
 } from '@components/ui/Drawer';
 import { Card, CardContent } from '@components/ui/Card';
@@ -17,7 +18,12 @@ import { useForm } from 'react-hook-form';
 import { useDetailForm } from '@hooks/useFormChanges';
 
 const DetailCountry = () => {
-  const { isOpenDetail, closeDetailDrawer, openEditDrawer } = useDrawerStore();
+  const {
+    isOpenDetail,
+    closeDetailDrawer,
+    openEditDrawer,
+    openHistoryLogDrawer,
+  } = useDrawerStore();
   const detail_data = useDrawerStore((state) => state.detail_data) as ICountry;
 
   const { register, setValue } = useForm<ICountry>();
@@ -63,6 +69,19 @@ const DetailCountry = () => {
             </CardContent>
           </Card>
         </DrawerBody>
+        <DrawerFooter>
+          <Button
+            variant="primary"
+            icon={{ size: 'large', icon: IconPencil, color: 'White' }}
+            type="submit"
+            onClick={() =>
+              openHistoryLogDrawer({
+                code: detail_data?.country_code,
+                category: 'Country',
+              })
+            }
+          />
+        </DrawerFooter>
       </DrawerContent>
     </Drawer>
   );

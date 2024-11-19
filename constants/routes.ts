@@ -47,3 +47,8 @@ export const PATH_ITEMS_UOM_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}
 export const PATH_ITEMS_CATEGORY = `${PATH_CONFIGURATION_INVENTORY_AND_MATERIAL_MANAGEMENT}/material-management/category`;
 export const PATH_ITEMS_CATEGORY_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/category`;
 /* ======================= Inventory and Material Management End ==================== */
+
+/* ======================= Log History Start ==================== */
+export const PATH_LOG_HISTORY = `${PATH_API}/log`;
+export const PATH_LOG_HISTORY_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/log`;
+/* ======================= Log History End ==================== */

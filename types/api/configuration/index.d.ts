@@ -1,8 +1,4 @@
 /* ======================= Configuration Start ==================== */
-type CountryFormBody = {
-  country_code: string;
-  country_name: string;
-};
 
 type ProvinceFormBody = {
   province_code: string;
@@ -32,3 +28,7 @@ type CategoryMMFormBody = {
   categoryMM_name: string;
 };
 /* ======================= Inventory and Material Management End ==================== */
+type CountryFormBody = {
+  country_code: string;
+  country_name: string;
+};
