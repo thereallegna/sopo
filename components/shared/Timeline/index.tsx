@@ -15,6 +15,7 @@ const Timeline: React.FC = () => {
     isError,
   } = useQuery({
     queryKey: [GET_LOG_HISTORY],
+
     queryFn: () =>
       getLogHistory({
         code: data_log_history_query?.data?.code || '',

@@ -13,7 +13,7 @@ import {
 import { Card, CardContent } from '@components/ui/Card';
 import InputField from '@components/shared/InputField';
 import { useDrawerStore } from '@stores/useDrawerStore';
-import { IconPencil } from '@tabler/icons-react';
+import { IconHistory, IconPencil } from '@tabler/icons-react';
 import { useForm } from 'react-hook-form';
 import { useDetailForm } from '@hooks/useFormChanges';
 
@@ -71,8 +71,10 @@ const DetailCountry = () => {
         </DrawerBody>
         <DrawerFooter>
           <Button
-            variant="primary"
-            icon={{ size: 'large', icon: IconPencil, color: 'White' }}
+            variant="backDrawer"
+            className="w-7"
+            size="icon"
+            icon={{ size: 'large', icon: IconHistory, color: 'dark' }}
             type="submit"
             onClick={() =>
               openHistoryLogDrawer({
