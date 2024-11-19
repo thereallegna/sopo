@@ -23,9 +23,9 @@ import {
 } from '@components/shared/InputField';
 import { AxiosResponse } from 'axios';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
-import IconComponent from '../Icon';
-import Label, { LabelProps } from '../Label';
-import { Button } from '../Button';
+import IconComponent from '../../ui/Icon';
+import Label, { LabelProps } from '../../ui/Label';
+import { Button } from '../../ui/Button';
 
 type FrameworkItem = {
   value: string;
@@ -45,8 +45,8 @@ interface ComboboxProps {
   className?: string;
 
   // Query
-  queryKey?: string[];
-  queryFn?: (options: FetcherOptions) => Promise<any>;
+  queryKey: string[];
+  queryFn?: (options?: FetcherOptions) => Promise<any>;
   dataLabel?: string;
   dataValue?: string;
 }
@@ -66,18 +66,19 @@ export const Combobox = ({
   dataValue = 'value', // nilai default jika dataValue tidak disediakan
 }: ComboboxProps) => {
   const [open, setOpen] = React.useState(false);
-  const [searchQuery, setSearchQuery] = React.useState<string>();
 
   const popoverContentId = React.useMemo(
     () => `popover-content-${Math.random().toString(36).substr(2, 9)}`,
     []
   );
 
-  const { data: queryData } = useQuery<AxiosResponse<ApiResponse<any[]>>>({
-    queryKey: queryKey || [],
-    queryFn: queryFn ? () => queryFn({ search: searchQuery }) : undefined,
+  const { data: queryData, isLoading } = useQuery<
+    AxiosResponse<ApiResponse<any[]>>
+  >({
+    queryKey: [...queryKey],
+    queryFn: queryFn ? () => queryFn() : undefined,
     placeholderData: keepPreviousData,
-    enabled: Boolean(queryFn && queryKey), // hanya melakukan query jika queryFn dan queryKey ada
+    enabled: disabled,
   });
 
   return (
@@ -91,7 +92,7 @@ export const Combobox = ({
           {label}
         </Label>
         <Popover open={open} onOpenChange={setOpen}>
-          <PopoverTrigger className="w-full">
+          <PopoverTrigger className="w-full" asChild>
             <Button
               variant="secondary"
               type="button"
@@ -114,8 +115,6 @@ export const Combobox = ({
                   <CommandInput
                     placeholder="Search"
                     className="h-[30px] outline-none border border-neutral-200 w-full rounded-sm pl-2"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
                   />
                 </div>
                 <IconComponent
@@ -125,16 +124,18 @@ export const Combobox = ({
                 />
               </div>
               <CommandList>
-                <CommandEmpty>No data found.</CommandEmpty>
+                <CommandEmpty>
+                  {isLoading ? 'Loading..' : 'No data found.'}
+                </CommandEmpty>
                 <CommandGroup>
-                  {queryData?.data.data.results.map((item) => (
+                  {queryData?.data?.data?.results.map((item) => (
                     <CommandItem
                       key={item[dataValue]}
-                      value={item[dataValue]}
-                      onSelect={(currentValue) => {
+                      value={item[dataLabel]}
+                      onSelect={() => {
                         onChange?.({
                           label: item[dataLabel],
-                          value: currentValue,
+                          value: item[dataValue],
                         });
                         setOpen(false);
                       }}

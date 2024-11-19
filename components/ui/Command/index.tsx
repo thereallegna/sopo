@@ -13,6 +13,7 @@ const Command = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <CommandPrimitive
     ref={ref}
+    // shouldFilter={false}
     className={cn(
       'flex h-full w-full flex-col overflow-hidden rounded-sm bg-white text-neutral-950 dark:bg-neutral-950 dark:text-neutral-50',
       className

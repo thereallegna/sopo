@@ -24,7 +24,7 @@ import { useFormChanges } from '@hooks/useFormChanges';
 import { errorMapping } from '@utils/errorMapping';
 import { AxiosError } from 'axios';
 import { GET_CITY, GET_PROVINCE } from '@constants/queryKey';
-import Combobox from '@components/ui/Combobox';
+import Combobox from '@components/shared/Combobox';
 import useToastStore from '@stores/useToastStore';
 import { useFormSave } from '@hooks/useFormSave';
 

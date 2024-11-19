@@ -16,7 +16,7 @@ import { useDrawerStore } from '@stores/useDrawerStore';
 import { IconHistory, IconPencil } from '@tabler/icons-react';
 import { useForm } from 'react-hook-form';
 import { useDetailForm } from '@hooks/useFormChanges';
-import Combobox from '@components/ui/Combobox';
+import Combobox from '@components/shared/Combobox';
 
 const DetailProvince = () => {
   const {
@@ -79,6 +79,7 @@ const DetailProvince = () => {
                 label="Country"
                 placeholder="Select Country"
                 disabled
+                queryKey={[]}
               />
             </CardContent>
           </Card>

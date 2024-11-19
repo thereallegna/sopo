@@ -36,13 +36,27 @@ const editCountry = async (body: CountryFormBody) => {
 
 const getProvince = async (option?: FetcherOptions) => {
   let url = PATH_PROVINCE;
-  if (!option?.all) {
-    url = `${PATH_PROVINCE}?page_size=${
-      option?.pagination.pageSize || ''
-    }&current_page=${option?.pagination.pageIndex || ''}&search=${
-      option?.search || ''
-    }`;
+  if (option && !option.all) {
+    // Menggunakan URLSearchParams untuk membangun query string
+    const params = new URLSearchParams();
+
+    // Menambahkan parameter dengan kondisi jika ada nilainya
+    if (option.pagination) {
+      params.append('page_size', option.pagination.pageSize?.toString() || '');
+      params.append(
+        'current_page',
+        option.pagination.pageIndex?.toString() || ''
+      );
+    }
+
+    if (option.search) {
+      params.append('search', option.search);
+    }
+
+    // Menyusun URL lengkap dengan parameter
+    url = `${PATH_PROVINCE}?${params.toString()}`;
   }
+
   const res = await axios.get(url);
   return res;
 };
