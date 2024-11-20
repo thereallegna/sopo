@@ -27,9 +27,10 @@ export const UOMDefaultValues: UOMFormBody = {
   uom_name: '',
 };
 
-export const CategoryMMDefaultValues: CategoryMMFormBody = {
-  categoryMM_code: '',
-  categoryMM_name: '',
+export const ItemCategoryDefaultValues: ItemCategoryFormBody = {
+  item_category_code: '',
+  item_category_name: '',
+  active: true,
 };
 // Configuration Material Management End
 

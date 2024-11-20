@@ -18,20 +18,18 @@ import { useDetailForm } from '@hooks/useFormChanges';
 
 const DetailCategoryMM = () => {
   const { isOpenDetail, closeDetailDrawer, openEditDrawer } = useDrawerStore();
-  const detail_data = useDrawerStore(
-    (state) => state.detail_data
-  ) as ICategoryMM;
+  const detail_data = useDrawerStore((state) => state.detail_data) as ICategory;
 
-  const { register, setValue } = useForm<ICategoryMM>();
+  const { register, setValue } = useForm<ICategory>();
 
-  useDetailForm<ICategoryMM>(detail_data, setValue);
+  useDetailForm<ICategory>(detail_data, setValue);
 
   return (
     <Drawer onClose={closeDetailDrawer} open={isOpenDetail}>
       <DrawerContent>
         <DrawerHeader
           onClick={closeDetailDrawer}
-          drawerTitle="Detail Category MM"
+          drawerTitle="Detail Item's Category"
         >
           <DrawerEndHeader>
             <Button
@@ -48,23 +46,33 @@ const DetailCategoryMM = () => {
           <Card size="drawer">
             <CardContent className="flex-wrap flex flex-row gap-6 items-center">
               <InputField
-                value={detail_data?.categoryMM_code || ''}
-                label="Category MM Code"
-                placeholder="Category MM Code"
+                value={detail_data?.item_category_code || ''}
+                label="Item Category Code"
+                placeholder="Item Category Code"
                 right
                 type="text"
                 disabled
-                {...register('categoryMM_code')}
+                {...register('item_category_code')}
               />
               <InputField
-                value={detail_data?.categoryMM_name || ''}
-                label="Category MM Name"
-                placeholder="Category MM Name"
+                value={detail_data?.item_category_name || ''}
+                label="Item Category Name"
+                placeholder="Item Category Name"
                 right
                 type="text"
                 disabled
-                {...register('categoryMM_name')}
+                {...register('item_category_name')}
               />
+              {/* <div className='flex items-center gap-2'>
+                <label htmlFor="active" className='cursor-pointer text-base font-semibold'>
+                  Active
+                </label>
+                <Checkbox
+                  value={detail_data?.active || ''}
+                  disabled
+                  {...register('active')}
+                />
+              </div> */}
             </CardContent>
           </Card>
         </DrawerBody>

@@ -111,7 +111,7 @@ const editCity = async (body: CityFormBody) => {
     const res = await axios.put(`${PATH_CITY}/${body.city_code}`, body);
     return res.data;
   } catch (error) {
-    console.error('Error editing country:', error);
+    console.error('Error editing city:', error);
     throw error;
   }
 };
