@@ -12,7 +12,6 @@ export const useFormSave = ({
   hasChanged,
 }: UseFormSaveProps) => {
   const handleSaveClick = () => {
-    console.log('Save button clicked');
     ref.current?.requestSubmit();
   };
 

@@ -9,15 +9,14 @@ export async function GET(req: NextRequest) {
 
     const session = await getServerSideSession();
 
-    const url = `${PATH_CITY_BE}?page_size=${
-      params.get('page_size') || ''
-    }&page=${params.get('current_page') || ''}&search=${
-      params.get('search') || ''
-    }`;
-
-    const response = await axios.get(url.toString(), {
+    const response = await axios.get(`${PATH_CITY_BE}`, {
       headers: {
         Authorization: `Bearer ${session.user?.data?.authorization?.access_token}`,
+      },
+      params: {
+        page_size: params.get('page_size'),
+        page: params.get('current_page'),
+        search: params.get('search'),
       },
     });
 

@@ -1,32 +1,23 @@
 import { PATH_ITEMS_UOM, PATH_ITEMS_CATEGORY } from '@constants/routes';
 import axios from 'axios';
-// import { TableOptionState } from '../../../../types/client/table';
+import { FetcherOptions } from '../../../../types/client/fetcher';
 
 const getUOM = async (option?: FetcherOptions) => {
-  let url = PATH_ITEMS_UOM;
-  if (option && !option.all) {
-    // Menggunakan URLSearchParams untuk membangun query string
-    const params = new URLSearchParams();
+  try {
+    const res = await axios.get(`${PATH_ITEMS_UOM}`, {
+      params: {
+        all: option?.all,
+        page_size: !option?.all ? option?.pagination?.pageSize : undefined,
+        current_page: !option?.all ? option?.pagination?.pageIndex : undefined,
+        search: option?.search,
+      },
+    });
 
-    // Menambahkan parameter dengan kondisi jika ada nilainya
-    if (option.pagination) {
-      params.append('page_size', option.pagination.pageSize?.toString() || '');
-      params.append(
-        'current_page',
-        option.pagination.pageIndex?.toString() || ''
-      );
-    }
-
-    if (option.search) {
-      params.append('search', option.search);
-    }
-
-    // Menyusun URL lengkap dengan parameter
-    url = `${PATH_ITEMS_UOM}?${params.toString()}`;
+    return res;
+  } catch (error) {
+    console.error('Error fetching log history:', error);
+    throw error;
   }
-
-  const res = await axios.get(url);
-  return res;
 };
 
 const createUOM = async (body: UOMFormBody) => {
@@ -50,41 +41,21 @@ const editUOM = async (body: UOMFormBody) => {
 };
 
 const getCategoryMM = async (option?: FetcherOptions) => {
-  // let url = `${PATH_ITEMS_CATEGORY}?page_size=${
-  //   option?.pagination.pageSize || ''
-  // }&current_page=${option?.pagination.pageIndex || ''}&search=${
-  //   option?.search || ''
-  // }`;
-  // console.log(option?.grouping.length);
-  // if (option?.grouping && option.grouping.length > 0) {
-  //   url = PATH_ITEMS_CATEGORY;
-  // }
-  // const res = await axios.get(url);
-  // return res;
-  let url = PATH_ITEMS_CATEGORY;
-  if (option && !option.all) {
-    // Menggunakan URLSearchParams untuk membangun query string
-    const params = new URLSearchParams();
+  try {
+    const res = await axios.get(`${PATH_ITEMS_CATEGORY}`, {
+      params: {
+        all: option?.all,
+        page_size: !option?.all ? option?.pagination?.pageSize : undefined,
+        current_page: !option?.all ? option?.pagination?.pageIndex : undefined,
+        search: option?.search,
+      },
+    });
 
-    // Menambahkan parameter dengan kondisi jika ada nilainya
-    if (option.pagination) {
-      params.append('page_size', option.pagination.pageSize?.toString() || '');
-      params.append(
-        'current_page',
-        option.pagination.pageIndex?.toString() || ''
-      );
-    }
-
-    if (option.search) {
-      params.append('search', option.search);
-    }
-
-    // Menyusun URL lengkap dengan parameter
-    url = `${PATH_ITEMS_CATEGORY}?${params.toString()}`;
+    return res;
+  } catch (error) {
+    console.error('Error fetching log history:', error);
+    throw error;
   }
-
-  const res = await axios.get(url);
-  return res;
 };
 
 const createCategoryMM = async (body: CategoryMMFormBody) => {
