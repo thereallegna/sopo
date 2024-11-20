@@ -9,15 +9,13 @@ export async function GET(req: NextRequest) {
 
     const session = await getServerSideSession();
 
-    const url = `${PATH_LOG_HISTORY_BE}?code=${params.get(
-      'code'
-    )}&category=${params.get('category')}`;
-
-    console.log('Backend URL:', url);
-
-    const response = await axios.get(url.toString(), {
+    const response = await axios.get(PATH_LOG_HISTORY_BE, {
       headers: {
         Authorization: `Bearer ${session.user?.data?.authorization?.access_token}`,
+      },
+      params: {
+        code: params.get('code'),
+        category: params.get('category'),
       },
     });
 

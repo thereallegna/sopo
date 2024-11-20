@@ -1,17 +1,23 @@
 import { PATH_CITY, PATH_COUNTRY, PATH_PROVINCE } from '@constants/routes';
 import axios from 'axios';
+import { FetcherOptions } from '../../../../types/client/fetcher';
 
 const getCountry = async (option?: FetcherOptions) => {
-  let url = PATH_COUNTRY;
-  if (!option?.all) {
-    url = `${PATH_COUNTRY}?page_size=${
-      option?.pagination.pageSize || ''
-    }&current_page=${option?.pagination.pageIndex || ''}&search=${
-      option?.search || ''
-    }`;
+  try {
+    const res = await axios.get(`${PATH_COUNTRY}`, {
+      params: {
+        all: option?.all,
+        page_size: !option?.all ? option?.pagination?.pageSize : undefined,
+        current_page: !option?.all ? option?.pagination?.pageIndex : undefined,
+        search: option?.search,
+      },
+    });
+
+    return res;
+  } catch (error) {
+    console.error('Error fetching log history:', error);
+    throw error;
   }
-  const res = await axios.get(url);
-  return res;
 };
 
 const createCountry = async (body: CountryFormBody) => {
@@ -35,30 +41,21 @@ const editCountry = async (body: CountryFormBody) => {
 };
 
 const getProvince = async (option?: FetcherOptions) => {
-  let url = PATH_PROVINCE;
-  if (option && !option.all) {
-    // Menggunakan URLSearchParams untuk membangun query string
-    const params = new URLSearchParams();
+  try {
+    const res = await axios.get(`${PATH_PROVINCE}`, {
+      params: {
+        all: option?.all,
+        page_size: !option?.all ? option?.pagination?.pageSize : undefined,
+        current_page: !option?.all ? option?.pagination?.pageIndex : undefined,
+        search: option?.search,
+      },
+    });
 
-    // Menambahkan parameter dengan kondisi jika ada nilainya
-    if (option.pagination) {
-      params.append('page_size', option.pagination.pageSize?.toString() || '');
-      params.append(
-        'current_page',
-        option.pagination.pageIndex?.toString() || ''
-      );
-    }
-
-    if (option.search) {
-      params.append('search', option.search);
-    }
-
-    // Menyusun URL lengkap dengan parameter
-    url = `${PATH_PROVINCE}?${params.toString()}`;
+    return res;
+  } catch (error) {
+    console.error('Error fetching log history:', error);
+    throw error;
   }
-
-  const res = await axios.get(url);
-  return res;
 };
 
 const createProvince = async (body: ProvinceFormBody) => {
@@ -82,16 +79,21 @@ const editProvince = async (body: ProvinceFormBody) => {
 };
 
 const getCity = async (option?: FetcherOptions) => {
-  let url = PATH_CITY;
-  if (!option?.all) {
-    url = `${PATH_CITY}?page_size=${
-      option?.pagination.pageSize || ''
-    }&current_page=${option?.pagination.pageIndex || ''}&search=${
-      option?.search || ''
-    }`;
+  try {
+    const res = await axios.get(`${PATH_CITY}`, {
+      params: {
+        all: option?.all,
+        page_size: !option?.all ? option?.pagination?.pageSize : undefined,
+        current_page: !option?.all ? option?.pagination?.pageIndex : undefined,
+        search: option?.search,
+      },
+    });
+
+    return res;
+  } catch (error) {
+    console.error('Error fetching log history:', error);
+    throw error;
   }
-  const res = await axios.get(url);
-  return res;
 };
 
 const createCity = async (body: CityFormBody) => {

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useCallback, useRef } from 'react';
+import React, { useRef } from 'react';
 import { Button } from '@components/ui/Button';
 import {
   Drawer,
@@ -26,6 +26,7 @@ import { AxiosError } from 'axios';
 import { errorMapping } from '@utils/errorMapping';
 import { GET_COUNTRY } from '@constants/queryKey';
 import useToastStore from '@stores/useToastStore';
+import { useFormSave } from '@hooks/useFormSave';
 
 const CreateCountry = () => {
   const formRef = useRef<HTMLFormElement>(null);
@@ -65,10 +66,10 @@ const CreateCountry = () => {
     },
     onSuccess: (data) => {
       console.log('Mutation successful:', data);
+      setIsDirty(false);
       reset();
       closeDrawer();
       setIsLoading(false);
-      setIsDirty(false);
       openDetailDrawer(data.data);
       queryClient.invalidateQueries({ queryKey: [GET_COUNTRY] });
       openToast('Country successfully added', 'success');
@@ -92,23 +93,11 @@ const CreateCountry = () => {
     mutationCreateCountry(data);
   };
 
-  const handleSaveClick = () => {
-    console.log('Save button clicked');
-    formRef.current?.requestSubmit();
-  };
-
-  const handleInputKeyDown = useCallback(
-    (event: React.KeyboardEvent<HTMLInputElement>) => {
-      if (event.key === 'Enter' && !event.shiftKey) {
-        event.preventDefault();
-        console.log('Enter key pressed');
-        if (!isLoading && hasChanged) {
-          formRef.current?.requestSubmit();
-        }
-      }
-    },
-    [isLoading, hasChanged]
-  );
+  const { handleSaveClick, handleInputKeyDown } = useFormSave({
+    ref: formRef,
+    isLoading,
+    hasChanged,
+  });
 
   return (
     <Drawer onClose={handleCloseDrawer} open={isOpen}>

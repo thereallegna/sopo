@@ -26,6 +26,7 @@ import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import IconComponent from '../../ui/Icon';
 import Label, { LabelProps } from '../../ui/Label';
 import { Button } from '../../ui/Button';
+import { FetcherOptions } from '../../../types/client/fetcher';
 
 type FrameworkItem = {
   value: string;

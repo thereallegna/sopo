@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { Drawer, DrawerContent, DrawerBody } from '@components/ui/Drawer';
-
 import { useDrawerStore } from '@stores/useDrawerStore';
 import FilterDrawerHeader from '@components/ui/Drawer/FilterDrawerHeader';
 import Timeline from '@components/shared/Timeline';

@@ -10,8 +10,6 @@ export const getLogHistory = async (option?: TimelineQuery) => {
       },
     });
 
-    console.log('Log history:', res.data);
-
     return res.data;
   } catch (error) {
     console.error('Error fetching log history:', error);

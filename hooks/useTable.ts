@@ -11,6 +11,7 @@ import {
   RowSizeType,
   GenerateColumnsOption,
 } from '../types/client/table';
+import { FetcherOptions } from '../types/client/fetcher';
 
 type UseTableProps<T> = {
   queryKey: string;

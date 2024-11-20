@@ -16,6 +16,7 @@ export const useFormChanges = <T extends DefaultValues>(
   const watchedValues = useWatch({
     control,
   });
+  // const [hasChanged, setHasChanged] = useState<boolean>(false)
 
   const { setChanged } = useFormStore();
 
@@ -41,6 +42,13 @@ export const useFormChanges = <T extends DefaultValues>(
     );
 
     if (allField === 'some') {
+      // setHasChanged(() => fieldsToCheck.some((key) => {
+      //     const currentValue = watchedValues?.[key];
+      //     const initialValue = initialValuesRef.current![key];
+
+      //     return currentValue !== initialValue;
+      //   })
+      // )
       hasChanged = fieldsToCheck.some((key) => {
         const currentValue = watchedValues?.[key];
         const initialValue = initialValuesRef.current![key];
@@ -48,6 +56,13 @@ export const useFormChanges = <T extends DefaultValues>(
         return currentValue !== initialValue;
       });
     } else if (allField === 'every') {
+      // setHasChanged(() => fieldsToCheck.every((key) => {
+      //     const currentValue = watchedValues?.[key];
+      //     const initialValue = initialValuesRef.current![key];
+
+      //     return currentValue !== initialValue;
+      //   })
+      // )
       hasChanged = fieldsToCheck.every((key) => {
         const currentValue = watchedValues?.[key];
         const initialValue = initialValuesRef.current![key];
@@ -65,6 +80,7 @@ export const useFormChanges = <T extends DefaultValues>(
   return {
     watchedValues,
     hasChanged,
+    // setHasChanged
   };
 };
 
