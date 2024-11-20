@@ -1,19 +1,23 @@
 import { PATH_ITEMS_UOM, PATH_ITEMS_CATEGORY } from '@constants/routes';
 import axios from 'axios';
-import { TableOptionState } from '../../../../types/client/table';
+import { FetcherOptions } from '../../../../types/client/fetcher';
 
-const getUOM = async (option?: TableOptionState) => {
-  let url = `${PATH_ITEMS_UOM}?page_size=${
-    option?.pagination.pageSize || ''
-  }&current_page=${option?.pagination.pageIndex || ''}&search=${
-    option?.search || ''
-  }`;
-  console.log(option?.grouping.length);
-  if (option?.grouping && option.grouping.length > 0) {
-    url = PATH_ITEMS_UOM;
+const getUOM = async (option?: FetcherOptions) => {
+  try {
+    const res = await axios.get(`${PATH_ITEMS_UOM}`, {
+      params: {
+        all: option?.all,
+        page_size: !option?.all ? option?.pagination?.pageSize : undefined,
+        current_page: !option?.all ? option?.pagination?.pageIndex : undefined,
+        search: option?.search,
+      },
+    });
+
+    return res;
+  } catch (error) {
+    console.error('Error fetching log history:', error);
+    throw error;
   }
-  const res = await axios.get(url);
-  return res;
 };
 
 const createUOM = async (body: UOMFormBody) => {
@@ -36,20 +40,22 @@ const editUOM = async (body: UOMFormBody) => {
   }
 };
 
-const getItemCategory = async (option?: TableOptionState) => {
-  let url = `${PATH_ITEMS_CATEGORY}?page_size=${
-    option?.pagination.pageSize || ''
-  }&current_page=${option?.pagination.pageIndex || ''}&search=${
-    option?.search || ''
-  }`;
-  console.log(option?.grouping.length);
-  if (option?.grouping && option.grouping.length > 0) {
-    url = PATH_ITEMS_CATEGORY;
-  }
-  const res = await axios.get(url);
+const getItemCategory = async (option?: FetcherOptions) => {
+  try {
+    const res = await axios.get(`${PATH_ITEMS_CATEGORY}`, {
+      params: {
+        all: option?.all,
+        page_size: !option?.all ? option?.pagination?.pageSize : undefined,
+        current_page: !option?.all ? option?.pagination?.pageIndex : undefined,
+        search: option?.search,
+      },
+    });
 
-  console.log('res:', res);
-  return res;
+    return res;
+  } catch (error) {
+    console.error('Error fetching log history:', error);
+    throw error;
+  }
 };
 
 const createItemCategory = async (body: ItemCategoryFormBody) => {

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useCallback } from 'react';
+import React, { useRef } from 'react';
 import { Button } from '@components/ui/Button';
 import {
   Drawer,
@@ -17,19 +17,24 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { provinceSchema } from '@constants/schemas/ConfigurationSchema/general';
-import { editProvince } from '@services/fetcher/configuration/general';
+import {
+  editProvince,
+  getCountry,
+} from '@services/fetcher/configuration/general';
 import useFormStore from '@stores/useFormStore';
 import { useDrawer } from '@hooks/useDrawer';
 import { useFormChanges } from '@hooks/useFormChanges';
 import { errorMapping } from '@utils/errorMapping';
 import { AxiosError } from 'axios';
-import { GET_PROVINCE } from '@constants/queryKey';
-import Combobox from '@components/ui/Combobox';
+import { GET_COUNTRY, GET_PROVINCE } from '@constants/queryKey';
+import Combobox from '@components/shared/Combobox';
 import useToastStore from '@stores/useToastStore';
+import { useFormSave } from '@hooks/useFormSave';
 
 const EditProvince = () => {
   const formRef = useRef<HTMLFormElement>(null);
-  const { isOpenEdit, closeEditDrawer, setDetailData } = useDrawerStore();
+  const { isOpenEdit, closeEditDrawer, setDetailData, openDetailDrawer } =
+    useDrawerStore();
   const detail_data = useDrawerStore((state) => state.detail_data) as IProvince;
   const { setIsDirty } = useFormStore();
   const [isLoading, setIsLoading] = React.useState(false);
@@ -58,15 +63,18 @@ const EditProvince = () => {
     mutationFn: editProvince,
     onMutate: () => {
       setIsLoading(true);
-      console.log('Edit mutation started...');
     },
     onSuccess: (data) => {
-      console.log('Edit mutation successful:', data);
-      reset();
       setDetailData(data.data);
       closeEditDrawer();
       setIsLoading(false);
       setIsDirty(false);
+      openDetailDrawer({
+        ...data.data,
+        country: watch('country'),
+        country_code: watch('country_code'),
+      } as IProvince);
+      reset();
       queryClient.invalidateQueries({ queryKey: [GET_PROVINCE] });
       showToast('Province successfully edited', 'success');
     },
@@ -75,7 +83,7 @@ const EditProvince = () => {
       setIsLoading(false);
       const errorRes = error as AxiosError<ErrorResponse>;
       if (errorRes.status === 500) {
-        showToast('City failed to edited', 'danger');
+        showToast('Province failed to edited', 'danger');
       }
       if (errorRes.response?.data) {
         const { errorField } = errorRes.response.data;
@@ -85,27 +93,14 @@ const EditProvince = () => {
   });
 
   const onSubmit: SubmitHandler<ProvinceFormBody> = (data) => {
-    console.log('Edit form submitted with data:', data);
     mutationEditProvince(data);
   };
 
-  const handleSaveClick = () => {
-    console.log('Save button clicked in edit form');
-    formRef.current?.requestSubmit();
-  };
-
-  const handleInputKeyDown = useCallback(
-    (event: React.KeyboardEvent<HTMLInputElement>) => {
-      if (event.key === 'Enter' && !event.shiftKey) {
-        event.preventDefault();
-        console.log('Enter key pressed');
-        if (!isLoading && hasChanged) {
-          formRef.current?.requestSubmit();
-        }
-      }
-    },
-    [isLoading, hasChanged]
-  );
+  const { handleSaveClick, handleInputKeyDown } = useFormSave({
+    ref: formRef,
+    isLoading,
+    hasChanged,
+  });
 
   return (
     <Drawer onClose={handleCloseDrawerEdit} open={isOpenEdit}>
@@ -158,26 +153,27 @@ const EditProvince = () => {
                   onKeyDown={handleInputKeyDown}
                 />
                 <Combobox
-                  className="flex-1 gap-2"
-                  value={watch('country')}
+                  className="flex-1"
+                  label="Country"
                   placeholder="Select Country"
+                  queryKey={[GET_COUNTRY]}
+                  queryFn={() => getCountry()}
+                  dataLabel="country_name"
+                  dataValue="country_code"
                   message={
                     errors.country
                       ? { text: errors.country.message!, type: 'danger' }
                       : undefined
                   }
-                  label="Country"
-                  items={[
-                    {
-                      label: 'Nanggroe Aceh Darussalam',
-                      value: '11.00.00.0000',
-                    },
-                    { label: 'Jawa Tengah', value: '2' },
-                    { label: 'Jawa Timur', value: '3' },
-                  ]}
-                  onChange={(val) =>
-                    setValue('country', val, { shouldDirty: true })
-                  }
+                  value={{
+                    label: watch('country'),
+                    value: watch('country_code'),
+                  }}
+                  onChange={(val) => {
+                    setValue('country', val.label, { shouldDirty: true });
+                    setValue('country_code', val.value, { shouldDirty: true });
+                    setError('country', { type: 'disabled' });
+                  }}
                 />
               </CardContent>
             </Card>

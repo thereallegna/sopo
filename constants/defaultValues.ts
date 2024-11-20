@@ -7,6 +7,7 @@ export const countryDefaultValues: CountryFormBody = {
 export const provinceDefaultValues: ProvinceFormBody = {
   province_code: '',
   province_name: '',
+  country_code: '',
   country: '',
 };
 
@@ -14,6 +15,7 @@ export const cityDefaultValues: CityFormBody = {
   city_code: '',
   city_name: '',
   province: '',
+  province_code: '',
   ring_area: '',
   location: '',
 };

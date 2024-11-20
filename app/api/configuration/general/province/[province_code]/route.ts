@@ -1,25 +1,29 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSideSession } from '@utils/session';
 import axios, { AxiosError } from 'axios';
-import { PATH_CITY_BE } from '@constants/routes';
+import { PATH_PROVINCE_BE } from '@constants/routes';
 
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { city_code: string } }
+  { params }: { params: { province_code: string } }
 ) {
   try {
     const session = await getServerSideSession();
 
-    const { city_code } = params;
+    const { province_code } = params;
 
-    const body = (await req.json()) as CityFormBody;
-    body.province = body.province_code;
+    const body = (await req.json()) as ProvinceFormBody;
+    body.country = body.country_code;
 
-    const response = await axios.put(`${PATH_CITY_BE}/${city_code}`, body, {
-      headers: {
-        Authorization: `Bearer ${session.user?.data?.authorization?.access_token}`,
-      },
-    });
+    const response = await axios.put(
+      `${PATH_PROVINCE_BE}/${province_code}`,
+      body,
+      {
+        headers: {
+          Authorization: `Bearer ${session.user?.data?.authorization?.access_token}`,
+        },
+      }
+    );
 
     return NextResponse.json(response.data);
   } catch (error: any) {

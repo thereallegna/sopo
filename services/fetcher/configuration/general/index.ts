@@ -1,19 +1,23 @@
 import { PATH_CITY, PATH_COUNTRY, PATH_PROVINCE } from '@constants/routes';
 import axios from 'axios';
-import { TableOptionState } from '../../../../types/client/table';
+import { FetcherOptions } from '../../../../types/client/fetcher';
 
-const getCountry = async (option?: TableOptionState) => {
-  let url = `${PATH_COUNTRY}?page_size=${
-    option?.pagination.pageSize || ''
-  }&current_page=${option?.pagination.pageIndex || ''}&search=${
-    option?.search || ''
-  }`;
-  console.log(option?.grouping.length);
-  if (option?.grouping && option.grouping.length > 0) {
-    url = PATH_COUNTRY;
+const getCountry = async (option?: FetcherOptions) => {
+  try {
+    const res = await axios.get(`${PATH_COUNTRY}`, {
+      params: {
+        all: option?.all,
+        page_size: !option?.all ? option?.pagination?.pageSize : undefined,
+        current_page: !option?.all ? option?.pagination?.pageIndex : undefined,
+        search: option?.search,
+      },
+    });
+
+    return res;
+  } catch (error) {
+    console.error('Error fetching log history:', error);
+    throw error;
   }
-  const res = await axios.get(url);
-  return res;
 };
 
 const createCountry = async (body: CountryFormBody) => {
@@ -36,17 +40,22 @@ const editCountry = async (body: CountryFormBody) => {
   }
 };
 
-const getProvince = async (option?: TableOptionState) => {
-  let url = `${PATH_PROVINCE}?page_size=${
-    option?.pagination.pageSize || ''
-  }&current_page=${option?.pagination.pageIndex || ''}&search=${
-    option?.search || ''
-  }`;
-  if (option?.grouping && option.grouping.length > 0) {
-    url = PATH_PROVINCE;
+const getProvince = async (option?: FetcherOptions) => {
+  try {
+    const res = await axios.get(`${PATH_PROVINCE}`, {
+      params: {
+        all: option?.all,
+        page_size: !option?.all ? option?.pagination?.pageSize : undefined,
+        current_page: !option?.all ? option?.pagination?.pageIndex : undefined,
+        search: option?.search,
+      },
+    });
+
+    return res;
+  } catch (error) {
+    console.error('Error fetching log history:', error);
+    throw error;
   }
-  const res = await axios.get(url);
-  return res;
 };
 
 const createProvince = async (body: ProvinceFormBody) => {
@@ -61,7 +70,7 @@ const createProvince = async (body: ProvinceFormBody) => {
 
 const editProvince = async (body: ProvinceFormBody) => {
   try {
-    const res = await axios.put(`${PATH_COUNTRY}/${body.province_code}`, body);
+    const res = await axios.put(`${PATH_PROVINCE}/${body.province_code}`, body);
     return res.data;
   } catch (error) {
     console.error('Error editing country:', error);
@@ -69,17 +78,22 @@ const editProvince = async (body: ProvinceFormBody) => {
   }
 };
 
-const getCity = async (option?: TableOptionState) => {
-  let url = `${PATH_CITY}?page_size=${
-    option?.pagination.pageSize || ''
-  }&current_page=${option?.pagination.pageIndex || ''}&search=${
-    option?.search || ''
-  }`;
-  if (option?.grouping && option.grouping.length > 0) {
-    url = PATH_CITY;
+const getCity = async (option?: FetcherOptions) => {
+  try {
+    const res = await axios.get(`${PATH_CITY}`, {
+      params: {
+        all: option?.all,
+        page_size: !option?.all ? option?.pagination?.pageSize : undefined,
+        current_page: !option?.all ? option?.pagination?.pageIndex : undefined,
+        search: option?.search,
+      },
+    });
+
+    return res;
+  } catch (error) {
+    console.error('Error fetching log history:', error);
+    throw error;
   }
-  const res = await axios.get(url);
-  return res;
 };
 
 const createCity = async (body: CityFormBody) => {

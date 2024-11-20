@@ -21,9 +21,12 @@ import {
   messageInputFieldVariant,
   MessageInputProps,
 } from '@components/shared/InputField';
-import IconComponent from '../Icon';
-import Label, { LabelProps } from '../Label';
-import { Button } from '../Button';
+import { AxiosResponse } from 'axios';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
+import IconComponent from '../../ui/Icon';
+import Label, { LabelProps } from '../../ui/Label';
+import { Button } from '../../ui/Button';
+import { FetcherOptions } from '../../../types/client/fetcher';
 
 type FrameworkItem = {
   value: string;
@@ -33,18 +36,24 @@ type FrameworkItem = {
 interface ComboboxProps {
   label?: string;
   labelProps?: LabelProps;
-  items: FrameworkItem[];
-  value?: string;
+  url?: string;
+  items?: FrameworkItem[];
+  value?: FrameworkItem;
   placeholder: string;
   message?: MessageInputProps;
-  onChange?: (val: string) => void;
+  onChange?: (val: FrameworkItem) => void;
   disabled?: boolean;
   className?: string;
+
+  // Query
+  queryKey: string[];
+  queryFn?: (options?: FetcherOptions) => Promise<any>;
+  dataLabel?: string;
+  dataValue?: string;
 }
 
 export const Combobox = ({
   value,
-  items,
   label,
   labelProps,
   message,
@@ -52,14 +61,26 @@ export const Combobox = ({
   onChange,
   disabled,
   className,
+  queryKey,
+  queryFn,
+  dataLabel = 'label', // nilai default jika dataLabel tidak disediakan
+  dataValue = 'value', // nilai default jika dataValue tidak disediakan
 }: ComboboxProps) => {
   const [open, setOpen] = React.useState(false);
-  const [searchQuery, setSearchQuery] = React.useState('');
 
   const popoverContentId = React.useMemo(
     () => `popover-content-${Math.random().toString(36).substr(2, 9)}`,
     []
   );
+
+  const { data: queryData, isLoading } = useQuery<
+    AxiosResponse<ApiResponse<any[]>>
+  >({
+    queryKey: [...queryKey],
+    queryFn: queryFn ? () => queryFn() : undefined,
+    placeholderData: keepPreviousData,
+    enabled: disabled,
+  });
 
   return (
     <div className={className}>
@@ -72,7 +93,7 @@ export const Combobox = ({
           {label}
         </Label>
         <Popover open={open} onOpenChange={setOpen}>
-          <PopoverTrigger className="w-full">
+          <PopoverTrigger className="w-full" asChild>
             <Button
               variant="secondary"
               type="button"
@@ -82,7 +103,7 @@ export const Combobox = ({
               }}
               disabled={disabled}
             >
-              <p className="font-normal">{value || placeholder}</p>
+              <p className="font-normal">{value?.label || placeholder}</p>
             </Button>
           </PopoverTrigger>
           <PopoverContent
@@ -95,8 +116,6 @@ export const Combobox = ({
                   <CommandInput
                     placeholder="Search"
                     className="h-[30px] outline-none border border-neutral-200 w-full rounded-sm pl-2"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
                   />
                 </div>
                 <IconComponent
@@ -106,32 +125,33 @@ export const Combobox = ({
                 />
               </div>
               <CommandList>
-                <CommandEmpty>No data found.</CommandEmpty>
+                <CommandEmpty>
+                  {isLoading ? 'Loading..' : 'No data found.'}
+                </CommandEmpty>
                 <CommandGroup>
-                  {items
-                    .filter((item) =>
-                      item.label
-                        .toLowerCase()
-                        .includes(searchQuery.toLowerCase())
-                    )
-                    .map((item) => (
-                      <CommandItem
-                        key={item.value}
-                        value={item.value}
-                        onSelect={(currentValue) => {
-                          onChange?.(currentValue);
-                          setOpen(false);
-                        }}
-                      >
-                        {item.label}
-                        <Check
-                          className={cn(
-                            'ml-auto',
-                            value === item.value ? 'opacity-100' : 'opacity-0'
-                          )}
-                        />
-                      </CommandItem>
-                    ))}
+                  {queryData?.data?.data?.results.map((item) => (
+                    <CommandItem
+                      key={item[dataValue]}
+                      value={item[dataLabel]}
+                      onSelect={() => {
+                        onChange?.({
+                          label: item[dataLabel],
+                          value: item[dataValue],
+                        });
+                        setOpen(false);
+                      }}
+                    >
+                      {item[dataLabel]}
+                      <Check
+                        className={cn(
+                          'ml-auto',
+                          value && value?.value === item[dataValue]
+                            ? 'opacity-100'
+                            : 'opacity-0'
+                        )}
+                      />
+                    </CommandItem>
+                  ))}
                 </CommandGroup>
               </CommandList>
             </Command>

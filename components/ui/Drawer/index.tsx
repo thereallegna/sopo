@@ -67,7 +67,7 @@ const DrawerContent = React.forwardRef<
       )}
       {...props}
     >
-      <div className="mx-auto  w-[100px] rounded-full bg-muted" />
+      <div className="mx-auto w-[100px] rounded-full bg-muted" />
       {children}
     </DrawerPrimitive.Content>
   </>
@@ -165,10 +165,7 @@ const DrawerFooter = ({
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div
-    className={cn('mt-auto flex flex-col gap-2 p-5', className)}
-    {...props}
-  />
+  <div className={cn(' flex flex-col gap-2 ', className)} {...props} />
 );
 DrawerFooter.displayName = 'DrawerFooter';
 

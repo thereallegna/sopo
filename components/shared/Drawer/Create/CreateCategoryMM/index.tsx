@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useCallback, useRef } from 'react';
+import React, { useRef } from 'react';
 import { Button } from '@components/ui/Button';
 import {
   Drawer,
@@ -26,6 +26,7 @@ import { GET_CATEGORY_MATERIAL_MANAGEMENT } from '@constants/queryKey';
 import { ItemCategorySchema } from '@constants/schemas/ConfigurationSchema/InventoryMaterialManagement';
 import { createItemCategory } from '@services/fetcher/configuration/material-management';
 import { Checkbox } from '@components/ui/Checkbox';
+import { useFormSave } from '@hooks/useFormSave';
 
 const CreateCategoryMM = () => {
   const formRef = useRef<HTMLFormElement>(null);
@@ -89,23 +90,11 @@ const CreateCategoryMM = () => {
     mutationCreateCategoryMM(data);
   };
 
-  const handleSaveClick = () => {
-    console.log('Save button clicked');
-    formRef.current?.requestSubmit();
-  };
-
-  const handleInputKeyDown = useCallback(
-    (event: React.KeyboardEvent<HTMLInputElement>) => {
-      if (event.key === 'Enter' && !event.shiftKey) {
-        event.preventDefault();
-        console.log('Enter key pressed');
-        if (!isLoading && hasChanged) {
-          formRef.current?.requestSubmit();
-        }
-      }
-    },
-    [isLoading, hasChanged]
-  );
+  const { handleSaveClick, handleInputKeyDown } = useFormSave({
+    ref: formRef,
+    isLoading,
+    hasChanged,
+  });
 
   return (
     <Drawer onClose={handleCloseDrawer} open={isOpen}>

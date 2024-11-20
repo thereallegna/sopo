@@ -23,6 +23,7 @@ const SidebarDropdown: React.FC<SidebarDropdownProps> = ({
     shouldRender,
     handleDropdownToggle,
     isOpen,
+    currentSearchQuery,
   } = useSidebar({ title, children, path });
 
   if (!shouldRender) {
@@ -31,31 +32,33 @@ const SidebarDropdown: React.FC<SidebarDropdownProps> = ({
 
   return (
     <>
-      <Button
-        type="button"
-        className="flex items-center justify-between p-2"
-        onClick={handleDropdownToggle}
-        icon={Icon}
-        variant="sidebar"
-        end_icon={{
-          icon: IconChevronDown,
-          className: cn(
-            'transition-transform duration-200',
-            dropdownOpen && 'rotate-180',
-            isOpen ? 'block' : 'hidden'
-          ),
-        }}
-      >
-        <h1
-          className={cn(
-            'leading-[18px] text-start overflow-hidden ml-2 whitespace-pre-line',
-            dropdownOpen ? 'font-semibold' : 'font-normal',
-            isOpen ? 'block' : 'hidden'
-          )}
+      {!currentSearchQuery && ( // Tambahkan kondisi ini
+        <Button
+          type="button"
+          className="flex items-center justify-between p-2"
+          onClick={handleDropdownToggle}
+          icon={Icon}
+          variant="sidebar"
+          end_icon={{
+            icon: IconChevronDown,
+            className: cn(
+              'transition-transform duration-200',
+              dropdownOpen && 'rotate-180',
+              isOpen ? 'block' : 'hidden'
+            ),
+          }}
         >
-          {title}
-        </h1>
-      </Button>
+          <h1
+            className={cn(
+              'leading-[18px] text-start overflow-hidden ml-2 whitespace-pre-line',
+              dropdownOpen ? 'font-semibold' : 'font-normal',
+              isOpen ? 'block' : 'hidden'
+            )}
+          >
+            {title}
+          </h1>
+        </Button>
+      )}
 
       {dropdownOpen && visibleChildren && visibleChildren.length > 0 && (
         <div className="ml-4 mt-1 space-y-1">
@@ -70,7 +73,8 @@ const SidebarDropdown: React.FC<SidebarDropdownProps> = ({
                       type="button"
                       className={cn(
                         'flex items-center justify-between p-2',
-                        isActive ? 'bg-blue-50 text-blue-500' : ''
+                        isActive ? 'bg-blue-50 text-blue-500' : '',
+                        currentSearchQuery && '-ml-7'
                       )}
                       variant="sidebar"
                       icon={child.icon}

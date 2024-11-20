@@ -15,16 +15,14 @@ import { IconPlus } from '@node_modules/@tabler/icons-react/dist/esm/tabler-icon
 import useTable from '@hooks/useTable';
 import TableContent from '@components/shared/TableContent';
 import { AxiosResponse } from 'axios';
-import {
-  GenerateColumnsOption,
-  TableOptionState,
-} from '../../../../types/client/table';
+import { GenerateColumnsOption } from '../../../../types/client/table';
+import { FetcherOptions } from '../../../../types/client/fetcher';
 
 export type TableDrawerProps = {
   title: string;
   columns: GenerateColumnsOption;
   queryKey: string;
-  queryFn: (option?: TableOptionState) => Promise<AxiosResponse<any, any>>;
+  queryFn: (option?: FetcherOptions) => Promise<AxiosResponse<any, any>>;
   keyFilterDrawer?: FilterDrawerType;
 };
 

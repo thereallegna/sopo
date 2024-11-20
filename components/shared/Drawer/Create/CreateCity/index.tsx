@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useCallback, useRef } from 'react';
+import React, { useRef } from 'react';
 import { Button } from '@components/ui/Button';
 import {
   Drawer,
@@ -17,16 +17,20 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { citySchema } from '@constants/schemas/ConfigurationSchema/general';
-import { createCity } from '@services/fetcher/configuration/general';
+import {
+  createCity,
+  getProvince,
+} from '@services/fetcher/configuration/general';
 import useFormStore from '@stores/useFormStore'; // Import useFormStore
 import { useDrawer } from '@hooks/useDrawer';
 import { cityDefaultValues } from '@constants/defaultValues';
 import { useFormChanges } from '@hooks/useFormChanges';
-import Combobox from '@components/ui/Combobox';
+import Combobox from '@components/shared/Combobox';
 import { errorMapping } from '@utils/errorMapping';
 import { AxiosError } from 'axios';
-import { GET_CITY } from '@constants/queryKey';
+import { GET_CITY, GET_PROVINCE } from '@constants/queryKey';
 import useToastStore from '@stores/useToastStore';
+import { useFormSave } from '@hooks/useFormSave';
 
 const CreateCity = () => {
   const formRef = useRef<HTMLFormElement>(null);
@@ -56,7 +60,8 @@ const CreateCity = () => {
     cityDefaultValues,
     control,
     setValue,
-    'every' // or 'every' depending on your needs
+    'every', // or 'every' depending on your needs
+    ['ring_area', 'location']
   );
 
   const { mutate: mutationCreateCity } = useMutation({
@@ -65,11 +70,15 @@ const CreateCity = () => {
       setIsLoading(true);
     },
     onSuccess: (data) => {
-      reset();
       closeDrawer();
       setIsLoading(false);
       setIsDirty(false);
-      openDetailDrawer(data.data);
+      openDetailDrawer({
+        ...data.data,
+        province: watch('province'),
+        province_code: watch('province_code'),
+      } as ICity);
+      reset();
       queryClient.invalidateQueries({ queryKey: [GET_CITY] });
       openToast('City successfuly added', 'warning');
     },
@@ -90,23 +99,11 @@ const CreateCity = () => {
     mutationCreateCity(data);
   };
 
-  const handleSaveClick = () => {
-    console.log('Save button clicked');
-    formRef.current?.requestSubmit();
-  };
-
-  const handleInputKeyDown = useCallback(
-    (event: React.KeyboardEvent<HTMLInputElement>) => {
-      if (event.key === 'Enter' && !event.shiftKey) {
-        event.preventDefault();
-        console.log('Enter key pressed');
-        if (!isLoading && hasChanged) {
-          formRef.current?.requestSubmit();
-        }
-      }
-    },
-    [isLoading, hasChanged]
-  );
+  const { handleSaveClick, handleInputKeyDown } = useFormSave({
+    ref: formRef,
+    isLoading,
+    hasChanged,
+  });
 
   return (
     <Drawer onClose={handleCloseDrawer} open={isOpen}>
@@ -167,22 +164,24 @@ const CreateCity = () => {
                   <Combobox
                     label="Province"
                     placeholder="Select Province"
-                    items={[
-                      {
-                        label: 'Nanggroe Aceh Darussalam',
-                        value: '11.00.00.0000',
-                      },
-                      { label: 'Jawa Tengah', value: '2' },
-                      { label: 'Jawa Timur', value: '3' },
-                    ]}
+                    queryKey={[GET_PROVINCE]}
+                    queryFn={getProvince}
+                    dataLabel="province_name"
+                    dataValue="province_code"
                     message={
                       errors.province
                         ? { text: errors.province.message!, type: 'danger' }
                         : undefined
                     }
-                    value={watch('province')}
+                    value={{
+                      label: watch('province'),
+                      value: watch('province_code'),
+                    }}
                     onChange={(val) => {
-                      setValue('province', val, { shouldDirty: true });
+                      setValue('province', val.label, { shouldDirty: true });
+                      setValue('province_code', val.value, {
+                        shouldDirty: true,
+                      });
                       setError('province', { type: 'disabled' });
                     }}
                   />

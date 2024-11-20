@@ -15,7 +15,9 @@ import { useDrawerStore } from '@stores/useDrawerStore';
 import { IconPencil } from '@tabler/icons-react';
 import { useForm } from 'react-hook-form';
 import { useDetailForm } from '@hooks/useFormChanges';
-import Combobox from '@components/ui/Combobox';
+import Combobox from '@components/shared/Combobox';
+import { GET_PROVINCE } from '@constants/queryKey';
+import { getProvince } from '@services/fetcher/configuration/general';
 
 const DetailCity = () => {
   const { isOpenDetail, closeDetailDrawer, openEditDrawer } = useDrawerStore();
@@ -68,14 +70,16 @@ const DetailCity = () => {
               </div>
               <div className="flex flex-col gap-[14px] flex-1 h-full justify-between">
                 <Combobox
-                  value={detail_data?.province || ''}
                   label="Province"
                   placeholder="Select Province"
-                  items={[
-                    { label: 'Jakarta', value: '1' },
-                    { label: 'Jawa Tengah', value: '2' },
-                    { label: 'Jawa Timur', value: '3' },
-                  ]}
+                  queryKey={[GET_PROVINCE]}
+                  queryFn={() => getProvince()}
+                  dataLabel="province_name"
+                  dataValue="province_code"
+                  value={{
+                    label: detail_data?.province,
+                    value: detail_data?.province_code,
+                  }}
                   disabled
                 />
                 <InputField

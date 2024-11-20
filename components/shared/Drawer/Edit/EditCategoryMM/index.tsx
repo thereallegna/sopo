@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useCallback } from 'react';
+import React, { useRef } from 'react';
 import { Button } from '@components/ui/Button';
 import {
   Drawer,
@@ -26,6 +26,7 @@ import { GET_CATEGORY_MATERIAL_MANAGEMENT } from '@constants/queryKey';
 import { editItemCategory } from '@services/fetcher/configuration/material-management';
 import { ItemCategorySchema } from '@constants/schemas/ConfigurationSchema/InventoryMaterialManagement';
 import useToastStore from '@stores/useToastStore';
+import { useFormSave } from '@hooks/useFormSave';
 
 const EditCategoryMM = () => {
   const formRef = useRef<HTMLFormElement>(null);
@@ -91,23 +92,11 @@ const EditCategoryMM = () => {
     mutationEditItemCategory(data);
   };
 
-  const handleSaveClick = () => {
-    console.log('Save button clicked in edit form');
-    formRef.current?.requestSubmit();
-  };
-
-  const handleInputKeyDown = useCallback(
-    (event: React.KeyboardEvent<HTMLInputElement>) => {
-      if (event.key === 'Enter' && !event.shiftKey) {
-        event.preventDefault();
-        console.log('Enter key pressed');
-        if (!isLoading && hasChanged) {
-          formRef.current?.requestSubmit();
-        }
-      }
-    },
-    [isLoading, hasChanged]
-  );
+  const { handleSaveClick, handleInputKeyDown } = useFormSave({
+    ref: formRef,
+    isLoading,
+    hasChanged,
+  });
 
   return (
     <Drawer onClose={handleCloseDrawerEdit} open={isOpenEdit}>
