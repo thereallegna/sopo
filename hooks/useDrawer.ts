@@ -4,11 +4,7 @@ import useFormStore from '@stores/useFormStore';
 import { UseFormReset } from 'react-hook-form';
 import { usePathname } from 'next/navigation';
 
-export const useDrawer = (
-  isDirty?: boolean,
-  reset?: UseFormReset<any>,
-  detail_data?: object
-) => {
+export const useDrawer = (reset?: UseFormReset<any>, detail_data?: object) => {
   const pathname = usePathname();
   const {
     isOpen,
@@ -20,49 +16,29 @@ export const useDrawer = (
     closeEditDrawer,
     closeAllDrawer,
   } = useDrawerStore();
-  const { setIsDirty, setReset, isReset, setLeavingPage, isChanged } =
+  const { setReset, isReset, setLeavingPage, changeStatus, setChangeStatus } =
     useFormStore();
 
   useEffect(() => {
     closeAllDrawer();
   }, [pathname, closeAllDrawer]);
 
-  useEffect(() => {
-    if (typeof isDirty !== 'undefined') {
-      setIsDirty(isDirty);
-    }
-  }, [isDirty, setIsDirty]);
-
-  const handleCloseDrawer = useCallback(() => {
-    if (isDirty) {
-      console.log('isDirty (handleCloseDrawer):', isDirty);
-      setLeavingPage(true);
-    } else {
-      console.log('Closing drawer without setting leaving page');
-      closeDrawer();
-      setIsDirty(false);
-      setReset(false);
-    }
-  }, [isDirty, closeDrawer, setIsDirty, setReset, setLeavingPage]);
-
-  const handleCloseDrawerEdit = useCallback(() => {
-    if (isChanged) {
-      console.log('isDirty (handleCloseDrawerEdit):', isDirty);
-      setLeavingPage(true);
-    } else {
-      console.log('Closing edit drawer without setting leaving page');
-      closeEditDrawer();
-      setIsDirty(false);
-      setReset(false);
-    }
-  }, [
-    closeEditDrawer,
-    setIsDirty,
-    setReset,
-    setLeavingPage,
-    isChanged,
-    isDirty,
-  ]);
+  const handleClose = useCallback(
+    (closeFunction: () => void) => {
+      if (changeStatus) {
+        setLeavingPage(true);
+      } else {
+        console.log('Closing drawer without setting leaving page');
+        closeFunction();
+        if (reset) {
+          reset();
+        }
+        setChangeStatus(false);
+        setReset(false);
+      }
+    },
+    [changeStatus, setLeavingPage, setReset, reset, setChangeStatus]
+  );
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
@@ -88,10 +64,10 @@ export const useDrawer = (
   }, [isReset, reset, setReset, detail_data]);
 
   return {
-    handleCloseDrawer,
+    handleCloseDrawer: () => handleClose(closeDrawer),
+    handleCloseDrawerEdit: () => handleClose(closeEditDrawer),
     isOpen,
     isOpenFilter,
     isOpenTable,
-    handleCloseDrawerEdit,
   };
 };

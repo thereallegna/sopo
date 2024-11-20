@@ -1,3 +1,16 @@
+// import isEqual from 'fast-deep-equal';
+
+//  const bindCurrentValueAndChangeValue = (
+//   currentObj: any,
+//   changeObj: any
+// ) => {
+//   console.log(!isEqual(currentObj, changeObj));
+//   console.log(currentObj, changeObj);
+//   return !isEqual(currentObj, changeObj);
+// };
+
+// export default bindCurrentValueAndChangeValue;
+
 import isEqual from 'fast-deep-equal';
 
 const bindCurrentValueAndChangeValue = (

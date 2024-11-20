@@ -18,7 +18,7 @@ export const useFormChanges = <T extends DefaultValues>(
   });
   // const [hasChanged, setHasChanged] = useState<boolean>(false)
 
-  const { setChanged } = useFormStore();
+  const { setChange } = useFormStore();
 
   // Use ref to store initial values
   const initialValuesRef = useRef<T | null>(initialValues || null);
@@ -93,6 +93,7 @@ export const useDetailForm = <T extends Record<string, any>>(
       (Object.keys(detailData) as Array<keyof T>).forEach((key) => {
         setValue(key as Path<T>, detailData[key] as PathValue<T, Path<T>>);
       });
+      
     }
   }, [detailData, setValue]);
 };
