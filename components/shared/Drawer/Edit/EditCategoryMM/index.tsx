@@ -11,6 +11,7 @@ import {
 } from '@components/ui/Drawer';
 import { Card, CardContent } from '@components/ui/Card';
 import InputField from '@components/shared/InputField';
+import { Checkbox } from '@components/ui/Checkbox';
 import { useDrawerStore } from '@stores/useDrawerStore';
 import { IconDeviceFloppy } from '@tabler/icons-react';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -36,6 +37,7 @@ const EditCategoryMM = () => {
   const queryClient = useQueryClient();
 
   const {
+    watch,
     register,
     handleSubmit,
     reset,
@@ -163,22 +165,28 @@ const EditCategoryMM = () => {
                   type="text"
                   onKeyDown={handleInputKeyDown}
                 />
-                <InputField
-                  {...register('active')}
-                  message={
-                    errors.active
-                      ? {
-                          text: errors.active.message!,
-                          type: 'danger',
-                        }
-                      : undefined
-                  }
-                  label="Active"
-                  placeholder="Active"
-                  right
-                  type="text"
-                  onKeyDown={handleInputKeyDown}
-                />
+                <div className="flex items-center gap-2">
+                  <label
+                    htmlFor="active"
+                    className="cursor-pointer text-base font-semibold"
+                  >
+                    Active
+                  </label>
+                  <Checkbox
+                    checked={watch('active')}
+                    {...register('active')}
+                    message={
+                      errors.active
+                        ? {
+                            text: errors.active.message!,
+                            type: 'danger',
+                          }
+                        : undefined
+                    }
+                    label=""
+                    onCheckedChange={(checked) => setValue('active', !!checked)}
+                  />
+                </div>
               </CardContent>
             </Card>
           </DrawerBody>

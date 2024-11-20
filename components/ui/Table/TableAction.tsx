@@ -47,7 +47,7 @@ const TableAction: React.FC<TableActionProps> = ({
       {onFilter && <FilterButton onClick={onFilter} />}
       <RowSizeDropdown active={rowSize} action={onRowSizeChange} />
       <SelectColumnDropdown {...columnSelector} />
-      <div className="flex items-center justify-end w-full gap-2">
+      <div className="flex items-center justify-end w-full h-full gap-2">
         <PrintButton data={data} columns={columns as ColumnDef<any>[]} />
         <ExportButton data={data} columns={columns as ColumnDef<any>[]} />
       </div>

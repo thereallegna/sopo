@@ -28,7 +28,7 @@ export const UOMDefaultValues: UOMFormBody = {
 export const ItemCategoryDefaultValues: ItemCategoryFormBody = {
   item_category_code: '',
   item_category_name: '',
-  active: '',
+  active: true,
 };
 // Configuration Material Management End
 

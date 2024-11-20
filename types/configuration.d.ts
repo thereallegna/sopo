@@ -37,7 +37,7 @@ interface ICategory {
   number?: number;
   item_category_code: string;
   item_category_name: string;
-  active: string;
+  active: boolean;
   create_date: string;
 }
 /* ======================= Inventory and Material Management End ==================== */

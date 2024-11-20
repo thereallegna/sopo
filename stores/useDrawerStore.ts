@@ -3,15 +3,19 @@ import { create } from 'zustand';
 export type FilterDrawerType =
   | 'filterCountry'
   | 'filterUOM'
-  | 'filterCategoryMM'
+  | 'filterItemCategory'
   | null;
-export type TableDrawerType = 'getCountry' | 'getUOM' | 'getCategoryMM' | null;
+export type TableDrawerType =
+  | 'getCountry'
+  | 'getUOM'
+  | 'getItemCategory'
+  | null;
 export type DetailDataType =
   | ICountry
   | IProvince
   | ICity
   | IUOM
-  | ICategoryMM
+  | ICategory
   | null;
 
 type DrawerState = {

@@ -28,7 +28,7 @@ type UOMFormBody = {
 type ItemCategoryFormBody = {
   item_category_code: string;
   item_category_name: string;
-  active: string;
+  active: boolean;
   coa_stock?: string;
   coa_stock_description?: string;
   coa_sales?: string;

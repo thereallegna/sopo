@@ -32,7 +32,7 @@ const EditCategory = dynamic(
   { ssr: false }
 );
 
-const Country = () => {
+const ItemCategory = () => {
   const { openFilterDrawer, openTableDrawer, closeFilterDrawer, openDrawer } =
     useDrawerStore();
 
@@ -41,7 +41,7 @@ const Country = () => {
   };
 
   const handleOpenFilter = () => {
-    openFilterDrawer('filterCategoryMM');
+    openFilterDrawer('filterItemCategory');
   };
 
   const handleOpenTable = () => {
@@ -166,4 +166,4 @@ const Country = () => {
   );
 };
 
-export default Country;
+export default ItemCategory;

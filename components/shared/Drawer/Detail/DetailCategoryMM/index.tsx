@@ -63,6 +63,16 @@ const DetailCategoryMM = () => {
                 disabled
                 {...register('item_category_name')}
               />
+              {/* <div className='flex items-center gap-2'>
+                <label htmlFor="active" className='cursor-pointer text-base font-semibold'>
+                  Active
+                </label>
+                <Checkbox
+                  value={detail_data?.active || ''}
+                  disabled
+                  {...register('active')}
+                />
+              </div> */}
             </CardContent>
           </Card>
         </DrawerBody>

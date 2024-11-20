@@ -48,6 +48,7 @@ export interface InputFieldProps
   extends VariantProps<typeof inputFieldVariant> {
   id?: string;
   label?: string;
+  defaultChecked?: boolean;
   /**
    * message is useful for displaying message
    */
@@ -72,6 +73,7 @@ const InputField = React.forwardRef<HTMLInputElement, InputFieldProps>(
   (props, ref) => {
     const {
       label,
+      defaultChecked,
       message,
       required,
       disabled,
@@ -107,6 +109,7 @@ const InputField = React.forwardRef<HTMLInputElement, InputFieldProps>(
             {label}
           </Label>
           <Input
+            defaultChecked={defaultChecked}
             ref={ref} // Pass ref to the Input component
             {...rest}
             disabled={disabled}

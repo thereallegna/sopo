@@ -25,6 +25,7 @@ import { errorMapping } from '@utils/errorMapping';
 import { GET_CATEGORY_MATERIAL_MANAGEMENT } from '@constants/queryKey';
 import { ItemCategorySchema } from '@constants/schemas/ConfigurationSchema/InventoryMaterialManagement';
 import { createItemCategory } from '@services/fetcher/configuration/material-management';
+import { Checkbox } from '@components/ui/Checkbox';
 
 const CreateCategoryMM = () => {
   const formRef = useRef<HTMLFormElement>(null);
@@ -111,7 +112,7 @@ const CreateCategoryMM = () => {
       <DrawerContent>
         <DrawerHeader
           onClick={handleCloseDrawer}
-          drawerTitle="Create Category MM"
+          drawerTitle="Create Item Category"
         >
           <DrawerEndHeader>
             <Button
@@ -161,22 +162,29 @@ const CreateCategoryMM = () => {
                   type="text"
                   onKeyDown={handleInputKeyDown}
                 />
-                <InputField
-                  {...register('active')}
-                  message={
-                    errors.active
-                      ? {
-                          text: errors.active.message!,
-                          type: 'danger',
-                        }
-                      : undefined
-                  }
-                  label="Active"
-                  placeholder="Active"
-                  right
-                  type="text"
-                  onKeyDown={handleInputKeyDown}
-                />
+                <div className="flex items-center gap-2">
+                  <label
+                    htmlFor="active"
+                    className="cursor-pointer text-base font-semibold"
+                  >
+                    Active
+                  </label>
+                  <Checkbox
+                    {...register('active')}
+                    message={
+                      errors.active
+                        ? {
+                            text: errors.active.message!,
+                            type: 'danger',
+                          }
+                        : undefined
+                    }
+                    label=""
+                    checked={ItemCategoryDefaultValues.active}
+                    disabled
+                    onCheckedChange={(checked) => setValue('active', !!checked)}
+                  />
+                </div>
               </CardContent>
             </Card>
           </DrawerBody>
