@@ -31,13 +31,20 @@ export const useDrawer = (reset?: UseFormReset<any>, detail_data?: object) => {
         console.log('Closing drawer without setting leaving page');
         closeFunction();
         if (reset) {
-          reset();
+          reset(detail_data);
         }
         setChangeStatus(false);
         setReset(false);
       }
     },
-    [changeStatus, setLeavingPage, setReset, reset, setChangeStatus]
+    [
+      changeStatus,
+      setLeavingPage,
+      setReset,
+      reset,
+      setChangeStatus,
+      detail_data,
+    ]
   );
 
   useEffect(() => {

@@ -15,7 +15,7 @@ import InputField from '@components/shared/InputField';
 import { useDrawerStore } from '@stores/useDrawerStore';
 import { IconHistory, IconPencil } from '@tabler/icons-react';
 import { useForm } from 'react-hook-form';
-import { useDetailForm } from '@hooks/useFormChanges';
+import { useSetValueForm } from '@hooks/useFormChanges';
 import Combobox from '@components/shared/Combobox';
 
 const DetailProvince = () => {
@@ -29,7 +29,7 @@ const DetailProvince = () => {
 
   const { register, setValue } = useForm<IProvince>();
 
-  useDetailForm<IProvince>(detail_data, setValue);
+  useSetValueForm<IProvince>(detail_data, setValue);
 
   return (
     <Drawer onClose={closeDetailDrawer} open={isOpenDetail}>

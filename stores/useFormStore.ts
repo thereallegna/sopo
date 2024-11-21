@@ -30,7 +30,7 @@ const useFormStore = create<FormStore>((set) => ({
 
   setLeavingPage: (status) => set({ leavingPage: status }),
   setReset: (status) => set({ isReset: status }),
-  resetForm: () => set({ isReset: true }), // Reset form
+  resetForm: () => set({ isReset: true }),
 }));
 
 export default useFormStore;

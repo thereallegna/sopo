@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Button } from '@components/ui/Button';
 import {
   Drawer,
@@ -30,7 +30,7 @@ import { useFormSave } from '@hooks/useFormSave';
 const CreateUOM = () => {
   const formRef = useRef<HTMLFormElement>(null);
   const { isOpen, closeDrawer, openDetailDrawer } = useDrawerStore();
-  const { changeStatus, setChangeStatus } = useFormStore();
+  const { setChangeStatus } = useFormStore();
   const [isLoading, setIsLoading] = React.useState(false);
   const showToast = useToastStore((state) => state.showToast);
   const queryClient = useQueryClient();
