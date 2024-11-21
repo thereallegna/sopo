@@ -31,7 +31,9 @@ import { useFormSave } from '@hooks/useFormSave';
 const EditCategoryMM = () => {
   const formRef = useRef<HTMLFormElement>(null);
   const { isOpenEdit, closeEditDrawer, setDetailData } = useDrawerStore();
-  const detail_data = useDrawerStore((state) => state.detail_data) as ICategory;
+  const detail_data = useDrawerStore(
+    (state) => state.detail_data
+  ) as ICategoryMM;
   const { setIsDirty } = useFormStore();
   const [isLoading, setIsLoading] = React.useState(false);
   const showToast = useToastStore((state) => state.showToast);

@@ -15,7 +15,7 @@ export type DetailDataType =
   | IProvince
   | ICity
   | IUOM
-  | ICategory
+  | ICategoryMM
   | null;
 
 type DrawerState = {
