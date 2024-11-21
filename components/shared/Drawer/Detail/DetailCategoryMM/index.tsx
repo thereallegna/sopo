@@ -18,11 +18,13 @@ import { useDetailForm } from '@hooks/useFormChanges';
 
 const DetailCategoryMM = () => {
   const { isOpenDetail, closeDetailDrawer, openEditDrawer } = useDrawerStore();
-  const detail_data = useDrawerStore((state) => state.detail_data) as ICategory;
+  const detail_data = useDrawerStore(
+    (state) => state.detail_data
+  ) as ICategoryMM;
 
-  const { register, setValue } = useForm<ICategory>();
+  const { register, setValue } = useForm<ICategoryMM>();
 
-  useDetailForm<ICategory>(detail_data, setValue);
+  useDetailForm<ICategoryMM>(detail_data, setValue);
 
   return (
     <Drawer onClose={closeDetailDrawer} open={isOpenDetail}>

@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { CSSProperties } from 'react';
 import Table, {
   TableHeader,
   TableRow,
@@ -9,6 +9,7 @@ import Table, {
   TableCell,
 } from '@components/ui/Table';
 import {
+  Column,
   flexRender,
   getCoreRowModel,
   getExpandedRowModel,
@@ -30,10 +31,45 @@ export interface PaginationState {
   pageSize: number;
 }
 
+const getCommonPinningStyles = (column: Column<any>): CSSProperties => {
+  const isPinned = column.getIsPinned();
+  const isLastLeftPinnedColumn =
+    isPinned === 'left' && column.getIsLastColumn('left');
+  const isFirstRightPinnedColumn =
+    isPinned === 'right' && column.getIsFirstColumn('right');
+
+  let boxShadow: string | undefined;
+
+  if (isLastLeftPinnedColumn) {
+    boxShadow = '-4px 0 4px -4px gray inset';
+  } else if (isFirstRightPinnedColumn) {
+    boxShadow = '4px 0 4px -4px gray inset';
+  }
+
+  const left = isPinned === 'left' ? `${column.getStart('left')}px` : undefined;
+  const right =
+    isPinned === 'right' ? `${column.getAfter('right')}px` : undefined;
+
+  const opacity = isPinned ? 0.95 : 1;
+  const position = isPinned ? 'sticky' : 'relative';
+  const zIndex = isPinned ? 1 : 0;
+
+  return {
+    boxShadow,
+    left,
+    right,
+    opacity,
+    position,
+    width: column.getSize(),
+    zIndex,
+  };
+};
+
 const TableContent = <T,>({
   data,
   columns,
   option,
+  // pinnedColumns,
   onPagination,
   onSearch,
   onFilter,
@@ -96,6 +132,7 @@ const TableContent = <T,>({
                       ? header.column.getToggleGroupingHandler()
                       : undefined
                   }
+                  style={{ ...getCommonPinningStyles(header.column) }}
                 >
                   {header.isPlaceholder
                     ? null
@@ -121,6 +158,7 @@ const TableContent = <T,>({
                       className={`${
                         row.getCanExpand() ? 'cursor-pointer' : ''
                       }`}
+                      style={{ ...getCommonPinningStyles(cell.column) }}
                     >
                       <div className="flex items-center gap-[10px]">
                         {cell.getIsGrouped() && (
@@ -154,7 +192,11 @@ const TableContent = <T,>({
                 }
                 if (cell.getIsAggregated()) {
                   return (
-                    <TableCell key={cell.id} size={option.rowSize}>
+                    <TableCell
+                      key={cell.id}
+                      size={option.rowSize}
+                      style={{ ...getCommonPinningStyles(cell.column) }}
+                    >
                       {/* {
                           flexRender(
                             cell.column.columnDef.aggregatedCell ??
@@ -166,7 +208,11 @@ const TableContent = <T,>({
                   );
                 }
                 return (
-                  <TableCell key={cell.id} size={option.rowSize}>
+                  <TableCell
+                    key={cell.id}
+                    size={option.rowSize}
+                    style={{ ...getCommonPinningStyles(cell.column) }}
+                  >
                     {cell.getIsPlaceholder()
                       ? null
                       : flexRender(

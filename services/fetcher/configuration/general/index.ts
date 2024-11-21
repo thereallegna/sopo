@@ -6,7 +6,6 @@ const getCountry = async (option?: FetcherOptions) => {
   try {
     const res = await axios.get(`${PATH_COUNTRY}`, {
       params: {
-        all: option?.all,
         page_size: !option?.all ? option?.pagination?.pageSize : undefined,
         current_page: !option?.all ? option?.pagination?.pageIndex : undefined,
         search: option?.search,
@@ -44,7 +43,6 @@ const getProvince = async (option?: FetcherOptions) => {
   try {
     const res = await axios.get(`${PATH_PROVINCE}`, {
       params: {
-        all: option?.all,
         page_size: !option?.all ? option?.pagination?.pageSize : undefined,
         current_page: !option?.all ? option?.pagination?.pageIndex : undefined,
         search: option?.search,
@@ -82,7 +80,6 @@ const getCity = async (option?: FetcherOptions) => {
   try {
     const res = await axios.get(`${PATH_CITY}`, {
       params: {
-        all: option?.all,
         page_size: !option?.all ? option?.pagination?.pageSize : undefined,
         current_page: !option?.all ? option?.pagination?.pageIndex : undefined,
         search: option?.search,
