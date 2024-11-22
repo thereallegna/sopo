@@ -52,6 +52,7 @@ const CreateCountry = () => {
   const { canSave } = useFormChanges({
     defaultValues: countryDefaultValues,
     control,
+    requireAllFields: true,
   });
 
   const { handleCloseDrawer } = useDrawer(reset);

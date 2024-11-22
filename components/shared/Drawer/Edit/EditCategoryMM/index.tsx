@@ -61,13 +61,13 @@ const EditCategoryMM = () => {
     setValue,
     control,
     formState: { errors },
-  } = useForm<CategoryMMFormBody>({
+  } = useForm<ItemCategoryFormBody>({
     mode: 'onBlur',
     resolver: yupResolver(ItemCategorySchema),
     defaultValues: detail_data,
   });
 
-  useSetValueForm<CategoryMMFormBody>(detail_data, setValue);
+  useSetValueForm<ItemCategoryFormBody>(detail_data, setValue);
 
   const { canSave } = useFormChanges({
     defaultValues: detail_data,
