@@ -27,6 +27,7 @@ export const PATH_AUTH_RESET_PASSWORD_BE = `${PATH_BACKEND_URL}/reset-password`;
 
 /* ======================= General Start ==================== */
 export const PATH_COUNTRY = `${PATH_CONFIGURATION_GENERAL}/country`;
+// country
 export const PATH_COUNTRY_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/country`;
 
 // city
@@ -36,6 +37,10 @@ export const PATH_CITY_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/city
 // province
 export const PATH_PROVINCE = `${PATH_CONFIGURATION_GENERAL}/province`;
 export const PATH_PROVINCE_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/province`;
+
+// coa
+export const PATH_COA = `${PATH_CONFIGURATION_GENERAL}/coa`;
+export const PATH_COA_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/coa`;
 /* ======================= General End ==================== */
 
 /* ======================= Inventory and Material Management Start ==================== */
@@ -46,6 +51,7 @@ export const PATH_ITEMS_UOM_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}
 // items category
 export const PATH_ITEMS_CATEGORY = `${PATH_CONFIGURATION_INVENTORY_AND_MATERIAL_MANAGEMENT}/material-management/category`;
 export const PATH_ITEMS_CATEGORY_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/item-category`;
+
 /* ======================= Inventory and Material Management End ==================== */
 
 /* ======================= Log History Start ==================== */

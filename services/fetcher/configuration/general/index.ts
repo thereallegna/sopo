@@ -1,4 +1,9 @@
-import { PATH_CITY, PATH_COUNTRY, PATH_PROVINCE } from '@constants/routes';
+import {
+  PATH_CITY,
+  PATH_COA,
+  PATH_COUNTRY,
+  PATH_PROVINCE,
+} from '@constants/routes';
 import axios from 'axios';
 import { FetcherOptions } from '../../../../types/client/fetcher';
 
@@ -116,6 +121,24 @@ const editCity = async (body: CityFormBody) => {
   }
 };
 
+const getCoa = async (option?: FetcherOptions) => {
+  try {
+    const res = await axios.get(`${PATH_COA}`, {
+      params: {
+        all: option?.all,
+        page_size: !option?.all ? option?.pagination?.pageSize : undefined,
+        current_page: !option?.all ? option?.pagination?.pageIndex : undefined,
+        search: option?.search,
+      },
+    });
+
+    return res;
+  } catch (error) {
+    console.error('Error fetching log history:', error);
+    throw error;
+  }
+};
+
 export {
   getCountry,
   createCountry,
@@ -126,4 +149,5 @@ export {
   getProvince,
   createProvince,
   editProvince,
+  getCoa,
 };
