@@ -3,35 +3,34 @@ import { create } from 'zustand';
 
 type FormState = {
   leavingPage: boolean;
-  isDirty: boolean;
   isReset: boolean;
-  isChanged: boolean;
+
+  changeStatus: boolean;
 };
 
 type FormActions = {
   setLeavingPage: (status: boolean) => void;
-  setIsDirty: (status: boolean) => void;
   setReset: (status: boolean) => void;
   resetForm: () => void; // Fungsi isReset untuk form
-  setChanged: (status: boolean) => void;
+  setChangeStatus: (data: boolean) => void;
 };
 
 type FormStore = FormState & FormActions;
 
 const initialValues: FormState = {
+  changeStatus: false,
+
   leavingPage: false,
-  isDirty: false,
   isReset: false,
-  isChanged: false,
 };
 
 const useFormStore = create<FormStore>((set) => ({
   ...initialValues,
+  setChangeStatus: (data) => set({ changeStatus: data }),
+
   setLeavingPage: (status) => set({ leavingPage: status }),
-  setIsDirty: (status) => set({ isDirty: status }),
-  setChanged: (status) => set({ isChanged: status }),
   setReset: (status) => set({ isReset: status }),
-  resetForm: () => set({ isReset: true, isDirty: false }), // Reset form
+  resetForm: () => set({ isReset: true }),
 }));
 
 export default useFormStore;

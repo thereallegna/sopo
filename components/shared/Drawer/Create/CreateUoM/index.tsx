@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Button } from '@components/ui/Button';
 import {
   Drawer,
@@ -19,7 +19,6 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import useFormStore from '@stores/useFormStore';
 import { useDrawer } from '@hooks/useDrawer';
 import { UOMDefaultValues } from '@constants/defaultValues';
-import { useFormChanges } from '@hooks/useFormChanges';
 import { AxiosError } from 'axios';
 import { errorMapping } from '@utils/errorMapping';
 import { GET_UOM } from '@constants/queryKey';
@@ -31,7 +30,7 @@ import { useFormSave } from '@hooks/useFormSave';
 const CreateUOM = () => {
   const formRef = useRef<HTMLFormElement>(null);
   const { isOpen, closeDrawer, openDetailDrawer } = useDrawerStore();
-  const { setIsDirty } = useFormStore();
+  const { setChangeStatus } = useFormStore();
   const [isLoading, setIsLoading] = React.useState(false);
   const showToast = useToastStore((state) => state.showToast);
   const queryClient = useQueryClient();
@@ -41,22 +40,27 @@ const CreateUOM = () => {
     handleSubmit,
     reset,
     setError,
-    setValue,
-    control,
-    formState: { errors, isDirty },
+    watch,
+    formState: { errors },
   } = useForm<UOMFormBody>({
     mode: 'onBlur',
     resolver: yupResolver(UOMSchema),
     defaultValues: UOMDefaultValues,
   });
 
-  const { handleCloseDrawer } = useDrawer(isDirty, reset);
-  const { hasChanged } = useFormChanges(
-    UOMDefaultValues,
-    control,
-    setValue,
-    'every'
-  );
+  const code = watch('uom_code');
+  const name = watch('uom_name');
+
+  // Memantau perubahan untuk tombol Save
+  const canSave = Boolean(code && name);
+
+  // Memantau perubahan untuk modal konfirmasi
+  useEffect(() => {
+    // Set changeStatus true jika salah satu field diisi
+    setChangeStatus(Boolean(code || name));
+  }, [code, name, setChangeStatus]);
+
+  const { handleCloseDrawer } = useDrawer(reset);
 
   const { mutate: mutationCreateUOM } = useMutation({
     mutationFn: createUOM,
@@ -69,7 +73,7 @@ const CreateUOM = () => {
       reset();
       closeDrawer();
       setIsLoading(false);
-      setIsDirty(false);
+      setChangeStatus(false);
       openDetailDrawer(data.data);
       queryClient.invalidateQueries({ queryKey: [GET_UOM] });
       showToast('UoM successfully added', 'success');
@@ -96,7 +100,7 @@ const CreateUOM = () => {
   const { handleSaveClick, handleInputKeyDown } = useFormSave({
     ref: formRef,
     isLoading,
-    hasChanged,
+    hasChanged: canSave, // Menggunakan canSave untuk tombol Save
   });
 
   return (
@@ -105,10 +109,10 @@ const CreateUOM = () => {
         <DrawerHeader onClick={handleCloseDrawer} drawerTitle="Create UoM">
           <DrawerEndHeader>
             <Button
-              variant={!hasChanged ? 'disabled' : 'primary'}
+              variant={!canSave ? 'disabled' : 'primary'}
               icon={{ size: 'large', icon: IconDeviceFloppy, color: 'White' }}
               onClick={handleSaveClick}
-              disabled={isLoading}
+              disabled={isLoading || !canSave}
             >
               {isLoading ? 'saving...' : 'save'}
             </Button>

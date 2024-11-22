@@ -21,22 +21,22 @@ import {
   editProvince,
   getCountry,
 } from '@services/fetcher/configuration/general';
-import useFormStore from '@stores/useFormStore';
-import { useDrawer } from '@hooks/useDrawer';
-import { useFormChanges } from '@hooks/useFormChanges';
+import { useFormChanges, useSetValueForm } from '@hooks/useFormChanges';
 import { errorMapping } from '@utils/errorMapping';
 import { AxiosError } from 'axios';
 import { GET_COUNTRY, GET_PROVINCE } from '@constants/queryKey';
 import Combobox from '@components/shared/Combobox';
 import useToastStore from '@stores/useToastStore';
 import { useFormSave } from '@hooks/useFormSave';
+import useFormStore from '@stores/useFormStore';
+import { useDrawer } from '@hooks/useDrawer';
 
 const EditProvince = () => {
   const formRef = useRef<HTMLFormElement>(null);
   const { isOpenEdit, closeEditDrawer, setDetailData, openDetailDrawer } =
     useDrawerStore();
+  const { setChangeStatus } = useFormStore();
   const detail_data = useDrawerStore((state) => state.detail_data) as IProvince;
-  const { setIsDirty } = useFormStore();
   const [isLoading, setIsLoading] = React.useState(false);
   const showToast = useToastStore((state) => state.showToast);
   const queryClient = useQueryClient();
@@ -49,15 +49,21 @@ const EditProvince = () => {
     setError,
     setValue,
     control,
-    formState: { errors, isDirty },
+    formState: { errors },
   } = useForm<ProvinceFormBody>({
-    mode: 'onSubmit',
+    mode: 'onBlur',
     resolver: yupResolver(provinceSchema),
     defaultValues: detail_data,
   });
 
-  const { handleCloseDrawerEdit } = useDrawer(isDirty, reset, detail_data);
-  const { hasChanged } = useFormChanges(detail_data, control, setValue);
+  useSetValueForm<ProvinceFormBody>(detail_data, setValue);
+
+  const { canSave } = useFormChanges({
+    defaultValues: detail_data,
+    control,
+  });
+
+  const { handleCloseDrawerEdit } = useDrawer(reset, detail_data);
 
   const { mutate: mutationEditProvince } = useMutation({
     mutationFn: editProvince,
@@ -66,9 +72,9 @@ const EditProvince = () => {
     },
     onSuccess: (data) => {
       setDetailData(data.data);
+      setChangeStatus(false);
       closeEditDrawer();
       setIsLoading(false);
-      setIsDirty(false);
       openDetailDrawer({
         ...data.data,
         country: watch('country'),
@@ -99,7 +105,7 @@ const EditProvince = () => {
   const { handleSaveClick, handleInputKeyDown } = useFormSave({
     ref: formRef,
     isLoading,
-    hasChanged,
+    hasChanged: canSave,
   });
 
   return (
@@ -108,7 +114,7 @@ const EditProvince = () => {
         <DrawerHeader onClick={handleCloseDrawerEdit} drawerTitle="Edit City">
           <DrawerEndHeader>
             <Button
-              variant={!hasChanged ? 'disabled' : 'primary'}
+              variant={!canSave ? 'disabled' : 'primary'}
               icon={{ size: 'large', icon: IconDeviceFloppy, color: 'White' }}
               onClick={handleSaveClick}
               disabled={isLoading}

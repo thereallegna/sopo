@@ -153,7 +153,9 @@ const DrawerHeader = ({
   >
     <div className="flex items-center gap-[10px]">
       <DrawerBack onClick={onClick} icon={IconArrowLeft} />
-      <DrawerTitle>{drawerTitle}</DrawerTitle>
+      <DrawerTitle className="flex-1 truncate min-w-fit">
+        {drawerTitle}
+      </DrawerTitle>
     </div>
 
     {children}
@@ -165,7 +167,7 @@ const DrawerFooter = ({
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn(' flex flex-col gap-2 ', className)} {...props} />
+  <div className={cn(' flex flex-col gap-2 px-5', className)} {...props} />
 );
 DrawerFooter.displayName = 'DrawerFooter';
 

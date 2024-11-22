@@ -15,7 +15,7 @@ import InputField from '@components/shared/InputField';
 import { useDrawerStore } from '@stores/useDrawerStore';
 import { IconHistory, IconPencil } from '@tabler/icons-react';
 import { useForm } from 'react-hook-form';
-import { useDetailForm } from '@hooks/useFormChanges';
+import { useSetValueForm } from '@hooks/useFormChanges';
 
 const DetailCountry = () => {
   const {
@@ -28,7 +28,7 @@ const DetailCountry = () => {
 
   const { register, setValue } = useForm<ICountry>();
 
-  useDetailForm<ICountry>(detail_data, setValue);
+  useSetValueForm<ICountry>(detail_data, setValue);
 
   return (
     <Drawer onClose={closeDetailDrawer} open={isOpenDetail}>

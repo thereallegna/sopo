@@ -34,7 +34,7 @@ import { getCoa } from '@services/fetcher/configuration/general';
 const CreateCategoryMM = () => {
   const formRef = useRef<HTMLFormElement>(null);
   const { isOpen, closeDrawer, openDetailDrawer } = useDrawerStore();
-  const { setIsDirty } = useFormStore();
+  const { setChangeStatus } = useFormStore();
   const [isLoading, setIsLoading] = React.useState(false);
   const openToast = useToastStore((state) => state.showToast);
   const queryClient = useQueryClient();
@@ -55,23 +55,24 @@ const CreateCategoryMM = () => {
     handleSubmit,
     reset,
     setError,
-    setValue,
     control,
-    formState: { errors, isDirty },
-  } = useForm<ItemCategoryFormBody>({
+    formState: { errors },
+  } = useForm<CategoryMMFormBody>({
     mode: 'onBlur',
     resolver: yupResolver(ItemCategorySchema),
     defaultValues: ItemCategoryDefaultValues,
   });
 
-  const { handleCloseDrawer } = useDrawer(isDirty, reset);
-  const { hasChanged } = useFormChanges(
-    ItemCategoryDefaultValues,
+  const { canSave } = useFormChanges({
+    defaultValues: CategoryMMDefaultValues,
     control,
     setValue,
     'every',
     ['active']
   );
+  });
+
+  const { handleCloseDrawer } = useDrawer(reset);
 
   const { mutate: mutationCreateCategoryMM } = useMutation({
     mutationFn: createItemCategory,
@@ -82,7 +83,7 @@ const CreateCategoryMM = () => {
       reset();
       closeDrawer();
       setIsLoading(false);
-      setIsDirty(false);
+      setChangeStatus(false);
       openDetailDrawer(data.data);
       queryClient.invalidateQueries({
         queryKey: [GET_CATEGORY_MATERIAL_MANAGEMENT],
@@ -109,7 +110,7 @@ const CreateCategoryMM = () => {
   const { handleSaveClick, handleInputKeyDown } = useFormSave({
     ref: formRef,
     isLoading,
-    hasChanged,
+    hasChanged: canSave,
   });
 
   const openModalForField = (fieldName: string) => {
@@ -134,7 +135,7 @@ const CreateCategoryMM = () => {
         >
           <DrawerEndHeader>
             <Button
-              variant={!hasChanged ? 'disabled' : 'primary'}
+              variant={!canSave ? 'disabled' : 'primary'}
               icon={{ size: 'large', icon: IconDeviceFloppy, color: 'White' }}
               type="submit"
               onClick={handleSaveClick}

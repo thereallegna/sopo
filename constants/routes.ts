@@ -45,6 +45,9 @@ export const PATH_COA_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/coa`;
 
 /* ======================= Inventory and Material Management Start ==================== */
 // items uom
+export const PATH_ITEMS_MASTER = `${PATH_CONFIGURATION_INVENTORY_AND_MATERIAL_MANAGEMENT}/material-management/item`;
+export const PATH_ITEMS_MASTER_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/item`;
+
 export const PATH_ITEMS_UOM = `${PATH_CONFIGURATION_INVENTORY_AND_MATERIAL_MANAGEMENT}/material-management/uom`;
 export const PATH_ITEMS_UOM_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/uom`;
 

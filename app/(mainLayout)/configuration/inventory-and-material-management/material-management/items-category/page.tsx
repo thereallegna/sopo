@@ -157,6 +157,7 @@ const ItemCategory = () => {
             },
           ],
         }}
+        pinnedColumns={['number', 'item_category_code']}
         queryFn={getItemCategory}
       />
       <CreateCategory />

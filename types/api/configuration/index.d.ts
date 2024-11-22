@@ -1,4 +1,8 @@
 /* ======================= Configuration Start ==================== */
+type CountryFormBody = {
+  country_code: string;
+  country_name: string;
+};
 
 type ProvinceFormBody = {
   province_code: string;
@@ -40,8 +44,17 @@ type ItemCategoryFormBody = {
   coa_consumption_cost?: string;
   coa_consumption_cost_description?: string;
 };
-/* ======================= Inventory and Material Management End ==================== */
-type CountryFormBody = {
-  country_code: string;
-  country_name: string;
+
+type ItemFormBody = {
+  number?: number;
+  item_code: string;
+  item_name: string;
+  local_code: string;
+  foreign_name: string;
+  old_code: string;
+  category_name: string;
+  spesification: string;
+  active: boolean;
+  create_date: string;
 };
+/* ======================= Inventory and Material Management End ==================== */

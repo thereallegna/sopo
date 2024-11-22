@@ -14,7 +14,7 @@ const TableHead = React.forwardRef<HTMLTableCellElement, TableHeadProps>(
     <th ref={ref}>
       <div
         className={cn(
-          'py-3 px-4 flex gap-x-2 items-center text-base font-semibold',
+          'py-3 px-4 flex gap-x-2 items-center text-base font-semibold w-full min-w-max',
           className
         )}
       >

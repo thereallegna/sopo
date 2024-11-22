@@ -18,6 +18,7 @@ const initialTableState = {
     [GET_COA]: paginationStateDefaultValue,
     [GET_UOM]: paginationStateDefaultValue,
     [GET_CATEGORY_MATERIAL_MANAGEMENT]: paginationStateDefaultValue,
+    [GET_MASTER_ITEM_MATERIAL_MANAGEMENT]: paginationStateDefaultValue,
   },
 };
 

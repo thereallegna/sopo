@@ -18,7 +18,6 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { countrySchema } from '@constants/schemas/ConfigurationSchema/general';
 import { createCountry } from '@services/fetcher/configuration/general';
-import useFormStore from '@stores/useFormStore';
 import { useDrawer } from '@hooks/useDrawer';
 import { countryDefaultValues } from '@constants/defaultValues';
 import { useFormChanges } from '@hooks/useFormChanges';
@@ -27,12 +26,13 @@ import { errorMapping } from '@utils/errorMapping';
 import { GET_COUNTRY } from '@constants/queryKey';
 import useToastStore from '@stores/useToastStore';
 import { useFormSave } from '@hooks/useFormSave';
+import useFormStore from '@stores/useFormStore';
 
 const CreateCountry = () => {
   const formRef = useRef<HTMLFormElement>(null);
   const { isOpen, closeDrawer, openDetailDrawer } = useDrawerStore();
-  const { setIsDirty } = useFormStore();
   const [isLoading, setIsLoading] = React.useState(false);
+  const { setChangeStatus } = useFormStore();
   const openToast = useToastStore((state) => state.showToast);
   const queryClient = useQueryClient();
 
@@ -41,22 +41,20 @@ const CreateCountry = () => {
     handleSubmit,
     reset,
     setError,
-    setValue,
     control,
-    formState: { errors, isDirty },
+    formState: { errors },
   } = useForm<CountryFormBody>({
     mode: 'onBlur',
     resolver: yupResolver(countrySchema),
     defaultValues: countryDefaultValues,
   });
 
-  const { handleCloseDrawer } = useDrawer(isDirty, reset);
-  const { hasChanged } = useFormChanges(
-    countryDefaultValues,
+  const { canSave } = useFormChanges({
+    defaultValues: countryDefaultValues,
     control,
-    setValue,
-    'every'
-  );
+  });
+
+  const { handleCloseDrawer } = useDrawer(reset);
 
   const { mutate: mutationCreateCountry } = useMutation({
     mutationFn: createCountry,
@@ -66,9 +64,9 @@ const CreateCountry = () => {
     },
     onSuccess: (data) => {
       console.log('Mutation successful:', data);
-      setIsDirty(false);
       reset();
       closeDrawer();
+      setChangeStatus(false);
       setIsLoading(false);
       openDetailDrawer(data.data);
       queryClient.invalidateQueries({ queryKey: [GET_COUNTRY] });
@@ -96,7 +94,7 @@ const CreateCountry = () => {
   const { handleSaveClick, handleInputKeyDown } = useFormSave({
     ref: formRef,
     isLoading,
-    hasChanged,
+    hasChanged: canSave,
   });
 
   return (
@@ -105,7 +103,7 @@ const CreateCountry = () => {
         <DrawerHeader onClick={handleCloseDrawer} drawerTitle="Create Country">
           <DrawerEndHeader>
             <Button
-              variant={!hasChanged ? 'disabled' : 'primary'}
+              variant={!canSave ? 'disabled' : 'primary'}
               icon={{ size: 'large', icon: IconDeviceFloppy, color: 'White' }}
               onClick={handleSaveClick}
               disabled={isLoading}

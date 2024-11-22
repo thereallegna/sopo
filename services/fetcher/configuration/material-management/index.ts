@@ -1,4 +1,8 @@
-import { PATH_ITEMS_UOM, PATH_ITEMS_CATEGORY } from '@constants/routes';
+import {
+  PATH_ITEMS_UOM,
+  PATH_ITEMS_CATEGORY,
+  PATH_ITEMS_MASTER,
+} from '@constants/routes';
 import axios from 'axios';
 import { FetcherOptions } from '../../../../types/client/fetcher';
 
@@ -6,7 +10,6 @@ const getUOM = async (option?: FetcherOptions) => {
   try {
     const res = await axios.get(`${PATH_ITEMS_UOM}`, {
       params: {
-        all: option?.all,
         page_size: !option?.all ? option?.pagination?.pageSize : undefined,
         current_page: !option?.all ? option?.pagination?.pageIndex : undefined,
         search: option?.search,
@@ -44,7 +47,6 @@ const getItemCategory = async (option?: FetcherOptions) => {
   try {
     const res = await axios.get(`${PATH_ITEMS_CATEGORY}`, {
       params: {
-        all: option?.all,
         page_size: !option?.all ? option?.pagination?.pageSize : undefined,
         current_page: !option?.all ? option?.pagination?.pageIndex : undefined,
         search: option?.search,
@@ -82,6 +84,23 @@ const editItemCategory = async (body: ItemCategoryFormBody) => {
   }
 };
 
+const getItem = async (option?: FetcherOptions) => {
+  try {
+    const res = await axios.get(`${PATH_ITEMS_MASTER}`, {
+      params: {
+        page_size: !option?.all ? option?.pagination?.pageSize : undefined,
+        current_page: !option?.all ? option?.pagination?.pageIndex : undefined,
+        search: option?.search,
+      },
+    });
+
+    return res;
+  } catch (error) {
+    console.error('Error fetching log history:', error);
+    throw error;
+  }
+};
+
 export {
   getUOM,
   createUOM,
@@ -89,4 +108,5 @@ export {
   getItemCategory,
   createItemCategory,
   editItemCategory,
+  getItem,
 };

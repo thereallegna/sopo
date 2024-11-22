@@ -19,7 +19,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import useFormStore from '@stores/useFormStore';
 import { useDrawer } from '@hooks/useDrawer';
-import { useFormChanges } from '@hooks/useFormChanges';
+import { useFormChanges, useSetValueForm } from '@hooks/useFormChanges';
 import { errorMapping } from '@utils/errorMapping';
 import { AxiosError } from 'axios';
 import { GET_CATEGORY_MATERIAL_MANAGEMENT, GET_COA } from '@constants/queryKey';
@@ -60,15 +60,21 @@ const EditCategoryMM = () => {
     setError,
     setValue,
     control,
-    formState: { errors, isDirty },
-  } = useForm<ItemCategoryFormBody>({
+    formState: { errors },
+  } = useForm<CategoryMMFormBody>({
     mode: 'onBlur',
     resolver: yupResolver(ItemCategorySchema),
     defaultValues: detail_data,
   });
 
-  const { handleCloseDrawerEdit } = useDrawer(isDirty, reset, detail_data);
-  const { hasChanged } = useFormChanges(detail_data, control, setValue);
+  useSetValueForm<CategoryMMFormBody>(detail_data, setValue);
+
+  const { canSave } = useFormChanges({
+    defaultValues: detail_data,
+    control,
+  });
+
+  const { handleCloseDrawerEdit } = useDrawer(reset, detail_data);
 
   const { mutate: mutationEditItemCategory } = useMutation({
     mutationFn: editItemCategory,
@@ -80,7 +86,7 @@ const EditCategoryMM = () => {
       setDetailData(data.data);
       closeEditDrawer();
       setIsLoading(false);
-      setIsDirty(false);
+      setChangeStatus(false);
       queryClient.invalidateQueries({
         queryKey: [GET_CATEGORY_MATERIAL_MANAGEMENT],
       });
@@ -106,7 +112,7 @@ const EditCategoryMM = () => {
   const { handleSaveClick, handleInputKeyDown } = useFormSave({
     ref: formRef,
     isLoading,
-    hasChanged,
+    hasChanged: canSave,
   });
 
   const openModalForField = (fieldName: string) => {
@@ -131,7 +137,7 @@ const EditCategoryMM = () => {
         >
           <DrawerEndHeader>
             <Button
-              variant={!hasChanged ? 'disabled' : 'primary'}
+              variant={!canSave ? 'disabled' : 'primary'}
               icon={{ size: 'large', icon: IconDeviceFloppy, color: 'White' }}
               onClick={handleSaveClick}
               disabled={isLoading}
