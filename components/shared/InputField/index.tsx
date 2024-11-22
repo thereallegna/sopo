@@ -67,6 +67,8 @@ export interface InputFieldProps
   end_icon?: IconProps;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
   onKeyDown?: React.KeyboardEventHandler<HTMLInputElement>; // Add onKeyDown here
+  onClick?: React.MouseEventHandler<HTMLInputElement>;
+  readOnly?: boolean;
 }
 
 const InputField = React.forwardRef<HTMLInputElement, InputFieldProps>(
@@ -122,6 +124,8 @@ const InputField = React.forwardRef<HTMLInputElement, InputFieldProps>(
             theme={message?.type}
             start_icon={start_icon}
             end_icon={end_icon}
+            onClick={props.onClick}
+            readOnly={props.readOnly}
             {...inputProps}
           />
         </div>
