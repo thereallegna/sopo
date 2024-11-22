@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { Button } from '@components/ui/Button';
 import {
   Drawer,
@@ -30,6 +30,7 @@ import { AxiosError } from 'axios';
 import { GET_CITY, GET_PROVINCE } from '@constants/queryKey';
 import useToastStore from '@stores/useToastStore';
 import { useFormSave } from '@hooks/useFormSave';
+import { useFormChanges } from '@hooks/useFormChanges';
 
 const CreateCity = () => {
   const formRef = useRef<HTMLFormElement>(null);
@@ -46,7 +47,7 @@ const CreateCity = () => {
     setError,
     setValue,
     watch,
-    // control,
+    control,
     formState: { errors },
   } = useForm<CityFormBody>({
     mode: 'onSubmit',
@@ -54,36 +55,37 @@ const CreateCity = () => {
     defaultValues: cityDefaultValues,
   });
 
-  const code = watch('city_code');
-  const name = watch('city_name');
-  const province = watch('province');
-  const province_code = watch('province_code');
-  const ring_area = watch('ring_area');
-  const location = watch('location');
+  // const code = watch('city_code');
+  // const name = watch('city_name');
+  // const province = watch('province');
+  // const province_code = watch('province_code');
+  // const ring_area = watch('ring_area');
+  // const location = watch('location');
 
-  const canSave = Boolean(code && name && province && province_code);
+  // const canSave = Boolean(code && name && province && province_code);
 
-  useEffect(() => {
-    setChangeStatus(
-      Boolean(
-        code || name || province || province_code || ring_area || location
-      )
-    );
-  }, [
-    code,
-    name,
-    province,
-    province_code,
-    setChangeStatus,
-    ring_area,
-    location,
-  ]);
+  // useEffect(() => {
+  //   setChangeStatus(
+  //     Boolean(
+  //       code || name || province || province_code || ring_area || location
+  //     )
+  //   );
+  // }, [
+  //   code,
+  //   name,
+  //   province,
+  //   province_code,
+  //   setChangeStatus,
+  //   ring_area,
+  //   location,
+  // ]);
 
-  // const { canSave } = useFormChanges({
-  //   defaultValues: cityDefaultValues,
-  //   control,
-  //   ignoredFields: ['ring_area', 'location'],
-  // });
+  const { canSave } = useFormChanges({
+    defaultValues: cityDefaultValues,
+    control,
+    ignoredFields: ['ring_area', 'location'],
+    requireAllFields: true,
+  });
 
   const { handleCloseDrawer } = useDrawer(reset);
 

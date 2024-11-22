@@ -40,16 +40,17 @@ const CreateCategoryMM = () => {
     handleSubmit,
     reset,
     setError,
+    setValue,
     control,
     formState: { errors },
-  } = useForm<CategoryMMFormBody>({
+  } = useForm<ItemCategoryFormBody>({
     mode: 'onBlur',
     resolver: yupResolver(ItemCategorySchema),
     defaultValues: ItemCategoryDefaultValues,
   });
 
   const { canSave } = useFormChanges({
-    defaultValues: CategoryMMDefaultValues,
+    defaultValues: ItemCategoryDefaultValues,
     control,
   });
 

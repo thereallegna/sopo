@@ -3,21 +3,22 @@ import { useEffect, useMemo } from 'react';
 import useFormStore from '@stores/useFormStore';
 
 interface UseFormStatusProps<T> {
-  defaultValues?: T; // Optional for create form
-  control: any; // control from react-hook-form
-  ignoredFields?: (keyof T)[]; // List of fields to ignore
+  defaultValues?: T;
+  control: any;
+  ignoredFields?: (keyof T)[];
+  requireAllFields?: boolean;
 }
 
 export const useFormChanges = <T extends Record<string, any>>({
   defaultValues,
   control,
   ignoredFields = [],
+  requireAllFields = false,
 }: UseFormStatusProps<T>) => {
   const { setChangeStatus } = useFormStore();
-
   const watchedFields = useWatch({ control });
 
-  // Normalize watchedFields to handle null vs "" issue
+  // Normalize fields to handle empty strings as null
   const normalizedWatchedFields = useMemo(
     () =>
       Object.keys(watchedFields).reduce(
@@ -30,7 +31,8 @@ export const useFormChanges = <T extends Record<string, any>>({
     [watchedFields]
   );
 
-  const filteredKeys = useMemo(
+  // Get all fields excluding ignored ones
+  const relevantFields = useMemo(
     () =>
       defaultValues
         ? Object.keys(defaultValues).filter(
@@ -40,6 +42,7 @@ export const useFormChanges = <T extends Record<string, any>>({
     [defaultValues, ignoredFields]
   );
 
+  // Compare values
   const valuesAreEqual = (value1: any, value2: any) => {
     if (
       (value1 === null || value1 === '') &&
@@ -50,46 +53,50 @@ export const useFormChanges = <T extends Record<string, any>>({
     return value1 === value2;
   };
 
-  const hasChanges = useMemo(
-    () =>
-      filteredKeys.some(
-        (key) =>
-          defaultValues &&
-          !valuesAreEqual(defaultValues[key], normalizedWatchedFields[key])
-      ),
-    [filteredKeys, normalizedWatchedFields, defaultValues]
-  );
+  // Check for any changes in all fields (including ignored ones)
+  const hasChanges = useMemo(() => {
+    if (!defaultValues) return false;
+
+    const allFields = Object.keys(defaultValues);
+    return allFields.some(
+      (key) => !valuesAreEqual(defaultValues[key], normalizedWatchedFields[key])
+    );
+  }, [normalizedWatchedFields, defaultValues]);
 
   useEffect(() => {
     setChangeStatus(hasChanges);
   }, [hasChanges, setChangeStatus]);
 
+  // Determine if form can be saved
   const canSave = useMemo(() => {
     if (!defaultValues) return false;
 
-    // Ensure all fields have values and at least one field has changed from its default value
-    const allFieldsValid = filteredKeys.every(
-      (key) =>
-        normalizedWatchedFields[key] !== undefined &&
-        normalizedWatchedFields[key] !== ''
-    );
+    // Check if fields are valid based on requireAllFields
+    const fieldsValidation = requireAllFields
+      ? relevantFields.every((key) => {
+          const value = normalizedWatchedFields[key];
+          return value !== undefined && value !== '' && value !== null;
+        })
+      : relevantFields.some((key) => {
+          const value = normalizedWatchedFields[key];
+          return value !== undefined && value !== '' && value !== null;
+        });
 
-    const anyFieldChanged = filteredKeys.some(
+    // Check if any relevant field has changed
+    const hasChangedFields = relevantFields.some(
       (key) => !valuesAreEqual(defaultValues[key], normalizedWatchedFields[key])
     );
 
-    return allFieldsValid && anyFieldChanged;
-  }, [filteredKeys, normalizedWatchedFields, defaultValues]);
-
-  console.log('canSave', canSave);
-  console.log('defaultValues', defaultValues);
-  console.log('watchedFields', watchedFields);
-  console.log('normalizedWatchedFields', normalizedWatchedFields);
-  console.log('changeStatus', hasChanges);
+    return fieldsValidation && hasChangedFields;
+  }, [
+    relevantFields,
+    normalizedWatchedFields,
+    defaultValues,
+    requireAllFields,
+  ]);
 
   return { canSave };
 };
-
 export const useSetValueForm = <T extends Record<string, any>>(
   detailData: T,
   setValue: UseFormSetValue<T>
