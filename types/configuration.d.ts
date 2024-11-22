@@ -35,12 +35,24 @@ type IUOM = {
   create_date: string;
 };
 
-type ICategoryMM = {
+type IItemCategory = {
   number?: number;
   item_category_code: string;
   item_category_name: string;
   active: boolean;
   create_date: string;
+  coa_stock?: string;
+  coa_stock_description?: string;
+  coa_sales?: string;
+  coa_sales_description?: string;
+  coa_cogs?: string;
+  coa_cogs_description?: string;
+  coa_sales_return?: string;
+  coa_sales_return_description?: string;
+  coa_purchase_return?: string;
+  coa_purchase_return_description?: string;
+  coa_consumption_cost?: string;
+  coa_consumption_cost_Description?: string;
 };
 
 type IItemMM = {

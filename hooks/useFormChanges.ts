@@ -1,90 +1,103 @@
 import { useWatch, UseFormSetValue, Path, PathValue } from 'react-hook-form';
-import { useEffect, useRef } from 'react';
+import { useEffect, useMemo } from 'react';
 import useFormStore from '@stores/useFormStore';
 
-interface DefaultValues {
-  [key: string]: any;
+interface UseFormStatusProps<T> {
+  defaultValues?: T;
+  control: any;
+  ignoredFields?: (keyof T)[];
+  requireAllFields?: boolean;
 }
-type allField = 'some' | 'every';
-export const useFormChanges = <T extends DefaultValues>(
-  initialValues: T,
-  control: any,
-  setValue?: any,
-  allField: allField = 'some',
-  ignoredFields?: string[]
-) => {
-  const watchedValues = useWatch({
-    control,
-  });
-  // const [hasChanged, setHasChanged] = useState<boolean>(false)
 
-  const { setChanged } = useFormStore();
+export const useFormChanges = <T extends Record<string, any>>({
+  defaultValues,
+  control,
+  ignoredFields = [],
+  requireAllFields = false,
+}: UseFormStatusProps<T>) => {
+  const { setChangeStatus } = useFormStore();
+  const watchedFields = useWatch({ control });
 
-  // Use ref to store initial values
-  const initialValuesRef = useRef<T | null>(initialValues || null);
+  // Normalize fields to handle empty strings as null
+  const normalizedWatchedFields = useMemo(
+    () =>
+      Object.keys(watchedFields).reduce(
+        (acc, key) => ({
+          ...acc,
+          [key]: watchedFields[key] === '' ? null : watchedFields[key],
+        }),
+        {} as T
+      ),
+    [watchedFields]
+  );
 
-  // Effect to set initial values in the form
-  useEffect(() => {
-    if (initialValues && setValue) {
-      Object.keys(initialValues).forEach((key) => {
-        setValue(key, initialValues[key]);
-      });
-      initialValuesRef.current = initialValues;
+  // Get all fields excluding ignored ones
+  const relevantFields = useMemo(
+    () =>
+      defaultValues
+        ? Object.keys(defaultValues).filter(
+            (key) => !ignoredFields.includes(key as keyof T)
+          )
+        : [],
+    [defaultValues, ignoredFields]
+  );
+
+  // Compare values
+  const valuesAreEqual = (value1: any, value2: any) => {
+    if (
+      (value1 === null || value1 === '') &&
+      (value2 === null || value2 === '')
+    ) {
+      return true;
     }
-  }, [initialValues, setValue]);
+    return value1 === value2;
+  };
 
-  let hasChanged = false;
+  // Check for any changes in all fields (including ignored ones)
+  const hasChanges = useMemo(() => {
+    if (!defaultValues) return false;
 
-  if (initialValuesRef.current) {
-    const ignored = ignoredFields || [];
-    const fieldsToCheck = Object.keys(initialValuesRef.current).filter(
-      (key) => !ignored.includes(key)
+    const allFields = Object.keys(defaultValues);
+    return allFields.some(
+      (key) => !valuesAreEqual(defaultValues[key], normalizedWatchedFields[key])
+    );
+  }, [normalizedWatchedFields, defaultValues]);
+
+  useEffect(() => {
+    setChangeStatus(hasChanges);
+  }, [hasChanges, setChangeStatus]);
+
+  // Determine if form can be saved
+  const canSave = useMemo(() => {
+    if (!defaultValues) return false;
+
+    // Check if fields are valid based on requireAllFields
+    const fieldsValidation = requireAllFields
+      ? relevantFields.every((key) => {
+          const value = normalizedWatchedFields[key];
+          return value !== undefined && value !== '' && value !== null;
+        })
+      : relevantFields.some((key) => {
+          const value = normalizedWatchedFields[key];
+          return value !== undefined && value !== '' && value !== null;
+        });
+
+    // Check if any relevant field has changed
+    const hasChangedFields = relevantFields.some(
+      (key) => !valuesAreEqual(defaultValues[key], normalizedWatchedFields[key])
     );
 
-    if (allField === 'some') {
-      // setHasChanged(() => fieldsToCheck.some((key) => {
-      //     const currentValue = watchedValues?.[key];
-      //     const initialValue = initialValuesRef.current![key];
+    return fieldsValidation && hasChangedFields;
+  }, [
+    relevantFields,
+    normalizedWatchedFields,
+    defaultValues,
+    requireAllFields,
+  ]);
 
-      //     return currentValue !== initialValue;
-      //   })
-      // )
-      hasChanged = fieldsToCheck.some((key) => {
-        const currentValue = watchedValues?.[key];
-        const initialValue = initialValuesRef.current![key];
-
-        return currentValue !== initialValue;
-      });
-    } else if (allField === 'every') {
-      // setHasChanged(() => fieldsToCheck.every((key) => {
-      //     const currentValue = watchedValues?.[key];
-      //     const initialValue = initialValuesRef.current![key];
-
-      //     return currentValue !== initialValue;
-      //   })
-      // )
-      hasChanged = fieldsToCheck.every((key) => {
-        const currentValue = watchedValues?.[key];
-        const initialValue = initialValuesRef.current![key];
-
-        return currentValue !== initialValue;
-      });
-    }
-  }
-
-  useEffect(() => {
-    // Set isDirty to true if there are changes
-    setChanged(hasChanged);
-  }, [hasChanged, watchedValues, initialValuesRef, setChanged]);
-
-  return {
-    watchedValues,
-    hasChanged,
-    // setHasChanged
-  };
+  return { canSave };
 };
-
-export const useDetailForm = <T extends Record<string, any>>(
+export const useSetValueForm = <T extends Record<string, any>>(
   detailData: T,
   setValue: UseFormSetValue<T>
 ) => {
@@ -94,5 +107,5 @@ export const useDetailForm = <T extends Record<string, any>>(
         setValue(key as Path<T>, detailData[key] as PathValue<T, Path<T>>);
       });
     }
-  }, [detailData, setValue]);
+  }, [detailData, setValue]); // Re-run when detailData changes
 };

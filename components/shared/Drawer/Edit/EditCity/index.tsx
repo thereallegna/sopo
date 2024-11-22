@@ -20,7 +20,7 @@ import { citySchema } from '@constants/schemas/ConfigurationSchema/general';
 import { editCity, getProvince } from '@services/fetcher/configuration/general';
 import useFormStore from '@stores/useFormStore';
 import { useDrawer } from '@hooks/useDrawer';
-import { useFormChanges } from '@hooks/useFormChanges';
+import { useFormChanges, useSetValueForm } from '@hooks/useFormChanges';
 import { errorMapping } from '@utils/errorMapping';
 import { AxiosError } from 'axios';
 import { GET_CITY, GET_PROVINCE } from '@constants/queryKey';
@@ -33,7 +33,7 @@ const EditCity = () => {
   const { isOpenEdit, closeEditDrawer, setDetailData, openDetailDrawer } =
     useDrawerStore();
   const detail_data = useDrawerStore((state) => state.detail_data) as ICity;
-  const { setIsDirty } = useFormStore();
+  const { setChangeStatus } = useFormStore();
   const [isLoading, setIsLoading] = React.useState(false);
   const showToast = useToastStore((state) => state.showToast);
   const queryClient = useQueryClient();
@@ -46,21 +46,21 @@ const EditCity = () => {
     setError,
     setValue,
     control,
-    formState: { errors, isDirty },
+    formState: { errors },
   } = useForm<CityFormBody>({
     mode: 'onSubmit',
     resolver: yupResolver(citySchema),
     defaultValues: detail_data,
   });
 
-  const { handleCloseDrawerEdit } = useDrawer(isDirty, reset, detail_data);
-  const { hasChanged } = useFormChanges(
-    detail_data,
+  useSetValueForm<CityFormBody>(detail_data, setValue);
+
+  const { canSave } = useFormChanges({
+    defaultValues: detail_data,
     control,
-    setValue,
-    'some', // or 'every' depending on your needs
-    ['ring_area', 'location']
-  );
+  });
+
+  const { handleCloseDrawerEdit } = useDrawer(reset, detail_data);
 
   const { mutate: mutationEditCity } = useMutation({
     mutationFn: editCity,
@@ -71,8 +71,8 @@ const EditCity = () => {
     onSuccess: (data) => {
       setDetailData(data.data);
       closeEditDrawer();
+      setChangeStatus(false);
       setIsLoading(false);
-      setIsDirty(false);
       openDetailDrawer({
         ...data.data,
         province: watch('province'),
@@ -104,7 +104,7 @@ const EditCity = () => {
   const { handleSaveClick, handleInputKeyDown } = useFormSave({
     ref: formRef,
     isLoading,
-    hasChanged,
+    hasChanged: canSave,
   });
 
   return (
@@ -113,7 +113,7 @@ const EditCity = () => {
         <DrawerHeader onClick={handleCloseDrawerEdit} drawerTitle="Edit City">
           <DrawerEndHeader>
             <Button
-              variant={!hasChanged ? 'disabled' : 'primary'}
+              variant={!canSave ? 'disabled' : 'primary'}
               icon={{ size: 'large', icon: IconDeviceFloppy, color: 'White' }}
               onClick={handleSaveClick}
               disabled={isLoading}

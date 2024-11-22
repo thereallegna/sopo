@@ -9,22 +9,27 @@ export const usePreventNavigation = () => {
   const pathname = usePathname();
   const nextPathRef = useRef<string | null>(null);
 
-  const { isDirty, leavingPage, setLeavingPage, resetForm, setChanged } =
-    useFormStore();
+  const {
+    changeStatus,
+    leavingPage,
+    setLeavingPage,
+    resetForm,
+    setChangeStatus,
+  } = useFormStore();
   const { closeDrawer, closeEditDrawer, isOpen, isOpenEdit } = useDrawerStore();
 
   useEffect(() => {
-    if (isDirty) {
+    if (changeStatus) {
       window.history.pushState({ from: pathname }, '', pathname);
     }
-  }, [isDirty, pathname]);
+  }, [changeStatus, pathname]);
 
   useEffect(() => {
     const handleClick = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
       const link = target.closest('a');
 
-      if (link && isDirty) {
+      if (link && changeStatus) {
         const href = link.getAttribute('href');
         if (href && !href.startsWith('#') && href !== pathname) {
           event.preventDefault();
@@ -35,7 +40,7 @@ export const usePreventNavigation = () => {
     };
 
     const handlePopState = (event: PopStateEvent) => {
-      if (isDirty) {
+      if (changeStatus) {
         event.preventDefault();
         const targetPath = event.state?.from || '/dashboard';
         nextPathRef.current = targetPath;
@@ -45,7 +50,7 @@ export const usePreventNavigation = () => {
     };
 
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
-      if (isDirty) {
+      if (changeStatus) {
         e.preventDefault();
         // eslint-disable-next-line no-param-reassign
         e.returnValue = '';
@@ -63,7 +68,7 @@ export const usePreventNavigation = () => {
       window.removeEventListener('popstate', handlePopState);
       window.removeEventListener('beforeunload', handleBeforeUnload);
     };
-  }, [isDirty, pathname, setLeavingPage]);
+  }, [changeStatus, pathname, setLeavingPage]);
 
   const closeLeavingDialog = useCallback(() => {
     setLeavingPage(false);
@@ -76,15 +81,18 @@ export const usePreventNavigation = () => {
 
     // Conditionally close the active drawer
     if (isOpenEdit) {
+      setChangeStatus(false);
+      setLeavingPage(false);
       closeEditDrawer();
-      setChanged(false);
       resetForm();
     } else if (isOpen) {
+      setChangeStatus(false);
+
+      setLeavingPage(false);
       closeDrawer();
+
       resetForm();
     }
-
-    setLeavingPage(false);
 
     if (nextPath) {
       try {
@@ -101,7 +109,6 @@ export const usePreventNavigation = () => {
     setLeavingPage,
     isOpen,
     isOpenEdit,
-    setChanged,
   ]);
 
   return {

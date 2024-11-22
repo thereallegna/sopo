@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import { Button } from '@components/ui/Button';
 import {
   Drawer,
@@ -18,7 +18,6 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import useFormStore from '@stores/useFormStore';
 import { useDrawer } from '@hooks/useDrawer';
-import { useFormChanges } from '@hooks/useFormChanges';
 import { errorMapping } from '@utils/errorMapping';
 import { AxiosError } from 'axios';
 import { GET_UOM } from '@constants/queryKey';
@@ -26,12 +25,13 @@ import { editUOM } from '@services/fetcher/configuration/material-management';
 import { UOMSchema } from '@constants/schemas/ConfigurationSchema/InventoryMaterialManagement';
 import useToastStore from '@stores/useToastStore';
 import { useFormSave } from '@hooks/useFormSave';
+import bindCurrentValueAndChangeValue from '@hooks/useBindCurrentValAndChangeVal';
 
 const EditUOM = () => {
   const formRef = useRef<HTMLFormElement>(null);
   const { isOpenEdit, closeEditDrawer, setDetailData } = useDrawerStore();
   const detail_data = useDrawerStore((state) => state.detail_data) as IUOM;
-  const { setIsDirty } = useFormStore();
+  const { setChangeStatus, changeStatus } = useFormStore();
   const [isLoading, setIsLoading] = React.useState(false);
   const showToast = useToastStore((state) => state.showToast);
   const queryClient = useQueryClient();
@@ -42,16 +42,51 @@ const EditUOM = () => {
     reset,
     setError,
     setValue,
-    control,
-    formState: { errors, isDirty },
+    watch,
+    formState: { errors },
   } = useForm<UOMFormBody>({
     mode: 'onBlur',
     resolver: yupResolver(UOMSchema),
     defaultValues: detail_data,
   });
 
-  const { handleCloseDrawerEdit } = useDrawer(isDirty, reset, detail_data);
-  const { hasChanged } = useFormChanges(detail_data, control, setValue);
+  const code = watch('uom_code');
+  const name = watch('uom_name');
+
+  const currentValueMemo = useMemo(
+    () => ({
+      code: detail_data?.uom_code || '',
+      name: detail_data?.uom_name || '',
+    }),
+    [detail_data?.uom_code, detail_data?.uom_name]
+  );
+
+  const changeValueMemo = useMemo(
+    () => ({
+      code: detail_data?.uom_code || code,
+      name,
+    }),
+    [detail_data?.uom_code, code, name]
+  );
+
+  console.log('changeStatus', changeStatus);
+
+  useEffect(() => {
+    if (detail_data) {
+      setChangeStatus(
+        bindCurrentValueAndChangeValue(currentValueMemo, changeValueMemo)
+      );
+    }
+  }, [detail_data, changeValueMemo, setChangeStatus, currentValueMemo]);
+
+  useEffect(() => {
+    if (detail_data) {
+      setValue('uom_code', detail_data.uom_code || '');
+      setValue('uom_name', detail_data.uom_name || '');
+    }
+  }, [detail_data, setValue]);
+
+  const { handleCloseDrawerEdit } = useDrawer(reset, detail_data);
 
   const { mutate: mutationEditUOM } = useMutation({
     mutationFn: editUOM,
@@ -61,11 +96,12 @@ const EditUOM = () => {
     },
     onSuccess: (data) => {
       console.log('Edit mutation successful:', data);
+      setChangeStatus(false);
       reset();
       setDetailData(data.data);
       closeEditDrawer();
+      console.log('status', changeStatus);
       setIsLoading(false);
-      setIsDirty(false);
       queryClient.invalidateQueries({ queryKey: [GET_UOM] });
       showToast('UoM successfully edited', 'success');
     },
@@ -91,7 +127,7 @@ const EditUOM = () => {
   const { handleSaveClick, handleInputKeyDown } = useFormSave({
     ref: formRef,
     isLoading,
-    hasChanged,
+    hasChanged: changeStatus,
   });
 
   return (
@@ -100,7 +136,7 @@ const EditUOM = () => {
         <DrawerHeader onClick={handleCloseDrawerEdit} drawerTitle="Edit UoM">
           <DrawerEndHeader>
             <Button
-              variant={!hasChanged ? 'disabled' : 'primary'}
+              variant={!changeStatus ? 'disabled' : 'primary'}
               icon={{ size: 'large', icon: IconDeviceFloppy, color: 'White' }}
               onClick={handleSaveClick}
               disabled={isLoading}

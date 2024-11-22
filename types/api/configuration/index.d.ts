@@ -42,7 +42,7 @@ type ItemCategoryFormBody = {
   coa_purchase_return?: string;
   coa_purchase_return_description?: string;
   coa_consumption_cost?: string;
-  cos_consumption_cost_description?: string;
+  coa_consumption_cost_description?: string;
 };
 
 type MasterItemFormBody = {

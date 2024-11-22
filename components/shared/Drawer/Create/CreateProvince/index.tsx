@@ -35,7 +35,7 @@ import { useFormSave } from '@hooks/useFormSave';
 const CreateCity = () => {
   const formRef = useRef<HTMLFormElement>(null);
   const { isOpen, closeDrawer, openDetailDrawer } = useDrawerStore();
-  const { setIsDirty } = useFormStore();
+  const { setChangeStatus } = useFormStore();
   const [isLoading, setIsLoading] = React.useState(false);
   const showToast = useToastStore((state) => state.showToast);
   const queryClient = useQueryClient();
@@ -48,20 +48,20 @@ const CreateCity = () => {
     setValue,
     watch,
     control,
-    formState: { errors, isDirty },
+    formState: { errors },
   } = useForm<ProvinceFormBody>({
     mode: 'onSubmit',
     resolver: yupResolver(provinceSchema),
     defaultValues: provinceDefaultValues,
   });
 
-  const { handleCloseDrawer } = useDrawer(isDirty, reset);
-  const { hasChanged } = useFormChanges(
-    provinceDefaultValues,
+  const { canSave } = useFormChanges({
+    defaultValues: provinceDefaultValues,
     control,
-    setValue,
-    'every' // or 'every' depending on your needs
-  );
+    requireAllFields: true,
+  });
+
+  const { handleCloseDrawer } = useDrawer(reset);
 
   const { mutate: mutationCreateCity } = useMutation({
     mutationFn: createProvince,
@@ -71,7 +71,8 @@ const CreateCity = () => {
     onSuccess: (data) => {
       closeDrawer();
       setIsLoading(false);
-      setIsDirty(false);
+      setChangeStatus(false);
+
       openDetailDrawer({
         ...data.data,
         country: watch('country'),
@@ -101,7 +102,7 @@ const CreateCity = () => {
   const { handleSaveClick, handleInputKeyDown } = useFormSave({
     ref: formRef,
     isLoading,
-    hasChanged,
+    hasChanged: canSave,
   });
 
   return (
@@ -110,7 +111,7 @@ const CreateCity = () => {
         <DrawerHeader onClick={handleCloseDrawer} drawerTitle="Add Province">
           <DrawerEndHeader>
             <Button
-              variant={!hasChanged ? 'disabled' : 'primary'}
+              variant={!canSave ? 'disabled' : 'primary'}
               icon={{ size: 'large', icon: IconDeviceFloppy, color: 'White' }}
               type="submit"
               onClick={handleSaveClick}

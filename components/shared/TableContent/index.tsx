@@ -81,6 +81,8 @@ const TableContent = <T,>({
 
   const isGrouping = option.grouping.length > 0;
 
+  console.log('adkaldj', data);
+
   const table = useReactTable({
     data: data?.results ?? defaultData,
     columns: generatedColumns,

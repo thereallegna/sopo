@@ -153,7 +153,7 @@ const ItemCategory = () => {
               header: 'Coa Consumption Cost',
             },
             {
-              accessor: 'coa_consumption_cost',
+              accessor: 'coa_consumption_cost_description',
               header: 'Coa Consumption Cost Description',
             },
           ],
