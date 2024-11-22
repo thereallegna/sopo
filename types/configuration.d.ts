@@ -37,8 +37,22 @@ type IUOM = {
 
 type ICategoryMM = {
   number?: number;
-  categoryMM_code: string;
-  categoryMM_name: string;
+  item_category_code: string;
+  item_category_name: string;
+  active: boolean;
+  create_date: string;
+};
+
+type IItemMM = {
+  number?: number;
+  item_code: string;
+  item_name: string;
+  local_code: string;
+  foreign_name: string;
+  old_code: string;
+  category_name: string;
+  spesification: string;
+  active: boolean;
   create_date: string;
 };
 /* ======================= Inventory and Material Management End ==================== */

@@ -5,6 +5,7 @@ import {
   createColumnHelper,
 } from '@tanstack/react-table';
 import GoToDetail from '@components/shared/TableContent/ToDetail';
+import { IconCircleCheckFilled } from '@tabler/icons-react';
 import { GenerateColumnsOption } from '../types/client/table';
 
 export const generateColumns = ({
@@ -19,8 +20,22 @@ export const generateColumns = ({
     columnHelper.accessor(column.accessor, {
       id: column.accessor,
       header: column.header,
-      cell: (props) => props.renderValue(),
+      cell: (props) => {
+        const value = props.renderValue();
+
+        if (typeof value === 'boolean') {
+          return value ? (
+            <IconCircleCheckFilled size={16} className="text-Green-500" />
+          ) : null;
+        }
+
+        return value;
+      },
       enableGrouping: true,
+      // minSize: 90,
+      // meta: {
+      //   isPinning: column.isPinning
+      // }
     })
   );
 

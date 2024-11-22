@@ -153,7 +153,9 @@ const DrawerHeader = ({
   >
     <div className="flex items-center gap-[10px]">
       <DrawerBack onClick={onClick} icon={IconArrowLeft} />
-      <DrawerTitle>{drawerTitle}</DrawerTitle>
+      <DrawerTitle className="flex-1 truncate min-w-fit">
+        {drawerTitle}
+      </DrawerTitle>
     </div>
 
     {children}

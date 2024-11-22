@@ -8,6 +8,7 @@ import {
 type ColumnKey = {
   accessor: string;
   header: string;
+  isPinning?: boolean;
 };
 
 type GenerateColumnsOption = {
@@ -39,6 +40,7 @@ type TableContentProps<T> = {
   data?: ApiResultResponse<T[]>;
   columns: GenerateColumnsOption;
   option: TableOptionState;
+  pinnedColumns?: string[];
   onPagination: (
     pg: PaginationState | ((prev: PaginationState) => PaginationState)
   ) => void;

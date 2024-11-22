@@ -21,6 +21,7 @@ import { FetcherOptions } from '../../../../types/client/fetcher';
 export type TableDrawerProps = {
   title: string;
   columns: GenerateColumnsOption;
+  pinnedColumns?: string[];
   queryKey: string;
   queryFn: (option?: FetcherOptions) => Promise<AxiosResponse<any, any>>;
   keyFilterDrawer?: FilterDrawerType;
@@ -30,6 +31,7 @@ const TableDrawer = ({
   title,
   columns,
   queryKey,
+  pinnedColumns,
   queryFn,
   keyFilterDrawer,
 }: TableDrawerProps) => {
@@ -44,6 +46,7 @@ const TableDrawer = ({
     queryFn,
     columns,
     queryKey,
+    pinnedColumns,
     onFilter: keyFilterDrawer ? openFilterDrawer : undefined,
   });
 

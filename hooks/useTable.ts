@@ -19,12 +19,14 @@ type UseTableProps<T> = {
     options?: FetcherOptions
   ) => Promise<AxiosResponse<ApiResponse<T[]>>>;
   columns: GenerateColumnsOption;
+  pinnedColumns?: string[];
   onFilter?: () => void;
 };
 
 const useTable = <T>({
   queryKey,
   columns,
+  pinnedColumns,
   queryFn,
   onFilter,
 }: UseTableProps<T>): TableContentProps<T> => {
@@ -147,6 +149,7 @@ const useTable = <T>({
     data: responseData,
     columns,
     option,
+    pinnedColumns,
     onPagination,
     onSearch,
     onFilter,

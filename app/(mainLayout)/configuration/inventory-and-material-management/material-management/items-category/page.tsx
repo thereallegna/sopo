@@ -7,7 +7,7 @@ import BodyContent from '@components/module/Content/BodyContent';
 import Image from 'next/image';
 import FilterButton from '@components/ui/Table/Action/FilterButton';
 import { useDrawerStore } from '@stores/useDrawerStore';
-import { getCategoryMM } from '@services/fetcher/configuration/material-management';
+import { getItemCategory } from '@services/fetcher/configuration/material-management';
 import { GET_CATEGORY_MATERIAL_MANAGEMENT } from '@constants/queryKey';
 import dynamic from 'next/dynamic';
 
@@ -32,7 +32,7 @@ const EditCategory = dynamic(
   { ssr: false }
 );
 
-const Country = () => {
+const ItemCategory = () => {
   const { openFilterDrawer, openTableDrawer, closeFilterDrawer, openDrawer } =
     useDrawerStore();
 
@@ -41,7 +41,7 @@ const Country = () => {
   };
 
   const handleOpenFilter = () => {
-    openFilterDrawer('filterCategoryMM');
+    openFilterDrawer('filterItemCategory');
   };
 
   const handleOpenTable = () => {
@@ -52,7 +52,7 @@ const Country = () => {
   return (
     <>
       <Content>
-        <HeaderContent title="CategoryMM" onAdd={handleOpenAdd} />
+        <HeaderContent title="Item's Category" onAdd={handleOpenAdd} />
         <BodyContent>
           <div className="flex flex-col gap-4 py-2 items-center">
             <Image
@@ -83,7 +83,7 @@ const Country = () => {
       </Content>
       <FilterCategory />
       <TableDrawer
-        title="Find CategoryMM"
+        title="Find Category Material Management"
         queryKey={GET_CATEGORY_MATERIAL_MANAGEMENT}
         columns={{
           columns: [
@@ -92,20 +92,73 @@ const Country = () => {
               header: '#',
             },
             {
-              accessor: 'categoryMM_code',
-              header: 'Category MM Code',
+              accessor: 'item_category_code',
+              header: 'Item Category Code',
             },
             {
-              accessor: 'categoryMM_name',
-              header: 'Category MM Name',
+              accessor: 'item_category_name',
+              header: 'Item Category Name',
+            },
+            {
+              accessor: 'active',
+              header: 'Active',
             },
             {
               accessor: 'create_date',
-              header: 'Create MM Date',
+              header: 'Create Date',
+            },
+            {
+              accessor: 'coa_stock',
+              header: 'Coa Stock',
+            },
+            {
+              accessor: 'coa_stock_description',
+              header: 'Coa Stock Description',
+            },
+            {
+              accessor: 'coa_sales',
+              header: 'Coa Sales',
+            },
+            {
+              accessor: 'coa_sales_description',
+              header: 'Coa Sales Description',
+            },
+            {
+              accessor: 'coa_cogs',
+              header: 'Coa Cogs',
+            },
+            {
+              accessor: 'coa_cogs_description',
+              header: 'Coa Cogs Description',
+            },
+            {
+              accessor: 'coa_sales_return',
+              header: 'Coa Sales Return',
+            },
+            {
+              accessor: 'coa_sales_return_description',
+              header: 'Coa Sales Return Description',
+            },
+            {
+              accessor: 'coa_purchase_return',
+              header: 'Coa Purchase Return',
+            },
+            {
+              accessor: 'coa_purchase_return_description',
+              header: 'Coa Purchase Return Description',
+            },
+            {
+              accessor: 'coa_consumption_cost',
+              header: 'Coa Consumption Cost',
+            },
+            {
+              accessor: 'coa_consumption_cost',
+              header: 'Coa Consumption Cost Description',
             },
           ],
         }}
-        queryFn={getCategoryMM}
+        pinnedColumns={['number', 'item_category_code']}
+        queryFn={getItemCategory}
       />
       <CreateCategory />
       <DetailCategory />
@@ -114,4 +167,4 @@ const Country = () => {
   );
 };
 
-export default Country;
+export default ItemCategory;
