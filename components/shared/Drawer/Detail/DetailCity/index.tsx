@@ -14,10 +14,10 @@ import InputField from '@components/shared/InputField';
 import { useDrawerStore } from '@stores/useDrawerStore';
 import { IconPencil } from '@tabler/icons-react';
 import { useForm } from 'react-hook-form';
-import { useDetailForm } from '@hooks/useFormChanges';
 import Combobox from '@components/shared/Combobox';
 import { GET_PROVINCE } from '@constants/queryKey';
 import { getProvince } from '@services/fetcher/configuration/general';
+import { useSetValueForm } from '@hooks/useFormChanges';
 
 const DetailCity = () => {
   const { isOpenDetail, closeDetailDrawer, openEditDrawer } = useDrawerStore();
@@ -25,7 +25,7 @@ const DetailCity = () => {
 
   const { register, setValue } = useForm<ICity>();
 
-  useDetailForm<ICity>(detail_data, setValue);
+  useSetValueForm<ICity>(detail_data, setValue);
 
   return (
     <Drawer onClose={closeDetailDrawer} open={isOpenDetail}>

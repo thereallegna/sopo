@@ -18,20 +18,20 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { countrySchema } from '@constants/schemas/ConfigurationSchema/general';
 import { editCountry } from '@services/fetcher/configuration/general';
-import useFormStore from '@stores/useFormStore';
 import { useDrawer } from '@hooks/useDrawer';
-import { useFormChanges } from '@hooks/useFormChanges';
+import { useFormChanges, useSetValueForm } from '@hooks/useFormChanges';
 import { errorMapping } from '@utils/errorMapping';
 import { AxiosError } from 'axios';
 import { GET_COUNTRY } from '@constants/queryKey';
 import useToastStore from '@stores/useToastStore';
 import { useFormSave } from '@hooks/useFormSave';
+import useFormStore from '@stores/useFormStore';
 
 const EditCountry = () => {
   const formRef = useRef<HTMLFormElement>(null);
   const { isOpenEdit, closeEditDrawer, setDetailData } = useDrawerStore();
   const detail_data = useDrawerStore((state) => state.detail_data) as ICountry;
-  const { setIsDirty } = useFormStore();
+  const { setChangeStatus } = useFormStore();
   const [isLoading, setIsLoading] = React.useState(false);
   const showToast = useToastStore((state) => state.showToast);
   const queryClient = useQueryClient();
@@ -43,16 +43,21 @@ const EditCountry = () => {
     setError,
     setValue,
     control,
-    formState: { errors, isDirty },
+    formState: { errors },
   } = useForm<CountryFormBody>({
     mode: 'onBlur',
     resolver: yupResolver(countrySchema),
     defaultValues: detail_data,
   });
 
-  const { handleCloseDrawerEdit } = useDrawer(isDirty, reset, detail_data);
-  const { hasChanged } = useFormChanges(detail_data, control, setValue);
+  useSetValueForm<CountryFormBody>(detail_data, setValue);
 
+  const { canSave } = useFormChanges({
+    defaultValues: detail_data,
+    control,
+  });
+
+  const { handleCloseDrawerEdit } = useDrawer(reset, detail_data);
   const { mutate: mutationEditCountry } = useMutation({
     mutationFn: editCountry,
     onMutate: () => {
@@ -65,7 +70,7 @@ const EditCountry = () => {
       setDetailData(data.data);
       closeEditDrawer();
       setIsLoading(false);
-      setIsDirty(false);
+      setChangeStatus(false);
       queryClient.invalidateQueries({ queryKey: [GET_COUNTRY] });
       showToast('Country successfully edited', 'success');
     },
@@ -91,7 +96,7 @@ const EditCountry = () => {
   const { handleSaveClick, handleInputKeyDown } = useFormSave({
     ref: formRef,
     isLoading,
-    hasChanged,
+    hasChanged: canSave,
   });
 
   return (
@@ -103,7 +108,7 @@ const EditCountry = () => {
         >
           <DrawerEndHeader>
             <Button
-              variant={!hasChanged ? 'disabled' : 'primary'}
+              variant={!canSave ? 'disabled' : 'primary'}
               icon={{ size: 'large', icon: IconDeviceFloppy, color: 'White' }}
               onClick={handleSaveClick}
               disabled={isLoading}
