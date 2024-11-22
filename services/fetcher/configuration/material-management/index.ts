@@ -101,6 +101,16 @@ const getItem = async (option?: FetcherOptions) => {
   }
 };
 
+const createItem = async (body: MasterItemFormBody) => {
+  try {
+    const res = await axios.post(PATH_ITEMS_MASTER, body);
+    return res.data;
+  } catch (error) {
+    console.error('Error creating item category:', error);
+    throw error;
+  }
+};
+
 export {
   getUOM,
   createUOM,
@@ -109,4 +119,5 @@ export {
   createItemCategory,
   editItemCategory,
   getItem,
+  createItem,
 };

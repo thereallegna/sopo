@@ -10,12 +10,11 @@ export interface TableHeadProps
 }
 
 const TableHead = React.forwardRef<HTMLTableCellElement, TableHeadProps>(
-  ({ className, children, activeGroup, onGroup }, ref) => (
-    <th ref={ref}>
+  ({ children, activeGroup, onGroup, ...props }, ref) => (
+    <th ref={ref} className="bg-Neutral-100" {...props}>
       <div
         className={cn(
-          'py-3 px-4 flex gap-x-2 items-center text-base font-semibold w-full min-w-max',
-          className
+          'py-3 px-4 flex gap-x-2 items-center text-base font-semibold w-full min-w-max bg-Neutral-100'
         )}
       >
         {onGroup && (

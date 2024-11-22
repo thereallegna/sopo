@@ -32,7 +32,7 @@ const TableAction: React.FC<TableActionProps> = ({
   onFilter,
   onRowSizeChange,
 }) => (
-  <div className="flex justify-between gap-2">
+  <div className="flex justify-between gap-2 z-20">
     <div className="flex gap-2 flex-1 w-full">
       <Input
         placeholder="Search..."

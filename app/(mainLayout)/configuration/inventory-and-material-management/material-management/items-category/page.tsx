@@ -90,6 +90,7 @@ const ItemCategory = () => {
             {
               accessor: 'number',
               header: '#',
+              size: 65,
             },
             {
               accessor: 'item_category_code',
