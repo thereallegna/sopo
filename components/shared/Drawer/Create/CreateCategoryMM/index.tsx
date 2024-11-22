@@ -52,6 +52,7 @@ const CreateCategoryMM = () => {
   const { canSave } = useFormChanges({
     defaultValues: ItemCategoryDefaultValues,
     control,
+    requireAllFields: true,
   });
 
   const { handleCloseDrawer } = useDrawer(reset);

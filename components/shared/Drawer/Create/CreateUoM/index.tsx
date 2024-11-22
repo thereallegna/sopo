@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { Button } from '@components/ui/Button';
 import {
   Drawer,
@@ -26,6 +26,7 @@ import { UOMSchema } from '@constants/schemas/ConfigurationSchema/InventoryMater
 import { createUOM } from '@services/fetcher/configuration/material-management';
 import useToastStore from '@stores/useToastStore';
 import { useFormSave } from '@hooks/useFormSave';
+import { useFormChanges } from '@hooks/useFormChanges';
 
 const CreateUOM = () => {
   const formRef = useRef<HTMLFormElement>(null);
@@ -40,7 +41,7 @@ const CreateUOM = () => {
     handleSubmit,
     reset,
     setError,
-    watch,
+    control,
     formState: { errors },
   } = useForm<UOMFormBody>({
     mode: 'onBlur',
@@ -48,17 +49,23 @@ const CreateUOM = () => {
     defaultValues: UOMDefaultValues,
   });
 
-  const code = watch('uom_code');
-  const name = watch('uom_name');
+  const { canSave } = useFormChanges({
+    defaultValues: UOMDefaultValues,
+    control,
+    requireAllFields: true,
+  });
 
-  // Memantau perubahan untuk tombol Save
-  const canSave = Boolean(code && name);
+  // const code = watch('uom_code');
+  // const name = watch('uom_name');
 
-  // Memantau perubahan untuk modal konfirmasi
-  useEffect(() => {
-    // Set changeStatus true jika salah satu field diisi
-    setChangeStatus(Boolean(code || name));
-  }, [code, name, setChangeStatus]);
+  // // Memantau perubahan untuk tombol Save
+  // const canSave = Boolean(code && name);
+
+  // // Memantau perubahan untuk modal konfirmasi
+  // useEffect(() => {
+  //   // Set changeStatus true jika salah satu field diisi
+  //   setChangeStatus(Boolean(code || name));
+  // }, [code, name, setChangeStatus]);
 
   const { handleCloseDrawer } = useDrawer(reset);
 
