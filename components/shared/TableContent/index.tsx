@@ -81,8 +81,6 @@ const TableContent = <T,>({
 
   const isGrouping = option.grouping.length > 0;
 
-  console.log('adkaldj', data);
-
   const table = useReactTable({
     data: data?.results ?? defaultData,
     columns: generatedColumns,
@@ -153,8 +151,13 @@ const TableContent = <T,>({
           {table.getRowModel().rows.map((row) => (
             <TableRow
               key={row.id}
+              className={onSelectRow ? 'cursor-pointer' : undefined}
               onClick={
-                onSelectRow ? () => onSelectRow(row.original) : undefined
+                onSelectRow
+                  ? () => {
+                      onSelectRow(row.original);
+                    }
+                  : undefined
               }
             >
               {row.getVisibleCells().map((cell) => {

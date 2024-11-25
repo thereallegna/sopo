@@ -14,6 +14,7 @@ interface SelectableModalProps {
   columns: GenerateColumnsOption;
   queryKey: string;
   queryFn: (option?: FetcherOptions) => Promise<AxiosResponse<any, any>>;
+  onSelectRow?: (data: any) => void;
 }
 
 const SelectableModal: React.FC<SelectableModalProps> = ({
@@ -23,11 +24,13 @@ const SelectableModal: React.FC<SelectableModalProps> = ({
   columns,
   queryKey,
   queryFn,
+  onSelectRow,
 }) => {
   const tableProps = useTable<any[]>({
     queryFn,
     columns,
     queryKey,
+    onSelectRow,
   });
 
   if (!isOpen) return null;
