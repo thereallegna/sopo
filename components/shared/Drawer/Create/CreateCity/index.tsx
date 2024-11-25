@@ -203,10 +203,8 @@ const CreateCity = () => {
                       value: watch('province_code'),
                     }}
                     onChange={(val) => {
-                      setValue('province', val.label, { shouldDirty: true });
-                      setValue('province_code', val.value, {
-                        shouldDirty: true,
-                      });
+                      setValue('province', val.label);
+                      setValue('province_code', val.value);
                       setError('province', { type: 'disabled' });
                     }}
                   />

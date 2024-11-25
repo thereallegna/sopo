@@ -76,4 +76,10 @@ type IItemMM = {
   service_item?: boolean;
   tax_liablepackage?: boolean;
 };
+
+type ICoa = {
+  account: string;
+  number?: number;
+  description: string;
+};
 /* ======================= Inventory and Material Management End ==================== */

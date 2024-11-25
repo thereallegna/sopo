@@ -40,16 +40,6 @@ const CreateCategoryMM = () => {
   const openToast = useToastStore((state) => state.showToast);
   const queryClient = useQueryClient();
   const [isModalOpen, setModalOpen] = React.useState(false);
-  const [, setModalTargetField] = React.useState('');
-
-  const [] = React.useState({
-    coa_stock: '',
-    coa_sales: '',
-    coa_cogs: '',
-    coa_sales_return: '',
-    coa_purchase_return: '',
-    coa_consumption_cost: '',
-  });
 
   const {
     register,
@@ -64,6 +54,8 @@ const CreateCategoryMM = () => {
     resolver: yupResolver(ItemCategorySchema),
     defaultValues: ItemCategoryDefaultValues,
   });
+
+  const { coa_form, setCoaForm } = useFormStore();
 
   const { canSave } = useFormChanges({
     defaultValues: ItemCategoryDefaultValues,
@@ -113,8 +105,8 @@ const CreateCategoryMM = () => {
   });
 
   const openModalForField = (fieldName: string) => {
-    setModalTargetField(fieldName);
     setModalOpen(true);
+    setCoaForm(fieldName);
   };
 
   return (
@@ -504,6 +496,19 @@ const CreateCategoryMM = () => {
           hasAction: false,
         }}
         queryFn={getCoa}
+        onSelectRow={(data: ICoa) => {
+          setValue(
+            `${coa_form}_account` as keyof ItemCategoryFormBody,
+            data.account,
+            { shouldDirty: true }
+          );
+          setValue(
+            `${coa_form}_description` as keyof ItemCategoryFormBody,
+            data.description,
+            { shouldDirty: true }
+          );
+          setModalOpen(false); // Close the modal after selection
+        }}
       />
     </Drawer>
   );
