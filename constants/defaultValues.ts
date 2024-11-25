@@ -32,6 +32,14 @@ export const ItemCategoryDefaultValues: ItemCategoryFormBody = {
   item_category_name: '',
   active: true,
 };
+
+export const masterItemDefaultValues: MasterItemFormBody = {
+  item_code: '',
+  item_name: '',
+  category_code: '',
+  uom_code: '',
+  active: false,
+};
 // Configuration Material Management End
 
 // Zustand Pagination State

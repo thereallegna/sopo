@@ -30,14 +30,18 @@ const inputVariant = cva(
 );
 
 export interface InputProps
-  extends React.InputHTMLAttributes<HTMLInputElement>,
+  extends React.InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement>,
     VariantProps<typeof inputVariant> {
   start_icon?: IconProps;
   end_icon?: IconProps;
   iconClassName?: string;
+  textarea?: boolean; // New prop to enable textarea
 }
 
-const Input = React.forwardRef<HTMLInputElement, InputProps>(
+const Input = React.forwardRef<
+  HTMLInputElement | HTMLTextAreaElement,
+  InputProps
+>(
   (
     {
       className,
@@ -48,6 +52,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       sizes,
       iconClassName,
       disabled,
+      textarea,
       ...props
     },
     ref
@@ -66,7 +71,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 
     // Determine the correct icon to show for password input
     let passwordIcon = null;
-    if (type === 'password') {
+    if (type === 'password' && !textarea) {
       passwordIcon = showPw ? (
         <IconComponent
           icon={IconEyeClosed}
@@ -92,13 +97,22 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         )}
       >
         {StartIcon && <IconComponent data-testid="start-icon" {...StartIcon} />}
-        <input
-          type={inputType}
-          className={cn('w-full outline-none bg-transparent', className)}
-          ref={ref}
-          disabled={disabled}
-          {...props}
-        />
+        {textarea ? (
+          <textarea
+            className={cn('w-full outline-none bg-transparent', className)}
+            ref={ref as React.Ref<HTMLTextAreaElement>}
+            disabled={disabled}
+            {...props}
+          />
+        ) : (
+          <input
+            type={inputType}
+            className={cn('w-full outline-none bg-transparent', className)}
+            ref={ref as React.Ref<HTMLInputElement>}
+            disabled={disabled}
+            {...props}
+          />
+        )}
         {passwordIcon}
         {EndIcon && <IconComponent data-testid="end-icon" {...EndIcon} />}
       </div>

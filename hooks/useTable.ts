@@ -20,6 +20,7 @@ type UseTableProps<T> = {
   ) => Promise<AxiosResponse<ApiResponse<T[]>>>;
   columns: GenerateColumnsOption;
   pinnedColumns?: string[];
+  onSelectRow?: (data: T) => void;
   onFilter?: () => void;
 };
 
@@ -27,6 +28,7 @@ const useTable = <T>({
   queryKey,
   columns,
   pinnedColumns,
+  onSelectRow,
   queryFn,
   onFilter,
 }: UseTableProps<T>): TableContentProps<T> => {
@@ -156,6 +158,7 @@ const useTable = <T>({
     onColumnVisibility,
     onGrouping,
     onRowSizeChange,
+    onSelectRow,
   };
 };
 

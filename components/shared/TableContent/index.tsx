@@ -41,16 +41,15 @@ const getCommonPinningStyles = (column: Column<any>): CSSProperties => {
   let boxShadow: string | undefined;
 
   if (isLastLeftPinnedColumn) {
-    boxShadow = '-4px 0 4px -4px gray inset';
+    boxShadow = '-1px 0 1px -1px gray inset';
   } else if (isFirstRightPinnedColumn) {
-    boxShadow = '4px 0 4px -4px gray inset';
+    boxShadow = '1px 0 1px -1px gray inset';
   }
 
   const left = isPinned === 'left' ? `${column.getStart('left')}px` : undefined;
   const right =
     isPinned === 'right' ? `${column.getAfter('right')}px` : undefined;
 
-  const opacity = isPinned ? 0.95 : 1;
   const position = isPinned ? 'sticky' : 'relative';
   const zIndex = isPinned ? 1 : 0;
 
@@ -58,7 +57,6 @@ const getCommonPinningStyles = (column: Column<any>): CSSProperties => {
     boxShadow,
     left,
     right,
-    opacity,
     position,
     width: column.getSize(),
     zIndex,
@@ -69,7 +67,8 @@ const TableContent = <T,>({
   data,
   columns,
   option,
-  // pinnedColumns,
+  pinnedColumns,
+  onSelectRow,
   onPagination,
   onSearch,
   onFilter,
@@ -94,6 +93,9 @@ const TableContent = <T,>({
       grouping: option.grouping,
       pagination: option.pagination,
       columnVisibility: option.columnVisibility,
+      columnPinning: {
+        left: pinnedColumns,
+      },
     },
     getGroupedRowModel: getGroupedRowModel(),
     getCoreRowModel: getCoreRowModel(),
@@ -149,7 +151,12 @@ const TableContent = <T,>({
         </TableHeader>
         <TableBody>
           {table.getRowModel().rows.map((row) => (
-            <TableRow key={row.id}>
+            <TableRow
+              key={row.id}
+              onClick={
+                onSelectRow ? () => onSelectRow(row.original) : undefined
+              }
+            >
               {row.getVisibleCells().map((cell) => {
                 if (cell.getIsGrouped()) {
                   return (

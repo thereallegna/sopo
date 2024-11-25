@@ -32,10 +32,7 @@ export const generateColumns = ({
         return value;
       },
       enableGrouping: true,
-      // minSize: 90,
-      // meta: {
-      //   isPinning: column.isPinning
-      // }
+      size: column.size,
     })
   );
 
