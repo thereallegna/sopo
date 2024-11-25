@@ -16,7 +16,7 @@ import { IconDeviceFloppy, IconSearch } from '@tabler/icons-react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import useFormStore from '@stores/useFormStore'; // Import useFormStore
+// import useFormStore from '@stores/useFormStore'; // Import useFormStore
 import { useDrawer } from '@hooks/useDrawer';
 import {
   cityDefaultValues,
@@ -37,7 +37,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@components/ui/Tabs';
 const CreateMasterItemMM = () => {
   const formRef = useRef<HTMLFormElement>(null);
   const { isOpen, closeDrawer, openDetailDrawer } = useDrawerStore();
-  const { setIsDirty } = useFormStore();
+  // const { setIsDirty } = useFormStore();
   const [isLoading, setIsLoading] = React.useState(false);
   const openToast = useToastStore((state) => state.showToast);
   const queryClient = useQueryClient();
@@ -47,22 +47,28 @@ const CreateMasterItemMM = () => {
     handleSubmit,
     reset,
     setError,
-    setValue,
+    // setValue,
     control,
-    formState: { errors, isDirty },
+    formState: { errors },
   } = useForm<MasterItemFormBody>({
     mode: 'onSubmit',
     resolver: yupResolver(MasterItemMMSchema),
     defaultValues: masterItemDefaultValues,
   });
 
-  const { handleCloseDrawer } = useDrawer(isDirty, reset);
-  const { hasChanged } = useFormChanges(
-    cityDefaultValues,
+  const { handleCloseDrawer } = useDrawer(reset);
+  // const { hasChanged } = useFormChanges(
+  //   cityDefaultValues,
+  //   control,
+  //   setValue,
+  //   'every' // or 'every' depending on your needs
+  // );
+  const { canSave } = useFormChanges({
+    defaultValues: cityDefaultValues,
     control,
-    setValue,
-    'every' // or 'every' depending on your needs
-  );
+    ignoredFields: ['ring_area', 'location'],
+    requireAllFields: true,
+  });
 
   const { mutate: mutationCreateMasterItemMM } = useMutation({
     mutationFn: createItem,
@@ -72,7 +78,7 @@ const CreateMasterItemMM = () => {
     onSuccess: (data) => {
       closeDrawer();
       setIsLoading(false);
-      setIsDirty(false);
+      // setIsDirty(false);
       openDetailDrawer(data.data);
       reset();
       queryClient.invalidateQueries({
@@ -100,7 +106,7 @@ const CreateMasterItemMM = () => {
   const { handleSaveClick, handleInputKeyDown } = useFormSave({
     ref: formRef,
     isLoading,
-    hasChanged,
+    hasChanged: canSave,
   });
 
   return (
@@ -109,7 +115,7 @@ const CreateMasterItemMM = () => {
         <DrawerHeader onClick={handleCloseDrawer} drawerTitle="Add Master Item">
           <DrawerEndHeader>
             <Button
-              variant={!hasChanged ? 'disabled' : 'primary'}
+              variant={!canSave ? 'disabled' : 'primary'}
               icon={{ size: 'large', icon: IconDeviceFloppy, color: 'White' }}
               type="submit"
               onClick={handleSaveClick}

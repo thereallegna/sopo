@@ -14,7 +14,7 @@ import InputField from '@components/shared/InputField';
 import { useDrawerStore } from '@stores/useDrawerStore';
 import { IconPencil } from '@tabler/icons-react';
 import { useForm } from 'react-hook-form';
-import { useDetailForm } from '@hooks/useFormChanges';
+// import { useDetailForm } from '@hooks/useFormChanges';
 import { Checkbox } from '@components/ui/Checkbox';
 import { useSetValueForm } from '@hooks/useFormChanges';
 
@@ -26,7 +26,7 @@ const DetailCategoryMM = () => {
 
   const { register, setValue } = useForm<IItemCategory>();
 
-  useDetailForm<IItemCategory>(detail_data, setValue);
+  useSetValueForm<IItemCategory>(detail_data, setValue);
 
   return (
     <Drawer onClose={closeDetailDrawer} open={isOpenDetail}>

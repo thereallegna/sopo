@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import { Button } from '@components/ui/Button';
 import {
   Drawer,
@@ -29,6 +29,7 @@ import useToastStore from '@stores/useToastStore';
 import { useFormSave } from '@hooks/useFormSave';
 import SelectableModal from '@components/ui/Modal';
 import { getCoa } from '@services/fetcher/configuration/general';
+import bindCurrentValueAndChangeValue from '@hooks/useBindCurrentValAndChangeVal';
 
 const EditCategoryMM = () => {
   const formRef = useRef<HTMLFormElement>(null);
@@ -36,7 +37,8 @@ const EditCategoryMM = () => {
   const detail_data = useDrawerStore(
     (state) => state.detail_data
   ) as IItemCategory;
-  const { setIsDirty } = useFormStore();
+  // const { setIsDirty } = useFormStore();
+  const { setChangeStatus, changeStatus } = useFormStore();
   const [isLoading, setIsLoading] = React.useState(false);
   const openToast = useToastStore((state) => state.showToast);
   const queryClient = useQueryClient();
@@ -73,6 +75,43 @@ const EditCategoryMM = () => {
     defaultValues: detail_data,
     control,
   });
+
+  const code = watch('item_category_code');
+  const name = watch('item_category_name');
+
+  const currentValueMemo = useMemo(
+    () => ({
+      code: detail_data?.item_category_code || '',
+      name: detail_data?.item_category_name || '',
+    }),
+    [detail_data?.item_category_code, detail_data?.item_category_name]
+  );
+
+  const changeValueMemo = useMemo(
+    () => ({
+      code: detail_data?.item_category_code || code,
+      name,
+    }),
+    [detail_data?.item_category_code, code, name]
+  );
+
+  console.log('changeStatus', changeStatus);
+
+  useEffect(() => {
+    if (detail_data) {
+      setChangeStatus(
+        bindCurrentValueAndChangeValue(currentValueMemo, changeValueMemo)
+      );
+    }
+  }, [detail_data, changeValueMemo, setChangeStatus, currentValueMemo]);
+
+  useEffect(() => {
+    if (detail_data) {
+      setValue('item_category_code', detail_data.item_category_code || '');
+      setValue('item_category_name', detail_data.item_category_name || '');
+      setValue('active', detail_data.active || false);
+    }
+  }, [detail_data, setValue]);
 
   const { handleCloseDrawerEdit } = useDrawer(reset, detail_data);
 
