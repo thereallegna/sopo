@@ -59,12 +59,21 @@ type IItemMM = {
   number?: number;
   item_code: string;
   item_name: string;
-  local_code: string;
-  foreign_name: string;
-  old_code: string;
-  category_name: string;
-  spesification: string;
   active: boolean;
-  create_date: string;
+  category_code: string;
+  uom_code: string;
+  source?: string;
+  local_code?: string;
+  foreign_name?: string;
+  old_code?: string;
+  spesification?: string;
+  item_request?: string;
+  hs_code?: string;
+  remark?: string;
+  inventory_item?: boolean;
+  sales_item?: boolean;
+  purchase_item?: boolean;
+  service_item?: boolean;
+  tax_liablepackage?: boolean;
 };
 /* ======================= Inventory and Material Management End ==================== */

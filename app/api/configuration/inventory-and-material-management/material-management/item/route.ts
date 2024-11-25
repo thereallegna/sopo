@@ -41,7 +41,7 @@ export async function POST(req: Request) {
   try {
     const session = await getServerSideSession();
 
-    const body = (await req.json()) as CountryFormBody;
+    const body = (await req.json()) as MasterItemFormBody;
 
     const response = await axios.post(PATH_ITEMS_MASTER_BE, body, {
       headers: {

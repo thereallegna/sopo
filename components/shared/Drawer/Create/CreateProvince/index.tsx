@@ -58,6 +58,7 @@ const CreateCity = () => {
   const { canSave } = useFormChanges({
     defaultValues: provinceDefaultValues,
     control,
+    requireAllFields: true,
   });
 
   const { handleCloseDrawer } = useDrawer(reset);

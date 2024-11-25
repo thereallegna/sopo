@@ -4,7 +4,7 @@ import { cn } from '@libs/classNames';
 import { cva, VariantProps } from 'class-variance-authority';
 import React from 'react';
 
-const tableCellVariant = cva('text-base text-Neutral-Black', {
+const tableCellVariant = cva('text-base text-Neutral-Black bg-Neutral-White', {
   variants: {
     size: {
       normal: 'py-[5px] px-[10px]',

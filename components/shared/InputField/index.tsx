@@ -10,7 +10,7 @@ import { IconProps } from '@components/ui/Icon';
 const inputFieldVariant = cva('flex', {
   variants: {
     right: {
-      true: 'flex-row  items-center gap-2 self-stretch',
+      true: 'flex-row  items-center gap-2 self-stretch w-full',
       false: 'flex-col gap-1',
     },
   },
@@ -65,6 +65,7 @@ export interface InputFieldProps
   value?: string;
   start_icon?: IconProps;
   end_icon?: IconProps;
+  textarea?: boolean;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
   onKeyDown?: React.KeyboardEventHandler<HTMLInputElement>;
   readOnly?: boolean;
@@ -88,6 +89,7 @@ const InputField = React.forwardRef<HTMLInputElement, InputFieldProps>(
       placeholder,
       start_icon,
       end_icon,
+      textarea,
       onChange,
       ...rest
     } = props;
@@ -125,6 +127,7 @@ const InputField = React.forwardRef<HTMLInputElement, InputFieldProps>(
             theme={message?.type}
             start_icon={start_icon}
             end_icon={end_icon}
+            textarea={textarea}
             readOnly={props.readOnly}
             {...inputProps}
           />

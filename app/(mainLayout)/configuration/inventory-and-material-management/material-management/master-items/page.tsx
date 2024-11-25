@@ -19,8 +19,8 @@ const TableDrawer = dynamic(
   () => import('@components/shared/Drawer/Table/TableDrawer'),
   { ssr: false }
 );
-const CreateUOM = dynamic(
-  () => import('@components/shared/Drawer/Create/CreateUoM'),
+const CreateMasterItemMM = dynamic(
+  () => import('@components/shared/Drawer/Create/CreateMasterItemMM'),
   { ssr: false }
 );
 const DetailUOM = dynamic(
@@ -131,7 +131,7 @@ const Country = () => {
         }}
         queryFn={getItem}
       />
-      <CreateUOM />
+      <CreateMasterItemMM />
       <DetailUOM />
       <EditUOM />
     </>
