@@ -43,6 +43,7 @@ const TableAction: React.FC<TableActionProps> = ({
         value={search}
         onChange={(e) => onSearch(e.target.value)}
         className="w-min"
+        onClick={() => console.log('kkkk')}
       />
       {onFilter && <FilterButton onClick={onFilter} />}
       <RowSizeDropdown active={rowSize} action={onRowSizeChange} />
