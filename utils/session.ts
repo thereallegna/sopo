@@ -44,8 +44,5 @@ export const clearServerSideSession = async (cookieOptions?: any) => {
     withSessionOptions
   );
 
-  session.user = undefined;
-  session.token = '';
-
-  await session.save();
+  session.destroy();
 };
