@@ -31,18 +31,18 @@ type ItemCategoryFormBody = {
   item_category_code: string;
   item_category_name: string;
   active: boolean;
-  coa_stock_account?: string;
-  coa_stock_description?: string;
-  coa_sales_account?: string;
-  coa_sales_description?: string;
-  coa_cogs_account?: string;
-  coa_cogs_description?: string;
-  coa_sales_return_account?: string;
-  coa_sales_return_description?: string;
-  coa_purchase_return_account?: string;
-  coa_purchase_return_description?: string;
-  coa_consumption_cost_account?: string;
-  coa_consumption_cost_description?: string;
+  coa_stock_account?: string | null;
+  coa_stock_description?: string | null;
+  coa_sales_account?: string | null;
+  coa_sales_description?: string | null;
+  coa_cogs_account?: string | null;
+  coa_cogs_description?: string | null;
+  coa_sales_return_account?: string | null;
+  coa_sales_return_description?: string | null;
+  coa_purchase_return_account?: string | null;
+  coa_purchase_return_description?: string | null;
+  coa_consumption_cost_account?: string | null;
+  coa_consumption_cost_description?: string | null;
 };
 
 type MasterItemFormBody = {

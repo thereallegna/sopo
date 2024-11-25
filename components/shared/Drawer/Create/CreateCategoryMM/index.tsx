@@ -57,7 +57,7 @@ const CreateCategoryMM = () => {
 
   const { coa_form, setCoaForm } = useFormStore();
 
-  const { canSave } = useFormChanges({
+  const { canSave } = useFormChanges<ItemCategoryFormBody>({
     defaultValues: ItemCategoryDefaultValues,
     control,
     requireAllFields: true,

@@ -31,6 +31,8 @@ export const ItemCategoryDefaultValues: ItemCategoryFormBody = {
   item_category_code: '',
   item_category_name: '',
   active: true,
+  coa_stock_account: '',
+  coa_stock_description: '',
 };
 
 export const masterItemDefaultValues: MasterItemFormBody = {
