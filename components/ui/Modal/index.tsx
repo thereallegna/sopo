@@ -10,7 +10,6 @@ import IconComponent from '../Icon';
 interface SelectableModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSelect: (value: string) => void;
   title: string;
   columns: GenerateColumnsOption;
   queryKey: string;

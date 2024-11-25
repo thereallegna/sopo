@@ -13,7 +13,7 @@ import { Card, CardContent } from '@components/ui/Card';
 import InputField from '@components/shared/InputField';
 import { Checkbox } from '@components/ui/Checkbox';
 import { useDrawerStore } from '@stores/useDrawerStore';
-import { IconDeviceFloppy } from '@tabler/icons-react';
+import { IconDeviceFloppy, IconSearch } from '@tabler/icons-react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm, SubmitHandler } from 'react-hook-form';
@@ -29,6 +29,7 @@ import useToastStore from '@stores/useToastStore';
 import { useFormSave } from '@hooks/useFormSave';
 import SelectableModal from '@components/ui/Modal';
 import { getCoa } from '@services/fetcher/configuration/general';
+import IconComponent from '@components/ui/Icon';
 import bindCurrentValueAndChangeValue from '@hooks/useBindCurrentValAndChangeVal';
 
 const EditCategoryMM = () => {
@@ -37,15 +38,17 @@ const EditCategoryMM = () => {
   const detail_data = useDrawerStore(
     (state) => state.detail_data
   ) as IItemCategory;
+
   // const { setIsDirty } = useFormStore();
   const { setChangeStatus, changeStatus } = useFormStore();
+
   const [isLoading, setIsLoading] = React.useState(false);
   const openToast = useToastStore((state) => state.showToast);
   const queryClient = useQueryClient();
   const [isModalOpen, setModalOpen] = React.useState(false);
-  const [modalTargetField, setModalTargetField] = React.useState('');
+  const [, setModalTargetField] = React.useState('');
 
-  const [fieldValues, setFieldValues] = React.useState({
+  const [] = React.useState({
     coa_stock: '',
     coa_sales: '',
     coa_cogs: '',
@@ -159,14 +162,6 @@ const EditCategoryMM = () => {
     setModalOpen(true);
   };
 
-  const handleModalSelect = (value: string) => {
-    setFieldValues((prevValues) => {
-      const updatedValues = { ...prevValues, [modalTargetField]: value };
-      return updatedValues;
-    });
-    setModalOpen(false);
-  };
-
   return (
     <Drawer onClose={handleCloseDrawerEdit} open={isOpenEdit}>
       <DrawerContent>
@@ -256,110 +251,270 @@ const EditCategoryMM = () => {
             <Card size="drawer">
               <CardContent className="flex-wrap flex flex-row gap-6">
                 <div className="flex flex-col gap-[14px] flex-1 h-full justify-between">
-                  <InputField
-                    {...register('coa_stock')}
-                    value={fieldValues.coa_stock}
-                    onClick={() => openModalForField('coa_stock')}
-                    message={
-                      errors.coa_stock
-                        ? {
-                            text: errors.coa_stock.message!,
-                            type: 'danger',
+                  <div className="flex justify-between items-center w-full mb-[12px] gap-4">
+                    <div className="flex flex-grow">
+                      <div className="flex-grow-[2]">
+                        <InputField
+                          {...register('coa_stock_account')}
+                          message={
+                            errors.coa_stock_account
+                              ? {
+                                  text: errors.coa_stock_account.message!,
+                                  type: 'danger',
+                                }
+                              : undefined
                           }
-                        : undefined
-                    }
-                    label="COA's Account (Stock)"
-                    placeholder="COA's Account (Stock)"
-                    right
-                    readOnly
-                  />
-                  <InputField
-                    {...register('coa_sales')}
-                    value={fieldValues.coa_sales}
-                    onClick={() => openModalForField('coa_sales')}
-                    message={
-                      errors.coa_sales
-                        ? {
-                            text: errors.coa_sales.message!,
-                            type: 'danger',
+                          label="COA's Account (Stock)"
+                          placeholder="COA's Account (Stock)"
+                          disabled
+                          right
+                        />
+                      </div>
+                      <div className="flex-grow-[8]">
+                        <InputField
+                          {...register('coa_stock_description')}
+                          message={
+                            errors.coa_stock_description
+                              ? {
+                                  text: errors.coa_stock_description.message!,
+                                  type: 'danger',
+                                }
+                              : undefined
                           }
-                        : undefined
-                    }
-                    label="COA's Account (Sales)"
-                    placeholder="COA's Account (Sales)"
-                    right
-                    readOnly
-                  />
-                  <InputField
-                    {...register('coa_cogs')}
-                    value={fieldValues.coa_cogs}
-                    onClick={() => openModalForField('coa_cogs')}
-                    message={
-                      errors.coa_cogs
-                        ? {
-                            text: errors.coa_cogs.message!,
-                            type: 'danger',
+                          placeholder="COA's Account (Stock)"
+                          disabled
+                          right
+                        />
+                      </div>
+                    </div>
+                    <IconComponent
+                      onClick={() => openModalForField('coa_stock')}
+                      size="medium"
+                      icon={IconSearch}
+                      className="cursor-pointer"
+                    />
+                  </div>
+                  <div className="flex justify-between items-center w-full mb-[12px] gap-4">
+                    <div className="flex flex-grow gap-0">
+                      <div className="w-2/10">
+                        <InputField
+                          {...register('coa_sales_account')}
+                          message={
+                            errors.coa_stock_account
+                              ? {
+                                  text: errors.coa_stock_account.message!,
+                                  type: 'danger',
+                                }
+                              : undefined
                           }
-                        : undefined
-                    }
-                    label="COA's Account (COGS)"
-                    placeholder="COA's Account (COGS)"
-                    right
-                    readOnly
-                  />
+                          label="COA's Account (Sales)"
+                          placeholder="COA's Account (Sales)"
+                          disabled
+                          right
+                        />
+                      </div>
+                      <div className="w-8/10">
+                        <InputField
+                          {...register('coa_sales_description')}
+                          message={
+                            errors.coa_sales_description
+                              ? {
+                                  text: errors.coa_sales_description.message!,
+                                  type: 'danger',
+                                }
+                              : undefined
+                          }
+                          placeholder="COA's Account (Stock)"
+                          disabled
+                          right
+                        />
+                      </div>
+                    </div>
+                    <IconComponent
+                      onClick={() => openModalForField('coa_sales')}
+                      size="medium"
+                      icon={IconSearch}
+                      className="cursor-pointer"
+                    />
+                  </div>
+                  <div className="flex justify-between items-center w-full mb-[12px] gap-4">
+                    <div className="flex flex-grow gap-0">
+                      <div className="w-2/10">
+                        <InputField
+                          {...register('coa_cogs_account')}
+                          message={
+                            errors.coa_cogs_account
+                              ? {
+                                  text: errors.coa_cogs_account.message!,
+                                  type: 'danger',
+                                }
+                              : undefined
+                          }
+                          label="COA's Account (COGS)"
+                          placeholder="COA's Account (COGS)"
+                          disabled
+                          right
+                        />
+                      </div>
+                      <div className="w-8/10">
+                        <InputField
+                          {...register('coa_cogs_description')}
+                          message={
+                            errors.coa_cogs_description
+                              ? {
+                                  text: errors.coa_cogs_description.message!,
+                                  type: 'danger',
+                                }
+                              : undefined
+                          }
+                          placeholder="COA's Account (COGS)"
+                          disabled
+                          right
+                        />
+                      </div>
+                    </div>
+                    <IconComponent
+                      onClick={() => openModalForField('coa_cogs')}
+                      size="medium"
+                      icon={IconSearch}
+                      className="cursor-pointer"
+                    />
+                  </div>
                 </div>
                 <div className="flex flex-col gap-[14px] flex-1">
-                  <InputField
-                    {...register('coa_sales_return')}
-                    value={fieldValues.coa_sales_return}
-                    onClick={() => openModalForField('coa_sales_return')}
-                    message={
-                      errors.coa_sales_return
-                        ? {
-                            text: errors.coa_sales_return.message!,
-                            type: 'danger',
+                  <div className="flex justify-between items-center w-full mb-[12px] gap-4">
+                    <div className="flex flex-grow gap-0">
+                      <div className="w-2/10">
+                        <InputField
+                          {...register('coa_sales_return_account')}
+                          message={
+                            errors.coa_sales_return_account
+                              ? {
+                                  text: errors.coa_sales_return_account
+                                    .message!,
+                                  type: 'danger',
+                                }
+                              : undefined
                           }
-                        : undefined
-                    }
-                    label="COA's Account (Sales Return)"
-                    placeholder="COA's Account (Sales Return)"
-                    right
-                    readOnly
-                  />
-                  <InputField
-                    {...register('coa_purchase_return')}
-                    value={fieldValues.coa_purchase_return}
-                    onClick={() => openModalForField('coa_purchase_return')}
-                    message={
-                      errors.coa_purchase_return
-                        ? {
-                            text: errors.coa_purchase_return.message!,
-                            type: 'danger',
+                          label="COA's Account (Sales Return)"
+                          placeholder="COA's Account (Sales Return)"
+                          disabled
+                          right
+                        />
+                      </div>
+                      <div className="w-8/10">
+                        <InputField
+                          {...register('coa_sales_return_description')}
+                          message={
+                            errors.coa_sales_return_description
+                              ? {
+                                  text: errors.coa_sales_return_description
+                                    .message!,
+                                  type: 'danger',
+                                }
+                              : undefined
                           }
-                        : undefined
-                    }
-                    label="COA's Account (Purchase Return)"
-                    placeholder="COA's Account (Purchase Return)"
-                    right
-                    readOnly
-                  />
-                  <InputField
-                    {...register('coa_consumption_cost')}
-                    value={fieldValues.coa_consumption_cost}
-                    onClick={() => openModalForField('coa_consumption_cost')}
-                    message={
-                      errors.coa_consumption_cost
-                        ? {
-                            text: errors.coa_consumption_cost.message!,
-                            type: 'danger',
+                          placeholder="COA's Account (Sales Return)"
+                          disabled
+                          right
+                        />
+                      </div>
+                    </div>
+                    <IconComponent
+                      onClick={() => openModalForField('coa_sales_return')}
+                      size="medium"
+                      icon={IconSearch}
+                      className="cursor-pointer"
+                    />
+                  </div>
+                  <div className="flex justify-between items-center w-full mb-[12px] gap-4">
+                    <div className="flex flex-grow">
+                      <div className="w-2/10">
+                        <InputField
+                          {...register('coa_purchase_return_account')}
+                          message={
+                            errors.coa_purchase_return_account
+                              ? {
+                                  text: errors.coa_purchase_return_account
+                                    .message!,
+                                  type: 'danger',
+                                }
+                              : undefined
                           }
-                        : undefined
-                    }
-                    label="COA's Account (Consumption Cost)"
-                    placeholder="COA's Account (Consumption Cost)"
-                    right
-                    readOnly
-                  />
+                          label="COA's Account (Purchase Return)"
+                          placeholder="COA's Account (Purchase Return)"
+                          disabled
+                          right
+                        />
+                      </div>
+                      <div className="w-8/10">
+                        <InputField
+                          {...register('coa_purchase_return_description')}
+                          message={
+                            errors.coa_purchase_return_description
+                              ? {
+                                  text: errors.coa_purchase_return_description
+                                    .message!,
+                                  type: 'danger',
+                                }
+                              : undefined
+                          }
+                          placeholder="COA's Account (Purchase Return)"
+                          disabled
+                          right
+                        />
+                      </div>
+                    </div>
+                    <IconComponent
+                      onClick={() => openModalForField('coa_purchse_return')}
+                      size="medium"
+                      icon={IconSearch}
+                      className="cursor-pointer"
+                    />
+                  </div>
+                  <div className="flex justify-between items-center w-full mb-[12px] gap-4">
+                    <div className="flex-grow">
+                      <InputField
+                        {...register('coa_consumption_cost_account')}
+                        message={
+                          errors.coa_consumption_cost_account
+                            ? {
+                                text: errors.coa_consumption_cost_account
+                                  .message!,
+                                type: 'danger',
+                              }
+                            : undefined
+                        }
+                        label="COA's Account (Consumption Cost)"
+                        placeholder="COA's Account (Consumption Cost)"
+                        disabled
+                        right
+                      />
+                    </div>
+                    <div className="w-8/10">
+                      <InputField
+                        {...register('coa_consumption_cost_description')}
+                        message={
+                          errors.coa_consumption_cost_description
+                            ? {
+                                text: errors.coa_consumption_cost_description
+                                  .message!,
+                                type: 'danger',
+                              }
+                            : undefined
+                        }
+                        placeholder="COA's Account (Cosumption Cost)"
+                        disabled
+                        right
+                      />
+                    </div>
+                    <IconComponent
+                      onClick={() => openModalForField('coa_consumption_cost')}
+                      size="medium"
+                      icon={IconSearch}
+                      className="cursor-pointer"
+                    />
+                  </div>
                 </div>
               </CardContent>
             </Card>
@@ -369,7 +524,6 @@ const EditCategoryMM = () => {
       <SelectableModal
         isOpen={isModalOpen}
         onClose={() => setModalOpen(false)}
-        onSelect={handleModalSelect}
         title="Find Coa"
         queryKey={GET_COA}
         columns={{
@@ -387,6 +541,7 @@ const EditCategoryMM = () => {
               header: 'Coa Description',
             },
           ],
+          hasAction: false,
         }}
         queryFn={getCoa}
       />

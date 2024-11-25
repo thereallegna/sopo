@@ -17,6 +17,7 @@ import { useForm } from 'react-hook-form';
 // import { useDetailForm } from '@hooks/useFormChanges';
 import { Checkbox } from '@components/ui/Checkbox';
 import { useSetValueForm } from '@hooks/useFormChanges';
+import { Checkbox } from '@components/ui/Checkbox';
 
 const DetailCategoryMM = () => {
   const { isOpenDetail, closeDetailDrawer, openEditDrawer } = useDrawerStore();
