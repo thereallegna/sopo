@@ -5,7 +5,7 @@ import { IconSearch } from '@tabler/icons-react';
 import { Checkbox } from '@components/ui/Checkbox';
 import { Button } from '@components/ui/Button';
 import Label from '@components/ui/Label';
-import { FormType } from '../../../../../types/form';
+import { FormType } from '../../../../../../types/form';
 
 const BasicForm = ({
   errors,

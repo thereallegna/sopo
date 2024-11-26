@@ -42,6 +42,7 @@ const CreateMasterItemMM = () => {
     type: 'add',
     requireAllFields: true,
     ignoredFields: [
+      'local_code',
       'tax_liable',
       'foreign_name',
       'hs_code',
