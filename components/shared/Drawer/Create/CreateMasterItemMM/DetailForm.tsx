@@ -111,13 +111,13 @@ const DetailForm = ({
               onKeyDown={handleInputKeyDown}
             />
             <InputField
-              {...register('tax_liable')}
+              {...register('remark')}
               message={
-                errors.tax_liable
-                  ? { text: errors.tax_liable.message!, type: 'danger' }
+                errors.remark
+                  ? { text: errors.remark.message!, type: 'danger' }
                   : undefined
               }
-              label="tax_liable"
+              label="Remark"
               placeholder="Text here.."
               right
               type="text"
@@ -125,7 +125,11 @@ const DetailForm = ({
               textarea
               onKeyDown={handleInputKeyDown}
             />
-            <Checkbox label="Tax Liable" />
+            <Checkbox
+              label="Tax Liable"
+              checked={watch('tax_liable')}
+              onCheckedChange={(val) => setValue('tax_liable', val)}
+            />
           </div>
         </TabsContent>
       </Tabs>

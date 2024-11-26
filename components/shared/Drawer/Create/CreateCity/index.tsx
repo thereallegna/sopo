@@ -142,6 +142,8 @@ const CreateCity = () => {
     validationSchema: citySchema,
     defaultValues: cityDefaultValues,
     type: 'add',
+    ignoredFields: ['ring_area', 'location'],
+    requireAllFields: true,
   });
 
   return (
