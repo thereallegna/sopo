@@ -61,6 +61,20 @@ const CreateCategoryMM = () => {
     defaultValues: ItemCategoryDefaultValues,
     control,
     requireAllFields: true,
+    ignoredFields: [
+      'coa_stock',
+      'coa_sales',
+      'coa_cogs',
+      'coa_sales_return',
+      'coa_purchase_return',
+      'coa_consumption_cost',
+      'coa_stock_description',
+      'coa_sales_description',
+      'coa_cogs_description',
+      'coa_sales_return_description',
+      'coa_purchase_return_description',
+      'coa_consumption_cost_description',
+    ],
   });
 
   const { handleCloseDrawer } = useDrawer(reset);
@@ -207,11 +221,11 @@ const CreateCategoryMM = () => {
                   <div className="flex justify-between items-center w-full gap-3">
                     <div className="flex flex-grow items-center gap-[10px]">
                       <InputField
-                        {...register('coa_stock_account')}
+                        {...register('coa_stock')}
                         message={
-                          errors.coa_stock_account
+                          errors.coa_stock
                             ? {
-                                text: errors.coa_stock_account.message!,
+                                text: errors.coa_stock.message!,
                                 type: 'danger',
                               }
                             : undefined
@@ -250,11 +264,11 @@ const CreateCategoryMM = () => {
                     <div className="flex flex-grow gap-0">
                       <div className="w-2/10">
                         <InputField
-                          {...register('coa_sales_account')}
+                          {...register('coa_sales')}
                           message={
-                            errors.coa_stock_account
+                            errors.coa_stock
                               ? {
-                                  text: errors.coa_stock_account.message!,
+                                  text: errors.coa_stock.message!,
                                   type: 'danger',
                                 }
                               : undefined
@@ -293,11 +307,11 @@ const CreateCategoryMM = () => {
                     <div className="flex flex-grow gap-0">
                       <div className="w-2/10">
                         <InputField
-                          {...register('coa_cogs_account')}
+                          {...register('coa_cogs')}
                           message={
-                            errors.coa_cogs_account
+                            errors.coa_cogs
                               ? {
-                                  text: errors.coa_cogs_account.message!,
+                                  text: errors.coa_cogs.message!,
                                   type: 'danger',
                                 }
                               : undefined
@@ -338,12 +352,11 @@ const CreateCategoryMM = () => {
                     <div className="flex flex-grow gap-0">
                       <div className="w-2/10">
                         <InputField
-                          {...register('coa_sales_return_account')}
+                          {...register('coa_sales_return')}
                           message={
-                            errors.coa_sales_return_account
+                            errors.coa_sales_return
                               ? {
-                                  text: errors.coa_sales_return_account
-                                    .message!,
+                                  text: errors.coa_sales_return.message!,
                                   type: 'danger',
                                 }
                               : undefined
@@ -383,12 +396,11 @@ const CreateCategoryMM = () => {
                     <div className="flex flex-grow">
                       <div className="w-2/10">
                         <InputField
-                          {...register('coa_purchase_return_account')}
+                          {...register('coa_purchase_return')}
                           message={
-                            errors.coa_purchase_return_account
+                            errors.coa_purchase_return
                               ? {
-                                  text: errors.coa_purchase_return_account
-                                    .message!,
+                                  text: errors.coa_purchase_return.message!,
                                   type: 'danger',
                                 }
                               : undefined
@@ -427,12 +439,11 @@ const CreateCategoryMM = () => {
                   <div className="flex justify-between items-center w-full mb-[12px] gap-4">
                     <div className="flex-grow">
                       <InputField
-                        {...register('coa_consumption_cost_account')}
+                        {...register('coa_consumption_cost')}
                         message={
-                          errors.coa_consumption_cost_account
+                          errors.coa_consumption_cost
                             ? {
-                                text: errors.coa_consumption_cost_account
-                                  .message!,
+                                text: errors.coa_consumption_cost.message!,
                                 type: 'danger',
                               }
                             : undefined
@@ -497,11 +508,9 @@ const CreateCategoryMM = () => {
         }}
         queryFn={getCoa}
         onSelectRow={(data: ICoa) => {
-          setValue(
-            `${coa_form}_account` as keyof ItemCategoryFormBody,
-            data.account,
-            { shouldDirty: true }
-          );
+          setValue(`${coa_form}` as keyof ItemCategoryFormBody, data.account, {
+            shouldDirty: true,
+          });
           setValue(
             `${coa_form}_description` as keyof ItemCategoryFormBody,
             data.description,

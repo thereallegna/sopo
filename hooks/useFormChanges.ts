@@ -87,9 +87,6 @@ export const useFormChanges = <T extends Record<string, any>>({
       (key) => !valuesAreEqual(defaultValues[key], normalizedWatchedFields[key])
     );
 
-    console.log(hasChangedFields, 'sjaksjkal');
-    console.log(watchedFields, 'kkkk');
-
     return fieldsValidation && hasChangedFields;
   }, [
     relevantFields,
