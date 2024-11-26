@@ -41,9 +41,18 @@ export const masterItemDefaultValues: MasterItemFormBody = {
   category_code: '',
   uom_code: '',
   uom_name: '',
+  local_code: '',
+  foreign_name: '',
+  old_code: '',
+  spesification: '',
+  hs_code: '',
+  remark: '',
   active: true,
   inventory_item: true,
   purchase_item: true,
+  service_item: false,
+  sales_item: false,
+  tax_liable: false,
 };
 // Configuration Material Management End
 
