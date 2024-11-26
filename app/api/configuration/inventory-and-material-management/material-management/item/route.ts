@@ -43,6 +43,8 @@ export async function POST(req: Request) {
 
     const body = (await req.json()) as MasterItemFormBody;
 
+    console.log(',kdaskldhaskj', body);
+
     const response = await axios.post(PATH_ITEMS_MASTER_BE, body, {
       headers: {
         Authorization: `Bearer ${session.user?.data?.authorization?.access_token}`,

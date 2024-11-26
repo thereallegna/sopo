@@ -60,7 +60,9 @@ type IItemMM = {
   item_code: string;
   item_name: string;
   active: boolean;
+  category_name: string;
   category_code: string;
+  uom_name: string;
   uom_code: string;
   source?: string;
   local_code?: string;
