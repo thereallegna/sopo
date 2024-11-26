@@ -63,6 +63,7 @@ const getItemCategory = async (option?: FetcherOptions) => {
 const createItemCategory = async (body: ItemCategoryFormBody) => {
   try {
     const res = await axios.post(PATH_ITEMS_CATEGORY, body);
+    console.log('abody', body);
     return res.data;
   } catch (error) {
     console.error('Error creating item category:', error);

@@ -18,11 +18,13 @@ import { useSetValueForm } from '@hooks/useFormChanges';
 
 const DetailUOM = () => {
   const { isOpenDetail, closeDetailDrawer, openEditDrawer } = useDrawerStore();
-  const detail_data = useDrawerStore((state) => state.detail_data) as IUOM;
+  const detail_data = useDrawerStore(
+    (state) => state.detail_data
+  ) as UOMFormBody;
 
-  const { register, setValue } = useForm<IUOM>();
+  const { register, setValue } = useForm<UOMFormBody>();
 
-  useSetValueForm<IUOM>(detail_data, setValue);
+  useSetValueForm<UOMFormBody>(detail_data, setValue);
 
   return (
     <Drawer onClose={closeDetailDrawer} open={isOpenDetail}>

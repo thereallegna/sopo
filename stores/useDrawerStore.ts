@@ -11,10 +11,10 @@ export type TableDrawerType =
   | 'getItemCategory'
   | null;
 export type DetailDataType =
-  | ICountry
-  | IProvince
-  | ICity
-  | IUOM
+  | UOMFormBody
+  | CountryFormBody
+  | ProvinceFormBody
+  | CityFormBody
   | IItemCategory
   | null;
 

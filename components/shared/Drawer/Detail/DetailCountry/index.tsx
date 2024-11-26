@@ -24,11 +24,13 @@ const DetailCountry = () => {
     openEditDrawer,
     openHistoryLogDrawer,
   } = useDrawerStore();
-  const detail_data = useDrawerStore((state) => state.detail_data) as ICountry;
+  const detail_data = useDrawerStore(
+    (state) => state.detail_data
+  ) as CountryFormBody;
 
-  const { register, setValue } = useForm<ICountry>();
+  const { register, setValue } = useForm<CountryFormBody>();
 
-  useSetValueForm<ICountry>(detail_data, setValue);
+  useSetValueForm<CountryFormBody>(detail_data, setValue);
 
   return (
     <Drawer onClose={closeDetailDrawer} open={isOpenDetail}>

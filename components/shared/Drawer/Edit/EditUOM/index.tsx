@@ -30,7 +30,9 @@ import bindCurrentValueAndChangeValue from '@hooks/useBindCurrentValAndChangeVal
 const EditUOM = () => {
   const formRef = useRef<HTMLFormElement>(null);
   const { isOpenEdit, closeEditDrawer, setDetailData } = useDrawerStore();
-  const detail_data = useDrawerStore((state) => state.detail_data) as IUOM;
+  const detail_data = useDrawerStore(
+    (state) => state.detail_data
+  ) as UOMFormBody;
   const { setChangeStatus, changeStatus } = useFormStore();
   const [isLoading, setIsLoading] = React.useState(false);
   const showToast = useToastStore((state) => state.showToast);

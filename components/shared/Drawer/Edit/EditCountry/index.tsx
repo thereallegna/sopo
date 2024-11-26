@@ -30,7 +30,9 @@ import useFormStore from '@stores/useFormStore';
 const EditCountry = () => {
   const formRef = useRef<HTMLFormElement>(null);
   const { isOpenEdit, closeEditDrawer, setDetailData } = useDrawerStore();
-  const detail_data = useDrawerStore((state) => state.detail_data) as ICountry;
+  const detail_data = useDrawerStore(
+    (state) => state.detail_data
+  ) as CountryFormBody;
   const { setChangeStatus } = useFormStore();
   const [isLoading, setIsLoading] = React.useState(false);
   const showToast = useToastStore((state) => state.showToast);
