@@ -44,6 +44,7 @@ interface ComboboxProps {
   onChange?: (val: FrameworkItem) => void;
   disabled?: boolean;
   className?: string;
+  required?: boolean;
 
   // Query
   queryKey: string[];
@@ -63,6 +64,7 @@ export const Combobox = ({
   className,
   queryKey,
   queryFn,
+  required,
   dataLabel = 'label', // nilai default jika dataLabel tidak disediakan
   dataValue = 'value', // nilai default jika dataValue tidak disediakan
 }: ComboboxProps) => {
@@ -86,7 +88,7 @@ export const Combobox = ({
     <div className={className}>
       <div className="w-full flex gap-2">
         <Label
-          required
+          required={required}
           className="shrink-0 w-[100px] font-semibold"
           {...labelProps}
         >

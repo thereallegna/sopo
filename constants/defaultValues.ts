@@ -40,11 +40,14 @@ export const ItemCategoryDefaultValues: ItemCategoryFormBody = {
 };
 
 export const masterItemDefaultValues: MasterItemFormBody = {
-  item_code: '',
   item_name: '',
+  category_name: '',
   category_code: '',
   uom_code: '',
-  active: false,
+  uom_name: '',
+  active: true,
+  inventory_item: true,
+  purchase_item: true,
 };
 // Configuration Material Management End
 
