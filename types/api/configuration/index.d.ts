@@ -31,25 +31,27 @@ type ItemCategoryFormBody = {
   item_category_code: string;
   item_category_name: string;
   active: boolean;
-  coa_stock?: string;
-  coa_stock_description?: string;
-  coa_sales?: string;
-  coa_sales_description?: string;
-  coa_cogs?: string;
-  coa_cogs_description?: string;
-  coa_sales_return?: string;
-  coa_sales_return_description?: string;
-  coa_purchase_return?: string;
-  coa_purchase_return_description?: string;
-  coa_consumption_cost?: string;
-  coa_consumption_cost_description?: string;
+  coa_stock?: string | null;
+  coa_stock_description?: string | null;
+  coa_sales?: string | null;
+  coa_sales_description?: string | null;
+  coa_cogs?: string | null;
+  coa_cogs_description?: string | null;
+  coa_sales_return?: string | null;
+  coa_sales_return_description?: string | null;
+  coa_purchase_return?: string | null;
+  coa_purchase_return_description?: string | null;
+  coa_consumption_cost?: string | null;
+  coa_consumption_cost_description?: string | null;
 };
 
 type MasterItemFormBody = {
-  item_code: string;
+  item_code?: string;
   item_name: string;
   active: boolean;
+  category_name: string;
   category_code: string;
+  uom_name: string;
   uom_code: string;
   source?: string;
   local_code?: string;
@@ -63,7 +65,7 @@ type MasterItemFormBody = {
   sales_item?: boolean;
   purchase_item?: boolean;
   service_item?: boolean;
-  tax_liablepackage?: boolean;
+  tax_liable?: boolean;
 };
 
 /* ======================= Inventory and Material Management End ==================== */

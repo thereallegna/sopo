@@ -10,11 +10,11 @@ import IconComponent from '../Icon';
 interface SelectableModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSelect: (value: string) => void;
   title: string;
   columns: GenerateColumnsOption;
   queryKey: string;
   queryFn: (option?: FetcherOptions) => Promise<AxiosResponse<any, any>>;
+  onSelectRow?: (data: any) => void;
 }
 
 const SelectableModal: React.FC<SelectableModalProps> = ({
@@ -24,11 +24,13 @@ const SelectableModal: React.FC<SelectableModalProps> = ({
   columns,
   queryKey,
   queryFn,
+  onSelectRow,
 }) => {
   const tableProps = useTable<any[]>({
     queryFn,
     columns,
     queryKey,
+    onSelectRow,
   });
 
   if (!isOpen) return null;

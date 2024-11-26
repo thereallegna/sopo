@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React from 'react';
 import { Button } from '@components/ui/Button';
 import {
   Drawer,
@@ -11,49 +11,40 @@ import {
 } from '@components/ui/Drawer';
 import { Card, CardContent } from '@components/ui/Card';
 import InputField from '@components/shared/InputField';
-import { useDrawerStore } from '@stores/useDrawerStore';
 import { IconDeviceFloppy } from '@tabler/icons-react';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useForm, SubmitHandler } from 'react-hook-form';
+// import { useForm, SubmitHandler } from 'react-hook-form';
 import { citySchema } from '@constants/schemas/ConfigurationSchema/general';
 import {
   createCity,
   getProvince,
 } from '@services/fetcher/configuration/general';
-import useFormStore from '@stores/useFormStore'; // Import useFormStore
-import { useDrawer } from '@hooks/useDrawer';
 import { cityDefaultValues } from '@constants/defaultValues';
 import Combobox from '@components/shared/Combobox';
-import { errorMapping } from '@utils/errorMapping';
-import { AxiosError } from 'axios';
 import { GET_CITY, GET_PROVINCE } from '@constants/queryKey';
-import useToastStore from '@stores/useToastStore';
-import { useFormSave } from '@hooks/useFormSave';
-import { useFormChanges } from '@hooks/useFormChanges';
+import { useForm } from '@hooks/useForm';
 
 const CreateCity = () => {
-  const formRef = useRef<HTMLFormElement>(null);
-  const { isOpen, closeDrawer, openDetailDrawer } = useDrawerStore();
-  const { setChangeStatus } = useFormStore();
-  const [isLoading, setIsLoading] = React.useState(false);
-  const openToast = useToastStore((state) => state.showToast);
-  const queryClient = useQueryClient();
+  // const formRef = useRef<HTMLFormElement>(null);
+  // const { isOpen, closeDrawer, openDetailDrawer } = useDrawerStore();
+  // const { setChangeStatus } = useFormStore();
+  // const [isLoading, setIsLoading] = React.useState(false);
+  // const openToast = useToastStore((state) => state.showToast);
+  // const queryClient = useQueryClient();
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    setError,
-    setValue,
-    watch,
-    control,
-    formState: { errors },
-  } = useForm<CityFormBody>({
-    mode: 'onSubmit',
-    resolver: yupResolver(citySchema),
-    defaultValues: cityDefaultValues,
-  });
+  // const {
+  //   register,
+  //   handleSubmit,
+  //   reset,
+  //   setError,
+  //   setValue,
+  //   watch,
+  //   control,
+  //   formState: { errors },
+  // } = useForm<CityFormBody>({
+  //   mode: 'onSubmit',
+  //   resolver: yupResolver(citySchema),
+  //   defaultValues: cityDefaultValues,
+  // });
 
   // const code = watch('city_code');
   // const name = watch('city_name');
@@ -80,54 +71,77 @@ const CreateCity = () => {
   //   location,
   // ]);
 
-  const { canSave } = useFormChanges({
-    defaultValues: cityDefaultValues,
-    control,
-    ignoredFields: ['ring_area', 'location'],
-    requireAllFields: true,
-  });
+  // const { canSave } = useFormChanges({
+  //   defaultValues: cityDefaultValues,
+  //   control,
+  //   ignoredFields: ['ring_area', 'location'],
+  //   requireAllFields: true,
+  // });
 
-  const { handleCloseDrawer } = useDrawer(reset);
+  // const { handleCloseDrawer } = useDrawer(reset);
 
-  const { mutate: mutationCreateCity } = useMutation({
-    mutationFn: createCity,
-    onMutate: () => {
-      setIsLoading(true);
-    },
-    onSuccess: (data) => {
-      closeDrawer();
-      setIsLoading(false);
-      setChangeStatus(false);
-      openDetailDrawer({
-        ...data.data,
-        province: watch('province'),
-        province_code: watch('province_code'),
-      } as ICity);
-      reset();
-      queryClient.invalidateQueries({ queryKey: [GET_CITY] });
-      openToast('City successfuly added', 'warning');
-    },
-    onError: (error: any) => {
-      setIsLoading(false);
-      const errorRes = error as AxiosError<ErrorResponse>;
-      if (errorRes.status === 500) {
-        openToast('City failed to added', 'danger');
-      }
-      if (errorRes.response?.data) {
-        const { errorField } = errorRes.response.data;
-        errorMapping(errorField, setError);
-      }
-    },
-  });
+  // const { mutate: mutationCreateCity } = useMutation({
+  //   mutationFn: createCity,
+  //   onMutate: () => {
+  //     setIsLoading(true);
+  //   },
+  //   onSuccess: (data) => {
+  //     closeDrawer();
+  //     setIsLoading(false);
+  //     setChangeStatus(false);
+  //     openDetailDrawer({
+  //       ...data.data,
+  //       province: watch('province'),
+  //       province_code: watch('province_code'),
+  //     } as ICity);
+  //     reset();
+  //     queryClient.invalidateQueries({ queryKey: [GET_CITY] });
+  //     openToast('City successfuly added', 'warning');
+  //   },
+  //   onError: (error: any) => {
+  //     setIsLoading(false);
+  //     const errorRes = error as AxiosError<ErrorResponse>;
+  //     if (errorRes.status === 500) {
+  //       openToast('City failed to added', 'danger');
+  //     }
+  //     if (errorRes.response?.data) {
+  //       const { errorField } = errorRes.response.data;
+  //       errorMapping(errorField, setError);
+  //     }
+  //   },
+  // });
 
-  const onSubmit: SubmitHandler<CityFormBody> = (data) => {
-    mutationCreateCity(data);
-  };
+  // const onSubmit: SubmitHandler<CityFormBody> = (data) => {
+  //   mutationCreateCity(data);
+  // };
 
-  const { handleSaveClick, handleInputKeyDown } = useFormSave({
-    ref: formRef,
+  // const { handleSaveClick, handleInputKeyDown } = useFormSave({
+  //   ref: formRef,
+  //   isLoading,
+  //   hasChanged: canSave,
+  // });
+
+  const {
+    handleCloseDrawer,
+    handleInputKeyDown,
+    handleSaveClick,
+    handleSubmit,
     isLoading,
-    hasChanged: canSave,
+    formRef,
+    isOpen,
+    canSave,
+    errors,
+    setError,
+    setValue,
+    register,
+    watch,
+  } = useForm({
+    label: 'City',
+    queryKey: GET_CITY,
+    mutationFn: createCity,
+    validationSchema: citySchema,
+    defaultValues: cityDefaultValues,
+    type: 'add',
   });
 
   return (
@@ -146,7 +160,7 @@ const CreateCity = () => {
             </Button>
           </DrawerEndHeader>
         </DrawerHeader>
-        <form ref={formRef} onSubmit={handleSubmit(onSubmit)}>
+        <form ref={formRef} onSubmit={handleSubmit}>
           <DrawerBody>
             <Card
               size="drawer"
@@ -203,10 +217,8 @@ const CreateCity = () => {
                       value: watch('province_code'),
                     }}
                     onChange={(val) => {
-                      setValue('province', val.label, { shouldDirty: true });
-                      setValue('province_code', val.value, {
-                        shouldDirty: true,
-                      });
+                      setValue('province', val.label);
+                      setValue('province_code', val.value);
                       setError('province', { type: 'disabled' });
                     }}
                   />

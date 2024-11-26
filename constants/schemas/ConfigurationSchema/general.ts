@@ -21,5 +21,4 @@ export const citySchema = Yup.object().shape({
     .max(5, 'Ring area must be at most 5 characters')
     .optional()
     .nullable(),
-  location: Yup.string().optional().nullable(),
 });

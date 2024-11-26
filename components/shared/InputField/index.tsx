@@ -67,8 +67,7 @@ export interface InputFieldProps
   end_icon?: IconProps;
   textarea?: boolean;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
-  onKeyDown?: React.KeyboardEventHandler<HTMLInputElement>; // Add onKeyDown here
-  onClick?: React.MouseEventHandler<HTMLInputElement>;
+  onKeyDown?: React.KeyboardEventHandler<HTMLInputElement>;
   readOnly?: boolean;
 }
 
@@ -104,14 +103,16 @@ const InputField = React.forwardRef<HTMLInputElement, InputFieldProps>(
               : 'flex-col gap-1'
           }`}
         >
-          <Label
-            required={required}
-            sizes={size}
-            className="shrink-0 w-[100px] font-semibold"
-            {...labelProps}
-          >
-            {label}
-          </Label>
+          {label && (
+            <Label
+              required={required}
+              sizes={size}
+              className="shrink-0 w-[100px] font-semibold"
+              {...labelProps}
+            >
+              {label}
+            </Label>
+          )}
           <Input
             defaultChecked={defaultChecked}
             ref={ref} // Pass ref to the Input component
@@ -127,7 +128,6 @@ const InputField = React.forwardRef<HTMLInputElement, InputFieldProps>(
             start_icon={start_icon}
             end_icon={end_icon}
             textarea={textarea}
-            onClick={props.onClick}
             readOnly={props.readOnly}
             {...inputProps}
           />

@@ -1,0 +1,16 @@
+import {
+  FieldErrors,
+  UseFormRegister,
+  UseFormSetError,
+  UseFormSetValue,
+  UseFormWatch,
+} from 'react-hook-form';
+
+type FormType<T> = {
+  errors: FieldErrors<T>;
+  watch: UseFormWatch<T>;
+  register: UseFormRegister<T>;
+  setValue: UseFormSetValue<T>;
+  setError: UseFormSetError<T>;
+  handleInputKeyDown: (event: React.KeyboardEvent<HTMLInputElement>) => void;
+};

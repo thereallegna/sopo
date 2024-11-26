@@ -31,14 +31,23 @@ export const ItemCategoryDefaultValues: ItemCategoryFormBody = {
   item_category_code: '',
   item_category_name: '',
   active: true,
+  coa_stock: '',
+  coa_sales: '',
+  coa_cogs: '',
+  coa_sales_return: '',
+  coa_purchase_return: '',
+  coa_consumption_cost: '',
 };
 
 export const masterItemDefaultValues: MasterItemFormBody = {
-  item_code: '',
   item_name: '',
+  category_name: '',
   category_code: '',
   uom_code: '',
-  active: false,
+  uom_name: '',
+  active: true,
+  inventory_item: true,
+  purchase_item: true,
 };
 // Configuration Material Management End
 

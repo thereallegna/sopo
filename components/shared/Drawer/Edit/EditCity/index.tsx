@@ -32,7 +32,9 @@ const EditCity = () => {
   const formRef = useRef<HTMLFormElement>(null);
   const { isOpenEdit, closeEditDrawer, setDetailData, openDetailDrawer } =
     useDrawerStore();
-  const detail_data = useDrawerStore((state) => state.detail_data) as ICity;
+  const detail_data = useDrawerStore(
+    (state) => state.detail_data
+  ) as CityFormBody;
   const { setChangeStatus } = useFormStore();
   const [isLoading, setIsLoading] = React.useState(false);
   const showToast = useToastStore((state) => state.showToast);
@@ -77,7 +79,7 @@ const EditCity = () => {
         ...data.data,
         province: watch('province'),
         province_code: watch('province_code'),
-      } as ICity);
+      });
       reset();
       queryClient.invalidateQueries({ queryKey: [GET_CITY] });
       showToast('City successfully edited', 'success');

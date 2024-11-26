@@ -12,6 +12,9 @@ const nextConfig = {
     // ignore during commit
     // ignoreDuringCommit: true,
   },
+  // images: {
+  //   domains: ['r1-web.runsystemdev.com'], // Add your domain if the image is external
+  // },
   output: 'standalone',
   compiler: {
     // removeConsole: !process.env.SHOW_CONSOLE_LOG,

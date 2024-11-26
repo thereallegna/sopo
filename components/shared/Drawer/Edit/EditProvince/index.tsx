@@ -36,7 +36,9 @@ const EditProvince = () => {
   const { isOpenEdit, closeEditDrawer, setDetailData, openDetailDrawer } =
     useDrawerStore();
   const { setChangeStatus } = useFormStore();
-  const detail_data = useDrawerStore((state) => state.detail_data) as IProvince;
+  const detail_data = useDrawerStore(
+    (state) => state.detail_data
+  ) as ProvinceFormBody;
   const [isLoading, setIsLoading] = React.useState(false);
   const showToast = useToastStore((state) => state.showToast);
   const queryClient = useQueryClient();
@@ -79,7 +81,7 @@ const EditProvince = () => {
         ...data.data,
         country: watch('country'),
         country_code: watch('country_code'),
-      } as IProvince);
+      } as ProvinceFormBody);
       reset();
       queryClient.invalidateQueries({ queryKey: [GET_PROVINCE] });
       showToast('Province successfully edited', 'success');
