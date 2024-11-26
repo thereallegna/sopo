@@ -21,11 +21,13 @@ import { useSetValueForm } from '@hooks/useFormChanges';
 
 const DetailCity = () => {
   const { isOpenDetail, closeDetailDrawer, openEditDrawer } = useDrawerStore();
-  const detail_data = useDrawerStore((state) => state.detail_data) as ICity;
+  const detail_data = useDrawerStore(
+    (state) => state.detail_data
+  ) as CityFormBody;
 
-  const { register, setValue } = useForm<ICity>();
+  const { setValue } = useForm<CityFormBody>();
 
-  useSetValueForm<ICity>(detail_data, setValue);
+  useSetValueForm<CityFormBody>(detail_data, setValue);
 
   return (
     <Drawer onClose={closeDetailDrawer} open={isOpenDetail}>
@@ -47,7 +49,6 @@ const DetailCity = () => {
             <CardContent className="flex-wrap flex flex-row gap-6">
               <div className="flex flex-col gap-[14px] flex-1">
                 <InputField
-                  {...register('city_code')}
                   value={detail_data?.city_code || ''}
                   label="City Code"
                   placeholder="INA09-10"
@@ -58,7 +59,6 @@ const DetailCity = () => {
                   disabled
                 />
                 <InputField
-                  {...register('city_name')}
                   value={detail_data?.city_name || ''}
                   label="City Name"
                   right
@@ -93,7 +93,6 @@ const DetailCity = () => {
               </div>
               <div className="flex flex-col gap-[14px] flex-1">
                 <InputField
-                  {...register('location')}
                   value={detail_data?.location || ''}
                   label="Location"
                   right

@@ -31,17 +31,17 @@ type ItemCategoryFormBody = {
   item_category_code: string;
   item_category_name: string;
   active: boolean;
-  coa_stock_account?: string | null;
+  coa_stock?: string | null;
   coa_stock_description?: string | null;
-  coa_sales_account?: string | null;
+  coa_sales?: string | null;
   coa_sales_description?: string | null;
-  coa_cogs_account?: string | null;
+  coa_cogs?: string | null;
   coa_cogs_description?: string | null;
-  coa_sales_return_account?: string | null;
+  coa_sales_return?: string | null;
   coa_sales_return_description?: string | null;
-  coa_purchase_return_account?: string | null;
+  coa_purchase_return?: string | null;
   coa_purchase_return_description?: string | null;
-  coa_consumption_cost_account?: string | null;
+  coa_consumption_cost?: string | null;
   coa_consumption_cost_description?: string | null;
 };
 

@@ -25,11 +25,13 @@ const DetailProvince = () => {
     openEditDrawer,
     openHistoryLogDrawer,
   } = useDrawerStore();
-  const detail_data = useDrawerStore((state) => state.detail_data) as IProvince;
+  const detail_data = useDrawerStore(
+    (state) => state.detail_data
+  ) as ProvinceFormBody;
 
-  const { register, setValue } = useForm<IProvince>();
+  const { register, setValue } = useForm<ProvinceFormBody>();
 
-  useSetValueForm<IProvince>(detail_data, setValue);
+  useSetValueForm<ProvinceFormBody>(detail_data, setValue);
 
   return (
     <Drawer onClose={closeDetailDrawer} open={isOpenDetail}>

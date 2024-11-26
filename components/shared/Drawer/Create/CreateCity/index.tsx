@@ -102,7 +102,8 @@ const CreateCity = () => {
         ...data.data,
         province: watch('province'),
         province_code: watch('province_code'),
-      } as ICity);
+        location: watch('location'),
+      } as CityFormBody);
       reset();
       queryClient.invalidateQueries({ queryKey: [GET_CITY] });
       openToast('City successfuly added', 'warning');
