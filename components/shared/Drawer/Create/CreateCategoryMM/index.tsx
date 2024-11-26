@@ -12,7 +12,7 @@ import {
 import { Card, CardContent } from '@components/ui/Card';
 import InputField from '@components/shared/InputField';
 import { useDrawerStore } from '@stores/useDrawerStore';
-import { IconDeviceFloppy, IconSearch } from '@tabler/icons-react';
+import { IconDeviceFloppy, IconSearch, IconX } from '@tabler/icons-react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm, SubmitHandler } from 'react-hook-form';
@@ -47,6 +47,7 @@ const CreateCategoryMM = () => {
     reset,
     setError,
     setValue,
+    watch,
     control,
     formState: { errors },
   } = useForm<ItemCategoryFormBody>({
@@ -121,6 +122,33 @@ const CreateCategoryMM = () => {
   const openModalForField = (fieldName: string) => {
     setModalOpen(true);
     setCoaForm(fieldName);
+  };
+
+  const clearField = (fieldName: keyof ItemCategoryFormBody) => {
+    setValue(fieldName, '');
+    setValue(`${fieldName}_description` as keyof ItemCategoryFormBody, '');
+  };
+
+  const renderIcon = (fieldName: keyof ItemCategoryFormBody) => {
+    const fieldValue = watch(fieldName);
+    if (fieldValue) {
+      return (
+        <IconComponent
+          onClick={() => clearField(fieldName)}
+          size="medium"
+          icon={IconX}
+          className="curdor-pointer"
+        />
+      );
+    }
+    return (
+      <IconComponent
+        onClick={() => openModalForField(fieldName)}
+        size="medium"
+        icon={IconSearch}
+        className="cirsor-pointer"
+      />
+    );
   };
 
   return (
@@ -250,194 +278,155 @@ const CreateCategoryMM = () => {
                         disabled
                         className="flex-1"
                       />
-                      {/* <div className="w-8/10">
-                      </div> */}
                     </div>
-                    <IconComponent
-                      onClick={() => openModalForField('coa_stock')}
-                      size="medium"
-                      icon={IconSearch}
-                      className="cursor-pointer"
-                    />
+                    {renderIcon('coa_stock')}
                   </div>
-                  <div className="flex justify-between items-center w-full mb-[8px] gap-3">
-                    <div className="flex flex-grow gap-0">
-                      <div className="w-2/10">
-                        <InputField
-                          {...register('coa_sales')}
-                          message={
-                            errors.coa_stock
-                              ? {
-                                  text: errors.coa_stock.message!,
-                                  type: 'danger',
-                                }
-                              : undefined
-                          }
-                          label="COA's Account (Sales)"
-                          placeholder="COA's Account (Sales)"
-                          disabled
-                          right
-                        />
-                      </div>
-                      <div className="w-8/10">
-                        <InputField
-                          {...register('coa_sales_description')}
-                          message={
-                            errors.coa_sales_description
-                              ? {
-                                  text: errors.coa_sales_description.message!,
-                                  type: 'danger',
-                                }
-                              : undefined
-                          }
-                          placeholder="COA's Account (Sales)"
-                          disabled
-                          right
-                        />
-                      </div>
+                  <div className="flex justify-between items-center w-full gap-3">
+                    <div className="flex flex-grow items-center gap-[10px]">
+                      <InputField
+                        {...register('coa_sales')}
+                        message={
+                          errors.coa_stock
+                            ? {
+                                text: errors.coa_stock.message!,
+                                type: 'danger',
+                              }
+                            : undefined
+                        }
+                        label="COA's Account (Sales)"
+                        placeholder="COA's Account (Sales)"
+                        disabled
+                        right
+                        className="flex-1"
+                      />
+                      <InputField
+                        {...register('coa_sales_description')}
+                        message={
+                          errors.coa_sales_description
+                            ? {
+                                text: errors.coa_sales_description.message!,
+                                type: 'danger',
+                              }
+                            : undefined
+                        }
+                        placeholder="COA's Account (Sales)"
+                        disabled
+                        className="flex-1"
+                      />
                     </div>
-                    <IconComponent
-                      onClick={() => openModalForField('coa_sales')}
-                      size="medium"
-                      icon={IconSearch}
-                      className="cursor-pointer"
-                    />
+                    {renderIcon('coa_sales')}
                   </div>
-                  <div className="flex justify-between items-center w-full mb-[12px] gap-4">
-                    <div className="flex flex-grow gap-0">
-                      <div className="w-2/10">
-                        <InputField
-                          {...register('coa_cogs')}
-                          message={
-                            errors.coa_cogs
-                              ? {
-                                  text: errors.coa_cogs.message!,
-                                  type: 'danger',
-                                }
-                              : undefined
-                          }
-                          label="COA's Account (COGS)"
-                          placeholder="COA's Account (COGS)"
-                          disabled
-                          right
-                        />
-                      </div>
-                      <div className="w-8/10">
-                        <InputField
-                          {...register('coa_cogs_description')}
-                          message={
-                            errors.coa_cogs_description
-                              ? {
-                                  text: errors.coa_cogs_description.message!,
-                                  type: 'danger',
-                                }
-                              : undefined
-                          }
-                          placeholder="COA's Account (COGS)"
-                          disabled
-                          right
-                        />
-                      </div>
+                  <div className="flex justify-between items-center w-full gap-3">
+                    <div className="flex flex-grow items-center gap-[10px]">
+                      <InputField
+                        {...register('coa_cogs')}
+                        message={
+                          errors.coa_cogs
+                            ? {
+                                text: errors.coa_cogs.message!,
+                                type: 'danger',
+                              }
+                            : undefined
+                        }
+                        label="COA's Account (COGS)"
+                        placeholder="COA's Account (COGS)"
+                        disabled
+                        right
+                        className="flex-1"
+                      />
+                      <InputField
+                        {...register('coa_cogs_description')}
+                        message={
+                          errors.coa_cogs_description
+                            ? {
+                                text: errors.coa_cogs_description.message!,
+                                type: 'danger',
+                              }
+                            : undefined
+                        }
+                        placeholder="COA's Account (COGS)"
+                        disabled
+                        className="flex-1"
+                      />
                     </div>
-                    <IconComponent
-                      onClick={() => openModalForField('coa_cogs')}
-                      size="medium"
-                      icon={IconSearch}
-                      className="cursor-pointer"
-                    />
+                    {renderIcon('coa_cogs')}
                   </div>
                 </div>
-                <div className="flex flex-col gap-[14px] flex-1">
-                  <div className="flex justify-between items-center w-full mb-[12px] gap-4">
-                    <div className="flex flex-grow gap-0">
-                      <div className="w-2/10">
-                        <InputField
-                          {...register('coa_sales_return')}
-                          message={
-                            errors.coa_sales_return
-                              ? {
-                                  text: errors.coa_sales_return.message!,
-                                  type: 'danger',
-                                }
-                              : undefined
-                          }
-                          label="COA's Account (Sales Return)"
-                          placeholder="COA's Account (Sales Return)"
-                          disabled
-                          right
-                        />
-                      </div>
-                      <div className="w-8/10">
-                        <InputField
-                          {...register('coa_sales_return_description')}
-                          message={
-                            errors.coa_sales_return_description
-                              ? {
-                                  text: errors.coa_sales_return_description
-                                    .message!,
-                                  type: 'danger',
-                                }
-                              : undefined
-                          }
-                          placeholder="COA's Account (Sales Return)"
-                          disabled
-                          right
-                        />
-                      </div>
+                <div className="flex flex-col gap-[14px] flex-1 h-full justify-between">
+                  <div className="flex justify-between items-center w-full gap-3">
+                    <div className="flex flex-grow items-center gap-[10px]">
+                      <InputField
+                        {...register('coa_sales_return')}
+                        message={
+                          errors.coa_sales_return
+                            ? {
+                                text: errors.coa_sales_return.message!,
+                                type: 'danger',
+                              }
+                            : undefined
+                        }
+                        label="COA's Account (Sales Return)"
+                        placeholder="COA's Account (Sales Return)"
+                        disabled
+                        right
+                        className="flex-1"
+                      />
+                      <InputField
+                        {...register('coa_sales_return_description')}
+                        message={
+                          errors.coa_sales_return_description
+                            ? {
+                                text: errors.coa_sales_return_description
+                                  .message!,
+                                type: 'danger',
+                              }
+                            : undefined
+                        }
+                        placeholder="COA's Account (Sales Return)"
+                        disabled
+                        className="flex-1"
+                      />
                     </div>
-                    <IconComponent
-                      onClick={() => openModalForField('coa_sales_return')}
-                      size="medium"
-                      icon={IconSearch}
-                      className="cursor-pointer"
-                    />
+                    {renderIcon('coa_sales_return')}
                   </div>
-                  <div className="flex justify-between items-center w-full mb-[12px] gap-4">
-                    <div className="flex flex-grow">
-                      <div className="w-2/10">
-                        <InputField
-                          {...register('coa_purchase_return')}
-                          message={
-                            errors.coa_purchase_return
-                              ? {
-                                  text: errors.coa_purchase_return.message!,
-                                  type: 'danger',
-                                }
-                              : undefined
-                          }
-                          label="COA's Account (Purchase Return)"
-                          placeholder="COA's Account (Purchase Return)"
-                          disabled
-                          right
-                        />
-                      </div>
-                      <div className="w-8/10">
-                        <InputField
-                          {...register('coa_purchase_return_description')}
-                          message={
-                            errors.coa_purchase_return_description
-                              ? {
-                                  text: errors.coa_purchase_return_description
-                                    .message!,
-                                  type: 'danger',
-                                }
-                              : undefined
-                          }
-                          placeholder="COA's Account (Purchase Return)"
-                          disabled
-                          right
-                        />
-                      </div>
+                  <div className="flex justify-between items-center w-full gap-3">
+                    <div className="flex flex-grow items-center gap-[10px]">
+                      <InputField
+                        {...register('coa_purchase_return')}
+                        message={
+                          errors.coa_purchase_return
+                            ? {
+                                text: errors.coa_purchase_return.message!,
+                                type: 'danger',
+                              }
+                            : undefined
+                        }
+                        label="COA's Account (Purchase Return)"
+                        placeholder="COA's Account (Purchase Return)"
+                        disabled
+                        right
+                        className="flex-1"
+                      />
+                      <InputField
+                        {...register('coa_purchase_return_description')}
+                        message={
+                          errors.coa_purchase_return_description
+                            ? {
+                                text: errors.coa_purchase_return_description
+                                  .message!,
+                                type: 'danger',
+                              }
+                            : undefined
+                        }
+                        placeholder="COA's Account (Purchase Return)"
+                        disabled
+                        className="flex-1"
+                      />
                     </div>
-                    <IconComponent
-                      onClick={() => openModalForField('coa_purchse_return')}
-                      size="medium"
-                      icon={IconSearch}
-                      className="cursor-pointer"
-                    />
+                    {renderIcon('coa_purchase_return')}
                   </div>
-                  <div className="flex justify-between items-center w-full mb-[12px] gap-4">
-                    <div className="flex-grow">
+                  <div className="flex justify-between items-center w-full gap-3">
+                    <div className="flex flex-grow items-center gap-[10px]">
                       <InputField
                         {...register('coa_consumption_cost')}
                         message={
@@ -452,9 +441,8 @@ const CreateCategoryMM = () => {
                         placeholder="COA's Account (Consumption Cost)"
                         disabled
                         right
+                        className="flex-1"
                       />
-                    </div>
-                    <div className="w-8/10">
                       <InputField
                         {...register('coa_consumption_cost_description')}
                         message={
@@ -468,15 +456,10 @@ const CreateCategoryMM = () => {
                         }
                         placeholder="COA's Account (Cosumption Cost)"
                         disabled
-                        right
+                        className="flex-1"
                       />
                     </div>
-                    <IconComponent
-                      onClick={() => openModalForField('coa_consumption_cost')}
-                      size="medium"
-                      icon={IconSearch}
-                      className="cursor-pointer"
-                    />
+                    {renderIcon('coa_consumption_cost')}
                   </div>
                 </div>
               </CardContent>
@@ -516,7 +499,7 @@ const CreateCategoryMM = () => {
             data.description,
             { shouldDirty: true }
           );
-          setModalOpen(false); // Close the modal after selection
+          setModalOpen(false);
         }}
       />
     </Drawer>

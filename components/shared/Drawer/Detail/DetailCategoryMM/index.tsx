@@ -86,64 +86,130 @@ const DetailCategoryMM = () => {
             </CardContent>
           </Card>
           <Card size="drawer">
-            <CardContent className="flex-wrap flex flex-row gap-6">
+            <CardContent className="flex-wrap flex flex-row gap-4">
               <div className="flex flex-col gap-[14px] flex-1 h-full justify-between">
-                <InputField
-                  value={detail_data?.coa_stock || ''}
-                  label="COA's Account (Stock)"
-                  placeholder="COA's Account (Stock)"
-                  right
-                  type="text"
-                  disabled
-                  {...register('coa_stock')}
-                />
-                <InputField
-                  value={detail_data?.coa_sales || ''}
-                  label="COA's Account (Sales)"
-                  placeholder="COA's Account (Sales)"
-                  right
-                  type="text"
-                  disabled
-                  {...register('coa_sales')}
-                />
-                <InputField
-                  value={detail_data?.coa_cogs || ''}
-                  label="COA's Account (COGS)"
-                  placeholder="COA's Account (COGS)"
-                  right
-                  type="text"
-                  disabled
-                  {...register('coa_cogs')}
-                />
+                <div className="flex justify-between items-center w-full gap-3">
+                  <div className="flex flex-grow items-center gap-[10px]">
+                    <InputField
+                      value={detail_data?.coa_stock || ''}
+                      label="COA's Account (Stock)"
+                      placeholder="COA's Account (Stock)"
+                      right
+                      disabled
+                      className="flex-1"
+                      {...register('coa_stock')}
+                    />
+                    <InputField
+                      value={detail_data?.coa_stock_description || ''}
+                      placeholder="COA's Account (Stock)"
+                      disabled
+                      className="flex-1"
+                      {...register('coa_stock_description')}
+                    />
+                  </div>
+                </div>
+                <div className="flex justify-between items-center w-full gap-3">
+                  <div className="flex flex-grow items-center gap-[10px]">
+                    <InputField
+                      value={detail_data?.coa_sales || ''}
+                      label="COA's Account (Sales)"
+                      placeholder="COA's Account (Sales)"
+                      right
+                      disabled
+                      className="flex-1"
+                      {...register('coa_sales')}
+                    />
+                    <InputField
+                      value={detail_data?.coa_sales_description || ''}
+                      placeholder="COA's Account (Sales)"
+                      disabled
+                      className="flex-1"
+                      {...register('coa_sales_description')}
+                    />
+                  </div>
+                </div>
+                <div className="flex justify-between items-center w-full gap-3">
+                  <div className="flex flex-grow items-center gap-[10px]">
+                    <InputField
+                      value={detail_data?.coa_cogs || ''}
+                      label="COA's Account (COGS)"
+                      placeholder="COA's Account (COGS)"
+                      right
+                      disabled
+                      className="flex-1"
+                      {...register('coa_cogs')}
+                    />
+                    <InputField
+                      value={detail_data?.coa_cogs_description || ''}
+                      placeholder="COA's Account (COGS)"
+                      disabled
+                      className="flex-1"
+                      {...register('coa_cogs_description')}
+                    />
+                  </div>
+                </div>
               </div>
-              <div className="flex flex-col gap-[14px] flex-1">
-                <InputField
-                  value={detail_data?.coa_sales_return || ''}
-                  label="COA's Account (Sales Return)"
-                  placeholder="COA's Account (Sales Return)"
-                  right
-                  type="text"
-                  disabled
-                  {...register('coa_sales_return')}
-                />
-                <InputField
-                  value={detail_data?.coa_purchase_return || ''}
-                  label="COA's Account (Purchase Return)"
-                  placeholder="COA's Account (Purchase Return)"
-                  right
-                  type="text"
-                  disabled
-                  {...register('coa_purchase_return')}
-                />
-                <InputField
-                  value={detail_data?.coa_consumption_cost || ''}
-                  label="COA's Account (Consumption Cost)"
-                  placeholder="COA's Account (Consumption Cost)"
-                  right
-                  type="text"
-                  disabled
-                  {...register('coa_consumption_cost')}
-                />
+              <div className="flex flex-col gap-[14px] flex-1 h-full justify-between">
+                <div className="flex justify-between items-center w-full gap-3">
+                  <div className="flex flex-grow items-center gap-[10px]">
+                    <InputField
+                      value={detail_data?.coa_sales_return || ''}
+                      label="COA's Account (Sales Return)"
+                      placeholder="COA's Account (Sales Return)"
+                      right
+                      disabled
+                      className="flex-1"
+                      {...register('coa_sales_return')}
+                    />
+                    <InputField
+                      value={detail_data?.coa_sales_return_description || ''}
+                      placeholder="COA's Account (Sales Return)"
+                      disabled
+                      className="flex-1"
+                      {...register('coa_sales_return_description')}
+                    />
+                  </div>
+                </div>
+                <div className="flex justify-between items-center w-full gap-3">
+                  <div className="flex flex-grow items-center gap-[10px]">
+                    <InputField
+                      value={detail_data?.coa_purchase_return || ''}
+                      label="COA's Account (Purchase Return)"
+                      placeholder="COA's Account (Purchase Return)"
+                      right
+                      disabled
+                      className="flex-1"
+                      {...register('coa_purchase_return')}
+                    />
+                    <InputField
+                      value={detail_data?.coa_purchase_return_description || ''}
+                      placeholder="COA's Account (Purchase Return)"
+                      disabled
+                      className="flex-1"
+                      {...register('coa_purchase_return_description')}
+                    />
+                  </div>
+                </div>
+                <div className="flex justify-between items-center w-full gap-3">
+                  <div className="flex flex-grow items-center gap-[10px]">
+                    <InputField
+                      value={detail_data?.coa_consumption_cost || ''}
+                      label="COA's Account (Consumption Cost)"
+                      placeholder="COA's Account (Consumption Cost)"
+                      right
+                      disabled
+                      className="flex-1"
+                      {...register('coa_consumption_cost')}
+                    />
+                    <InputField
+                      value={detail_data?.coa_consumption_cost_description}
+                      placeholder="COA's Account (Consumption Cost)"
+                      disabled
+                      className="flex-1"
+                      {...register('coa_consumption_cost_description')}
+                    />
+                  </div>
+                </div>
               </div>
             </CardContent>
           </Card>
