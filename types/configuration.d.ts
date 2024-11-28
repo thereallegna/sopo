@@ -15,7 +15,7 @@ type IItemCategory = {
   coa_purchase_return?: string;
   coa_purchase_return_description?: string;
   coa_consumption_cost?: string;
-  coa_consumption_cost_Description?: string;
+  coa_consumption_cost_description?: string;
 };
 
 type IItemMM = {
