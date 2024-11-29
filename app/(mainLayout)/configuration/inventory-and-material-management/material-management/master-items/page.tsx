@@ -30,8 +30,11 @@ const DetailMasterItemMM = dynamic(
     ),
   { ssr: false }
 );
-const EditUOM = dynamic(
-  () => import('@components/shared/Drawer/Edit/EditUOM'),
+const EditMasterItemMM = dynamic(
+  () =>
+    import(
+      '@components/module/Configuration/InventoryMaterialManagement/MasterItem/Edit'
+    ),
   { ssr: false }
 );
 
@@ -136,7 +139,7 @@ const Country = () => {
       />
       <CreateMasterItemMM />
       <DetailMasterItemMM />
-      <EditUOM />
+      <EditMasterItemMM />
     </>
   );
 };

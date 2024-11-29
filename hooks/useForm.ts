@@ -38,7 +38,8 @@ export const useForm = <T extends FieldValues>({
   requireAllFields = false,
 }: UseFormProps<T>) => {
   const formRef = useRef<HTMLFormElement>(null);
-  const { isOpen, closeDrawer, openDetailDrawer } = useDrawerStore();
+  const { isOpen, closeDrawer, openDetailDrawer, isOpenEdit, isOpenDetail } =
+    useDrawerStore();
   const { setChangeStatus } = useFormStore();
   const openToast = useToastStore((state) => state.showToast);
   const queryClient = useQueryClient();
@@ -62,7 +63,7 @@ export const useForm = <T extends FieldValues>({
     defaultValues,
   });
 
-  const { handleCloseDrawer } = useDrawer(reset);
+  const { handleCloseDrawer, handleCloseDrawerEdit } = useDrawer(reset);
 
   const watchedFields = useWatch({ control });
 
@@ -229,6 +230,9 @@ export const useForm = <T extends FieldValues>({
     isConfirmModalOpen,
     handleConfirm,
     handleCloseConfirmModal,
+    handleCloseDrawerEdit,
     confirmMessage,
+    isOpenDetail,
+    isOpenEdit,
   };
 };

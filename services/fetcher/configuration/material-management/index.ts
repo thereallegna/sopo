@@ -112,6 +112,16 @@ const createItem = async (body: MasterItemFormBody, params?: any) => {
   }
 };
 
+const editItem = async (body: MasterItemFormBody, params?: any) => {
+  try {
+    const res = await axios.put(PATH_ITEMS_MASTER, body, { params });
+    return res.data;
+  } catch (error) {
+    console.error('Error editing item category:', error);
+    throw error;
+  }
+};
+
 export {
   getUOM,
   createUOM,
@@ -121,4 +131,5 @@ export {
   editItemCategory,
   getItem,
   createItem,
+  editItem,
 };
