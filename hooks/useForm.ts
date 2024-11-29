@@ -21,9 +21,9 @@ export type UseFormProps<T> = {
   queryKey: string;
   validationSchema: ObjectSchema<any>;
   defaultValues: any;
-  mutationFn: (body: T) => Promise<any>;
+  mutationFn: (body: T, params?: any) => Promise<any>;
   type: 'add' | 'edit'; // Menentukan apakah form digunakan untuk add atau edit
-  ignoredFields?: (keyof T)[];
+  ignoredFields?: (keyof T)[]; // Optional Field
   requireAllFields?: boolean;
 };
 
@@ -43,6 +43,9 @@ export const useForm = <T extends FieldValues>({
   const openToast = useToastStore((state) => state.showToast);
   const queryClient = useQueryClient();
   const [isLoading, setIsLoading] = useState(false);
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false); // State untuk modal konfirmasi
+  const [confirmMessage, setConfirmMessage] = useState<string>();
+  const [tempData, setTempData] = useState<T | null>(null);
 
   const {
     register,
@@ -141,7 +144,8 @@ export const useForm = <T extends FieldValues>({
   ]);
 
   const { mutate: mutation } = useMutation({
-    mutationFn,
+    mutationFn: ({ body, params }: { body: T; params?: any }) =>
+      mutationFn(body, params),
     onMutate: () => {
       setIsLoading(true);
     },
@@ -162,7 +166,7 @@ export const useForm = <T extends FieldValues>({
         openToast(`${label} successfully edited`, 'success');
       }
     },
-    onError: (error: any) => {
+    onError: (error: any, variables) => {
       setIsLoading(false);
       const errorRes = error as AxiosError<ErrorResponse>;
       if (errorRes.response?.status === 500) {
@@ -172,6 +176,10 @@ export const useForm = <T extends FieldValues>({
         } else if (type === 'edit') {
           openToast(`Failed to edit ${label}`, 'danger');
         }
+      } else if (errorRes.status === 409) {
+        setTempData(variables.body);
+        setIsConfirmModalOpen(true);
+        setConfirmMessage(errorRes.response?.data.message);
       } else if (errorRes.response?.data) {
         const { errorField } = errorRes.response.data;
         errorMapping(errorField, setError);
@@ -180,7 +188,20 @@ export const useForm = <T extends FieldValues>({
   });
 
   const onSubmit: SubmitHandler<T> = (data) => {
-    mutation(data);
+    mutation({ body: data });
+  };
+
+  // Handler untuk tombol konfirmasi di modal
+  const handleConfirm = () => {
+    console.log('Temporary Data => ', tempData);
+    if (tempData) {
+      setIsConfirmModalOpen(false); // Tutup modal
+      mutation({ body: tempData, params: { confirm: true } });
+    }
+  };
+
+  const handleCloseConfirmModal = () => {
+    setIsConfirmModalOpen(false);
   };
 
   const { handleSaveClick, handleInputKeyDown } = useFormSave({
@@ -205,5 +226,9 @@ export const useForm = <T extends FieldValues>({
     canSave,
     formRef,
     isOpen,
+    isConfirmModalOpen,
+    handleConfirm,
+    handleCloseConfirmModal,
+    confirmMessage,
   };
 };

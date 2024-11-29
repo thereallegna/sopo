@@ -102,9 +102,9 @@ const getItem = async (option?: FetcherOptions) => {
   }
 };
 
-const createItem = async (body: MasterItemFormBody) => {
+const createItem = async (body: MasterItemFormBody, params?: any) => {
   try {
-    const res = await axios.post(PATH_ITEMS_MASTER, body);
+    const res = await axios.post(PATH_ITEMS_MASTER, body, { params });
     return res.data;
   } catch (error) {
     console.error('Error creating item category:', error);

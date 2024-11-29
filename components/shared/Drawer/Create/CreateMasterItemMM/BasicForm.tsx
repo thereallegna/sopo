@@ -1,7 +1,7 @@
 import React from 'react';
 import InputField from '@components/shared/InputField';
 import { Card, CardContent } from '@components/ui/Card';
-import { IconSearch } from '@tabler/icons-react';
+import { IconSearch, IconX } from '@tabler/icons-react';
 import { Checkbox } from '@components/ui/Checkbox';
 import { Button } from '@components/ui/Button';
 import Label from '@components/ui/Label';
@@ -13,7 +13,8 @@ const BasicForm = ({
   register,
   setValue,
   handleInputKeyDown,
-}: FormType<MasterItemFormBody>) => (
+  handleShowSource,
+}: FormType<MasterItemFormBody> & { handleShowSource: () => void }) => (
   <Card size="drawer" className="border border-Neutral-200 shadow-none">
     <CardContent className="flex-wrap flex flex-row gap-6 items-center">
       <div className="flex flex-col gap-[14px] flex-1">
@@ -41,6 +42,7 @@ const BasicForm = ({
               label="Active"
               checked={watch('active')}
               onCheckedChange={(val) => setValue('active', val)}
+              disabled
             />
           </div>
           <div className="flex items-center gap-[10px]">
@@ -54,16 +56,31 @@ const BasicForm = ({
               label="Source"
               right
               type="text"
-              disabled
+              disabled={watch('source') === undefined}
               className="w-full gap-2"
               onKeyDown={handleInputKeyDown}
+              readOnly
+              inputProps={{
+                onClick: handleShowSource,
+              }}
             />
-            <Button
-              type="button"
-              className="w-min"
-              variant="backDrawer"
-              icon={{ icon: IconSearch }}
-            />
+            {watch('source') ? (
+              <Button
+                type="button"
+                className="w-min"
+                variant="backDrawer"
+                icon={{ icon: IconX }}
+                onClick={() => setValue('source', undefined)}
+              />
+            ) : (
+              <Button
+                type="button"
+                className="w-min"
+                variant="backDrawer"
+                icon={{ icon: IconSearch }}
+                onClick={handleShowSource}
+              />
+            )}
           </div>
         </div>
         <InputField
