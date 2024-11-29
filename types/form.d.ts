@@ -7,10 +7,11 @@ import {
 } from 'react-hook-form';
 
 type FormType<T> = {
-  errors: FieldErrors<T>;
+  errors?: FieldErrors<T>;
+  disableAll?: boolean;
   watch: UseFormWatch<T>;
   register: UseFormRegister<T>;
-  setValue: UseFormSetValue<T>;
-  setError: UseFormSetError<T>;
-  handleInputKeyDown: (event: React.KeyboardEvent<HTMLInputElement>) => void;
+  setValue?: UseFormSetValue<T>;
+  setError?: UseFormSetError<T>;
+  handleInputKeyDown?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
 };
