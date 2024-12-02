@@ -11,12 +11,16 @@ import PrintButton from '@components/ui/Table/Action/PrintButton';
 import { AccessorKeyColumnDef, ColumnDef } from '@tanstack/react-table';
 import { RowSizeType } from '../../../types/client/table';
 
-interface TableActionProps {
+export interface TableActionProps {
   data: any[];
   search?: string;
   columns: AccessorKeyColumnDef<any, any>[] | ColumnDef<any, any>[];
   columnSelector: SelectColumnDropdownProps;
   rowSize: RowSizeType;
+  showPrint?: boolean;
+  showExport?: boolean;
+  showColumnSelector?: boolean;
+  showRowSizeSelector?: boolean;
   onSearch: (keyword: string) => void;
   onFilter?: () => void;
   onRowSizeChange: (size: RowSizeType) => void;
@@ -28,6 +32,10 @@ const TableAction: React.FC<TableActionProps> = ({
   columnSelector,
   rowSize,
   search,
+  showPrint = true,
+  showExport = true,
+  showColumnSelector = true,
+  showRowSizeSelector = true,
   onSearch,
   onFilter,
   onRowSizeChange,
@@ -43,14 +51,19 @@ const TableAction: React.FC<TableActionProps> = ({
         value={search}
         onChange={(e) => onSearch(e.target.value)}
         className="w-min"
-        onClick={() => console.log('kkkk')}
       />
       {onFilter && <FilterButton onClick={onFilter} />}
-      <RowSizeDropdown active={rowSize} action={onRowSizeChange} />
-      <SelectColumnDropdown {...columnSelector} />
+      {showRowSizeSelector && (
+        <RowSizeDropdown active={rowSize} action={onRowSizeChange} />
+      )}
+      {showColumnSelector && <SelectColumnDropdown {...columnSelector} />}
       <div className="flex items-center justify-end w-full h-full gap-2">
-        <PrintButton data={data} columns={columns as ColumnDef<any>[]} />
-        <ExportButton data={data} columns={columns as ColumnDef<any>[]} />
+        {showPrint && (
+          <PrintButton data={data} columns={columns as ColumnDef<any>[]} />
+        )}
+        {showExport && (
+          <ExportButton data={data} columns={columns as ColumnDef<any>[]} />
+        )}
       </div>
     </div>
   </div>

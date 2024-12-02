@@ -1,7 +1,7 @@
 import React from 'react';
 import InputField from '@components/shared/InputField';
 import { Card, CardContent } from '@components/ui/Card';
-import { IconSearch } from '@tabler/icons-react';
+import { IconSearch, IconX } from '@tabler/icons-react';
 import { Checkbox } from '@components/ui/Checkbox';
 import { Button } from '@components/ui/Button';
 import Label from '@components/ui/Label';
@@ -13,7 +13,9 @@ const BasicForm = ({
   register,
   setValue,
   handleInputKeyDown,
-}: FormType<MasterItemFormBody>) => (
+  handleShowSource,
+  disableAll, // Pastikan properti ini diterima
+}: FormType<MasterItemFormBody> & { handleShowSource?: () => void }) => (
   <Card size="drawer" className="border border-Neutral-200 shadow-none">
     <CardContent className="flex-wrap flex flex-row gap-6 items-center">
       <div className="flex flex-col gap-[14px] flex-1">
@@ -22,7 +24,7 @@ const BasicForm = ({
             <InputField
               {...register('item_code')}
               message={
-                errors.item_code
+                errors?.item_code
                   ? {
                       text: errors.item_code.message!,
                       type: 'danger',
@@ -30,68 +32,89 @@ const BasicForm = ({
                   : undefined
               }
               label="Item Code"
-              // placeholder="Text here.."
-              right
               type="text"
-              disabled
+              right
+              disabled={disableAll || true} // Disabled berdasarkan disableAll
               className="w-full gap-2"
               onKeyDown={handleInputKeyDown}
             />
             <Checkbox
               label="Active"
               checked={watch('active')}
-              onCheckedChange={(val) => setValue('active', val)}
+              onCheckedChange={(val) => setValue && setValue('active', val)}
+              disabled={disableAll} // Disabled berdasarkan disableAll
             />
           </div>
           <div className="flex items-center gap-[10px]">
             <InputField
               {...register('source')}
               message={
-                errors.source
+                errors?.source
                   ? { text: errors.source.message!, type: 'danger' }
                   : undefined
               }
               label="Source"
-              right
               type="text"
-              disabled
+              right
+              disabled={disableAll || watch('source') === undefined}
               className="w-full gap-2"
               onKeyDown={handleInputKeyDown}
+              readOnly={disableAll} // Disabled jika disableAll true
+              inputProps={{
+                onClick: handleShowSource,
+              }}
             />
-            <Button
-              type="button"
-              className="w-min"
-              variant="backDrawer"
-              icon={{ icon: IconSearch }}
-            />
+            {watch('source') ? (
+              <Button
+                type="button"
+                className="w-min"
+                variant="backDrawer"
+                icon={{ icon: IconX }}
+                onClick={() =>
+                  !disableAll && setValue && setValue('source', undefined)
+                }
+                disabled={disableAll} // Disabled berdasarkan disableAll
+              />
+            ) : (
+              <Button
+                type="button"
+                className="w-min"
+                variant="backDrawer"
+                icon={{ icon: IconSearch }}
+                onClick={handleShowSource}
+                disabled={disableAll} // Disabled berdasarkan disableAll
+              />
+            )}
           </div>
         </div>
         <InputField
           {...register('item_name')}
           message={
-            errors.item_name
+            errors?.item_name
               ? { text: errors.item_name.message!, type: 'danger' }
               : undefined
           }
           label="Item Name"
           placeholder="Text here.."
-          right
           type="text"
           required
+          right
+          disabled={disableAll} // Disabled berdasarkan disableAll
           className="w-full gap-2"
           onKeyDown={handleInputKeyDown}
         />
         <InputField
           {...register('local_code')}
           message={
-            errors.local_code
+            errors?.local_code
               ? { text: errors.local_code.message!, type: 'danger' }
               : undefined
           }
           label="Item Local Code"
           placeholder="Text here.."
-          right
           type="text"
+          right
+          disabled={disableAll} // Disabled berdasarkan disableAll
           className="w-full gap-2"
           onKeyDown={handleInputKeyDown}
         />
@@ -100,43 +123,45 @@ const BasicForm = ({
         <InputField
           {...register('foreign_name')}
           message={
-            errors.foreign_name
+            errors?.foreign_name
               ? { text: errors.foreign_name.message!, type: 'danger' }
               : undefined
           }
           label="Foreign Name"
           placeholder="Text here.."
-          right
           type="text"
+          right
+          disabled={disableAll} // Disabled berdasarkan disableAll
           className="w-full gap-2"
           onKeyDown={handleInputKeyDown}
         />
         <InputField
           {...register('old_code')}
           message={
-            errors.old_code
+            errors?.old_code
               ? { text: errors.old_code.message!, type: 'danger' }
               : undefined
           }
           label="Old Code"
           placeholder="Text here.."
-          right
           type="text"
+          right
+          disabled={disableAll} // Disabled berdasarkan disableAll
           className="w-full gap-2"
           onKeyDown={handleInputKeyDown}
         />
         <InputField
           {...register('item_request')}
           message={
-            errors.item_request
+            errors?.item_request
               ? { text: errors.item_request.message!, type: 'danger' }
               : undefined
           }
           label="Item Request#"
           placeholder="Text here.."
-          right
-          disabled
           type="text"
+          right
+          disabled // Selalu disabled
           className="w-full gap-2"
           onKeyDown={handleInputKeyDown}
         />
@@ -147,22 +172,30 @@ const BasicForm = ({
           <Checkbox
             label="Inventory Item"
             checked={watch('inventory_item')}
-            onCheckedChange={(val) => setValue('inventory_item', val)}
+            onCheckedChange={(val) =>
+              setValue && setValue('inventory_item', val)
+            }
+            disabled={disableAll} // Disabled berdasarkan disableAll
           />
           <Checkbox
             label="Sales Item"
             checked={watch('sales_item')}
-            onCheckedChange={(val) => setValue('sales_item', val)}
+            onCheckedChange={(val) => setValue && setValue('sales_item', val)}
+            disabled={disableAll} // Disabled berdasarkan disableAll
           />
           <Checkbox
             label="Purchase Item"
             checked={watch('purchase_item')}
-            onCheckedChange={(val) => setValue('purchase_item', val)}
+            onCheckedChange={(val) =>
+              setValue && setValue('purchase_item', val)
+            }
+            disabled={disableAll} // Disabled berdasarkan disableAll
           />
           <Checkbox
             label="Service Item"
             checked={watch('service_item')}
-            onCheckedChange={(val) => setValue('service_item', val)}
+            onCheckedChange={(val) => setValue && setValue('service_item', val)}
+            disabled={disableAll} // Disabled berdasarkan disableAll
           />
         </div>
       </div>

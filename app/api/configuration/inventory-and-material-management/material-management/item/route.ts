@@ -37,25 +37,28 @@ export async function GET(req: NextRequest) {
 }
 
 // create
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   try {
     const session = await getServerSideSession();
 
     const body = (await req.json()) as MasterItemFormBody;
 
-    console.log(',kdaskldhaskj', body);
+    const params = req.nextUrl.searchParams;
 
     const response = await axios.post(PATH_ITEMS_MASTER_BE, body, {
       headers: {
         Authorization: `Bearer ${session.user?.data?.authorization?.access_token}`,
       },
+      params,
     });
 
     return NextResponse.json(response.data);
   } catch (error: any) {
     const axiosError = error as AxiosError;
     if (axiosError.response?.data) {
-      return NextResponse.json(error?.response?.data, { status: 400 });
+      return NextResponse.json(error?.response?.data, {
+        status: axiosError.response.status,
+      });
     }
     return NextResponse.json(
       { message: 'Internal server error', error },

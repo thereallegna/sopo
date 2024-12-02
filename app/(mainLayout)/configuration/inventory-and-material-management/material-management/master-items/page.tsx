@@ -26,17 +26,17 @@ const CreateMasterItemMM = dynamic(
     ),
   { ssr: false }
 );
-const DetailUOM = dynamic(
+const DetailMasterItemMM = dynamic(
   () =>
     import(
-      '@components/module/Configuration/InventoryMaterialManagement/UoM/Detail'
+      '@components/module/Configuration/InventoryMaterialManagement/MasterItem/Detail'
     ),
   { ssr: false }
 );
-const EditUOM = dynamic(
+const EditMasterItemMM = dynamic(
   () =>
     import(
-      '@components/module/Configuration/InventoryMaterialManagement/UoM/Edit'
+      '@components/module/Configuration/InventoryMaterialManagement/MasterItem/Edit'
     ),
   { ssr: false }
 );
@@ -141,8 +141,8 @@ const Country = () => {
         queryFn={getItem}
       />
       <CreateMasterItemMM />
-      <DetailUOM />
-      <EditUOM />
+      <DetailMasterItemMM />
+      <EditMasterItemMM />
     </>
   );
 };
