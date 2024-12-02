@@ -20,7 +20,10 @@ const TableDrawer = dynamic(
   { ssr: false }
 );
 const CreateMasterItemMM = dynamic(
-  () => import('@components/shared/Drawer/Create/CreateMasterItemMM'),
+  () =>
+    import(
+      '@components/module/Configuration/InventoryMaterialManagement/MasterItem/Create'
+    ),
   { ssr: false }
 );
 const DetailMasterItemMM = dynamic(

@@ -9,7 +9,7 @@ import {
 } from '@services/fetcher/configuration/material-management';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@components/ui/Tabs';
 import { Checkbox } from '@components/ui/Checkbox';
-import { FormType } from '../../../../../types/form';
+import { FormType } from '../../../../../../types/form';
 
 const DetailForm = ({
   errors,
