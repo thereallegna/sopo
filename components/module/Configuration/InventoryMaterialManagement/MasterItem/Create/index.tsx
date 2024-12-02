@@ -92,6 +92,7 @@ const CreateMasterItemMM = () => {
               handleInputKeyDown={handleInputKeyDown}
               setError={setError}
               handleShowSource={() => setShowModalSource(true)}
+              add
             />
             <DetailForm
               errors={errors}

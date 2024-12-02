@@ -15,7 +15,11 @@ const BasicForm = ({
   handleInputKeyDown,
   handleShowSource,
   disableAll, // Pastikan properti ini diterima
-}: FormType<MasterItemFormBody> & { handleShowSource?: () => void }) => (
+  add,
+}: FormType<MasterItemFormBody> & {
+  handleShowSource?: () => void;
+  add?: boolean;
+}) => (
   <Card size="drawer" className="border border-Neutral-200 shadow-none">
     <CardContent className="flex-wrap flex flex-row gap-6 items-center">
       <div className="flex flex-col gap-[14px] flex-1">
@@ -42,7 +46,7 @@ const BasicForm = ({
               label="Active"
               checked={watch('active')}
               onCheckedChange={(val) => setValue && setValue('active', val)}
-              disabled={disableAll} // Disabled berdasarkan disableAll
+              disabled={disableAll || add} // Disabled berdasarkan disableAll
             />
           </div>
           <div className="flex items-center gap-[10px]">

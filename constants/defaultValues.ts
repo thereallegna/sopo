@@ -51,7 +51,7 @@ export const masterItemDefaultValues: MasterItemFormBody = {
   spesification: '',
   hs_code: '',
   remark: '',
-  active: false,
+  active: true,
   inventory_item: false,
   purchase_item: false,
   service_item: false,

@@ -10,11 +10,11 @@ import {
   DrawerHeader,
 } from '@components/ui/Drawer';
 import { IconPencil } from '@tabler/icons-react';
-import BasicForm from '@components/shared/Drawer/Create/CreateMasterItemMM/BasicForm';
 import { useDrawerStore } from '@stores/useDrawerStore';
 import { useSetValueForm } from '@hooks/useFormChanges';
 import { useForm } from 'react-hook-form';
-import DetailForm from '@components/shared/Drawer/Create/CreateMasterItemMM/DetailForm';
+import BasicForm from '../Create/BasicForm';
+import DetailForm from '../Create/DetailForm';
 
 const DetailMasterItemMM = () => {
   const { isOpenDetail, closeDetailDrawer, openEditDrawer } = useDrawerStore();
