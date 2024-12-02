@@ -68,6 +68,10 @@ const TableContent = <T,>({
   columns,
   option,
   pinnedColumns,
+  showPrint,
+  showExport,
+  showColumnSelector,
+  showRowSizeSelector,
   onSelectRow,
   onPagination,
   onSearch,
@@ -106,7 +110,7 @@ const TableContent = <T,>({
   });
 
   return (
-    <div className="flex flex-col gap-[10px]">
+    <div className="flex flex-col gap-[10px] w-full">
       <TableAction
         search={option.search}
         rowSize={option.rowSize}
@@ -120,6 +124,10 @@ const TableContent = <T,>({
           onSelectAll: table.getToggleAllColumnsVisibilityHandler(),
           columnVisible: table.getAllLeafColumns(),
         }}
+        showRowSizeSelector={showRowSizeSelector}
+        showColumnSelector={showColumnSelector}
+        showExport={showExport}
+        showPrint={showPrint}
       />
       <Table>
         <TableHeader>
@@ -151,7 +159,9 @@ const TableContent = <T,>({
           {table.getRowModel().rows.map((row) => (
             <TableRow
               key={row.id}
-              className={onSelectRow ? 'cursor-pointer' : undefined}
+              className={
+                onSelectRow ? 'cursor-pointer hover:bg-Neutral-200' : undefined
+              }
               onClick={
                 onSelectRow
                   ? () => {

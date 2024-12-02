@@ -20,6 +20,10 @@ type UseTableProps<T> = {
   ) => Promise<AxiosResponse<ApiResponse<T[]>>>;
   columns: GenerateColumnsOption;
   pinnedColumns?: string[];
+  showPrint?: boolean;
+  showExport?: boolean;
+  showColumnSelector?: boolean;
+  showRowSizeSelector?: boolean;
   onSelectRow?: (data: T) => void;
   onFilter?: () => void;
 };
@@ -31,6 +35,10 @@ const useTable = <T>({
   onSelectRow,
   queryFn,
   onFilter,
+  showPrint,
+  showExport,
+  showColumnSelector,
+  showRowSizeSelector,
 }: UseTableProps<T>): TableContentProps<T> => {
   const params = useSearchParams();
   const pathname = usePathname();
@@ -152,6 +160,10 @@ const useTable = <T>({
     columns,
     option,
     pinnedColumns,
+    showPrint,
+    showExport,
+    showColumnSelector,
+    showRowSizeSelector,
     onPagination,
     onSearch,
     onFilter,

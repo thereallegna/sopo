@@ -20,19 +20,25 @@ import {
 } from '@services/fetcher/configuration/material-management';
 import { ConfirmationAlert } from '@components/shared/Alert';
 import SelectableModal from '@components/ui/Modal';
-import BasicForm from './BasicForm';
-import DetailForm from './DetailForm';
+import BasicForm from '@components/shared/Drawer/Create/CreateMasterItemMM/BasicForm';
+import DetailForm from '@components/shared/Drawer/Create/CreateMasterItemMM/DetailForm';
+import { useSetValueForm } from '@hooks/useFormChanges';
+import { useDrawerStore } from '@stores/useDrawerStore';
 
-const CreateMasterItemMM = () => {
+const EditMasterItemMM = () => {
   const [showModalSource, setShowModalSource] = useState<boolean>(false);
+  const detail_data = useDrawerStore(
+    (state) => state.detail_data
+  ) as MasterItemFormBody;
+
   const {
-    handleCloseDrawer,
+    handleCloseDrawerEdit,
     handleInputKeyDown,
     handleSaveClick,
     handleSubmit,
     isLoading,
     formRef,
-    isOpen,
+    isOpenEdit,
     canSave,
     errors,
     setError,
@@ -49,7 +55,7 @@ const CreateMasterItemMM = () => {
     mutationFn: createItem,
     validationSchema: MasterItemMMSchema,
     defaultValues: masterItemDefaultValues,
-    type: 'add',
+    type: 'edit',
     requireAllFields: true,
     ignoredFields: [
       'local_code',
@@ -66,10 +72,15 @@ const CreateMasterItemMM = () => {
     ],
   });
 
+  useSetValueForm<MasterItemFormBody>(detail_data, setValue);
+
   return (
-    <Drawer onClose={handleCloseDrawer} open={isOpen}>
+    <Drawer onClose={handleCloseDrawerEdit} open={isOpenEdit}>
       <DrawerContent>
-        <DrawerHeader onClick={handleCloseDrawer} drawerTitle="Add Master Item">
+        <DrawerHeader
+          onClick={handleCloseDrawerEdit}
+          drawerTitle="Add Master Item"
+        >
           <DrawerEndHeader>
             <Button
               variant={!canSave ? 'disabled' : 'primary'}
@@ -172,4 +183,4 @@ const CreateMasterItemMM = () => {
   );
 };
 
-export default CreateMasterItemMM;
+export default EditMasterItemMM;

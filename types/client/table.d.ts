@@ -1,3 +1,4 @@
+import { TableActionProps } from '@components/ui/Table/TableAction';
 import {
   GroupingState,
   PaginationState,
@@ -41,6 +42,10 @@ type TableContentProps<T> = {
   columns: GenerateColumnsOption;
   option: TableOptionState;
   pinnedColumns?: string[];
+  showPrint?: boolean;
+  showExport?: boolean;
+  showColumnSelector?: boolean;
+  showRowSizeSelector?: boolean;
   onSelectRow?: (data: T) => void;
   onPagination: (
     pg: PaginationState | ((prev: PaginationState) => PaginationState)
@@ -50,6 +55,7 @@ type TableContentProps<T> = {
   onColumnVisibility: (column: Updater<VisibilityState>) => void;
   onGrouping?: (group: Updater<GroupingState>) => void;
   onRowSizeChange: (size: RowSizeType) => void;
+  actionProps?: TableActionProps;
 };
 
 type PaginationPartial =
