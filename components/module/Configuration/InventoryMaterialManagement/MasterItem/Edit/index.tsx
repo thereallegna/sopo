@@ -10,20 +10,19 @@ import {
   DrawerHeader,
 } from '@components/ui/Drawer';
 import { IconDeviceFloppy } from '@tabler/icons-react';
-import { masterItemDefaultValues } from '@constants/defaultValues';
 import { GET_MASTER_ITEM_MATERIAL_MANAGEMENT } from '@constants/queryKey';
 import { MasterItemMMSchema } from '@constants/schemas/ConfigurationSchema/InventoryMaterialManagement';
 import { useForm } from '@hooks/useForm';
 import {
-  createItem,
+  editItem,
   getItem,
 } from '@services/fetcher/configuration/material-management';
 import { ConfirmationAlert } from '@components/shared/Alert';
 import SelectableModal from '@components/ui/Modal';
-import BasicForm from '@components/shared/Drawer/Create/CreateMasterItemMM/BasicForm';
-import DetailForm from '@components/shared/Drawer/Create/CreateMasterItemMM/DetailForm';
 import { useSetValueForm } from '@hooks/useFormChanges';
 import { useDrawerStore } from '@stores/useDrawerStore';
+import BasicForm from '../Create/BasicForm';
+import DetailForm from '../Create/DetailForm';
 
 const EditMasterItemMM = () => {
   const [showModalSource, setShowModalSource] = useState<boolean>(false);
@@ -52,9 +51,9 @@ const EditMasterItemMM = () => {
   } = useForm({
     label: 'Master item',
     queryKey: GET_MASTER_ITEM_MATERIAL_MANAGEMENT,
-    mutationFn: createItem,
+    mutationFn: editItem,
     validationSchema: MasterItemMMSchema,
-    defaultValues: masterItemDefaultValues,
+    defaultValues: detail_data,
     type: 'edit',
     requireAllFields: true,
     ignoredFields: [
@@ -79,7 +78,7 @@ const EditMasterItemMM = () => {
       <DrawerContent>
         <DrawerHeader
           onClick={handleCloseDrawerEdit}
-          drawerTitle="Add Master Item"
+          drawerTitle="Edit Master Item"
         >
           <DrawerEndHeader>
             <Button

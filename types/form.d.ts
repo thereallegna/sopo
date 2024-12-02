@@ -7,6 +7,7 @@ import {
 } from 'react-hook-form';
 
 type FormType<T> = {
+  detail_data?: T;
   errors?: FieldErrors<T>;
   disableAll?: boolean;
   watch: UseFormWatch<T>;

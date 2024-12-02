@@ -114,7 +114,11 @@ const createItem = async (body: MasterItemFormBody, params?: any) => {
 
 const editItem = async (body: MasterItemFormBody, params?: any) => {
   try {
-    const res = await axios.put(PATH_ITEMS_MASTER, body, { params });
+    const res = await axios.put(
+      `${PATH_ITEMS_MASTER}/${body.item_code}`,
+      body,
+      { params }
+    );
     return res.data;
   } catch (error) {
     console.error('Error editing item category:', error);
