@@ -11,11 +11,16 @@ export const ItemCategorySchema = Yup.object().shape({
   active: Yup.boolean().required('Active is required'),
 });
 
-export const MasterItemMMSchema = Yup.object().shape({
+export const CreateMasterItemMMSchema = Yup.object().shape({
   item_name: Yup.string().required('Item name is required'),
   category_name: Yup.string().required('Category is required'),
   category_code: Yup.string().required('Category is required'),
   uom_name: Yup.string().required('UoM is required'),
   uom_code: Yup.string().required('UoM is required'),
+  active: Yup.boolean().required('Active is required'),
+});
+
+export const EditMasterItemMMSchema = Yup.object().shape({
+  item_name: Yup.string().required('Item name is required'),
   active: Yup.boolean().required('Active is required'),
 });

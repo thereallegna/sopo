@@ -3,7 +3,7 @@ import {
   PATH_ITEMS_CATEGORY,
   PATH_ITEMS_MASTER,
 } from '@constants/routes';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { FetcherOptions } from '../../../../types/client/fetcher';
 
 const getUOM = async (option?: FetcherOptions) => {
@@ -97,9 +97,16 @@ const getItem = async (option?: FetcherOptions) => {
 
     return res;
   } catch (error) {
-    console.error('Error fetching log history:', error);
+    console.error('Error fetching list item : ', error);
     throw error;
   }
+};
+
+const getDetailItem = async (
+  id: string
+): Promise<AxiosResponse<BasicResponse<MasterItemFormBody>>> => {
+  const res = await axios.get(`${PATH_ITEMS_MASTER}/${id}`);
+  return res;
 };
 
 const createItem = async (body: MasterItemFormBody, params?: any) => {
@@ -134,6 +141,7 @@ export {
   createItemCategory,
   editItemCategory,
   getItem,
+  getDetailItem,
   createItem,
   editItem,
 };
