@@ -12,7 +12,7 @@ import {
 import { IconDeviceFloppy } from '@tabler/icons-react';
 import { masterItemDefaultValues } from '@constants/defaultValues';
 import { GET_MASTER_ITEM_MATERIAL_MANAGEMENT } from '@constants/queryKey';
-import { MasterItemMMSchema } from '@constants/schemas/ConfigurationSchema/InventoryMaterialManagement';
+import { CreateMasterItemMMSchema } from '@constants/schemas/ConfigurationSchema/InventoryMaterialManagement';
 import { useForm } from '@hooks/useForm';
 import {
   createItem,
@@ -20,8 +20,8 @@ import {
 } from '@services/fetcher/configuration/material-management';
 import { ConfirmationAlert } from '@components/shared/Alert';
 import SelectableModal from '@components/ui/Modal';
-import BasicForm from './BasicForm';
-import DetailForm from './DetailForm';
+import BasicForm from '../Form/BasicForm';
+import DetailForm from '../Form/DetailForm';
 
 const CreateMasterItemMM = () => {
   const [showModalSource, setShowModalSource] = useState<boolean>(false);
@@ -47,7 +47,7 @@ const CreateMasterItemMM = () => {
     label: 'Master item',
     queryKey: GET_MASTER_ITEM_MATERIAL_MANAGEMENT,
     mutationFn: createItem,
-    validationSchema: MasterItemMMSchema,
+    validationSchema: CreateMasterItemMMSchema,
     defaultValues: masterItemDefaultValues,
     type: 'add',
     requireAllFields: true,
@@ -59,7 +59,7 @@ const CreateMasterItemMM = () => {
       'inventory_item',
       'old_code',
       'sales_item',
-      'service_item',
+      // 'service_item',
       'purchase_item',
       'spesification',
       'remark',

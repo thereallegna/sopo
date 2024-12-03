@@ -99,7 +99,8 @@ export const useFormChanges = <T extends Record<string, any>>({
 };
 export const useSetValueForm = <T extends Record<string, any>>(
   detailData: T,
-  setValue: UseFormSetValue<T>
+  setValue: UseFormSetValue<T>,
+  dependencies?: any
 ) => {
   useEffect(() => {
     if (detailData) {
@@ -107,5 +108,5 @@ export const useSetValueForm = <T extends Record<string, any>>(
         setValue(key as Path<T>, detailData[key] as PathValue<T, Path<T>>);
       });
     }
-  }, [detailData, setValue]); // Re-run when detailData changes
+  }, [detailData, setValue, dependencies]); // Re-run when detailData changes
 };

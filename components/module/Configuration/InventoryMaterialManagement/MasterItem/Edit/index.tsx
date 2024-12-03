@@ -11,7 +11,7 @@ import {
 } from '@components/ui/Drawer';
 import { IconDeviceFloppy } from '@tabler/icons-react';
 import { GET_MASTER_ITEM_MATERIAL_MANAGEMENT } from '@constants/queryKey';
-import { MasterItemMMSchema } from '@constants/schemas/ConfigurationSchema/InventoryMaterialManagement';
+import { EditMasterItemMMSchema } from '@constants/schemas/ConfigurationSchema/InventoryMaterialManagement';
 import { useForm } from '@hooks/useForm';
 import {
   editItem,
@@ -21,8 +21,8 @@ import { ConfirmationAlert } from '@components/shared/Alert';
 import SelectableModal from '@components/ui/Modal';
 import { useSetValueForm } from '@hooks/useFormChanges';
 import { useDrawerStore } from '@stores/useDrawerStore';
-import BasicForm from '../Create/BasicForm';
-import DetailForm from '../Create/DetailForm';
+import BasicForm from '../Form/BasicForm';
+import DetailForm from '../Form/DetailForm';
 
 const EditMasterItemMM = () => {
   const [showModalSource, setShowModalSource] = useState<boolean>(false);
@@ -52,7 +52,7 @@ const EditMasterItemMM = () => {
     label: 'Master item',
     queryKey: GET_MASTER_ITEM_MATERIAL_MANAGEMENT,
     mutationFn: editItem,
-    validationSchema: MasterItemMMSchema,
+    validationSchema: EditMasterItemMMSchema,
     defaultValues: detail_data,
     type: 'edit',
     requireAllFields: true,
@@ -68,10 +68,15 @@ const EditMasterItemMM = () => {
       'purchase_item',
       'spesification',
       'remark',
+      'category_code',
+      'category_name',
+      'uom_code',
+      'uom_name',
+      'item_request',
     ],
   });
 
-  useSetValueForm<MasterItemFormBody>(detail_data, setValue);
+  useSetValueForm<MasterItemFormBody>(detail_data, setValue, isOpenEdit);
 
   return (
     <Drawer onClose={handleCloseDrawerEdit} open={isOpenEdit}>
@@ -110,6 +115,7 @@ const EditMasterItemMM = () => {
               register={register}
               handleInputKeyDown={handleInputKeyDown}
               setError={setError}
+              type="edit"
             />
           </DrawerBody>
         </form>
@@ -172,9 +178,7 @@ const EditMasterItemMM = () => {
         }}
         queryFn={getItem}
         onSelectRow={(data: MasterItemFormBody) => {
-          setValue('source', data.item_code, {
-            shouldDirty: true,
-          });
+          setValue('source', data.item_code);
           setShowModalSource(false);
         }}
       />

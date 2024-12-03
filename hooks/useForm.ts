@@ -38,8 +38,14 @@ export const useForm = <T extends FieldValues>({
   requireAllFields = false,
 }: UseFormProps<T>) => {
   const formRef = useRef<HTMLFormElement>(null);
-  const { isOpen, closeDrawer, openDetailDrawer, isOpenEdit, isOpenDetail } =
-    useDrawerStore();
+  const {
+    isOpen,
+    closeDrawer,
+    closeEditDrawer,
+    openDetailDrawer,
+    isOpenEdit,
+    isOpenDetail,
+  } = useDrawerStore();
   const { setChangeStatus } = useFormStore();
   const openToast = useToastStore((state) => state.showToast);
   const queryClient = useQueryClient();
@@ -63,7 +69,10 @@ export const useForm = <T extends FieldValues>({
     defaultValues,
   });
 
-  const { handleCloseDrawer, handleCloseDrawerEdit } = useDrawer(reset);
+  const { handleCloseDrawer, handleCloseDrawerEdit } = useDrawer(
+    reset,
+    defaultValues
+  );
 
   const watchedFields = useWatch({ control });
 
@@ -132,7 +141,7 @@ export const useForm = <T extends FieldValues>({
         });
 
     // Check if any relevant field has changed
-    const hasChangedFields = relevantFields.some(
+    const hasChangedFields = Object.keys(defaultValues).some(
       (key) => !valuesAreEqual(defaultValues[key], normalizedWatchedFields[key])
     );
 
@@ -151,7 +160,11 @@ export const useForm = <T extends FieldValues>({
       setIsLoading(true);
     },
     onSuccess: (data) => {
-      closeDrawer();
+      if (type === 'add') {
+        closeDrawer();
+      } else {
+        closeEditDrawer();
+      }
       setIsLoading(false);
       setChangeStatus(false);
       openDetailDrawer(data.data);
@@ -194,7 +207,6 @@ export const useForm = <T extends FieldValues>({
 
   // Handler untuk tombol konfirmasi di modal
   const handleConfirm = () => {
-    console.log('Temporary Data => ', tempData);
     if (tempData) {
       setIsConfirmModalOpen(false); // Tutup modal
       mutation({ body: tempData, params: { confirm: true } });

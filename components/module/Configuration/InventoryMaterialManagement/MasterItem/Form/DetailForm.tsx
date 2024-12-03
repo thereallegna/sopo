@@ -19,7 +19,11 @@ const DetailForm = ({
   setError,
   handleInputKeyDown,
   disableAll, // Tambahkan parameter disableAll
-}: FormType<MasterItemFormBody> & { disableAll?: boolean }) => (
+  type = 'add',
+}: FormType<MasterItemFormBody> & {
+  disableAll?: boolean;
+  type?: 'add' | 'edit';
+}) => (
   <Card size="drawer" className="border border-Neutral-200 shadow-none">
     <CardContent className="flex-wrap flex flex-row gap-6 items-center">
       <Tabs defaultValue="general">
@@ -59,7 +63,7 @@ const DetailForm = ({
                   setError('category_code', { type: 'disabled' });
                 }
               }}
-              disabled={disableAll} // Disabled berdasarkan disableAll
+              disabled={disableAll || type === 'edit'} // Disabled berdasarkan disableAll
             />
             <Combobox
               label="UoM"
@@ -87,7 +91,7 @@ const DetailForm = ({
                   setError('uom_code', { type: 'disabled' });
                 }
               }}
-              disabled={disableAll} // Disabled berdasarkan disableAll
+              disabled={disableAll || type === 'edit'} // Disabled berdasarkan disableAll
             />
             <InputField
               {...register('spesification')}
