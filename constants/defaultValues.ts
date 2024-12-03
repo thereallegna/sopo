@@ -60,6 +60,15 @@ export const masterItemDefaultValues: MasterItemFormBody = {
 };
 // Configuration Material Management End
 
+// Configuration Financial Management Start
+
+export const currencyDefaultValues: CurrencyFormBody = {
+  currency_code: '',
+  currency_name: '',
+};
+
+// Configuration Financial Management End
+
 // Zustand Pagination State
 export const paginationStateDefaultValue = {
   columnVisibility: {},

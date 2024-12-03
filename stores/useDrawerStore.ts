@@ -4,6 +4,7 @@ export type FilterDrawerType =
   | 'filterCountry'
   | 'filterUOM'
   | 'filterItemCategory'
+  | 'filterCurrency'
   | null;
 export type TableDrawerType =
   | 'getCountry'
@@ -16,6 +17,7 @@ export type DetailDataType =
   | ProvinceFormBody
   | CityFormBody
   | IItemCategory
+  | CurrencyFormBody
   | null;
 
 type DrawerState = {
