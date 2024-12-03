@@ -5,6 +5,7 @@ export const PATH_BACKEND_URL_VERSION = '/v1';
 // initial start
 export const PATH_CONFIGURATION_GENERAL = `${PATH_API}/configuration/general`;
 export const PATH_CONFIGURATION_INVENTORY_AND_MATERIAL_MANAGEMENT = `${PATH_API}/configuration/inventory-and-material-management`;
+export const PATH_CONFIGURATION_FINANCIAL_MANAGEMENT = `${PATH_API}/configuration/financial-management`;
 // initial end
 
 /* ======================= Auth Start ==================== */
@@ -61,3 +62,10 @@ export const PATH_ITEMS_CATEGORY_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VER
 export const PATH_LOG_HISTORY = `${PATH_API}/log`;
 export const PATH_LOG_HISTORY_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/log`;
 /* ======================= Log History End ==================== */
+
+/* ======================= Financial Management Start ==================== */
+
+// currency
+export const PATH_CURRENCY = `${PATH_CONFIGURATION_FINANCIAL_MANAGEMENT}/currency`;
+export const PATH_CURRENCY_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/currency`;
+/* ======================= Financial Management End ==================== */
