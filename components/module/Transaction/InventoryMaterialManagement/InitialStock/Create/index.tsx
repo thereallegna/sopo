@@ -28,12 +28,17 @@ import { InitialStockDefaultValues } from '@constants/defaultValues';
 import { useFormChanges } from '@hooks/useFormChanges';
 import { AxiosError } from 'axios';
 import { errorMapping } from '@utils/errorMapping';
-import { GET_INITIAL_STOCK, GET_WAREHOUSE } from '@constants/queryKey';
+import {
+  GET_CURRENCY,
+  GET_INITIAL_STOCK,
+  GET_WAREHOUSE,
+} from '@constants/queryKey';
 import useToastStore from '@stores/useToastStore';
 import { useFormSave } from '@hooks/useFormSave';
 import useFormStore from '@stores/useFormStore';
 // import { Calendar } from '@components/ui/Calendar';
-import TableDrawer from '../../Table/TableDrawer';
+import TableDrawer from '@components/shared/Drawer/Table/TableDrawer';
+import { getCurrency } from '@services/fetcher/configuration/financial-management';
 
 const CreateInitialStock = () => {
   const formRef = useRef<HTMLFormElement>(null);
@@ -197,25 +202,25 @@ const CreateInitialStock = () => {
                     onKeyDown={handleInputKeyDown}
                   />
                   {/* <InputField 
-                                        label="Date"
-                                        placeholder="Select a Date"
-                                        value={date ? date.toLocaleDateString() : ''}
-                                        onClick={() => setIsCalendarVisible(true)}
-                                        readOnly
-                                        required
-                                        className="w-full gap-2"
-                                    />
-                                    {isCalendarVisible && (
-                                        <Calendar 
-                                            mode="single"
-                                            selected={date}
-                                            onSelect={(selectedDate) => {
-                                                setDate(selectedDate);
-                                                setIsCalendarVisible(false);
-                                            }}
-                                            className="rounded-md border"
-                                        />
-                                    )} */}
+                    label="Date"
+                    placeholder="Select a Date"
+                    value={date ? date.toLocaleDateString() : ''}
+                    onClick={() => setIsCalendarVisible(true)}
+                    readOnly
+                    required
+                    className="w-full gap-2"
+                  />
+                  {isCalendarVisible && (
+                      <Calendar 
+                          mode="single"
+                          selected={date}
+                          onSelect={(selectedDate) => {
+                              setDate(selectedDate);
+                              setIsCalendarVisible(false);
+                          }}
+                          className="rounded-md border"
+                      />
+                  )} */}
                 </div>
                 <div className="flex flex-col gap-[14px] flex-1 h-full justify-between">
                   <Combobox
@@ -240,28 +245,28 @@ const CreateInitialStock = () => {
                       setError('warehouse', { type: 'disabled' });
                     }}
                   />
-                  {/* <Combobox 
-                                        label="Currency"
-                                        placeholder="Select Currency"
-                                        queryKey={[GET_CURRENCY]}
-                                        queryFn={getCurrency}
-                                        dataLabel="currency_name"
-                                        dataValue="currency_code"
-                                        message={
-                                            errors.currency
-                                                ? { text: errors.currency.message!, type: 'danger' }
-                                                : undefined
-                                        }
-                                        value={{
-                                            label: watch('currency'),
-                                            value: watch('currency_code'),
-                                        }}
-                                        onChange={(val) => {
-                                            setValue("currency", val.label);
-                                            setValue("currency_code", val.value);
-                                            setError('currency', { type: 'disabled' });
-                                        }}
-                                    />  */}
+                  <Combobox
+                    label="Currency"
+                    placeholder="Select Currency"
+                    queryKey={[GET_CURRENCY]}
+                    queryFn={getCurrency}
+                    dataLabel="currency_name"
+                    dataValue="currency_code"
+                    message={
+                      errors.currency
+                        ? { text: errors.currency.message!, type: 'danger' }
+                        : undefined
+                    }
+                    value={{
+                      label: watch('currency'),
+                      value: watch('currency_code'),
+                    }}
+                    onChange={(val) => {
+                      setValue('currency', val.label);
+                      setValue('currency_code', val.value);
+                      setError('currency', { type: 'disabled' });
+                    }}
+                  />
                 </div>
                 <div className="flex flex-col gap-[14px] flex-1 h-full justify-between">
                   <InputField

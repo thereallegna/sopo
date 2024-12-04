@@ -85,18 +85,18 @@ const DetailInitialStock = () => {
                   disabled
                 />
                 {/* <Combobox 
-                                    label="Currecy"
-                                    placeholder="Currency"
-                                    queryKey={[GET_CURRENCY]}
-                                    queryFn={() => getCurrency()}
-                                    dataLabel="qurency_name"
-                                    dataValue="qurency_code"
-                                    value={{
-                                        label: detail_data?.currency,
-                                        value: detail_data?.currency_code,
-                                    }}
-                                    disabled
-                                /> */}
+                  label="Currecy"
+                  placeholder="Currency"
+                  queryKey={[GET_CURRENCY]}
+                  queryFn={() => getCurrency()}
+                  dataLabel="qurency_name"
+                  dataValue="qurency_code"
+                  value={{
+                      label: detail_data?.currency,
+                      value: detail_data?.currency_code,
+                  }}
+                  disabled
+                /> */}
               </div>
               <div>
                 <InputField

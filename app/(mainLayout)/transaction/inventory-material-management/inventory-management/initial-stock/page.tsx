@@ -20,15 +20,24 @@ const TableDrawer = dynamic(
   { ssr: false }
 );
 const CreateInitialStock = dynamic(
-  () => import('@components/shared/Drawer/Create/CreateInitialStock'),
+  () =>
+    import(
+      '@components/module/Transaction/InventoryMaterialManagement/InitialStock/Create'
+    ),
   { ssr: false }
 );
 const DetailInitialStock = dynamic(
-  () => import('@components/shared/Drawer/Detail/DetailInitialStock'),
+  () =>
+    import(
+      '@components/module/Transaction/InventoryMaterialManagement/InitialStock/Detail'
+    ),
   { ssr: false }
 );
 const EditInitialStock = dynamic(
-  () => import('@components/shared/Drawer/Edit/EditInitialStock'),
+  () =>
+    import(
+      '@components/module/Transaction/InventoryMaterialManagement/InitialStock/Edit'
+    ),
   { ssr: false }
 );
 

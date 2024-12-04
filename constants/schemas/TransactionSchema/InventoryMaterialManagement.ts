@@ -8,7 +8,6 @@ export const InitialStockSchema = Yup.object().shape({
   currency: Yup.string().required('Currency is required'),
   currency_code: Yup.string().required('Currency is required'),
   rate: Yup.string().required('Rate is required'),
-  remark: Yup.string().required('Remark is required'),
   item: Yup.string().required('Item is required'),
   item_name: Yup.string().required('Item is required'),
   item_code: Yup.string().required('Item is required'),
