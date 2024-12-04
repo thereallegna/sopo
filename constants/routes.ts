@@ -5,6 +5,7 @@ export const PATH_BACKEND_URL_VERSION = '/v1';
 // initial start
 export const PATH_CONFIGURATION_GENERAL = `${PATH_API}/configuration/general`;
 export const PATH_CONFIGURATION_INVENTORY_AND_MATERIAL_MANAGEMENT = `${PATH_API}/configuration/inventory-and-material-management`;
+export const PATH_CONFIGURATION_INVENTORY_MATERIAL_MANAGEMENT = `${PATH_API}/transaction/inventory-material-management`;
 // initial end
 
 /* ======================= Auth Start ==================== */
@@ -44,10 +45,11 @@ export const PATH_COA_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/coa`;
 /* ======================= General End ==================== */
 
 /* ======================= Inventory and Material Management Start ==================== */
-// items uom
+// items master
 export const PATH_ITEMS_MASTER = `${PATH_CONFIGURATION_INVENTORY_AND_MATERIAL_MANAGEMENT}/material-management/item`;
 export const PATH_ITEMS_MASTER_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/item`;
 
+// item uom
 export const PATH_ITEMS_UOM = `${PATH_CONFIGURATION_INVENTORY_AND_MATERIAL_MANAGEMENT}/material-management/uom`;
 export const PATH_ITEMS_UOM_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/uom`;
 
@@ -55,7 +57,16 @@ export const PATH_ITEMS_UOM_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}
 export const PATH_ITEMS_CATEGORY = `${PATH_CONFIGURATION_INVENTORY_AND_MATERIAL_MANAGEMENT}/material-management/category`;
 export const PATH_ITEMS_CATEGORY_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/item-category`;
 
+// warehouse
+export const PATH_WAREHOUSE = `${PATH_CONFIGURATION_INVENTORY_AND_MATERIAL_MANAGEMENT}/material-management/warehouse`;
+export const PATH_WAREHOUSE_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/warehouse`;
+
 /* ======================= Inventory and Material Management End ==================== */
+
+/* ======================= Inventory Material Management Start ==================== */
+// initial stock
+export const PATH_INITIAL_STOCK = `${PATH_CONFIGURATION_INVENTORY_MATERIAL_MANAGEMENT}/inventory-management/initial-stock`;
+export const PATH_INITIAL_STOCK_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/initial-stock`;
 
 /* ======================= Log History Start ==================== */
 export const PATH_LOG_HISTORY = `${PATH_API}/log`;

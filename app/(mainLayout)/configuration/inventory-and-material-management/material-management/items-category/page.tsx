@@ -62,7 +62,7 @@ const ItemCategory = () => {
               height={213}
             />
             <p className="text-Neutral-500 text-lg">
-              Filter to find data Country
+              Filter to find data Item Category
             </p>
             <div>
               <FilterButton

@@ -4,11 +4,13 @@ export type FilterDrawerType =
   | 'filterCountry'
   | 'filterUOM'
   | 'filterItemCategory'
+  | 'filterInitialStock'
   | null;
 export type TableDrawerType =
   | 'getCountry'
   | 'getUOM'
   | 'getItemCategory'
+  | 'getInitialStock'
   | null;
 export type DetailDataType =
   | UOMFormBody
@@ -16,6 +18,7 @@ export type DetailDataType =
   | ProvinceFormBody
   | CityFormBody
   | IItemCategory
+  | InitialStockFormBody
   | null;
 
 type DrawerState = {
