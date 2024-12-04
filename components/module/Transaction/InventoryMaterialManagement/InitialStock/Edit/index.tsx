@@ -24,11 +24,12 @@ import { useDrawer } from '@hooks/useDrawer';
 import { useFormChanges, useSetValueForm } from '@hooks/useFormChanges';
 import { errorMapping } from '@utils/errorMapping';
 import { AxiosError } from 'axios';
-import { GET_WAREHOUSE } from '@constants/queryKey';
+import { GET_CURRENCY, GET_WAREHOUSE } from '@constants/queryKey';
 import Combobox from '@components/shared/Combobox';
 // import { Calendar } from '@components/ui/Calendar';
 import useToastStore from '@stores/useToastStore';
 import { useFormSave } from '@hooks/useFormSave';
+import { getCurrency } from '@services/fetcher/configuration/financial-management';
 
 const EditInitialStock = () => {
   const formRef = useRef<HTMLFormElement>(null);
@@ -180,6 +181,7 @@ const EditInitialStock = () => {
                   <Combobox
                     label="Warehouse"
                     placeholder="Select Warehouse"
+                    disabled
                     queryKey={[GET_WAREHOUSE]}
                     queryFn={() => getWarehouse()}
                     dataLabel="warehouse_name"
@@ -201,30 +203,31 @@ const EditInitialStock = () => {
                       setError('warehouse', { type: 'disabled' });
                     }}
                   />
-                  {/* <Combobox 
+                  <Combobox
                     label="Currency"
                     placeholder="Select Currency"
+                    disabled
                     queryKey={[GET_CURRENCY]}
                     queryFn={() => getCurrency()}
                     dataLabel="currency_name"
                     dataValue="currency_code"
                     message={
-                        errors.currency
-                            ? { text: errors.currency.message!, type: 'danger'}
-                            : undefined
+                      errors.currency
+                        ? { text: errors.currency.message!, type: 'danger' }
+                        : undefined
                     }
                     value={{
-                        label: watch('currency'),
-                        value: watch('currency_code')
+                      label: watch('currency'),
+                      value: watch('currency_code'),
                     }}
-                    onChange={() => {
-                        setValue('currency', val.label, { shouldDirty: true });
-                        setValue('currency_code', val.value, {
-                            shouldDirty: true,
-                        });
-                        setError('currency', { type: 'disabled' });
+                    onChange={(val) => {
+                      setValue('currency', val.label, { shouldDirty: true });
+                      setValue('currency_code', val.value, {
+                        shouldDirty: true,
+                      });
+                      setError('currency', { type: 'disabled' });
                     }}
-                  /> */}
+                  />
                 </div>
                 <div className="flex flex-col gap-[14px] flex-1">
                   <InputField
@@ -256,6 +259,7 @@ const EditInitialStock = () => {
                     type="text"
                     required
                     className="w-full gap-2"
+                    textarea
                     disabled
                     onKeyDown={handleInputKeyDown}
                   />
