@@ -2,8 +2,9 @@ import {
   PATH_ITEMS_UOM,
   PATH_ITEMS_CATEGORY,
   PATH_ITEMS_MASTER,
+  PATH_WAREHOUSE,
 } from '@constants/routes';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { FetcherOptions } from '../../../../types/client/fetcher';
 
 const getUOM = async (option?: FetcherOptions) => {
@@ -97,9 +98,16 @@ const getItem = async (option?: FetcherOptions) => {
 
     return res;
   } catch (error) {
-    console.error('Error fetching log history:', error);
+    console.error('Error fetching list item : ', error);
     throw error;
   }
+};
+
+const getDetailItem = async (
+  id: string
+): Promise<AxiosResponse<BasicResponse<MasterItemFormBody>>> => {
+  const res = await axios.get(`${PATH_ITEMS_MASTER}/${id}`);
+  return res;
 };
 
 const createItem = async (body: MasterItemFormBody, params?: any) => {
@@ -108,6 +116,24 @@ const createItem = async (body: MasterItemFormBody, params?: any) => {
     return res.data;
   } catch (error) {
     console.error('Error creating item category:', error);
+    throw error;
+  }
+};
+
+const getWarehouse = async (option?: FetcherOptions) => {
+  try {
+    const res = await axios.get(`${PATH_WAREHOUSE}`, {
+      params: {
+        all: option?.all,
+        page_size: !option?.all ? option?.pagination?.pageSize : undefined,
+        current_page: !option?.all ? option?.pagination?.pageIndex : undefined,
+        search: option?.search,
+      },
+    });
+
+    return res;
+  } catch (error) {
+    console.error('Error fetching log history:', error);
     throw error;
   }
 };
@@ -134,6 +160,8 @@ export {
   createItemCategory,
   editItemCategory,
   getItem,
+  getDetailItem,
   createItem,
+  getWarehouse,
   editItem,
 };

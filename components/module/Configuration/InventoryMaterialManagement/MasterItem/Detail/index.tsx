@@ -13,18 +13,33 @@ import { IconPencil } from '@tabler/icons-react';
 import { useDrawerStore } from '@stores/useDrawerStore';
 import { useSetValueForm } from '@hooks/useFormChanges';
 import { useForm } from 'react-hook-form';
-import BasicForm from '../Create/BasicForm';
-import DetailForm from '../Create/DetailForm';
+import { getDetailItem } from '@services/fetcher/configuration/material-management';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
+import { GET_DETAIL_MASTER_ITEM } from '@constants/queryKey';
+// import { useDetailItem } from '@hooks/useDetailItem';
+import BasicForm from '../Form/BasicForm';
+import DetailForm from '../Form/DetailForm';
 
 const DetailMasterItemMM = () => {
-  const { isOpenDetail, closeDetailDrawer, openEditDrawer } = useDrawerStore();
+  const { isOpenDetail, closeDetailDrawer, openEditDrawer, setDetailData } =
+    useDrawerStore();
   const detail_data = useDrawerStore(
     (state) => state.detail_data
   ) as MasterItemFormBody;
 
   const { setValue, watch, register } = useForm<MasterItemFormBody>();
 
-  useSetValueForm<MasterItemFormBody>(detail_data, setValue);
+  const { isLoading } = useQuery({
+    queryKey: [GET_DETAIL_MASTER_ITEM, detail_data],
+    queryFn: async () => {
+      const res = await getDetailItem(detail_data.item_code as string);
+      setDetailData(Object.assign(detail_data, res.data.data));
+      return res.data.data;
+    },
+    placeholderData: keepPreviousData,
+  });
+
+  useSetValueForm<MasterItemFormBody>(detail_data, setValue, isLoading);
 
   return (
     <Drawer onClose={closeDetailDrawer} open={isOpenDetail}>
@@ -35,12 +50,13 @@ const DetailMasterItemMM = () => {
         >
           <DrawerEndHeader>
             <Button
-              variant="primary"
+              variant={isLoading ? 'disabled' : 'primary'}
               icon={{ size: 'large', icon: IconPencil, color: 'White' }}
               type="submit"
-              onClick={openEditDrawer}
+              onClick={isLoading ? undefined : openEditDrawer}
+              disabled={isLoading}
             >
-              Edit
+              {isLoading ? 'Loading..' : 'Edit'}
             </Button>
           </DrawerEndHeader>
         </DrawerHeader>

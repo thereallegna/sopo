@@ -5,6 +5,7 @@ type FormState = {
   leavingPage: boolean;
   isReset: boolean;
   coa_form: string | null;
+  item_form: string | null;
   changeStatus: boolean;
 };
 
@@ -14,6 +15,7 @@ type FormActions = {
   resetForm: () => void; // Fungsi isReset untuk form
   setChangeStatus: (data: boolean) => void;
   setCoaForm: (val: string) => void;
+  setItemForm: (val: string) => void;
 };
 
 type FormStore = FormState & FormActions;
@@ -21,6 +23,7 @@ type FormStore = FormState & FormActions;
 const initialValues: FormState = {
   changeStatus: false,
   coa_form: null,
+  item_form: null,
   leavingPage: false,
   isReset: false,
 };
@@ -33,6 +36,7 @@ const useFormStore = create<FormStore>((set) => ({
   setReset: (status) => set({ isReset: status }),
   resetForm: () => set({ isReset: true }),
   setCoaForm: (val: string) => set({ coa_form: val }),
+  setItemForm: (val: string) => set({ item_form: val }),
 }));
 
 export default useFormStore;

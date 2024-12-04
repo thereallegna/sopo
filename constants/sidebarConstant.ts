@@ -199,91 +199,94 @@ export const sidebarConstant: SidebarItem[] = [
     icon: { icon: IconArrowsLeftRight },
     children: [
       {
-        title: 'Inventory Management',
-        children: [
-          {
-            title: 'Initial Stock',
-            path: '/transaction/inventory-management/initial-stock',
-          },
-          {
-            title: 'Stock Adjustment',
-            path: '/transaction/inventory-management/stock-adjustment',
-          },
-          {
-            title: 'Stock Mutation',
-            path: '/transaction/inventory-management/stock-mutation',
-          },
-        ],
-      },
-      {
-        title: 'Material Management',
-        children: [
-          {
-            title: 'Initial Stock',
-            path: '/transaction/material-management/initial-stock',
-          },
-          {
-            title: 'Stock Adjustment',
-            path: '/transaction/material-management/stock-adjustment',
-          },
-          {
-            title: 'Stock Mutation',
-            path: '/transaction/material-management/stock-mutation',
-          },
-          {
-            title: 'Purcahsed Material Receive',
-            path: '/transaction/material-management/purcahsed-material-receive',
-          },
-        ],
-      },
-      {
-        title: 'Purchasing Management',
-        children: [
-          {
-            title: 'Vendor Management System',
-            path: '/transaction/purchasing-management/vendor-management-system',
-          },
-          {
-            title: 'Purcahsing',
-            path: '/transaction/purchasing-management/purchasing',
-          },
-        ],
-      },
-      {
         title: 'Financial Management',
         children: [
           {
             title: 'Account Receivable - AR',
-            path: '/transaction/financial-management/account-receivable-ar',
+            children: [
+              {
+                title: 'Sales Invoice',
+                path: 'transaction/financial-management/account-receivable-ar/sales-invoice',
+              },
+              {
+                title: 'Sales Return Invoice',
+                path: 'transaction/financial-management/account-receivable-ar/sales-return-invoice',
+              },
+              {
+                title: 'Incoming Payment',
+                path: 'transaction/financial-management/account-receivable-ar/incoming-payment',
+              },
+              {
+                title: "Customer's AR Downpayment",
+                path: 'transaction/financial-management/account-receivable-ar/customer-ar-downpayment',
+              },
+              {
+                title: 'Customer Deposit (Currency Switching)',
+                path: 'transaction/financial-management/account-receivable-ar/customer-deposit',
+              },
+              {
+                title: 'AR Settlement',
+                path: 'transaction/financial-management/account-receivable-ar/ar-settlement',
+              },
+              {
+                title: 'Customer Deposit Return',
+                path: 'transaction/financial-management/account-receivable-ar/customer-deposit-return',
+              },
+            ],
           },
           {
-            title: 'Account Payable - AP',
-            path: '/transaction/financial-management/account-payable-ap',
+            title: 'Account Payable - AR',
+            children: [
+              {
+                title: 'Purchase Invoice',
+                path: 'transaction/financial-management/account-payable-ar/purchase-invoice',
+              },
+              {
+                title: "Vendor's AP Downpayment",
+                path: 'transaction/financial-management/account-payable-ar/vendor-ap-downpayment',
+              },
+              {
+                title: 'Outgoing Payment',
+                path: 'transaction/financial-management/account-payable-ar/outgoing payment',
+              },
+              {
+                title: 'Purchase Return Invoice',
+                path: 'transaction/financial-management/account-payable-ar/purchase-return-invoice',
+              },
+              {
+                title: 'Purchase Receipt',
+                path: 'transaction/financial-management/account-payable-ar/purchase-receipt',
+              },
+              {
+                title: 'AR Settlement',
+                path: 'transaction/financial-management/account-payable-ar/ar-settlement',
+              },
+              {
+                title: 'Vendor Deposit (Currency Switching)',
+                path: 'transaction/financial-management/account-payable-ar/vendor-deposit',
+              },
+              {
+                title: 'Vendor Deposit Return',
+                path: 'transaction/financial-management/account-payable-ar/vendor-deposit-return',
+              },
+            ],
           },
           {
             title: 'Cash Flow Management',
-            path: '/transaction/financial-management/cash-flow-management',
-          },
-        ],
-      },
-      {
-        title: 'Sales Management',
-        children: [
-          {
-            title: 'Outstanding Sales Order',
-            path: '/transaction/sales-management/outstanding-sales-order',
-          },
-          {
-            title: 'Sales Order to Delivery',
-            path: '/transaction/sales-management/sales-order-to-delivery',
-          },
-          {
-            title: 'AR Aging - Invoiced',
-            path: '/transaction/sales-management/ar-aging-invoiced',
-          },
-          {
-            title: "Sales Person's Collection",
-            path: "/transaction/sales-management/sales-person's-collection",
+            children: [
+              {
+                title: 'Cash Advance Settlement',
+                path: 'transaction/financial-management/cash-flow-management/cash-advance-settlement',
+              },
+              {
+                title: 'Voucher Request',
+                path: 'transaction/financial-management/cash-flow-management/voucher-request',
+              },
+              {
+                title: 'Voucher',
+                path: 'transaction/financial-management/cash-flow-management/voucher',
+              },
+            ],
           },
         ],
       },
@@ -305,6 +308,144 @@ export const sidebarConstant: SidebarItem[] = [
           {
             title: 'Journal Reprocess',
             path: '/transaction/accounting-management/journal-reprocess',
+          },
+        ],
+      },
+      {
+        title: 'Purchasing Management',
+        children: [
+          {
+            title: 'Vendor Management System',
+            children: [
+              {
+                title: 'Vendor Quotation',
+                path: '/transaction/purchasing-management/vendor-management-system/vendor-quotation',
+              },
+            ],
+          },
+          {
+            title: 'Purchasing',
+            children: [
+              {
+                title: 'Material Request',
+                path: '/transaction/purchasing-management/purchasing/material-request',
+              },
+              {
+                title: 'Purchase Order Request',
+                path: '/transaction/purchasing-management/purchasing/purchase-order-request',
+              },
+              {
+                title: 'Purchase Order',
+                path: '/transaction/purchasing-management/purchasing/purchase-order',
+              },
+            ],
+          },
+        ],
+      },
+      {
+        title: 'Inventory Material Management',
+        children: [
+          {
+            title: 'Inventory Management',
+            children: [
+              {
+                title: 'Initial Stock',
+                path: '/transaction/inventory-material-management/inventory-management/initial-stock',
+              },
+              {
+                title: 'Stock Adjustment',
+                path: '/transaction/inventory-material-management/inventory-management/stock-adjustment',
+              },
+              {
+                title: 'Stock Mutation',
+                path: '/transaction/inventory-material-management/inventory-management/stock-mutation',
+              },
+            ],
+          },
+          {
+            title: 'Material Management',
+            children: [
+              {
+                title: 'Internal Material Management',
+                children: [
+                  {
+                    title: 'Material Consumption',
+                    path: '/transaction/inventory-material-management/material-management/internal-material-management/material-consumption',
+                  },
+                  {
+                    title: 'Material Transfer',
+                    path: '/transaction/inventory-material-management/material-management/internal-material-management/material-transfer',
+                  },
+                  {
+                    title: 'Material Receive',
+                    path: '/transaction/inventory-material-management/material-management/internal-material-management/material-receive',
+                  },
+                  {
+                    title: 'Direct Material Receive',
+                    path: '/transaction/inventory-material-management/material-management/internal-material-management/direct-material-receive',
+                  },
+                ],
+              },
+              {
+                title: 'Inbound Material Management',
+                children: [
+                  {
+                    title: 'Purchased Material Receive',
+                    path: '/transaction/inventory-material-management/material-management/inbound-material-management/purchased-material-receive',
+                  },
+                  {
+                    title: 'Sales Return Material Receive',
+                    path: '/transaction/inventory-material-management/material-management/inbound-material-management/sales-return-material-receive',
+                  },
+                  {
+                    title: 'Direct Purchase Receive',
+                    path: '/transaction/inventory-material-management/material-management/inbound-material-management/direct-purchase-receive',
+                  },
+                ],
+              },
+              {
+                title: 'Outbound Material Management',
+                children: [
+                  {
+                    title: 'Sales Return Delivery',
+                    path: '/transaction/inventory-material-management/material-management/outbound-material-management/sales-return-delivery',
+                  },
+                  {
+                    title: 'Purchase Return Delivery',
+                    path: '/transaction/inventory-material-management/material-management/outbound-material-management/purchase-return-delivery',
+                  },
+                  {
+                    title: 'Sales Delivery',
+                    path: '/transaction/inventory-material-management/material-management/outbound-material-management/sales-delivery',
+                  },
+                  {
+                    title: 'Direct Sales Delivery',
+                    path: '/transaction/inventory-material-management/material-management/outbound-material-management/direct-sales-delivery',
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        title: 'Sales Distribution',
+        children: [
+          {
+            title: "Customer's Quotation",
+            path: '/transaction/sales-distribution/customer-quotation',
+          },
+          {
+            title: 'Sales Order',
+            path: '/transaction/sales-distribution/sales-order',
+          },
+          {
+            title: 'Delivery Request',
+            path: '/transaction/sales-distribution/delivery-request',
+          },
+          {
+            title: 'Service Delivery',
+            path: '/transaction/sales-distribution/service-delivery',
           },
         ],
       },

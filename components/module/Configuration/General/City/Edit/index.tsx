@@ -124,7 +124,6 @@ const EditCity = () => {
             </Button>
           </DrawerEndHeader>
         </DrawerHeader>
-
         <form ref={formRef} onSubmit={handleSubmit(onSubmit)}>
           <DrawerBody>
             <Card size="drawer">

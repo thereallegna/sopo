@@ -40,6 +40,7 @@ const CreateCategoryMM = () => {
   const openToast = useToastStore((state) => state.showToast);
   const queryClient = useQueryClient();
   const [isModalOpen, setModalOpen] = React.useState(false);
+  const { coa_form, setCoaForm } = useFormStore();
 
   const {
     register,
@@ -55,8 +56,6 @@ const CreateCategoryMM = () => {
     resolver: yupResolver(ItemCategorySchema),
     defaultValues: ItemCategoryDefaultValues,
   });
-
-  const { coa_form, setCoaForm } = useFormStore();
 
   const { canSave } = useFormChanges<ItemCategoryFormBody>({
     defaultValues: ItemCategoryDefaultValues,
