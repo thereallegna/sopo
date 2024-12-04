@@ -101,6 +101,7 @@ const CreateMasterItemMM = () => {
               register={register}
               handleInputKeyDown={handleInputKeyDown}
               setError={setError}
+              type="add"
             />
           </DrawerBody>
         </form>

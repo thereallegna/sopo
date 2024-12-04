@@ -75,13 +75,15 @@ export const Combobox = ({
     []
   );
 
+  console.log('Combobox Edit => ', disabled);
+
   const { data: queryData, isLoading } = useQuery<
     AxiosResponse<ApiResponse<any[]>>
   >({
     queryKey: [...queryKey],
     queryFn: queryFn ? () => queryFn() : undefined,
     placeholderData: keepPreviousData,
-    enabled: disabled,
+    enabled: !disabled,
   });
 
   return (
