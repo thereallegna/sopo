@@ -69,3 +69,9 @@ type MasterItemFormBody = {
 };
 
 /* ======================= Inventory and Material Management End ==================== */
+
+/* ======================= Financial Management Start ==================== */
+type CurrencyFormBody = {
+  currency_code: string;
+  currency_name: string;
+};

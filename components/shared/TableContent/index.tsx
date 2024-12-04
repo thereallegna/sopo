@@ -41,9 +41,9 @@ const getCommonPinningStyles = (column: Column<any>): CSSProperties => {
   let boxShadow: string | undefined;
 
   if (isLastLeftPinnedColumn) {
-    boxShadow = '-1px 0 1px -1px gray inset';
+    boxShadow = '-1px 0 1px -1px rgba(0, 0, 0, 0.1) inset';
   } else if (isFirstRightPinnedColumn) {
-    boxShadow = '1px 0 1px -1px gray inset';
+    boxShadow = '1px 0 1px -1px rgba(0, 0, 0, 0.1) inset';
   }
 
   const left = isPinned === 'left' ? `${column.getStart('left')}px` : undefined;
@@ -51,7 +51,8 @@ const getCommonPinningStyles = (column: Column<any>): CSSProperties => {
     isPinned === 'right' ? `${column.getAfter('right')}px` : undefined;
 
   const position = isPinned ? 'sticky' : 'relative';
-  const zIndex = isPinned ? 1 : 0;
+  const zIndex = isPinned ? 10 : 0;
+  const backgroundColor = isPinned ? 'white' : undefined;
 
   return {
     boxShadow,
@@ -60,6 +61,7 @@ const getCommonPinningStyles = (column: Column<any>): CSSProperties => {
     position,
     width: column.getSize(),
     zIndex,
+    backgroundColor,
   };
 };
 

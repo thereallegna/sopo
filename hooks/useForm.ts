@@ -153,6 +153,13 @@ export const useForm = <T extends FieldValues>({
     requireAllFields,
   ]);
 
+  console.log('Has Changes => ', hasChanges);
+  console.log('Normalized Watched Fields => ', normalizedWatchedFields);
+  console.log('Default Values => ', defaultValues);
+  console.log('Relevant Fields => ', relevantFields);
+  console.log('Can Save => ', canSave);
+  console.log('watch => ', watchedFields);
+
   const { mutate: mutation } = useMutation({
     mutationFn: ({ body, params }: { body: T; params?: any }) =>
       mutationFn(body, params),
