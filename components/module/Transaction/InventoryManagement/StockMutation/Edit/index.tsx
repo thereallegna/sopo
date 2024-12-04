@@ -10,29 +10,34 @@ import {
   DrawerHeader,
 } from '@components/ui/Drawer';
 import { IconDeviceFloppy } from '@tabler/icons-react';
-import { masterItemDefaultValues } from '@constants/defaultValues';
 import { GET_MASTER_ITEM_MATERIAL_MANAGEMENT } from '@constants/queryKey';
-import { CreateMasterItemMMSchema } from '@constants/schemas/ConfigurationSchema/InventoryMaterialManagement';
+import { EditMasterItemMMSchema } from '@constants/schemas/ConfigurationSchema/InventoryMaterialManagement';
 import { useForm } from '@hooks/useForm';
 import {
-  createItem,
+  editItem,
   getItem,
 } from '@services/fetcher/configuration/material-management';
 import { ConfirmationAlert } from '@components/shared/Alert';
 import SelectableModal from '@components/ui/Modal';
+import { useSetValueForm } from '@hooks/useFormChanges';
+import { useDrawerStore } from '@stores/useDrawerStore';
 import BasicForm from '../Form/BasicForm';
 import DetailForm from '../Form/DetailForm';
 
-const CreateMasterItemMM = () => {
+const EditMasterItemMM = () => {
   const [showModalSource, setShowModalSource] = useState<boolean>(false);
+  const detail_data = useDrawerStore(
+    (state) => state.detail_data
+  ) as MasterItemFormBody;
+
   const {
-    handleCloseDrawer,
+    handleCloseDrawerEdit,
     handleInputKeyDown,
     handleSaveClick,
     handleSubmit,
     isLoading,
     formRef,
-    isOpen,
+    isOpenEdit,
     canSave,
     errors,
     setError,
@@ -46,10 +51,10 @@ const CreateMasterItemMM = () => {
   } = useForm({
     label: 'Master item',
     queryKey: GET_MASTER_ITEM_MATERIAL_MANAGEMENT,
-    mutationFn: createItem,
-    validationSchema: CreateMasterItemMMSchema,
-    defaultValues: masterItemDefaultValues,
-    type: 'add',
+    mutationFn: editItem,
+    validationSchema: EditMasterItemMMSchema,
+    defaultValues: detail_data,
+    type: 'edit',
     requireAllFields: true,
     ignoredFields: [
       'local_code',
@@ -63,13 +68,23 @@ const CreateMasterItemMM = () => {
       'purchase_item',
       'spesification',
       'remark',
+      'category_code',
+      'category_name',
+      'uom_code',
+      'uom_name',
+      'item_request',
     ],
   });
 
+  useSetValueForm<MasterItemFormBody>(detail_data, setValue, isOpenEdit);
+
   return (
-    <Drawer onClose={handleCloseDrawer} open={isOpen}>
+    <Drawer onClose={handleCloseDrawerEdit} open={isOpenEdit}>
       <DrawerContent>
-        <DrawerHeader onClick={handleCloseDrawer} drawerTitle="Add Master Item">
+        <DrawerHeader
+          onClick={handleCloseDrawerEdit}
+          drawerTitle="Edit Stock Mutation"
+        >
           <DrawerEndHeader>
             <Button
               variant={!canSave ? 'disabled' : 'primary'}
@@ -91,8 +106,6 @@ const CreateMasterItemMM = () => {
               register={register}
               handleInputKeyDown={handleInputKeyDown}
               setError={setError}
-              handleShowSource={() => setShowModalSource(true)}
-              add
             />
             <DetailForm
               errors={errors}
@@ -101,6 +114,7 @@ const CreateMasterItemMM = () => {
               register={register}
               handleInputKeyDown={handleInputKeyDown}
               setError={setError}
+              type="edit"
             />
           </DrawerBody>
         </form>
@@ -171,4 +185,4 @@ const CreateMasterItemMM = () => {
   );
 };
 
-export default CreateMasterItemMM;
+export default EditMasterItemMM;

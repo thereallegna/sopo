@@ -4,6 +4,7 @@ import {
   ColumnDef,
   createColumnHelper,
 } from '@tanstack/react-table';
+import Input from '@components/ui/Input';
 import GoToDetail from '@components/shared/TableContent/ToDetail';
 import { IconCircleCheckFilled } from '@tabler/icons-react';
 import { GenerateColumnsOption } from '../types/client/table';
@@ -29,6 +30,9 @@ export const generateColumns = ({
           ) : null;
         }
 
+        if (column.type === 'input') {
+          return <Input defaultValue={value} {...column.inputProps} />;
+        }
         return value;
       },
       enableGrouping: true,

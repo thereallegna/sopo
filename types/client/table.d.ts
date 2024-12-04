@@ -1,3 +1,4 @@
+import { InputProps } from '@components/ui/Input';
 import { TableActionProps } from '@components/ui/Table/TableAction';
 import {
   GroupingState,
@@ -10,6 +11,8 @@ type ColumnKey = {
   accessor: string;
   header: string;
   size?: number;
+  type?: 'default' | 'input';
+  inputProps?: InputProps;
 };
 
 type GenerateColumnsOption = {
@@ -56,6 +59,12 @@ type TableContentProps<T> = {
   onGrouping?: (group: Updater<GroupingState>) => void;
   onRowSizeChange: (size: RowSizeType) => void;
   actionProps?: TableActionProps;
+};
+
+type TableFormProps<T> = {
+  data?: T[];
+  columns: GenerateColumnsOption;
+  onChangeData?: (prev: T[]) => T[];
 };
 
 type PaginationPartial =

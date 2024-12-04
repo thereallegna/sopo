@@ -16,6 +16,7 @@ export type DetailDataType =
   | ProvinceFormBody
   | CityFormBody
   | IItemCategory
+  | MasterItemFormBody
   | null;
 
 type DrawerState = {
