@@ -13,6 +13,7 @@ export const GET_CATEGORY_MATERIAL_MANAGEMENT = 'getCategoryMaterialManagement';
 export const GET_MASTER_ITEM_MATERIAL_MANAGEMENT =
   'getMasterItemMaterialManagement';
 export const GET_WAREHOUSE = 'getWarehouse';
+export const GET_DETAIL_MASTER_ITEM = 'getDetailMasterItemMaterialManagement';
 // CONFIGURATION INVENTORY AND MATERIAL MANAGEMENT END
 
 // TRANSACTION INVENTORY MATERIAL MANAGEMENT
@@ -21,3 +22,7 @@ export const GET_INITIAL_STOCK = 'getInitialStock';
 // lOG HISTORY  START
 export const GET_LOG_HISTORY = 'getLogHistory';
 // lOG HISTORY  END
+
+// CONFIGURATION FINANCIAL MANAGEMENT START
+export const GET_CURRENCY = 'getCurrency';
+// CONFIGURATION FINANCIAL MANAGEMENT END

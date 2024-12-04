@@ -21,15 +21,15 @@ const TableDrawer = dynamic(
   { ssr: false }
 );
 const CreateCity = dynamic(
-  () => import('@components/shared/Drawer/Create/CreateCity'),
+  () => import('@components/module/Configuration/General/City/Create'),
   { ssr: false }
 );
 const DetailCity = dynamic(
-  () => import('@components/shared/Drawer/Detail/DetailCity'),
+  () => import('@components/module/Configuration/General/City/Detail'),
   { ssr: false }
 );
 const EditCity = dynamic(
-  () => import('@components/shared/Drawer/Edit/EditCity'),
+  () => import('@components/module/Configuration/General/City/Edit'),
   { ssr: false }
 );
 

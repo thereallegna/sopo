@@ -4,7 +4,7 @@ import {
   PATH_ITEMS_MASTER,
   PATH_WAREHOUSE,
 } from '@constants/routes';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { FetcherOptions } from '../../../../types/client/fetcher';
 
 const getUOM = async (option?: FetcherOptions) => {
@@ -98,14 +98,21 @@ const getItem = async (option?: FetcherOptions) => {
 
     return res;
   } catch (error) {
-    console.error('Error fetching log history:', error);
+    console.error('Error fetching list item : ', error);
     throw error;
   }
 };
 
-const createItem = async (body: MasterItemFormBody) => {
+const getDetailItem = async (
+  id: string
+): Promise<AxiosResponse<BasicResponse<MasterItemFormBody>>> => {
+  const res = await axios.get(`${PATH_ITEMS_MASTER}/${id}`);
+  return res;
+};
+
+const createItem = async (body: MasterItemFormBody, params?: any) => {
   try {
-    const res = await axios.post(PATH_ITEMS_MASTER, body);
+    const res = await axios.post(PATH_ITEMS_MASTER, body, { params });
     return res.data;
   } catch (error) {
     console.error('Error creating item category:', error);
@@ -131,6 +138,20 @@ const getWarehouse = async (option?: FetcherOptions) => {
   }
 };
 
+const editItem = async (body: MasterItemFormBody, params?: any) => {
+  try {
+    const res = await axios.put(
+      `${PATH_ITEMS_MASTER}/${body.item_code}`,
+      body,
+      { params }
+    );
+    return res.data;
+  } catch (error) {
+    console.error('Error editing item category:', error);
+    throw error;
+  }
+};
+
 export {
   getUOM,
   createUOM,
@@ -139,6 +160,8 @@ export {
   createItemCategory,
   editItemCategory,
   getItem,
+  getDetailItem,
   createItem,
   getWarehouse,
+  editItem,
 };

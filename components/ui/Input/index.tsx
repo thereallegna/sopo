@@ -92,8 +92,8 @@ const Input = React.forwardRef<
     return (
       <div
         className={cn(
-          inputVariant({ className, theme, sizes }),
-          disabled ? 'bg-Neutral-100' : ''
+          disabled ? 'bg-Neutral-100' : '',
+          inputVariant({ className, theme, sizes })
         )}
       >
         {StartIcon && <IconComponent data-testid="start-icon" {...StartIcon} />}

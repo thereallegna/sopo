@@ -20,15 +20,24 @@ const TableDrawer = dynamic(
   { ssr: false }
 );
 const CreateCategory = dynamic(
-  () => import('@components/shared/Drawer/Create/CreateCategoryMM'),
+  () =>
+    import(
+      '@components/module/Configuration/InventoryMaterialManagement/Category/Create'
+    ),
   { ssr: false }
 );
 const DetailCategory = dynamic(
-  () => import('@components/shared/Drawer/Detail/DetailCategoryMM'),
+  () =>
+    import(
+      '@components/module/Configuration/InventoryMaterialManagement/Category/Detail'
+    ),
   { ssr: false }
 );
 const EditCategory = dynamic(
-  () => import('@components/shared/Drawer/Edit/EditCategoryMM'),
+  () =>
+    import(
+      '@components/module/Configuration/InventoryMaterialManagement/Category/Edit'
+    ),
   { ssr: false }
 );
 

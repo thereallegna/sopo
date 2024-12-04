@@ -21,15 +21,15 @@ const TableDrawer = dynamic(
   { ssr: false }
 );
 const CreateCountry = dynamic(
-  () => import('@components/shared/Drawer/Create/CreateCountry'),
+  () => import('@components/module/Configuration/General/Country/Create'),
   { ssr: false }
 );
 const DetailCountry = dynamic(
-  () => import('@components/shared/Drawer/Detail/DetailCountry'),
+  () => import('@components/module/Configuration/General/Country/Detail'),
   { ssr: false }
 );
 const EditCountry = dynamic(
-  () => import('@components/shared/Drawer/Edit/EditCountry'),
+  () => import('@components/module/Configuration/General/Country/Edit'),
   { ssr: false }
 );
 

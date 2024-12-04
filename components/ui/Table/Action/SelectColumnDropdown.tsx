@@ -50,6 +50,7 @@ const SelectColumnDropdown: React.FC<SelectColumnDropdownProps> = ({
         </button>
         {columnVisible.map((column) => (
           <button
+            key={column.id}
             type="button"
             className="w-full py-[6px] hover:bg-[#EFF8FF] rounded"
             onClick={column.getToggleVisibilityHandler()}

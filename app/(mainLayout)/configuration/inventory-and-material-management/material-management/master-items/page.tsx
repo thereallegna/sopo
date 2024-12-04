@@ -20,15 +20,24 @@ const TableDrawer = dynamic(
   { ssr: false }
 );
 const CreateMasterItemMM = dynamic(
-  () => import('@components/shared/Drawer/Create/CreateMasterItemMM'),
+  () =>
+    import(
+      '@components/module/Configuration/InventoryMaterialManagement/MasterItem/Create'
+    ),
   { ssr: false }
 );
-const DetailUOM = dynamic(
-  () => import('@components/shared/Drawer/Detail/DetailUOM'),
+const DetailMasterItemMM = dynamic(
+  () =>
+    import(
+      '@components/module/Configuration/InventoryMaterialManagement/MasterItem/Detail'
+    ),
   { ssr: false }
 );
-const EditUOM = dynamic(
-  () => import('@components/shared/Drawer/Edit/EditUOM'),
+const EditMasterItemMM = dynamic(
+  () =>
+    import(
+      '@components/module/Configuration/InventoryMaterialManagement/MasterItem/Edit'
+    ),
   { ssr: false }
 );
 
@@ -132,8 +141,8 @@ const Country = () => {
         queryFn={getItem}
       />
       <CreateMasterItemMM />
-      <DetailUOM />
-      <EditUOM />
+      <DetailMasterItemMM />
+      <EditMasterItemMM />
     </>
   );
 };

@@ -9,7 +9,7 @@ import {
 } from '@services/fetcher/configuration/material-management';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@components/ui/Tabs';
 import { Checkbox } from '@components/ui/Checkbox';
-import { FormType } from '../../../../../types/form';
+import { FormType } from '../../../../../../types/form';
 
 const DetailForm = ({
   errors,
@@ -18,12 +18,19 @@ const DetailForm = ({
   setValue,
   setError,
   handleInputKeyDown,
-}: FormType<MasterItemFormBody>) => (
+  disableAll, // Tambahkan parameter disableAll
+  type = 'add',
+}: FormType<MasterItemFormBody> & {
+  disableAll?: boolean;
+  type?: 'add' | 'edit';
+}) => (
   <Card size="drawer" className="border border-Neutral-200 shadow-none">
     <CardContent className="flex-wrap flex flex-row gap-6 items-center">
       <Tabs defaultValue="general">
         <TabsList>
-          <TabsTrigger value="general">General</TabsTrigger>
+          <TabsTrigger value="general" disabled={disableAll}>
+            General
+          </TabsTrigger>
         </TabsList>
         <TabsContent
           value="general"
@@ -39,7 +46,7 @@ const DetailForm = ({
               dataLabel="item_category_name"
               dataValue="item_category_code"
               message={
-                errors.category_code
+                errors?.category_code
                   ? { text: errors.category_code.message!, type: 'danger' }
                   : undefined
               }
@@ -48,10 +55,15 @@ const DetailForm = ({
                 value: watch('category_code'),
               }}
               onChange={(val) => {
-                setValue('category_name', val.label);
-                setValue('category_code', val.value);
-                setError('category_code', { type: 'disabled' });
+                if (!disableAll && setValue) {
+                  setValue('category_name', val.label);
+                  setValue('category_code', val.value);
+                }
+                if (setError) {
+                  setError('category_code', { type: 'disabled' });
+                }
               }}
+              disabled={disableAll || type === 'edit'} // Disabled berdasarkan disableAll
             />
             <Combobox
               label="UoM"
@@ -62,7 +74,7 @@ const DetailForm = ({
               dataLabel="uom_name"
               dataValue="uom_code"
               message={
-                errors.uom_code
+                errors?.uom_code
                   ? { text: errors.uom_code.message!, type: 'danger' }
                   : undefined
               }
@@ -71,15 +83,20 @@ const DetailForm = ({
                 value: watch('uom_code'),
               }}
               onChange={(val) => {
-                setValue('uom_name', val.label);
-                setValue('uom_code', val.value);
-                setError('uom_code', { type: 'disabled' });
+                if (!disableAll && setValue) {
+                  setValue('uom_name', val.label);
+                  setValue('uom_code', val.value);
+                }
+                if (setError) {
+                  setError('uom_code', { type: 'disabled' });
+                }
               }}
+              disabled={disableAll || type === 'edit'} // Disabled berdasarkan disableAll
             />
             <InputField
               {...register('spesification')}
               message={
-                errors.spesification
+                errors?.spesification
                   ? {
                       text: errors.spesification.message!,
                       type: 'danger',
@@ -93,13 +110,14 @@ const DetailForm = ({
               className="w-full gap-2"
               textarea
               onKeyDown={handleInputKeyDown}
+              disabled={disableAll} // Disabled berdasarkan disableAll
             />
           </div>
           <div className="flex flex-col gap-[14px] flex-1">
             <InputField
               {...register('hs_code')}
               message={
-                errors.hs_code
+                errors?.hs_code
                   ? { text: errors.hs_code.message!, type: 'danger' }
                   : undefined
               }
@@ -109,11 +127,12 @@ const DetailForm = ({
               type="text"
               className="w-full gap-2"
               onKeyDown={handleInputKeyDown}
+              disabled={disableAll} // Disabled berdasarkan disableAll
             />
             <InputField
               {...register('remark')}
               message={
-                errors.remark
+                errors?.remark
                   ? { text: errors.remark.message!, type: 'danger' }
                   : undefined
               }
@@ -124,11 +143,15 @@ const DetailForm = ({
               className="w-full gap-2"
               textarea
               onKeyDown={handleInputKeyDown}
+              disabled={disableAll} // Disabled berdasarkan disableAll
             />
             <Checkbox
               label="Tax Liable"
               checked={watch('tax_liable')}
-              onCheckedChange={(val) => setValue('tax_liable', val)}
+              onCheckedChange={(val) =>
+                !disableAll && setValue && setValue('tax_liable', val)
+              }
+              disabled={disableAll} // Disabled berdasarkan disableAll
             />
           </div>
         </TabsContent>

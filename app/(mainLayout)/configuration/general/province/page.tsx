@@ -21,15 +21,15 @@ const TableDrawer = dynamic(
   { ssr: false }
 );
 const CreateProvince = dynamic(
-  () => import('@components/shared/Drawer/Create/CreateProvince'),
+  () => import('@components/module/Configuration/General/Province/Create'),
   { ssr: false }
 );
 const DetailProvince = dynamic(
-  () => import('@components/shared/Drawer/Detail/DetailProvince'),
+  () => import('@components/module/Configuration/General/Province/Detail'),
   { ssr: false }
 );
 const EditProvince = dynamic(
-  () => import('@components/shared/Drawer/Edit/EditProvince'),
+  () => import('@components/module/Configuration/General/Province/Edit'),
   { ssr: false }
 );
 

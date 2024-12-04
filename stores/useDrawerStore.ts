@@ -5,6 +5,7 @@ export type FilterDrawerType =
   | 'filterUOM'
   | 'filterItemCategory'
   | 'filterInitialStock'
+  | 'filterCurrency'
   | null;
 export type TableDrawerType =
   | 'getCountry'
@@ -19,6 +20,7 @@ export type DetailDataType =
   | CityFormBody
   | IItemCategory
   | InitialStockFormBody
+  | CurrencyFormBody
   | null;
 
 type DrawerState = {

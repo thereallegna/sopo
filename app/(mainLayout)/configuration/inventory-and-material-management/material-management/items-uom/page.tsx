@@ -20,15 +20,24 @@ const TableDrawer = dynamic(
   { ssr: false }
 );
 const CreateUOM = dynamic(
-  () => import('@components/shared/Drawer/Create/CreateUoM'),
+  () =>
+    import(
+      '@components/module/Configuration/InventoryMaterialManagement/UoM/Create'
+    ),
   { ssr: false }
 );
 const DetailUOM = dynamic(
-  () => import('@components/shared/Drawer/Detail/DetailUOM'),
+  () =>
+    import(
+      '@components/module/Configuration/InventoryMaterialManagement/UoM/Detail'
+    ),
   { ssr: false }
 );
 const EditUOM = dynamic(
-  () => import('@components/shared/Drawer/Edit/EditUOM'),
+  () =>
+    import(
+      '@components/module/Configuration/InventoryMaterialManagement/UoM/Edit'
+    ),
   { ssr: false }
 );
 

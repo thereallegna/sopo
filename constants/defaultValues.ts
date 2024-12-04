@@ -52,8 +52,8 @@ export const masterItemDefaultValues: MasterItemFormBody = {
   hs_code: '',
   remark: '',
   active: true,
-  inventory_item: true,
-  purchase_item: true,
+  inventory_item: false,
+  purchase_item: false,
   service_item: false,
   sales_item: false,
   tax_liable: false,
@@ -80,6 +80,15 @@ export const InitialStockDefaultValues: InitialStockFormBody = {
   uom_name: '',
 };
 // Transaction Inventory Material Management End
+
+// Configuration Financial Management Start
+
+export const currencyDefaultValues: CurrencyFormBody = {
+  currency_code: '',
+  currency_name: '',
+};
+
+// Configuration Financial Management End
 
 // Zustand Pagination State
 export const paginationStateDefaultValue = {
