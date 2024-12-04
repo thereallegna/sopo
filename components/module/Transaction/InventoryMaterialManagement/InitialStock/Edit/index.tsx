@@ -26,7 +26,7 @@ import { errorMapping } from '@utils/errorMapping';
 import { AxiosError } from 'axios';
 import { GET_WAREHOUSE } from '@constants/queryKey';
 import Combobox from '@components/shared/Combobox';
-import { Calendar } from '@components/ui/Calendar';
+// import { Calendar } from '@components/ui/Calendar';
 import useToastStore from '@stores/useToastStore';
 import { useFormSave } from '@hooks/useFormSave';
 
@@ -39,8 +39,8 @@ const EditInitialStock = () => {
   ) as InitialStockFormBody;
   const { setChangeStatus } = useFormStore();
   const [isLoading, setIsLoading] = React.useState(false);
-  const [isCalendarVisible, setIsCalendarVisible] = React.useState(false);
-  const [date, setDate] = React.useState<Date | undefined>(new Date());
+  // const [isCalendarVisible, setIsCalendarVisible] = React.useState(false);
+  // const [date, setDate] = React.useState<Date | undefined>(new Date());
   const showToast = useToastStore((state) => state.showToast);
   const queryClient = useQueryClient();
 
@@ -155,7 +155,7 @@ const EditInitialStock = () => {
                     disabled
                     onKeyDown={handleInputKeyDown}
                   />
-                  <InputField
+                  {/* <InputField
                     label="Date"
                     placeholder="Select a Date"
                     value={date ? date.toLocaleDateString() : ''}
@@ -174,7 +174,7 @@ const EditInitialStock = () => {
                       }}
                       className="rounded-md border"
                     />
-                  )}
+                  )} */}
                 </div>
                 <div className="flex flex-col gap-[14px] flex-1 h-full justify-between">
                   <Combobox
@@ -202,29 +202,29 @@ const EditInitialStock = () => {
                     }}
                   />
                   {/* <Combobox 
-                                        label="Currency"
-                                        placeholder="Select Currency"
-                                        queryKey={[GET_CURRENCY]}
-                                        queryFn={() => getCurrency()}
-                                        dataLabel="currency_name"
-                                        dataValue="currency_code"
-                                        message={
-                                            errors.currency
-                                                ? { text: errors.currency.message!, type: 'danger'}
-                                                : undefined
-                                        }
-                                        value={{
-                                            label: watch('currency'),
-                                            value: watch('currency_code')
-                                        }}
-                                        onChange={() => {
-                                            setValue('currency', val.label, { shouldDirty: true });
-                                            setValue('currency_code', val.value, {
-                                                shouldDirty: true,
-                                            });
-                                            setError('currency', { type: 'disabled' });
-                                        }}
-                                    /> */}
+                    label="Currency"
+                    placeholder="Select Currency"
+                    queryKey={[GET_CURRENCY]}
+                    queryFn={() => getCurrency()}
+                    dataLabel="currency_name"
+                    dataValue="currency_code"
+                    message={
+                        errors.currency
+                            ? { text: errors.currency.message!, type: 'danger'}
+                            : undefined
+                    }
+                    value={{
+                        label: watch('currency'),
+                        value: watch('currency_code')
+                    }}
+                    onChange={() => {
+                        setValue('currency', val.label, { shouldDirty: true });
+                        setValue('currency_code', val.value, {
+                            shouldDirty: true,
+                        });
+                        setError('currency', { type: 'disabled' });
+                    }}
+                  /> */}
                 </div>
                 <div className="flex flex-col gap-[14px] flex-1">
                   <InputField
