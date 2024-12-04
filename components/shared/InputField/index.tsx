@@ -68,6 +68,7 @@ export interface InputFieldProps
   textarea?: boolean;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
   onKeyDown?: React.KeyboardEventHandler<HTMLInputElement>;
+  onClick?: React.MouseEventHandler<HTMLInputElement | HTMLDivElement>;
   readOnly?: boolean;
 }
 
@@ -91,11 +92,26 @@ const InputField = React.forwardRef<HTMLInputElement, InputFieldProps>(
       end_icon,
       textarea,
       onChange,
+      onClick,
       ...rest
     } = props;
 
     return (
-      <div className={cn(inputFieldVariant({ className }))}>
+      <div
+        role="button"
+        tabIndex={0}
+        className={cn(inputFieldVariant({ className }))}
+        onClick={onClick}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            onClick?.(
+              e as unknown as React.MouseEvent<
+                HTMLInputElement | HTMLDivElement
+              >
+            );
+          }
+        }}
+      >
         <div
           className={`flex ${
             right
@@ -115,7 +131,7 @@ const InputField = React.forwardRef<HTMLInputElement, InputFieldProps>(
           )}
           <Input
             defaultChecked={defaultChecked}
-            ref={ref} // Pass ref to the Input component
+            ref={ref}
             {...rest}
             disabled={disabled}
             required={required}
@@ -132,7 +148,6 @@ const InputField = React.forwardRef<HTMLInputElement, InputFieldProps>(
             {...inputProps}
           />
         </div>
-
         {message && (
           <span
             className={cn(

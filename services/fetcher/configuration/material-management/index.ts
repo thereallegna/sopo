@@ -2,6 +2,7 @@ import {
   PATH_ITEMS_UOM,
   PATH_ITEMS_CATEGORY,
   PATH_ITEMS_MASTER,
+  PATH_WAREHOUSE,
 } from '@constants/routes';
 import axios, { AxiosResponse } from 'axios';
 import { FetcherOptions } from '../../../../types/client/fetcher';
@@ -119,6 +120,24 @@ const createItem = async (body: MasterItemFormBody, params?: any) => {
   }
 };
 
+const getWarehouse = async (option?: FetcherOptions) => {
+  try {
+    const res = await axios.get(`${PATH_WAREHOUSE}`, {
+      params: {
+        all: option?.all,
+        page_size: !option?.all ? option?.pagination?.pageSize : undefined,
+        current_page: !option?.all ? option?.pagination?.pageIndex : undefined,
+        search: option?.search,
+      },
+    });
+
+    return res;
+  } catch (error) {
+    console.error('Error fetching log history:', error);
+    throw error;
+  }
+};
+
 const editItem = async (body: MasterItemFormBody, params?: any) => {
   try {
     const res = await axios.put(
@@ -143,5 +162,6 @@ export {
   getItem,
   getDetailItem,
   createItem,
+  getWarehouse,
   editItem,
 };

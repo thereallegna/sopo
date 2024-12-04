@@ -24,6 +24,10 @@ const buttonVariants = cva(
           'bg-Blue-200 text-Neutral-50 pointer-events-none	 border border-solid border-Blue-300',
         navbarSettings:
           'bg-transparent shadow-none border-none hover-none focus:ring-transparent',
+        ghost:
+          'hover:bg-neutral-100 hover:text-neutral-900 dark:hover:bg-neutral-800 dark:hover:text-neutral-50',
+        outline:
+          'border border-neutral-200 bg-white hover:bg-neutral-100 hover:text-neutral-900 dark:border-neutral-800 dark:bg-neutral-950 dark:hover:bg-neutral-800 dark:hover:text-neutral-50',
       },
       size: {
         small: 'font-semibold text-base',

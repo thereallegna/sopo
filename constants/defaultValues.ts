@@ -60,6 +60,27 @@ export const masterItemDefaultValues: MasterItemFormBody = {
 };
 // Configuration Material Management End
 
+// Transaction Inventory Material Management Start
+export const InitialStockDefaultValues: InitialStockFormBody = {
+  document_number: '',
+  document_date: '',
+  warehouse: '',
+  warehouse_code: '',
+  currency: '',
+  currency_code: '',
+  rate: '',
+  remark: '',
+  item: '',
+  item_name: '',
+  item_code: '',
+  batch: '',
+  quantity: '',
+  price: '',
+  local_code: '',
+  uom_name: '',
+};
+// Transaction Inventory Material Management End
+
 // Configuration Financial Management Start
 
 export const currencyDefaultValues: CurrencyFormBody = {
