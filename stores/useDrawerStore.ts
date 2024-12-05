@@ -19,6 +19,7 @@ export type DetailDataType =
   | ProvinceFormBody
   | CityFormBody
   | IItemCategory
+  | MasterItemFormBody
   | InitialStockFormBody
   | CurrencyFormBody
   | null;

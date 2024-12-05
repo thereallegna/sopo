@@ -1,5 +1,6 @@
 'use client';
 
+import { useTableContext } from '@context/TableContext';
 import { cn } from '@libs/classNames';
 import { cva, VariantProps } from 'class-variance-authority';
 import React from 'react';
@@ -10,6 +11,7 @@ const tableCellVariant = cva('text-base text-Neutral-Black', {
       normal: 'py-[5px] px-[10px]',
       compact: 'py-1 px-[10px]',
       narrow: 'px-2',
+      form: 'p-0',
     },
     columnPinning: {
       true: 'sticky left-0',
@@ -27,13 +29,18 @@ export interface TableCellProps
     VariantProps<typeof tableCellVariant> {}
 
 const TableCell = React.forwardRef<HTMLTableCellElement, TableCellProps>(
-  ({ className, size, ...props }, ref) => (
-    <td
-      className={cn(tableCellVariant({ size, className }))}
-      ref={ref}
-      {...props}
-    />
-  )
+  ({ className, size, ...props }, ref) => {
+    const { type } = useTableContext();
+    return (
+      <td
+        className={cn(
+          tableCellVariant({ size: type === 'form' ? type : size, className })
+        )}
+        ref={ref}
+        {...props}
+      />
+    );
+  }
 );
 TableCell.displayName = 'TableCell';
 

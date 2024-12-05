@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import { TableProvider } from '@context/TableContext';
 import { cn } from '@libs/classNames';
 import TableHead from './TableHead';
 import TableHeader from './TableHeader';
@@ -9,18 +10,33 @@ import TableFooter from './TableFooter';
 import TableRow from './TableRow';
 import TableCell from './TableCell';
 
-const Table = React.forwardRef<
-  HTMLTableElement,
-  React.HTMLAttributes<HTMLTableElement>
->(({ className, ...props }, ref) => (
-  <div className="w-full border-[1px] border-neutral-200 rounded-sm h-full overflow-auto">
-    <table
-      ref={ref}
-      className={cn('w-full border-collapse border-spacing-0', className)}
-      {...props}
-    />
-  </div>
-));
+interface TableProps extends React.HTMLAttributes<HTMLTableElement> {
+  type?: 'default' | 'form';
+}
+
+const Table = React.forwardRef<HTMLTableElement, TableProps>(
+  ({ className, type = 'default', ...props }, ref) => (
+    <TableProvider value={{ type }}>
+      <div
+        className={`w-full ${
+          type === 'default' ? 'border border-1' : 'border-0 -mx-[10px]'
+        } border-neutral-200 rounded-sm h-full overflow-auto`}
+      >
+        <table
+          ref={ref}
+          className={cn(
+            'w-full',
+            type === 'default'
+              ? 'border-collapse'
+              : 'border-separate border-spacing-[10px]',
+            className
+          )}
+          {...props}
+        />
+      </div>
+    </TableProvider>
+  )
+);
 Table.displayName = 'Table';
 
 export { TableHeader, TableBody, TableFooter, TableHead, TableRow, TableCell };

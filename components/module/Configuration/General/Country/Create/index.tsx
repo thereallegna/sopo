@@ -128,6 +128,7 @@ const CreateCountry = () => {
                   label="Country Code"
                   placeholder="Country Code"
                   right
+                  required
                   type="text"
                   onKeyDown={handleInputKeyDown}
                 />
@@ -141,6 +142,7 @@ const CreateCountry = () => {
                   label="Country Name"
                   placeholder="Country Name"
                   right
+                  required
                   type="text"
                   onKeyDown={handleInputKeyDown}
                 />

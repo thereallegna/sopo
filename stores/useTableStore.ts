@@ -6,6 +6,7 @@ import {
   GET_CATEGORY_MATERIAL_MANAGEMENT,
   GET_COA,
   GET_MASTER_ITEM_MATERIAL_MANAGEMENT,
+  GET_STOCK_MUTATION,
   GET_CURRENCY,
   GET_INITIAL_STOCK,
 } from '@constants/queryKey';
@@ -22,6 +23,7 @@ const initialTableState = {
     [GET_UOM]: paginationStateDefaultValue,
     [GET_CATEGORY_MATERIAL_MANAGEMENT]: paginationStateDefaultValue,
     [GET_MASTER_ITEM_MATERIAL_MANAGEMENT]: paginationStateDefaultValue,
+    [GET_STOCK_MUTATION]: paginationStateDefaultValue,
     [GET_CURRENCY]: paginationStateDefaultValue,
     [GET_INITIAL_STOCK]: paginationStateDefaultValue,
   },

@@ -21,7 +21,7 @@ import {
 import { ConfirmationAlert } from '@components/shared/Alert';
 import SelectableModal from '@components/ui/Modal';
 import BasicForm from '../Form/BasicForm';
-import DetailForm from '../Form/DetailForm';
+import MutateFromForm from '../Form/MutateFromForm';
 
 const CreateMasterItemMM = () => {
   const [showModalSource, setShowModalSource] = useState<boolean>(false);
@@ -69,7 +69,10 @@ const CreateMasterItemMM = () => {
   return (
     <Drawer onClose={handleCloseDrawer} open={isOpen}>
       <DrawerContent>
-        <DrawerHeader onClick={handleCloseDrawer} drawerTitle="Add Master Item">
+        <DrawerHeader
+          onClick={handleCloseDrawer}
+          drawerTitle="Add Stock Mutation"
+        >
           <DrawerEndHeader>
             <Button
               variant={!canSave ? 'disabled' : 'primary'}
@@ -91,10 +94,9 @@ const CreateMasterItemMM = () => {
               register={register}
               handleInputKeyDown={handleInputKeyDown}
               setError={setError}
-              handleShowSource={() => setShowModalSource(true)}
               add
             />
-            <DetailForm
+            <MutateFromForm
               errors={errors}
               watch={watch}
               setValue={setValue}
@@ -163,7 +165,9 @@ const CreateMasterItemMM = () => {
         }}
         queryFn={getItem}
         onSelectRow={(data: MasterItemFormBody) => {
-          setValue('source', data.item_code);
+          setValue('source', data.item_code, {
+            shouldDirty: true,
+          });
           setShowModalSource(false);
         }}
       />

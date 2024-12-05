@@ -53,7 +53,7 @@ type MasterItemFormBody = {
   category_code: string;
   uom_name: string;
   uom_code: string;
-  source?: string;
+  source?: string | null;
   local_code?: string;
   foreign_name?: string;
   old_code?: string;
