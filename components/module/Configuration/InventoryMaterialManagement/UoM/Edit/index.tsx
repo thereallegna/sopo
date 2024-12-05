@@ -21,7 +21,7 @@ import { useDrawer } from '@hooks/useDrawer';
 import { errorMapping } from '@utils/errorMapping';
 import { AxiosError } from 'axios';
 import { GET_UOM } from '@constants/queryKey';
-import { editUOM } from '@services/fetcher/configuration/material-management';
+import { editUOM } from '@services/fetcher/configuration/material-item-warehouse-management';
 import { UOMSchema } from '@constants/schemas/ConfigurationSchema/InventoryMaterialManagement';
 import useToastStore from '@stores/useToastStore';
 import { useFormSave } from '@hooks/useFormSave';

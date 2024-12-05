@@ -13,6 +13,7 @@ export const GET_CATEGORY_MATERIAL_MANAGEMENT = 'getCategoryMaterialManagement';
 export const GET_MASTER_ITEM_MATERIAL_MANAGEMENT =
   'getMasterItemMaterialManagement';
 export const GET_WAREHOUSE = 'getWarehouse';
+export const GET_WAREHOUSE_CATEGORY = 'getWarehouseCategory';
 export const GET_DETAIL_MASTER_ITEM = 'getDetailMasterItemMaterialManagement';
 // CONFIGURATION INVENTORY AND MATERIAL MANAGEMENT END
 

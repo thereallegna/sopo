@@ -3,6 +3,7 @@ import {
   PATH_ITEMS_CATEGORY,
   PATH_ITEMS_MASTER,
   PATH_WAREHOUSE,
+  PATH_WAREHOUSE_CATEGORY,
 } from '@constants/routes';
 import axios, { AxiosResponse } from 'axios';
 import { FetcherOptions } from '../../../../types/client/fetcher';
@@ -120,6 +121,46 @@ const createItem = async (body: MasterItemFormBody, params?: any) => {
   }
 };
 
+const getWarehouseCatrgory = async (option?: FetcherOptions) => {
+  try {
+    const res = await axios.get(`${PATH_WAREHOUSE_CATEGORY}`, {
+      params: {
+        page_size: !option?.all ? option?.pagination?.pageSize : undefined,
+        current_page: !option?.all ? option?.pagination?.pageIndex : undefined,
+        search: option?.search,
+      },
+    });
+
+    return res;
+  } catch (error) {
+    console.error('Error fetching log history:', error);
+    throw error;
+  }
+};
+
+const createWarehouseCatrgory = async (body: WarehouseCategoryFormBody) => {
+  try {
+    const res = await axios.post(PATH_WAREHOUSE_CATEGORY, body);
+    return res.data;
+  } catch (error) {
+    console.error('Error creating country:', error);
+    throw error;
+  }
+};
+
+const editWarehouseCatrgory = async (body: WarehouseCategoryFormBody) => {
+  try {
+    const res = await axios.put(
+      `${PATH_WAREHOUSE_CATEGORY}/${body.whs_ct_code}`,
+      body
+    );
+    return res.data;
+  } catch (error) {
+    console.error('Error editing country:', error);
+    throw error;
+  }
+};
+
 const getWarehouse = async (option?: FetcherOptions) => {
   try {
     const res = await axios.get(`${PATH_WAREHOUSE}`, {
@@ -188,6 +229,9 @@ export {
   getDetailItem,
   createItem,
   getWarehouse,
+  getWarehouseCatrgory,
+  createWarehouseCatrgory,
+  editWarehouseCatrgory,
   editItem,
   createStockMutation,
   editStockMutation,

@@ -16,7 +16,7 @@ import { useForm } from '@hooks/useForm';
 import {
   editStockMutation,
   getItem,
-} from '@services/fetcher/configuration/material-management';
+} from '@services/fetcher/configuration/material-item-warehouse-management';
 import { ConfirmationAlert } from '@components/shared/Alert';
 import SelectableModal from '@components/ui/Modal';
 import { useSetValueForm } from '@hooks/useFormChanges';

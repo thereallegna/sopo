@@ -17,7 +17,7 @@ import { useForm } from '@hooks/useForm';
 import {
   createItem,
   getItem,
-} from '@services/fetcher/configuration/material-management';
+} from '@services/fetcher/configuration/material-item-warehouse-management';
 import { ConfirmationAlert } from '@components/shared/Alert';
 import SelectableModal from '@components/ui/Modal';
 import BasicForm from '../Form/BasicForm';

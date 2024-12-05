@@ -68,6 +68,11 @@ type MasterItemFormBody = {
   tax_liable?: boolean;
 };
 
+type WarehouseCategoryFormBody = {
+  whs_ct_code: string;
+  whs_ct_name: string;
+};
+
 /* ======================= Inventory and Material Management End ==================== */
 
 /* ======================= Financial Management Start ==================== */

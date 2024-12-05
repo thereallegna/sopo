@@ -6,7 +6,7 @@ import { GET_CATEGORY_MATERIAL_MANAGEMENT, GET_UOM } from '@constants/queryKey';
 import {
   getItemCategory,
   getUOM,
-} from '@services/fetcher/configuration/material-management';
+} from '@services/fetcher/configuration/material-item-warehouse-management';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@components/ui/Tabs';
 import { Checkbox } from '@components/ui/Checkbox';
 import { FormType } from '../../../../../../types/form';

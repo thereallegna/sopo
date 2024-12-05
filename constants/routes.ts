@@ -62,6 +62,10 @@ export const PATH_ITEMS_CATEGORY_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VER
 export const PATH_WAREHOUSE = `${PATH_CONFIGURATION_INVENTORY_AND_MATERIAL_MANAGEMENT}/material-management/warehouse`;
 export const PATH_WAREHOUSE_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/warehouse`;
 
+// warehouse category
+export const PATH_WAREHOUSE_CATEGORY = `${PATH_CONFIGURATION_INVENTORY_AND_MATERIAL_MANAGEMENT}/material-management/warehouse-category`;
+export const PATH_WAREHOUSE_CATEGORY_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/warehouse-category`;
+
 /* ======================= Inventory and Material Management End ==================== */
 
 /* ======================= Inventory Material Management Start ==================== */

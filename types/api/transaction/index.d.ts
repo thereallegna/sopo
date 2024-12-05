@@ -15,7 +15,7 @@ type InitialStockFormBody = {
   warehouse_code: string;
   currency: string;
   currency_code: string;
-  rate: string;
+  rate: decimal;
   remark?: string | null;
   item: string;
   item_name: string;

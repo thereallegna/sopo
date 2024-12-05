@@ -23,7 +23,7 @@ import { useFormChanges, useSetValueForm } from '@hooks/useFormChanges';
 import { errorMapping } from '@utils/errorMapping';
 import { AxiosError } from 'axios';
 import { GET_CATEGORY_MATERIAL_MANAGEMENT, GET_COA } from '@constants/queryKey';
-import { editItemCategory } from '@services/fetcher/configuration/material-management';
+import { editItemCategory } from '@services/fetcher/configuration/material-item-warehouse-management';
 import { ItemCategorySchema } from '@constants/schemas/ConfigurationSchema/InventoryMaterialManagement';
 import useToastStore from '@stores/useToastStore';
 import { useFormSave } from '@hooks/useFormSave';
@@ -218,6 +218,7 @@ const EditCategoryMM = () => {
                     label="Item Category Code"
                     placeholder="Item Category Code"
                     right
+                    disabled
                     type="text"
                     onKeyDown={handleInputKeyDown}
                   />
@@ -235,6 +236,7 @@ const EditCategoryMM = () => {
                     label="Item Category Name"
                     placeholder="Item Category Name"
                     right
+                    required
                     type="text"
                     onKeyDown={handleInputKeyDown}
                   />

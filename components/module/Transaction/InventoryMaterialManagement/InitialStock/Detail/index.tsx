@@ -15,9 +15,10 @@ import { useDrawerStore } from '@stores/useDrawerStore';
 import { IconPencil } from '@tabler/icons-react';
 import { useForm } from 'react-hook-form';
 import Combobox from '@components/shared/Combobox';
-import { GET_WAREHOUSE } from '@constants/queryKey';
-import { getWarehouse } from '@services/fetcher/configuration/material-management';
+import { GET_CURRENCY, GET_WAREHOUSE } from '@constants/queryKey';
+import { getWarehouse } from '@services/fetcher/configuration/material-item-warehouse-management';
 import { useSetValueForm } from '@hooks/useFormChanges';
+import { getCurrency } from '@services/fetcher/configuration/financial-management';
 
 const DetailInitialStock = () => {
   const { isOpenDetail, closeDetailDrawer, openEditDrawer } = useDrawerStore();
@@ -70,7 +71,7 @@ const DetailInitialStock = () => {
                   disabled
                 />
               </div>
-              <div>
+              <div className="flex flex-col gap-[14px] flex-1 h-full justify-between">
                 <Combobox
                   label="Warehouse"
                   placeholder="Warehouse"
@@ -84,7 +85,7 @@ const DetailInitialStock = () => {
                   }}
                   disabled
                 />
-                {/* <Combobox 
+                <Combobox
                   label="Currecy"
                   placeholder="Currency"
                   queryKey={[GET_CURRENCY]}
@@ -92,13 +93,13 @@ const DetailInitialStock = () => {
                   dataLabel="qurency_name"
                   dataValue="qurency_code"
                   value={{
-                      label: detail_data?.currency,
-                      value: detail_data?.currency_code,
+                    label: detail_data?.currency,
+                    value: detail_data?.currency_code,
                   }}
                   disabled
-                /> */}
+                />
               </div>
-              <div>
+              <div className="flex flex-col gap-[14px] flex-1 h-full justify-between">
                 <InputField
                   value={detail_data?.rate || ''}
                   label="Rate"

@@ -7,7 +7,7 @@ import BodyContent from '@components/module/Content/BodyContent';
 import Image from 'next/image';
 import FilterButton from '@components/ui/Table/Action/FilterButton';
 import { useDrawerStore } from '@stores/useDrawerStore';
-import { getItem } from '@services/fetcher/configuration/material-management';
+import { getItem } from '@services/fetcher/configuration/material-item-warehouse-management';
 import { GET_MASTER_ITEM_MATERIAL_MANAGEMENT } from '@constants/queryKey';
 import dynamic from 'next/dynamic';
 

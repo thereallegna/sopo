@@ -13,12 +13,12 @@ import { Card, CardContent } from '@components/ui/Card';
 import InputField from '@components/shared/InputField';
 import { useForm } from '@hooks/useForm';
 import { IconDeviceFloppy } from '@tabler/icons-react';
-import { GET_CURRENCY } from '@constants/queryKey';
-import { createCurrency } from '@services/fetcher/configuration/financial-management';
-import { currencySchema } from '@constants/schemas/ConfigurationSchema/FinancialManagement';
-import { currencyDefaultValues } from '@constants/defaultValues';
+import { GET_WAREHOUSE_CATEGORY } from '@constants/queryKey';
+import { WarehouseCategorySchema } from '@constants/schemas/ConfigurationSchema/InventoryMaterialManagement';
+import { warehouseCategoryDefaultValues } from '@constants/defaultValues';
+import { createWarehouseCatrgory } from '@services/fetcher/configuration/material-item-warehouse-management';
 
-const CreateCurrency = () => {
+const CreateWarehouseCategory = () => {
   const {
     handleCloseDrawer,
     handleInputKeyDown,
@@ -32,10 +32,10 @@ const CreateCurrency = () => {
     register,
   } = useForm({
     label: 'Master item',
-    queryKey: GET_CURRENCY,
-    mutationFn: createCurrency,
-    validationSchema: currencySchema,
-    defaultValues: currencyDefaultValues,
+    queryKey: GET_WAREHOUSE_CATEGORY,
+    mutationFn: createWarehouseCatrgory,
+    validationSchema: WarehouseCategorySchema,
+    defaultValues: warehouseCategoryDefaultValues,
     type: 'add',
     requireAllFields: true,
   });
@@ -43,7 +43,10 @@ const CreateCurrency = () => {
   return (
     <Drawer onClose={handleCloseDrawer} open={isOpen}>
       <DrawerContent>
-        <DrawerHeader onClick={handleCloseDrawer} drawerTitle="Create Currency">
+        <DrawerHeader
+          onClick={handleCloseDrawer}
+          drawerTitle="Create Warehouse Category"
+        >
           <DrawerEndHeader>
             <Button
               variant={!canSave ? 'disabled' : 'primary'}
@@ -61,27 +64,27 @@ const CreateCurrency = () => {
             <Card size="drawer">
               <CardContent className="flex-wrap flex flex-row gap-6 items-start">
                 <InputField
-                  {...register('currency_code')}
+                  {...register('whs_ct_code')}
                   message={
-                    errors.currency_code
-                      ? { text: errors.currency_code.message!, type: 'danger' }
+                    errors.whs_ct_code
+                      ? { text: errors.whs_ct_code.message!, type: 'danger' }
                       : undefined
                   }
-                  label="Currency Code"
-                  placeholder="Currency Code"
+                  label="Warehouse Category Code"
+                  placeholder="Warehouse Category Code"
                   right
                   type="text"
                   onKeyDown={handleInputKeyDown}
                 />
                 <InputField
-                  {...register('currency_name')}
+                  {...register('whs_ct_name')}
                   message={
-                    errors.currency_name
-                      ? { text: errors.currency_name.message!, type: 'danger' }
+                    errors.whs_ct_name
+                      ? { text: errors.whs_ct_name.message!, type: 'danger' }
                       : undefined
                   }
-                  label="Currency Name"
-                  placeholder="Currency Name"
+                  label="Warehouse Category Name"
+                  placeholder="Warehouse Category Name"
                   right
                   type="text"
                   onKeyDown={handleInputKeyDown}
@@ -95,4 +98,4 @@ const CreateCurrency = () => {
   );
 };
 
-export default CreateCurrency;
+export default CreateWarehouseCategory;

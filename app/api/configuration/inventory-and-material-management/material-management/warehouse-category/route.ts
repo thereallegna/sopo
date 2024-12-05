@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSideSession } from '@utils/session';
 import axios, { AxiosError } from 'axios';
-import { PATH_INITIAL_STOCK_BE } from '@constants/routes';
+import { PATH_WAREHOUSE_CATEGORY_BE } from '@constants/routes';
 
 export async function GET(req: NextRequest) {
   try {
@@ -9,7 +9,7 @@ export async function GET(req: NextRequest) {
 
     const session = await getServerSideSession();
 
-    const response = await axios.get(`${PATH_INITIAL_STOCK_BE}`, {
+    const response = await axios.get(`${PATH_WAREHOUSE_CATEGORY_BE}`, {
       headers: {
         Authorization: `Bearer ${session.user?.data?.authorization?.access_token}`,
       },
@@ -35,13 +35,14 @@ export async function GET(req: NextRequest) {
   }
 }
 
+// create
 export async function POST(req: Request) {
   try {
     const session = await getServerSideSession();
 
-    const body = (await req.json()) as InitialStockFormBody;
+    const body = (await req.json()) as CurrencyFormBody;
 
-    const response = await axios.post(PATH_INITIAL_STOCK_BE, body, {
+    const response = await axios.post(PATH_WAREHOUSE_CATEGORY_BE, body, {
       headers: {
         Authorization: `Bearer ${session.user?.data?.authorization?.access_token}`,
       },

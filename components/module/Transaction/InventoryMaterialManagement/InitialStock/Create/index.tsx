@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Button } from '@components/ui/Button';
 import {
   Drawer,
@@ -22,7 +22,7 @@ import {
   createInitialStock,
   getInitialStock,
 } from '@services/fetcher/transaction/inventory-material-management';
-import { getWarehouse } from '@services/fetcher/configuration/material-management';
+import { getWarehouse } from '@services/fetcher/configuration/material-item-warehouse-management';
 import { useDrawer } from '@hooks/useDrawer';
 import { InitialStockDefaultValues } from '@constants/defaultValues';
 import { useFormChanges } from '@hooks/useFormChanges';
@@ -36,21 +36,18 @@ import {
 import useToastStore from '@stores/useToastStore';
 import { useFormSave } from '@hooks/useFormSave';
 import useFormStore from '@stores/useFormStore';
-// import { Calendar } from '@components/ui/Calendar';
 import TableDrawer from '@components/shared/Drawer/Table/TableDrawer';
 import { getCurrency } from '@services/fetcher/configuration/financial-management';
+import DatePicker from '@components/shared/DatePicker';
 
 const CreateInitialStock = () => {
   const formRef = useRef<HTMLFormElement>(null);
   const { isOpen, closeDrawer, openDetailDrawer } = useDrawerStore();
   const [isLoading, setIsLoading] = React.useState(false);
-  // const [isCalendarVisible, setIsCalendarVisible] = React.useState(false);
-  // const [date, setDate] = React.useState<Date | undefined>(new Date());
   const { setChangeStatus } = useFormStore();
+  const [documentDate, setDocumentDate] = useState<Date | undefined>(undefined);
   const openToast = useToastStore((state) => state.showToast);
   const queryClient = useQueryClient();
-  // const [isModalOpen, setModalOpen] = React.useState(false);
-  // const { item_form, setItemForm } = useFormStore();
 
   const {
     register,
@@ -115,6 +112,10 @@ const CreateInitialStock = () => {
     isLoading,
     hasChanged: canSave,
   });
+
+  const handleDateChange = (date: Date) => {
+    setDocumentDate(date);
+  };
 
   // const openModalForField = (fieldName: string) => {
   //     setModalOpen(true);
@@ -201,26 +202,13 @@ const CreateInitialStock = () => {
                     className="w-full gap-2"
                     onKeyDown={handleInputKeyDown}
                   />
-                  {/* <InputField 
-                    label="Date"
-                    placeholder="Select a Date"
-                    value={date ? date.toLocaleDateString() : ''}
-                    onClick={() => setIsCalendarVisible(true)}
-                    readOnly
-                    required
-                    className="w-full gap-2"
+                  <DatePicker
+                    label="Document Date"
+                    placeholder="Select Date"
+                    value={documentDate}
+                    onChange={handleDateChange}
+                    className="rounded-md border-shadow"
                   />
-                  {isCalendarVisible && (
-                      <Calendar 
-                          mode="single"
-                          selected={date}
-                          onSelect={(selectedDate) => {
-                              setDate(selectedDate);
-                              setIsCalendarVisible(false);
-                          }}
-                          className="rounded-md border"
-                      />
-                  )} */}
                 </div>
                 <div className="flex flex-col gap-[14px] flex-1 h-full justify-between">
                   <Combobox
@@ -279,6 +267,7 @@ const CreateInitialStock = () => {
                     label="Rate"
                     placeholder="Rate"
                     right
+                    required
                     type="text"
                     className="w-full gap-2"
                     onKeyDown={handleInputKeyDown}
