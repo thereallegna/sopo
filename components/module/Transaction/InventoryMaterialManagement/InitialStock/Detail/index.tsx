@@ -16,7 +16,7 @@ import { IconPencil } from '@tabler/icons-react';
 import { useForm } from 'react-hook-form';
 import Combobox from '@components/shared/Combobox';
 import { GET_CURRENCY, GET_WAREHOUSE } from '@constants/queryKey';
-import { getWarehouse } from '@services/fetcher/configuration/material-management';
+import { getWarehouse } from '@services/fetcher/configuration/material-item-warehouse-management';
 import { useSetValueForm } from '@hooks/useFormChanges';
 import { getCurrency } from '@services/fetcher/configuration/financial-management';
 

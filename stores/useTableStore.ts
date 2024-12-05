@@ -9,6 +9,7 @@ import {
   GET_STOCK_MUTATION,
   GET_CURRENCY,
   GET_INITIAL_STOCK,
+  GET_WAREHOUSE_CATEGORY,
 } from '@constants/queryKey';
 import { create } from 'zustand';
 import { paginationStateDefaultValue } from '@constants/defaultValues';
@@ -26,6 +27,7 @@ const initialTableState = {
     [GET_STOCK_MUTATION]: paginationStateDefaultValue,
     [GET_CURRENCY]: paginationStateDefaultValue,
     [GET_INITIAL_STOCK]: paginationStateDefaultValue,
+    [GET_WAREHOUSE_CATEGORY]: paginationStateDefaultValue,
   },
 };
 

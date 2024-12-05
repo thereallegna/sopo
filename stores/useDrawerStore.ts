@@ -6,6 +6,7 @@ export type FilterDrawerType =
   | 'filterItemCategory'
   | 'filterInitialStock'
   | 'filterCurrency'
+  | 'filterWarehouseCategory'
   | null;
 export type TableDrawerType =
   | 'getCountry'
@@ -22,6 +23,7 @@ export type DetailDataType =
   | MasterItemFormBody
   | InitialStockFormBody
   | CurrencyFormBody
+  | WarehouseCategoryFormBody
   | null;
 
 type DrawerState = {

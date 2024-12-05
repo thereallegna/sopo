@@ -59,6 +59,12 @@ export const masterItemDefaultValues: MasterItemFormBody = {
   sales_item: false,
   tax_liable: false,
 };
+
+export const warehouseCategoryDefaultValues: WarehouseCategoryFormBody = {
+  whs_ct_code: '',
+  whs_ct_name: '',
+};
+
 // Configuration Material Management End
 
 // Transaction Inventory Material Management Start

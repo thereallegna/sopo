@@ -24,3 +24,8 @@ export const EditMasterItemMMSchema = Yup.object().shape({
   item_name: Yup.string().required('Item name is required'),
   active: Yup.boolean().required('Active is required'),
 });
+
+export const WarehouseCategorySchema = Yup.object().shape({
+  whs_ct_code: Yup.string().required('Warehouse category code is required'),
+  whs_ct_name: Yup.string().required('Warehouse category name is required'),
+});

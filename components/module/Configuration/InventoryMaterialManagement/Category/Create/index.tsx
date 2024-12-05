@@ -24,7 +24,7 @@ import { AxiosError } from 'axios';
 import { errorMapping } from '@utils/errorMapping';
 import { GET_CATEGORY_MATERIAL_MANAGEMENT, GET_COA } from '@constants/queryKey';
 import { ItemCategorySchema } from '@constants/schemas/ConfigurationSchema/InventoryMaterialManagement';
-import { createItemCategory } from '@services/fetcher/configuration/material-management';
+import { createItemCategory } from '@services/fetcher/configuration/material-item-warehouse-management';
 import { Checkbox } from '@components/ui/Checkbox';
 import useToastStore from '@stores/useToastStore';
 import { useFormSave } from '@hooks/useFormSave';

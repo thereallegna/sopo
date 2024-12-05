@@ -22,7 +22,7 @@ import {
   createInitialStock,
   getInitialStock,
 } from '@services/fetcher/transaction/inventory-material-management';
-import { getWarehouse } from '@services/fetcher/configuration/material-management';
+import { getWarehouse } from '@services/fetcher/configuration/material-item-warehouse-management';
 import { useDrawer } from '@hooks/useDrawer';
 import { InitialStockDefaultValues } from '@constants/defaultValues';
 import { useFormChanges } from '@hooks/useFormChanges';

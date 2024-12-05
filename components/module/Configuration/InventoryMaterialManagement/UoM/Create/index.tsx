@@ -23,7 +23,7 @@ import { AxiosError } from 'axios';
 import { errorMapping } from '@utils/errorMapping';
 import { GET_UOM } from '@constants/queryKey';
 import { UOMSchema } from '@constants/schemas/ConfigurationSchema/InventoryMaterialManagement';
-import { createUOM } from '@services/fetcher/configuration/material-management';
+import { createUOM } from '@services/fetcher/configuration/material-item-warehouse-management';
 import useToastStore from '@stores/useToastStore';
 import { useFormSave } from '@hooks/useFormSave';
 import { useFormChanges } from '@hooks/useFormChanges';

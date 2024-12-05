@@ -18,7 +18,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { InitialStockSchema } from '@constants/schemas/TransactionSchema/InventoryMaterialManagement';
 import { editInitialStock } from '@services/fetcher/transaction/inventory-material-management';
-import { getWarehouse } from '@services/fetcher/configuration/material-management';
+import { getWarehouse } from '@services/fetcher/configuration/material-item-warehouse-management';
 import useFormStore from '@stores/useFormStore';
 import { useDrawer } from '@hooks/useDrawer';
 import { useFormChanges, useSetValueForm } from '@hooks/useFormChanges';
