@@ -1,0 +1,45 @@
+import { PATH_INITIAL_STOCK } from '@constants/routes';
+import axios from 'axios';
+import { FetcherOptions } from '../../../../types/client/fetcher';
+
+const getInitialStock = async (option?: FetcherOptions) => {
+  try {
+    const res = await axios.get(`${PATH_INITIAL_STOCK}`, {
+      params: {
+        page_size: !option?.all ? option?.pagination?.pageSize : undefined,
+        current_page: !option?.all ? option?.pagination?.pageIndex : undefined,
+        search: option?.search,
+      },
+    });
+
+    return res;
+  } catch (error) {
+    console.error('Error fetching log history:', error);
+    throw error;
+  }
+};
+
+const createInitialStock = async (body: InitialStockFormBody) => {
+  try {
+    const res = await axios.post(PATH_INITIAL_STOCK, body);
+    return res.data;
+  } catch (error) {
+    console.error('Error creating initial stock:', error);
+    throw error;
+  }
+};
+
+const editInitialStock = async (body: InitialStockFormBody) => {
+  try {
+    const res = await axios.put(
+      `${PATH_INITIAL_STOCK}/${body.document_number}`,
+      body
+    );
+    return res.data;
+  } catch (error) {
+    console.error('Error editing initial stock:', error);
+    throw error;
+  }
+};
+
+export { getInitialStock, createInitialStock, editInitialStock };
