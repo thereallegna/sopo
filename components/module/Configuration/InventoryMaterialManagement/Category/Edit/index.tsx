@@ -218,6 +218,7 @@ const EditCategoryMM = () => {
                     label="Item Category Code"
                     placeholder="Item Category Code"
                     right
+                    disabled
                     type="text"
                     onKeyDown={handleInputKeyDown}
                   />
@@ -235,6 +236,7 @@ const EditCategoryMM = () => {
                     label="Item Category Name"
                     placeholder="Item Category Name"
                     right
+                    required
                     type="text"
                     onKeyDown={handleInputKeyDown}
                   />

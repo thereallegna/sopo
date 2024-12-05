@@ -109,20 +109,8 @@ const InitialStock = () => {
               header: 'Date',
             },
             {
-              accessor: 'currency',
-              header: 'Currency',
-            },
-            {
               accessor: 'warehouse_name',
               header: 'Warehouse',
-            },
-            {
-              accessor: 'item_name',
-              header: "Item's Name",
-            },
-            {
-              accessor: 'batch',
-              header: 'Batch',
             },
           ],
         }}
