@@ -1,3 +1,4 @@
+import { CheckboxProps } from '@components/ui/Checkbox';
 import { InputProps } from '@components/ui/Input';
 import { TableActionProps } from '@components/ui/Table/TableAction';
 import {
@@ -11,13 +12,21 @@ type ColumnKey = {
   accessor: string;
   header: string;
   size?: number;
-  type?: 'default' | 'input';
+  type?: 'default' | 'input' | 'checkbox';
   inputProps?: InputProps;
+  checkboxProps?: CheckboxProps;
 };
 
 type GenerateColumnsOption = {
   columns: ColumnKey[];
   hasAction?: boolean;
+  disableAll?: boolean;
+  onInputChange?: (rowIndex: number, columnId: string, value: string) => void;
+  onCheckedChange?: (
+    rowIndex: number,
+    columnId: string,
+    value: boolean
+  ) => void;
 };
 
 type TableState = {
@@ -64,7 +73,7 @@ type TableContentProps<T> = {
 type TableFormProps<T> = {
   data?: T[];
   columns: GenerateColumnsOption;
-  onChangeData?: (prev: T[]) => T[];
+  onChangeData?: (prev: T[]) => void;
 };
 
 type PaginationPartial =
