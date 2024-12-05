@@ -15,7 +15,7 @@ import { GET_MASTER_ITEM_MATERIAL_MANAGEMENT } from '@constants/queryKey';
 import { CreateMasterItemMMSchema } from '@constants/schemas/ConfigurationSchema/InventoryMaterialManagement';
 import { useForm } from '@hooks/useForm';
 import {
-  createItem,
+  createStockMutation,
   getItem,
 } from '@services/fetcher/configuration/material-management';
 import { ConfirmationAlert } from '@components/shared/Alert';
@@ -46,24 +46,11 @@ const CreateMasterItemMM = () => {
   } = useForm({
     label: 'Master item',
     queryKey: GET_MASTER_ITEM_MATERIAL_MANAGEMENT,
-    mutationFn: createItem,
+    mutationFn: createStockMutation,
     validationSchema: CreateMasterItemMMSchema,
     defaultValues: masterItemDefaultValues,
     type: 'add',
     requireAllFields: true,
-    ignoredFields: [
-      'local_code',
-      'tax_liable',
-      'foreign_name',
-      'hs_code',
-      'inventory_item',
-      'old_code',
-      'sales_item',
-      'service_item',
-      'purchase_item',
-      'spesification',
-      'remark',
-    ],
   });
 
   return (
@@ -164,8 +151,8 @@ const CreateMasterItemMM = () => {
           hasAction: false,
         }}
         queryFn={getItem}
-        onSelectRow={(data: MasterItemFormBody) => {
-          setValue('source', data.item_code, {
+        onSelectRow={(data: StockMutationFormBody) => {
+          setValue('document', data.document, {
             shouldDirty: true,
           });
           setShowModalSource(false);

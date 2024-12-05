@@ -17,6 +17,7 @@ export type DetailDataType =
   | CityFormBody
   | IItemCategory
   | MasterItemFormBody
+  | StockMutationFormBody
   | null;
 
 type DrawerState = {

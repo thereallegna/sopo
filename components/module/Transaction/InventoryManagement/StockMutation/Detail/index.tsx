@@ -18,28 +18,28 @@ import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { GET_DETAIL_MASTER_ITEM } from '@constants/queryKey';
 // import { useDetailItem } from '@hooks/useDetailItem';
 import BasicForm from '../Form/BasicForm';
-import DetailForm from '../Form/DetailForm';
+import MutateFromForm from '../Form/MutateFromForm';
 
 const DetailMasterItemMM = () => {
   const { isOpenDetail, closeDetailDrawer, openEditDrawer, setDetailData } =
     useDrawerStore();
   const detail_data = useDrawerStore(
     (state) => state.detail_data
-  ) as MasterItemFormBody;
+  ) as StockMutationFormBody;
 
-  const { setValue, watch, register } = useForm<MasterItemFormBody>();
+  const { setValue, watch, register } = useForm<StockMutationFormBody>();
 
   const { isLoading } = useQuery({
     queryKey: [GET_DETAIL_MASTER_ITEM, detail_data],
     queryFn: async () => {
-      const res = await getDetailItem(detail_data.item_code as string);
+      const res = await getDetailItem(detail_data.document as string);
       setDetailData(Object.assign(detail_data, res.data.data));
       return res.data.data;
     },
     placeholderData: keepPreviousData,
   });
 
-  useSetValueForm<MasterItemFormBody>(detail_data, setValue, isLoading);
+  useSetValueForm<StockMutationFormBody>(detail_data, setValue, isLoading);
 
   return (
     <Drawer onClose={closeDetailDrawer} open={isOpenDetail}>
@@ -63,7 +63,7 @@ const DetailMasterItemMM = () => {
         <form>
           <DrawerBody>
             <BasicForm watch={watch} register={register} disableAll />
-            <DetailForm watch={watch} register={register} disableAll />
+            <MutateFromForm watch={watch} register={register} disableAll />
           </DrawerBody>
         </form>
       </DrawerContent>

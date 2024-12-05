@@ -12,17 +12,17 @@ const BasicForm = ({
   setValue,
   handleInputKeyDown,
   disableAll, // Pastikan properti ini diterima
-}: FormType<MasterItemFormBody> & {
+}: FormType<StockMutationFormBody> & {
   add?: boolean;
 }) => (
   <Card size="drawer" className="border border-Neutral-200 shadow-none">
     <CardContent className="flex-wrap flex flex-row gap-6 items-center">
       <div className="flex flex-col gap-[14px] flex-1">
         <InputField
-          {...register('item_name')}
+          {...register('document')}
           message={
-            errors?.item_name
-              ? { text: errors.item_name.message!, type: 'danger' }
+            errors?.document
+              ? { text: errors.document.message!, type: 'danger' }
               : undefined
           }
           label="Document"
@@ -35,10 +35,10 @@ const BasicForm = ({
           onKeyDown={handleInputKeyDown}
         />
         <InputField
-          // {...register('local_code')}
+          {...register('date')}
           message={
-            errors?.local_code
-              ? { text: errors.local_code.message!, type: 'danger' }
+            errors?.date
+              ? { text: errors.date.message!, type: 'danger' }
               : undefined
           }
           label="Date"
@@ -53,10 +53,10 @@ const BasicForm = ({
       </div>
       <div className="flex flex-col gap-[14px] flex-1 h-full justify-between">
         <InputField
-          // {...register('foreign_name')}
+          {...register('warehouse')}
           message={
-            errors?.foreign_name
-              ? { text: errors.foreign_name.message!, type: 'danger' }
+            errors?.warehouse
+              ? { text: errors.warehouse.message!, type: 'danger' }
               : undefined
           }
           label="Warehouse"
@@ -72,20 +72,18 @@ const BasicForm = ({
           <Label className="shrink-0 w-[100px] font-semibold">Cancel</Label>
           <Checkbox
             label="Inventory Item"
-            checked={watch('inventory_item')}
-            onCheckedChange={(val) =>
-              setValue && setValue('inventory_item', val)
-            }
+            checked={watch('cancel')}
+            onCheckedChange={(val) => setValue && setValue('cancel', val)}
             disabled={disableAll} // Disabled berdasarkan disableAll
           />
         </div>
       </div>
       <div className="flex flex-col gap-[14px] flex-1">
         <InputField
-          // {...register('foreign_name')}
+          {...register('reason_for_cacellation')}
           message={
-            errors?.foreign_name
-              ? { text: errors.foreign_name.message!, type: 'danger' }
+            errors?.reason_for_cacellation
+              ? { text: errors.reason_for_cacellation.message!, type: 'danger' }
               : undefined
           }
           label="Reason for Cancellation"
@@ -97,10 +95,10 @@ const BasicForm = ({
           onKeyDown={handleInputKeyDown}
         />
         <InputField
-          // {...register('foreign_name')}
+          {...register('remark')}
           message={
-            errors?.foreign_name
-              ? { text: errors.foreign_name.message!, type: 'danger' }
+            errors?.remark
+              ? { text: errors.remark.message!, type: 'danger' }
               : undefined
           }
           label="Remark"
