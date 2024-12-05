@@ -169,11 +169,11 @@ export const sidebarConstant: SidebarItem[] = [
             children: [
               {
                 title: "Warehouse's Category",
-                path: '/configuration/inventory-and-material-management/material-management/warehouse-category',
+                path: '/configuration/inventory-and-material-management/werehouse-management-system/warehouse-category',
               },
               {
                 title: 'Warehouse',
-                path: '/configuration/inventory-and-material-management/material-management/warehouse',
+                path: '/configuration/inventory-and-material-management/werehouse-management-system/warehouse',
               },
             ],
           },

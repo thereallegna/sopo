@@ -7,41 +7,42 @@ import BodyContent from '@components/module/Content/BodyContent';
 import Image from 'next/image';
 import FilterButton from '@components/ui/Table/Action/FilterButton';
 import { useDrawerStore } from '@stores/useDrawerStore';
-import { getUOM } from '@services/fetcher/configuration/material-item-warehouse-management';
-import { GET_UOM } from '@constants/queryKey';
+import { GET_WAREHOUSE_CATEGORY } from '@constants/queryKey';
 import dynamic from 'next/dynamic';
+import { getWarehouseCatrgory } from '@services/fetcher/configuration/material-item-warehouse-management';
 
-const FilterUOM = dynamic(
-  () => import('@components/shared/Drawer/Filter/UOMFilter'),
+// Dynamically import Drawer components
+const FilterCountry = dynamic(
+  () => import('@components/shared/Drawer/Filter/CountryFilter'),
   { ssr: false }
 );
 const TableDrawer = dynamic(
   () => import('@components/shared/Drawer/Table/TableDrawer'),
   { ssr: false }
 );
-const CreateUOM = dynamic(
+const CreateCountry = dynamic(
   () =>
     import(
-      '@components/module/Configuration/InventoryMaterialManagement/UoM/Create'
+      '@components/module/Configuration/InventoryMaterialManagement/WarehouseCategory/Create'
     ),
   { ssr: false }
 );
-const DetailUOM = dynamic(
+const DetailCountry = dynamic(
   () =>
     import(
-      '@components/module/Configuration/InventoryMaterialManagement/UoM/Detail'
+      '@components/module/Configuration/InventoryMaterialManagement/WarehouseCategory/Detail'
     ),
   { ssr: false }
 );
-const EditUOM = dynamic(
+const EditCountry = dynamic(
   () =>
     import(
-      '@components/module/Configuration/InventoryMaterialManagement/UoM/Edit'
+      '@components/module/Configuration/InventoryMaterialManagement/WarehouseCategory/Edit'
     ),
   { ssr: false }
 );
 
-const Country = () => {
+const WarehouseCategory = () => {
   const { openFilterDrawer, openTableDrawer, closeFilterDrawer, openDrawer } =
     useDrawerStore();
 
@@ -50,7 +51,7 @@ const Country = () => {
   };
 
   const handleOpenFilter = () => {
-    openFilterDrawer('filterUOM');
+    openFilterDrawer('filterWarehouseCategory');
   };
 
   const handleOpenTable = () => {
@@ -61,7 +62,7 @@ const Country = () => {
   return (
     <>
       <Content>
-        <HeaderContent title="UoM" onAdd={handleOpenAdd} />
+        <HeaderContent title="Warehouse Category" onAdd={handleOpenAdd} />
         <BodyContent>
           <div className="flex flex-col gap-4 py-2 items-center">
             <Image
@@ -71,7 +72,7 @@ const Country = () => {
               height={213}
             />
             <p className="text-Neutral-500 text-lg">
-              Filter to find data Country
+              Filter to find data Warehouse Category
             </p>
             <div className="pb-[10px]">
               <FilterButton
@@ -90,10 +91,10 @@ const Country = () => {
           </div>
         </BodyContent>
       </Content>
-      <FilterUOM />
+      <FilterCountry />
       <TableDrawer
-        title="Find UoM"
-        queryKey={GET_UOM}
+        title="Find Warehouse Category"
+        queryKey={GET_WAREHOUSE_CATEGORY}
         columns={{
           columns: [
             {
@@ -101,12 +102,12 @@ const Country = () => {
               header: '#',
             },
             {
-              accessor: 'uom_code',
-              header: 'UoM Code',
+              accessor: 'whs_ct_code',
+              header: 'Warehouse Category Code',
             },
             {
-              accessor: 'uom_name',
-              header: 'UoM Name',
+              accessor: 'whs_ct_name',
+              header: 'Warehouse Category Name',
             },
             {
               accessor: 'create_date',
@@ -114,13 +115,13 @@ const Country = () => {
             },
           ],
         }}
-        queryFn={getUOM}
+        queryFn={getWarehouseCatrgory}
       />
-      <CreateUOM />
-      <DetailUOM />
-      <EditUOM />
+      <CreateCountry />
+      <DetailCountry />
+      <EditCountry />
     </>
   );
 };
 
-export default Country;
+export default WarehouseCategory;
