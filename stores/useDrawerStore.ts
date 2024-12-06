@@ -21,6 +21,7 @@ export type DetailDataType =
   | CityFormBody
   | IItemCategory
   | MasterItemFormBody
+  | StockMutationFormBody
   | InitialStockFormBody
   | CurrencyFormBody
   | WarehouseCategoryFormBody

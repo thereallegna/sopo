@@ -14,7 +14,7 @@ import { GET_MASTER_ITEM_MATERIAL_MANAGEMENT } from '@constants/queryKey';
 import { EditMasterItemMMSchema } from '@constants/schemas/ConfigurationSchema/InventoryMaterialManagement';
 import { useForm } from '@hooks/useForm';
 import {
-  editItem,
+  editStockMutation,
   getItem,
 } from '@services/fetcher/configuration/material-item-warehouse-management';
 import { ConfirmationAlert } from '@components/shared/Alert';
@@ -22,13 +22,13 @@ import SelectableModal from '@components/ui/Modal';
 import { useSetValueForm } from '@hooks/useFormChanges';
 import { useDrawerStore } from '@stores/useDrawerStore';
 import BasicForm from '../Form/BasicForm';
-import DetailForm from '../Form/DetailForm';
+import MutateFromForm from '../Form/MutateFromForm';
 
 const EditMasterItemMM = () => {
   const [showModalSource, setShowModalSource] = useState<boolean>(false);
   const detail_data = useDrawerStore(
     (state) => state.detail_data
-  ) as MasterItemFormBody;
+  ) as StockMutationFormBody;
 
   const {
     handleCloseDrawerEdit,
@@ -51,32 +51,14 @@ const EditMasterItemMM = () => {
   } = useForm({
     label: 'Master item',
     queryKey: GET_MASTER_ITEM_MATERIAL_MANAGEMENT,
-    mutationFn: editItem,
+    mutationFn: editStockMutation,
     validationSchema: EditMasterItemMMSchema,
     defaultValues: detail_data,
     type: 'edit',
     requireAllFields: true,
-    ignoredFields: [
-      'local_code',
-      'tax_liable',
-      'foreign_name',
-      'hs_code',
-      'inventory_item',
-      'old_code',
-      'sales_item',
-      'service_item',
-      'purchase_item',
-      'spesification',
-      'remark',
-      'category_code',
-      'category_name',
-      'uom_code',
-      'uom_name',
-      'item_request',
-    ],
   });
 
-  useSetValueForm<MasterItemFormBody>(detail_data, setValue, isOpenEdit);
+  useSetValueForm<StockMutationFormBody>(detail_data, setValue, isOpenEdit);
 
   return (
     <Drawer onClose={handleCloseDrawerEdit} open={isOpenEdit}>
@@ -107,14 +89,13 @@ const EditMasterItemMM = () => {
               handleInputKeyDown={handleInputKeyDown}
               setError={setError}
             />
-            <DetailForm
+            <MutateFromForm
               errors={errors}
               watch={watch}
               setValue={setValue}
               register={register}
               handleInputKeyDown={handleInputKeyDown}
               setError={setError}
-              type="edit"
             />
           </DrawerBody>
         </form>
@@ -176,8 +157,8 @@ const EditMasterItemMM = () => {
           hasAction: false,
         }}
         queryFn={getItem}
-        onSelectRow={(data: MasterItemFormBody) => {
-          setValue('source', data.item_code);
+        onSelectRow={(data: StockMutationFormBody) => {
+          setValue('document', data.document);
           setShowModalSource(false);
         }}
       />

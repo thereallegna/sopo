@@ -7,11 +7,15 @@ import {
 import Input from '@components/ui/Input';
 import GoToDetail from '@components/shared/TableContent/ToDetail';
 import { IconCircleCheckFilled } from '@tabler/icons-react';
+import { Checkbox } from '@components/ui/Checkbox';
 import { GenerateColumnsOption } from '../types/client/table';
 
 export const generateColumns = ({
   columns,
   hasAction = true,
+  disableAll,
+  onInputChange,
+  onCheckedChange,
 }: GenerateColumnsOption):
   | AccessorKeyColumnDef<any, any>[]
   | ColumnDef<any, any>[] => {
@@ -23,6 +27,11 @@ export const generateColumns = ({
       header: column.header,
       cell: (props) => {
         const value = props.renderValue();
+        // console.log("ini ", value)
+        // const value = props.getValue();
+        // const value = props.row.original ? props.row.original[props.cell.column.id] : '';
+        const rowIndex = props.row.index; // Dapatkan indeks baris
+        const columnId = props.column.id;
 
         if (typeof value === 'boolean') {
           return value ? (
@@ -31,7 +40,29 @@ export const generateColumns = ({
         }
 
         if (column.type === 'input') {
-          return <Input defaultValue={value} {...column.inputProps} />;
+          return (
+            <Input
+              defaultValue={value}
+              disabled={disableAll}
+              onChange={(e) =>
+                onInputChange &&
+                onInputChange(rowIndex, columnId, e.target.value)
+              }
+              {...column.inputProps}
+            />
+          );
+        }
+
+        if (column.type === 'checkbox') {
+          return (
+            <Checkbox
+              checked={value}
+              onCheckedChange={(check) =>
+                onCheckedChange && onCheckedChange(rowIndex, columnId, check)
+              }
+              {...column.checkboxProps}
+            />
+          );
         }
         return value;
       },
