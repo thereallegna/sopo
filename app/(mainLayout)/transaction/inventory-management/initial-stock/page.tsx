@@ -22,21 +22,21 @@ const TableDrawer = dynamic(
 const CreateInitialStock = dynamic(
   () =>
     import(
-      '@components/module/Transaction/InventoryMaterialManagement/InitialStock/Create'
+      '@components/module/Transaction/InventoryManagement/InitialStock/Create'
     ),
   { ssr: false }
 );
 const DetailInitialStock = dynamic(
   () =>
     import(
-      '@components/module/Transaction/InventoryMaterialManagement/InitialStock/Detail'
+      '@components/module/Transaction/InventoryManagement/InitialStock/Edit'
     ),
   { ssr: false }
 );
 const EditInitialStock = dynamic(
   () =>
     import(
-      '@components/module/Transaction/InventoryMaterialManagement/InitialStock/Edit'
+      '@components/module/Transaction/InventoryManagement/InitialStock/Edit'
     ),
   { ssr: false }
 );
