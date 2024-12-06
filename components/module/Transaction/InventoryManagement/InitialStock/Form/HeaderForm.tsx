@@ -41,8 +41,8 @@ const InitialStockHeaderForm = ({
           onKeyDown={handleInputKeyDown}
         />
         <DatePicker
-          label="Document Date"
-          placeholder="Select a date"
+          label="Date"
+          placeholder="Select a Date"
           value={
             watch('document_date')
               ? new Date(watch('document_date'))
