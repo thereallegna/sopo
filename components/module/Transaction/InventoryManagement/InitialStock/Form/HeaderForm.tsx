@@ -16,8 +16,8 @@ const InitialStockHeaderForm = ({
   setError,
   handleInputKeyDown,
   disableAll,
-}: //   type = 'add',
-FormType<InitialStockFormBody> & {
+  type = 'add',
+}: FormType<InitialStockFormBody> & {
   disableAll?: boolean;
   type?: 'add' | 'edit';
 }) => (
@@ -73,21 +73,21 @@ FormType<InitialStockFormBody> & {
             label: watch('warehouse'),
             value: watch('warehouse_code'),
           }}
+          //   onChange={(val) => {
+          //     setValue('warehouse', val.label);
+          //     setValue('warehouse_code', val.value);
+          //     setError('warehouse', { type: 'disabled' });
+          //   }}
           onChange={(val) => {
-            setValue('warehouse', val.label);
-            setValue('warehouse_code', val.value);
-            setError('warehouse', { type: 'disabled' });
+            if (!disableAll && setValue) {
+              setValue('warehouse', val.label);
+              setValue('warehouse_code', val.value);
+            }
+            if (setError) {
+              setError('warehouse_code', { type: 'disabled' });
+            }
           }}
-          // onChange={(val) => {
-          //     if (!disableAll && setValue) {
-          //         setValue('warehouse', val.label);
-          //         setValue('warehouse_code', val.value);
-          //     }
-          //     if (setError) {
-          //         setError('warehouse_code', { type: 'disabled' });
-          //     }
-          // }}
-          // disabled={disableAll || type === 'edit'}
+          disabled={disableAll || type === 'edit'}
         />
         <Combobox
           label="Currency"
@@ -106,21 +106,21 @@ FormType<InitialStockFormBody> & {
             label: watch('currency'),
             value: watch('currency_code'),
           }}
+          //   onChange={(val) => {
+          //     setValue('currency', val.label);
+          //     setValue('currency_code', val.value);
+          //     setError('currency', { type: 'disabled' });
+          //   }}
           onChange={(val) => {
-            setValue('currency', val.label);
-            setValue('currency_code', val.value);
-            setError('currency', { type: 'disabled' });
+            if (!disableAll && setValue) {
+              setValue('currency', val.label);
+              setValue('currency_code', val.value);
+            }
+            if (setError) {
+              setError('currency_code', { type: 'disabled' });
+            }
           }}
-          // onChange={(val) => {
-          //     if (!disableAll && setValue) {
-          //         setValue('currency', val.label);
-          //         setValue('currency_code', val.value);
-          //     }
-          //     if (setError) {
-          //         setError('currency_code', { type: 'disabled' });
-          //     }
-          // }}
-          // disabled={disableAll || type === 'edit'}
+          disabled={disableAll || type === 'edit'}
         />
       </div>
       <div className="flex flex-col gap-[14px] flex-1 h-full justify-between">
