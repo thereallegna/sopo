@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React from 'react';
 import { Button } from '@components/ui/Button';
 import {
   Drawer,
@@ -9,110 +9,55 @@ import {
   DrawerEndHeader,
   DrawerHeader,
 } from '@components/ui/Drawer';
-import { Card, CardContent } from '@components/ui/Card';
-import InputField from '@components/shared/InputField';
-import { useDrawerStore } from '@stores/useDrawerStore';
 import { IconDeviceFloppy } from '@tabler/icons-react';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { GET_INITIAL_STOCK } from '@constants/queryKey';
 import { InitialStockSchema } from '@constants/schemas/TransactionSchema/InventoryMaterialManagement';
+import { useForm } from '@hooks/useForm';
 import { editInitialStock } from '@services/fetcher/transaction/inventory-material-management';
-import { getWarehouse } from '@services/fetcher/configuration/material-item-warehouse-management';
-import useFormStore from '@stores/useFormStore';
-import { useDrawer } from '@hooks/useDrawer';
-import { useFormChanges, useSetValueForm } from '@hooks/useFormChanges';
-import { errorMapping } from '@utils/errorMapping';
-import { AxiosError } from 'axios';
-import { GET_CURRENCY, GET_WAREHOUSE } from '@constants/queryKey';
-import Combobox from '@components/shared/Combobox';
-// import { Calendar } from '@components/ui/Calendar';
-import useToastStore from '@stores/useToastStore';
-import { useFormSave } from '@hooks/useFormSave';
-import { getCurrency } from '@services/fetcher/configuration/financial-management';
+// import { getItem } from '@services/fetcher/configuration/material-item-warehouse-management';
+import { ConfirmationAlert } from '@components/shared/Alert';
+// import SelectableModal from '@components/ui/Modal';
+import { useSetValueForm } from '@hooks/useFormChanges';
+import { useDrawerStore } from '@stores/useDrawerStore';
+import InitialStockHeaderForm from '../Form/HeaderForm';
+import InitialStockDetailForm from '../Form/DetailForm';
 
 const EditInitialStock = () => {
-  const formRef = useRef<HTMLFormElement>(null);
-  const { isOpenEdit, closeEditDrawer, setDetailData, openDetailDrawer } =
-    useDrawerStore();
+  // const [showModalSource, setShowModalSource ] = useState<boolean>(false);
+
   const detail_data = useDrawerStore(
     (state) => state.detail_data
   ) as InitialStockFormBody;
-  const { setChangeStatus } = useFormStore();
-  const [isLoading, setIsLoading] = React.useState(false);
-  // const [isCalendarVisible, setIsCalendarVisible] = React.useState(false);
-  // const [date, setDate] = React.useState<Date | undefined>(new Date());
-  const showToast = useToastStore((state) => state.showToast);
-  const queryClient = useQueryClient();
 
   const {
-    watch,
-    register,
+    handleCloseDrawerEdit,
+    handleInputKeyDown,
+    handleSaveClick,
     handleSubmit,
-    reset,
+    isLoading,
+    formRef,
+    isOpenEdit,
+    canSave,
+    errors,
     setError,
     setValue,
-    control,
-    formState: { errors },
-  } = useForm<InitialStockFormBody>({
-    mode: 'onSubmit',
-    resolver: yupResolver(InitialStockSchema),
-    defaultValues: detail_data,
-  });
-
-  useSetValueForm<InitialStockFormBody>(detail_data, setValue);
-
-  const { canSave } = useFormChanges({
-    defaultValues: detail_data,
-    control,
-  });
-
-  const { handleCloseDrawerEdit } = useDrawer(reset, detail_data);
-
-  const { mutate: mutationEditInitialStock } = useMutation({
+    register,
+    watch,
+    isConfirmModalOpen,
+    handleConfirm,
+    handleCloseConfirmModal,
+    confirmMessage,
+  } = useForm({
+    label: 'Edit Initial Stock',
+    queryKey: GET_INITIAL_STOCK,
     mutationFn: editInitialStock,
-    onMutate: () => {
-      setIsLoading(true);
-      console.log('Edit mutation started...');
-    },
-    onSuccess: (data) => {
-      setDetailData(data.data);
-      closeEditDrawer();
-      setChangeStatus(false);
-      setIsLoading(false);
-      openDetailDrawer({
-        ...data.data,
-        warehouse: watch('warehouse'),
-        warehouse_code: watch('warehouse_code'),
-      });
-      reset();
-      queryClient.invalidateQueries({ queryKey: [GET_WAREHOUSE] });
-      showToast('Initial Stock succssfully edited', 'success');
-    },
-    onError: (error: any) => {
-      console.log('Edit mutation error:', error);
-      setIsLoading(false);
-      const errorRes = error as AxiosError<ErrorResponse>;
-      if (errorRes.status === 500) {
-        showToast('Initial Stock failed to edit', 'danger');
-      }
-      if (errorRes.response?.data) {
-        const { errorField } = errorRes.response.data;
-        errorMapping(errorField, setError);
-      }
-    },
+    validationSchema: InitialStockSchema,
+    defaultValues: detail_data,
+    type: 'edit',
+    requireAllFields: true,
   });
 
-  const onSubmit: SubmitHandler<InitialStockFormBody> = (data) => {
-    console.log('Edit form submmitted with data:', data);
-    mutationEditInitialStock(data);
-  };
-
-  const { handleSaveClick, handleInputKeyDown } = useFormSave({
-    ref: formRef,
-    isLoading,
-    hasChanged: canSave,
-  });
+  useSetValueForm<InitialStockFormBody>(detail_data, setValue, isOpenEdit);
 
   return (
     <Drawer onClose={handleCloseDrawerEdit} open={isOpenEdit}>
@@ -125,149 +70,40 @@ const EditInitialStock = () => {
             <Button
               variant={!canSave ? 'disabled' : 'primary'}
               icon={{ size: 'large', icon: IconDeviceFloppy, color: 'White' }}
+              type="submit"
               onClick={handleSaveClick}
               disabled={isLoading}
             >
-              {isLoading ? 'saving...' : 'save'}
+              {isLoading ? 'Saving...' : 'Save'}
             </Button>
           </DrawerEndHeader>
         </DrawerHeader>
-        <form ref={formRef} onSubmit={handleSubmit(onSubmit)}>
+        <form ref={formRef} onSubmit={handleSubmit}>
           <DrawerBody>
-            <Card size="drawer">
-              <CardContent className="flex-wrap flex flex-row gap-6">
-                <div className="flex flex-col gap-[14px] flex-1">
-                  <InputField
-                    {...register('document_number')}
-                    message={
-                      errors.document_number
-                        ? {
-                            text: errors.document_number.message!,
-                            type: 'danger',
-                          }
-                        : undefined
-                    }
-                    label="Document Number"
-                    placeholder="Document Number"
-                    right
-                    type="text"
-                    required
-                    className="w-full gap-2"
-                    disabled
-                    onKeyDown={handleInputKeyDown}
-                  />
-                  {/* <InputField
-                    label="Date"
-                    placeholder="Select a Date"
-                    value={date ? date.toLocaleDateString() : ''}
-                    onClick={() => setIsCalendarVisible(true)}
-                    readOnly
-                    required
-                    className="w-full gap-2"
-                  />
-                  {isCalendarVisible && (
-                    <Calendar
-                      mode="single"
-                      selected={date}
-                      onSelect={(selectedDate) => {
-                        setDate(selectedDate);
-                        setIsCalendarVisible(false);
-                      }}
-                      className="rounded-md border"
-                    />
-                  )} */}
-                </div>
-                <div className="flex flex-col gap-[14px] flex-1 h-full justify-between">
-                  <Combobox
-                    label="Warehouse"
-                    placeholder="Select Warehouse"
-                    disabled
-                    queryKey={[GET_WAREHOUSE]}
-                    queryFn={() => getWarehouse()}
-                    dataLabel="warehouse_name"
-                    dataValue="warehouse_code"
-                    message={
-                      errors.warehouse
-                        ? { text: errors.warehouse.message!, type: 'danger' }
-                        : undefined
-                    }
-                    value={{
-                      label: watch('warehouse'),
-                      value: watch('warehouse_code'),
-                    }}
-                    onChange={(val) => {
-                      setValue('warehouse', val.label, { shouldDirty: true });
-                      setValue('warehouse_code', val.value, {
-                        shouldDirty: true,
-                      });
-                      setError('warehouse', { type: 'disabled' });
-                    }}
-                  />
-                  <Combobox
-                    label="Currency"
-                    placeholder="Select Currency"
-                    disabled
-                    queryKey={[GET_CURRENCY]}
-                    queryFn={() => getCurrency()}
-                    dataLabel="currency_name"
-                    dataValue="currency_code"
-                    message={
-                      errors.currency
-                        ? { text: errors.currency.message!, type: 'danger' }
-                        : undefined
-                    }
-                    value={{
-                      label: watch('currency'),
-                      value: watch('currency_code'),
-                    }}
-                    onChange={(val) => {
-                      setValue('currency', val.label, { shouldDirty: true });
-                      setValue('currency_code', val.value, {
-                        shouldDirty: true,
-                      });
-                      setError('currency', { type: 'disabled' });
-                    }}
-                  />
-                </div>
-                <div className="flex flex-col gap-[14px] flex-1">
-                  <InputField
-                    {...register('rate')}
-                    message={
-                      errors.rate
-                        ? { text: errors.rate.message!, type: 'danger' }
-                        : undefined
-                    }
-                    label="Rate"
-                    placeholder="Rate"
-                    right
-                    type="text"
-                    required
-                    className="w-full gap-2"
-                    disabled
-                    onKeyDown={handleInputKeyDown}
-                  />
-                  <InputField
-                    {...register('remark')}
-                    message={
-                      errors.remark
-                        ? { text: errors.remark.message!, type: 'danger' }
-                        : undefined
-                    }
-                    label="Remark"
-                    placeholder="Remark"
-                    right
-                    type="text"
-                    required
-                    className="w-full gap-2"
-                    textarea
-                    disabled
-                    onKeyDown={handleInputKeyDown}
-                  />
-                </div>
-              </CardContent>
-            </Card>
+            <InitialStockHeaderForm
+              errors={errors}
+              watch={watch}
+              setValue={setValue}
+              register={register}
+              handleInputKeyDown={handleInputKeyDown}
+              setError={setError}
+            />
+            <InitialStockDetailForm
+              errors={errors}
+              watch={watch}
+              setValue={setValue}
+              register={register}
+              handleInputKeyDown={handleInputKeyDown}
+              setError={setError}
+            />
           </DrawerBody>
         </form>
+        <ConfirmationAlert
+          open={isConfirmModalOpen}
+          description={confirmMessage}
+          action={handleConfirm}
+          onClose={handleCloseConfirmModal}
+        />
       </DrawerContent>
     </Drawer>
   );

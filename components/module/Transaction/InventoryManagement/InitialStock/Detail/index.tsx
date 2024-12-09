@@ -17,7 +17,7 @@ import { useForm } from 'react-hook-form';
 import { useQuery } from '@tanstack/react-query';
 import { GET_INITIAL_STOCK } from '@constants/queryKey';
 import InitialStockHeaderForm from '../Form/HeaderForm';
-import InitialStockBodyForm from '../Form/BodyForm';
+import InitialStockBodyForm from '../Form/DetailForm';
 
 const DetailInitialStock = () => {
   const { isOpenDetail, closeDetailDrawer, openEditDrawer } = useDrawerStore();
@@ -30,7 +30,7 @@ const DetailInitialStock = () => {
   const { isLoading } = useQuery({
     queryKey: [GET_INITIAL_STOCK, detail_data],
     queryFn: async () => {
-      // // const res = await getInitialStock(detail_data.document_number as string);
+      // const res = await getInitialStock(detail_data.document as string);
       // setDetailData(Object.assign(detail_data, res.data.data));
       // return res.data.data;
     },

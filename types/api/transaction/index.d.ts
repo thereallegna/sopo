@@ -22,8 +22,8 @@ type StockMutationFormBody = {
 };
 /* ======================= Inventory Material Management Start ==================== */
 type InitialStockFormBody = {
-  document_number: string;
-  document_date: string;
+  document: string;
+  date: string;
   warehouse: string;
   warehouse_code: string;
   currency: string;
@@ -38,5 +38,6 @@ type InitialStockFormBody = {
   price: string;
   local_code: string;
   uom_name: string;
+  detail: any[];
 };
 /* ======================= Inventory Material Management End ==================== */

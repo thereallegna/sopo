@@ -29,7 +29,7 @@ const CreateInitialStock = dynamic(
 const DetailInitialStock = dynamic(
   () =>
     import(
-      '@components/module/Transaction/InventoryManagement/InitialStock/Edit'
+      '@components/module/Transaction/InventoryManagement/InitialStock/Detail'
     ),
   { ssr: false }
 );

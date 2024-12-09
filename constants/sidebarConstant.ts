@@ -350,15 +350,15 @@ export const sidebarConstant: SidebarItem[] = [
             children: [
               {
                 title: 'Initial Stock',
-                path: '/transaction/inventory-management/initial-stock',
+                path: '/transaction/inventory-material-management/inventory-management/initial-stock',
               },
               {
                 title: 'Stock Adjustment',
-                path: '/transaction/inventory-management/stock-adjustment',
+                path: '/transaction/inventory-material-management/inventory-management/stock-adjustment',
               },
               {
                 title: 'Stock Mutation',
-                path: '/transaction/inventory-management/stock-mutation',
+                path: '/transaction/inventory-material-management/inventory-management/stock-mutation',
               },
             ],
           },
