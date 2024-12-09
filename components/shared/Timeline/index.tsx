@@ -14,7 +14,7 @@ const Timeline: React.FC = () => {
     isLoading,
     isError,
   } = useQuery({
-    queryKey: [GET_LOG_HISTORY],
+    queryKey: [GET_LOG_HISTORY, data_log_history_query?.data],
 
     queryFn: () =>
       getLogHistory({
@@ -23,6 +23,9 @@ const Timeline: React.FC = () => {
       }),
     enabled: !!data_log_history_query?.data,
   });
+
+  console.log(data_log_history);
+  console.log(data_log_history_query);
 
   if (isLoading) {
     // You can replace this with a loading spinner or any custom component
@@ -45,7 +48,7 @@ const Timeline: React.FC = () => {
   if (!data_log_history?.data) return null;
 
   return (
-    <div className="flex flex-col gap-[10px]">
+    <div className="flex flex-col gap-[10px] ">
       {data_log_history.data.map((item: TimelineItem) => (
         <div
           key={`${item.date}-${item.log}`}
@@ -58,7 +61,7 @@ const Timeline: React.FC = () => {
               <div className="w-[1px] h-full bg-Neutral-300 mx-auto flex-grow" />
             )}
           </div>
-          <div className="flex-1 flex-col">
+          <div className="flex-1 flex-col ">
             <p className="text-Neutral-400 leading-4 mb-[4px]">{item.date}</p>
             <p className="text-Neutral-600 leading-4 font-semibold">
               {item.log}

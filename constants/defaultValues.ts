@@ -69,8 +69,8 @@ export const warehouseCategoryDefaultValues: WarehouseCategoryFormBody = {
 
 // Transaction Inventory Material Management Start
 export const InitialStockDefaultValues: InitialStockFormBody = {
-  document_number: '',
-  document_date: '',
+  document: '',
+  date: '',
   warehouse: '',
   warehouse_code: '',
   currency: '',
@@ -85,6 +85,7 @@ export const InitialStockDefaultValues: InitialStockFormBody = {
   price: '',
   local_code: '',
   uom_name: '',
+  detail: [],
 };
 
 export const StockMutationDefaultValues: StockMutationFormBody = {

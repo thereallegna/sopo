@@ -17,13 +17,13 @@ const HistoryLog = () => {
       modal
       dismissible
     >
-      <DrawerContent fixed className="flex h-screen p-3 w-[240px]">
+      <DrawerContent fixed className="flex  p-3 w-[240px]">
         <div className="flex flex-col gap-[10px]">
           <FilterDrawerHeader
             title="History Log"
             onClick={closeHistoryLogDrawer}
           />
-          <DrawerBody className="p-0">
+          <DrawerBody className="p-0 custom-scrollbar h-[90vh]">
             <Timeline />
           </DrawerBody>
         </div>

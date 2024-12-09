@@ -31,10 +31,7 @@ const createInitialStock = async (body: InitialStockFormBody) => {
 
 const editInitialStock = async (body: InitialStockFormBody) => {
   try {
-    const res = await axios.put(
-      `${PATH_INITIAL_STOCK}/${body.document_number}`,
-      body
-    );
+    const res = await axios.put(`${PATH_INITIAL_STOCK}/${body.document}`, body);
     return res.data;
   } catch (error) {
     console.error('Error editing initial stock:', error);
