@@ -40,13 +40,14 @@ const CreateStockMutation = () => {
     handleCloseConfirmModal,
     confirmMessage,
   } = useForm({
-    label: 'Master item',
+    label: 'Stock Mutation',
     queryKey: GET_STOCK_MUTATION,
     mutationFn: createStockMutation,
     validationSchema: CreateStockMutationSchema,
     defaultValues: StockMutationDefaultValues,
     type: 'add',
     requireAllFields: true,
+    ignoredFields: ['cancel', 'reason_for_cancellation', 'remark'],
   });
 
   return (
@@ -68,7 +69,7 @@ const CreateStockMutation = () => {
             </Button>
           </DrawerEndHeader>
         </DrawerHeader>
-        <form ref={formRef} onSubmit={handleSubmit} className='overflow-auto'>
+        <form ref={formRef} onSubmit={handleSubmit} className="overflow-auto">
           <DrawerBody>
             <BasicForm
               errors={errors}

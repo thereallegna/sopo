@@ -14,24 +14,24 @@ const mutateFromColumn: GenerateColumnsOption = {
       header: 'Name',
       type: 'input',
       inputProps: {
-        disabled: true
-      }
+        disabled: true,
+      },
     },
     {
       accessor: 'batch',
       header: 'Batch',
       type: 'input',
       inputProps: {
-        disabled: true
-      }
+        disabled: true,
+      },
     },
     {
       accessor: 'stock',
       header: 'Stock',
       type: 'input',
       inputProps: {
-        disabled: true
-      }
+        disabled: true,
+      },
     },
     {
       accessor: 'quantity',
@@ -43,24 +43,24 @@ const mutateFromColumn: GenerateColumnsOption = {
       header: 'UoM',
       type: 'input',
       inputProps: {
-        disabled: true
-      }
+        disabled: true,
+      },
     },
     {
       accessor: 'currency',
       header: 'Currency',
       type: 'input',
       inputProps: {
-        disabled: true
-      }
+        disabled: true,
+      },
     },
     {
       accessor: 'unit_price',
       header: 'Unit Price',
       type: 'input',
       inputProps: {
-        disabled: true
-      }
+        disabled: true,
+      },
     },
   ],
   hasAction: false,
@@ -75,8 +75,8 @@ const MutateFromForm = ({
 // disableAll, // Tambahkan parameter disableAll
 // type = 'add'
 FormType<StockMutationFormBody>) => {
-  const [showModal, setShowModal] = useState<boolean>(false)
-  return(
+  const [showModal, setShowModal] = useState<boolean>(false);
+  return (
     <Card size="drawer" className="border border-Neutral-200 shadow-none">
       <CardContent className="flex-wrap flex flex-row gap-6 items-center w-full">
         <TableForm
@@ -86,7 +86,7 @@ FormType<StockMutationFormBody>) => {
             if (setValue) {
               setValue('mutated_from', prev);
             }
-          }} 
+          }}
           onShowGetDataModal={() => setShowModal(true)}
           getDataModalProps={{
             isOpen: showModal,
@@ -94,8 +94,8 @@ FormType<StockMutationFormBody>) => {
             queryKey: GET_INITIAL_STOCK,
             queryFn: getInitialStock,
             onClose: (val) => setShowModal(val),
-            // pinnedColumns: ['selected', 'number', 'item_code'],
-            columns: { 
+            // pinnedColumns: ['selected', 'number', 'document_number'],
+            columns: {
               columns: [
                 {
                   accessor: 'selected',
@@ -115,33 +115,42 @@ FormType<StockMutationFormBody>) => {
                   accessor: 'warehouse_name',
                   header: 'Warehouse',
                 },
-              ], 
-              hasAction: false 
+              ],
+              hasAction: false,
             },
             multipleSelect: true,
             idSelected: 'selected',
-            targetIdSelector: 'item_code',
-            valueSelected: watch('mutated_from')?.map((item) => item.item_code),
+            targetIdSelector: 'document_number',
+            valueSelected: watch('mutated_from')?.map(
+              (item) => item.document_number
+            ),
             onSelectRow: (data: any) => {
               if (setValue) {
                 // Fetch Detail Initial Stock
-                const convertData = convertStockMutationForm(data as InitialStockFormBody);
+                const convertData = convertStockMutationForm(
+                  data as InitialStockFormBody
+                );
                 const prevData = watch('mutated_from') || []; // Default ke array kosong jika undefined
-                const itemExists = prevData.some(item => item.item_code === convertData.item_code);
+                const itemExists = prevData.some(
+                  (item) => item.document_number === convertData.document_number
+                );
                 let updatedData;
                 if (itemExists) {
-                  updatedData = prevData.filter(item => item.item_code !== convertData.item_code);
+                  updatedData = prevData.filter(
+                    (item) =>
+                      item.document_number !== convertData.document_number
+                  );
                 } else {
                   updatedData = [...prevData, convertData];
                 }
                 setValue('mutated_from', updatedData);
               }
-            }
+            },
           }}
         />
       </CardContent>
     </Card>
-)
+  );
 };
 
 export default MutateFromForm;

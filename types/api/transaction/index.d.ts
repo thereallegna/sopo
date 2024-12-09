@@ -1,21 +1,22 @@
 type StockMutatedFormBody = {
-  item_code: string
-  item_name: string
-  batch: string
-  stock: number
-  quantity: string
-  uom: string
-  currency_code: string
-  currency: string
-  unit_price: string
-}
+  document_number: string;
+  item_code: string;
+  item_name: string;
+  batch: string;
+  stock: number;
+  quantity: string;
+  uom: string;
+  currency_code: string;
+  currency: string;
+  unit_price: string;
+};
 
 type StockMutationFormBody = {
   document: string;
   date: string;
   warehouse: string;
   cancel: boolean;
-  reason_for_cacellation?: string;
+  reason_for_cancellation?: string;
   remark?: string;
   mutated_from: StockMutatedFormBody[];
   mutated_to: StockMutatedFormBody[];

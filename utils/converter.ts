@@ -1,5 +1,8 @@
-export function convertStockMutationForm(item: InitialStockFormBody): StockMutatedFormBody {
+export function convertStockMutationForm(
+  item: InitialStockFormBody
+): StockMutatedFormBody {
   return {
+    document_number: item.document_number,
     item_code: item.item_code,
     item_name: item.item_name,
     batch: item.batch,
@@ -8,6 +11,6 @@ export function convertStockMutationForm(item: InitialStockFormBody): StockMutat
     uom: item.uom_name,
     currency: item.currency,
     currency_code: item.currency_code,
-    unit_price: item.price
-  }
+    unit_price: item.price,
+  };
 }
