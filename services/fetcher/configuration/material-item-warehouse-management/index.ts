@@ -193,31 +193,6 @@ const editItem = async (body: MasterItemFormBody, params?: any) => {
   }
 };
 
-const createStockMutation = async (
-  body: StockMutationFormBody,
-  params?: any
-) => {
-  try {
-    const res = await axios.post(PATH_ITEMS_MASTER, body, { params });
-    return res.data;
-  } catch (error) {
-    console.error('Error creating item category:', error);
-    throw error;
-  }
-};
-
-const editStockMutation = async (body: StockMutationFormBody, params?: any) => {
-  try {
-    const res = await axios.put(`${PATH_ITEMS_MASTER}/${body.document}`, body, {
-      params,
-    });
-    return res.data;
-  } catch (error) {
-    console.error('Error editing item category:', error);
-    throw error;
-  }
-};
-
 export {
   getUOM,
   createUOM,
@@ -233,6 +208,4 @@ export {
   createWarehouseCatrgory,
   editWarehouseCatrgory,
   editItem,
-  createStockMutation,
-  editStockMutation,
 };

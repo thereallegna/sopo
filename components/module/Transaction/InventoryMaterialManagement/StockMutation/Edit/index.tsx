@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { Button } from '@components/ui/Button';
 import {
   Drawer,
@@ -10,22 +10,17 @@ import {
   DrawerHeader,
 } from '@components/ui/Drawer';
 import { IconDeviceFloppy } from '@tabler/icons-react';
-import { GET_MASTER_ITEM_MATERIAL_MANAGEMENT } from '@constants/queryKey';
+import { GET_STOCK_MUTATION } from '@constants/queryKey';
 import { EditMasterItemMMSchema } from '@constants/schemas/ConfigurationSchema/InventoryMaterialManagement';
 import { useForm } from '@hooks/useForm';
-import {
-  editStockMutation,
-  getItem,
-} from '@services/fetcher/configuration/material-item-warehouse-management';
 import { ConfirmationAlert } from '@components/shared/Alert';
-import SelectableModal from '@components/ui/Modal';
+import { editStockMutation } from '@services/fetcher/transaction/inventory-material-management';
 import { useSetValueForm } from '@hooks/useFormChanges';
 import { useDrawerStore } from '@stores/useDrawerStore';
 import BasicForm from '../Form/BasicForm';
 import MutateFromForm from '../Form/MutateFromForm';
 
 const EditMasterItemMM = () => {
-  const [showModalSource, setShowModalSource] = useState<boolean>(false);
   const detail_data = useDrawerStore(
     (state) => state.detail_data
   ) as StockMutationFormBody;
@@ -50,7 +45,7 @@ const EditMasterItemMM = () => {
     confirmMessage,
   } = useForm({
     label: 'Master item',
-    queryKey: GET_MASTER_ITEM_MATERIAL_MANAGEMENT,
+    queryKey: GET_STOCK_MUTATION,
     mutationFn: editStockMutation,
     validationSchema: EditMasterItemMMSchema,
     defaultValues: detail_data,
@@ -106,62 +101,6 @@ const EditMasterItemMM = () => {
           onClose={handleCloseConfirmModal}
         />
       </DrawerContent>
-      <SelectableModal
-        isOpen={showModalSource}
-        onClose={() => setShowModalSource(false)}
-        title="Find Master Item"
-        queryKey={GET_MASTER_ITEM_MATERIAL_MANAGEMENT}
-        columns={{
-          columns: [
-            {
-              accessor: 'number',
-              header: '#',
-            },
-            {
-              accessor: 'item_code',
-              header: 'Item Code',
-            },
-            {
-              accessor: 'item_name',
-              header: 'Item Name',
-            },
-            {
-              accessor: 'local_code',
-              header: 'Local Code',
-            },
-            {
-              accessor: 'foreign_name',
-              header: 'Foreign Name',
-            },
-            {
-              accessor: 'old_code',
-              header: 'Old Code',
-            },
-            {
-              accessor: 'category_name',
-              header: 'Category Name',
-            },
-            {
-              accessor: 'spesification',
-              header: 'Specification',
-            },
-            {
-              accessor: 'active',
-              header: 'Active',
-            },
-            {
-              accessor: 'create_date',
-              header: 'Create Date',
-            },
-          ],
-          hasAction: false,
-        }}
-        queryFn={getItem}
-        onSelectRow={(data: StockMutationFormBody) => {
-          setValue('document', data.document);
-          setShowModalSource(false);
-        }}
-      />
     </Drawer>
   );
 };

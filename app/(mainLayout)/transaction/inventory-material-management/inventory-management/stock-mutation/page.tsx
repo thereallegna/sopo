@@ -9,7 +9,7 @@ import FilterButton from '@components/ui/Table/Action/FilterButton';
 import { useDrawerStore } from '@stores/useDrawerStore';
 import { GET_STOCK_MUTATION } from '@constants/queryKey';
 import dynamic from 'next/dynamic';
-import { getStockMutation } from '@services/fetcher/transaction/inventory-management';
+import { getStockMutation } from '@services/fetcher/transaction/inventory-material-management';
 
 const FilterUOM = dynamic(
   () => import('@components/shared/Drawer/Filter/UOMFilter'),
@@ -22,21 +22,21 @@ const TableDrawer = dynamic(
 const CreateStockMutation = dynamic(
   () =>
     import(
-      '@components/module/Transaction/InventoryManagement/StockMutation/Create'
+      '@components/module/Transaction/InventoryMaterialManagement/StockMutation/Create'
     ),
   { ssr: false }
 );
 const DetailStockMutation = dynamic(
   () =>
     import(
-      '@components/module/Transaction/InventoryManagement/StockMutation/Detail'
+      '@components/module/Transaction/InventoryMaterialManagement/StockMutation/Detail'
     ),
   { ssr: false }
 );
 const EditStockMutation = dynamic(
   () =>
     import(
-      '@components/module/Transaction/InventoryManagement/StockMutation/Edit'
+      '@components/module/Transaction/InventoryMaterialManagement/StockMutation/Edit'
     ),
   { ssr: false }
 );
