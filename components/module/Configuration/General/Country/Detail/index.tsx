@@ -78,12 +78,13 @@ const DetailCountry = () => {
             size="icon"
             icon={{ size: 'large', icon: IconHistory, color: 'dark' }}
             type="submit"
-            onClick={() =>
+            onClick={() => {
               openHistoryLogDrawer({
                 code: detail_data?.country_code,
                 category: 'Country',
-              })
-            }
+              });
+              console.log(detail_data?.country_code);
+            }}
           />
         </DrawerFooter>
       </DrawerContent>
