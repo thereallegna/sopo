@@ -7,6 +7,8 @@ import {
   Updater,
   VisibilityState,
 } from '@tanstack/react-table';
+import { AxiosResponse } from 'axios';
+import { FetcherOptions } from './fetcher';
 
 type ColumnKey = {
   accessor: string;
@@ -71,9 +73,11 @@ type TableContentProps<T> = {
 };
 
 type TableFormProps<T> = {
-  data?: T[];
+  data: T[];
   columns: GenerateColumnsOption;
+  getDataModalProps?: SelectableModalProps
   onChangeData?: (prev: T[]) => void;
+  onShowGetDataModal?: () => void
 };
 
 type PaginationPartial =
@@ -81,3 +85,18 @@ type PaginationPartial =
   | ((prev: PaginationState) => PaginationState);
 
 type RowSizeType = 'normal' | 'compact' | 'narrow' | null | undefined;
+
+type SelectableModalProps = {
+  isOpen: boolean;
+  title: string;
+  columns: GenerateColumnsOption;
+  queryKey: string;
+  multipleSelect?: boolean;
+  idSelected?: string;
+  targetIdSelector?: string;
+  valueSelected?: string[];
+  pinnedColumns?: string[];
+  onClose: (val: boolean) => void;
+  queryFn: (option?: FetcherOptions) => Promise<AxiosResponse<any, any>>;
+  onSelectRow?: (data: any) => void;
+}

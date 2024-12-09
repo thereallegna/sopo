@@ -27,17 +27,8 @@ export const generateColumns = ({
       header: column.header,
       cell: (props) => {
         const value = props.renderValue();
-        // console.log("ini ", value)
-        // const value = props.getValue();
-        // const value = props.row.original ? props.row.original[props.cell.column.id] : '';
         const rowIndex = props.row.index; // Dapatkan indeks baris
         const columnId = props.column.id;
-
-        if (typeof value === 'boolean') {
-          return value ? (
-            <IconCircleCheckFilled size={16} className="text-Green-500" />
-          ) : null;
-        }
 
         if (column.type === 'input') {
           return (
@@ -64,6 +55,13 @@ export const generateColumns = ({
             />
           );
         }
+
+        if (typeof value === 'boolean') {
+          return value ? (
+            <IconCircleCheckFilled size={16} className="text-Green-500" />
+          ) : null;
+        }
+
         return value;
       },
       enableGrouping: true,

@@ -86,7 +86,6 @@ const TableContent = <T,>({
   const generatedColumns = generateColumns(columns);
 
   const isGrouping = option.grouping.length > 0;
-
   const table = useReactTable({
     data: data?.results ?? defaultData,
     columns: generatedColumns,
