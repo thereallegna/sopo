@@ -73,6 +73,9 @@ export const PATH_WAREHOUSE_CATEGORY_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL
 export const PATH_INITIAL_STOCK = `${PATH_CONFIGURATION_INVENTORY_MATERIAL_MANAGEMENT}/inventory-management/initial-stock`;
 export const PATH_INITIAL_STOCK_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/initial-stock`;
 
+export const PATH_STOCK_MUTATION = `${PATH_CONFIGURATION_INVENTORY_MATERIAL_MANAGEMENT}/inventory-management/stock-mutation`;
+export const PATH_STOCK_MUTATION_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/stock-mutation`;
+
 /* ======================= Log History Start ==================== */
 export const PATH_LOG_HISTORY = `${PATH_API}/log`;
 export const PATH_LOG_HISTORY_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/log`;

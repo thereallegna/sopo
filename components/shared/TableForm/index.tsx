@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import Table, {
   TableHeader,
   TableRow,
@@ -14,52 +14,113 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 import SelectableModal from '@components/ui/Modal';
-// import { GET_COA, GET_MASTER_ITEM_MATERIAL_MANAGEMENT } from '@constants/queryKey';
-import { GET_MASTER_ITEM_MATERIAL_MANAGEMENT } from '@constants/queryKey';
-// import { getCoa } from '@services/fetcher/configuration/general';
-import { getItem } from '@services/fetcher/configuration/material-item-warehouse-management';
 import { Button } from '@components/ui/Button';
 import IconComponent from '@components/ui/Icon';
 import { IconTablePlus, IconChevronDown } from '@tabler/icons-react';
 import { TableFormProps } from '../../../types/client/table';
 import { generateColumns } from '../../../utils/generateColumn';
 
-const TableForm = <T,>({ data, columns, onChangeData }: TableFormProps<T>) => {
-  const [localData, setLocalData] = useState<T[]>(data ?? [{} as T]);
-  const [showModalSelectable, setShowModalSelectable] =
-    useState<boolean>(false);
+const TableForm = <T,>({ 
+  data, 
+  columns, 
+  onShowGetDataModal,
+  getDataModalProps,
+  onChangeData,
+}: TableFormProps<T>) => {
+  // const [localData, setLocalData] = useState<T[]>(data ?? []);
+
+    // useEffect(() => {
+    //   if(data){
+    //     setLocalData(data)
+    //   }
+    //   // setLocalData(() => {
+    //   //   // const isRowEmpty = (row: any) => {
+    //   //   //   if (row) {
+    //   //   //     const relevantFields = Object.keys(row).filter(
+    //   //   //       (key) => key !== getDataModalProps?.targetIdSelector
+    //   //   //     );
+        
+    //   //   //     console.log("Cek Data => ", row, relevantFields.every((key) => row[key] === '' || row[key] === undefined))
+    //   //   //     return relevantFields.every((key) => row[key] === '' || row[key] === undefined);
+    //   //   //   }
+    //   //   //   return false;
+    //   //   // };
+    //   //   const isRowEmpty = (row: any) =>
+    //   //     row
+    //   //       ? Object.values(row).every((v) => v === '' || v === undefined)
+    //   //       : true;
+      
+    //   //   const lastRow = data?.[data.length - 1];
+    //   //   const isLastRowEmpty = isRowEmpty(lastRow);
+      
+    //   //   const newData = [...(data ?? [])];
+      
+    //   //   // Tambahkan form kosong jika row terakhir kosong
+    //   //   if (!data || data.length <= 0 || !isLastRowEmpty) {
+    //   //     newData.push({} as T);
+    //   //   }
+    //   //   return newData;
+    //   // })
+    
+    // }, [data]);
 
   const handleInputChange = (
     rowIndex: number,
     columnId: string,
     value: string
   ) => {
-    setLocalData((prevData) => {
-      const updatedData = [...prevData];
-      updatedData[rowIndex] = { ...updatedData[rowIndex], [columnId]: value };
+    const prevData = [...data]
+    prevData[rowIndex] = { ...prevData[rowIndex], [columnId]: value }
+    onChangeData?.(prevData)
+    // setLocalData((prevData) => {
+    //   const updatedData = [...prevData];
+    //   updatedData[rowIndex] = { ...updatedData[rowIndex], [columnId]: value };
 
-      const lastRow = updatedData[updatedData.length - 1];
-      const secondLastRow = updatedData[updatedData.length - 2];
+      // const lastRow = updatedData[updatedData.length - 1];
+      // const secondLastRow = updatedData[updatedData.length - 2];
 
-      const isRowEmpty = (row: any) =>
-        row
-          ? Object.values(row).every((v) => v === '' || v === undefined)
-          : false;
+      // // const isRowEmpty = (row: any) => {
+      // //   if(row) {
+      // //     const relevantField = Object.keys(row).filter(
+      // //       (key) => key !== getDataModalProps?.targetIdSelector
+      // //     )
 
-      const isLastRowEmpty = isRowEmpty(lastRow);
-      const isSecondLastRowEmpty = isRowEmpty(secondLastRow);
+      // //     return relevantField
+      // //       ? Object.values(relevantField).every((v) => v === '' || v === undefined)
+      // //       : false;
+      // //   }
+      // //   return false
+      // // }
 
-      if (!isLastRowEmpty) {
-        updatedData.push({} as T);
-      }
+      // const isRowEmpty = (row: any) => {
+      //   if (row) {
+      //     const relevantFields = Object.keys(row).filter(
+      //       (key) => key !== getDataModalProps?.targetIdSelector
+      //     );
+      //     return relevantFields.every((key) => row[key] === '' || row[key] === undefined);
+      //   }
+      //   return false;
+      // };
 
-      if (isSecondLastRowEmpty && isLastRowEmpty) {
-        updatedData.pop();
-      }
+      // const isLastRowEmpty = isRowEmpty(lastRow);
+      // const isSecondLastRowEmpty = isRowEmpty(secondLastRow);
 
-      onChangeData?.(updatedData);
-      return updatedData;
-    });
+      // if (!isLastRowEmpty) {
+      //   updatedData.push({} as T);
+      // }
+
+      // if (isSecondLastRowEmpty && isLastRowEmpty) {
+      //   if(secondLastRow){
+      //     updatedData[updatedData.length - 2] = {} as T
+      //   }
+      //   updatedData.pop();
+      // }
+
+      // console.log("TEST ", update)
+
+    //   onChangeData?.(updatedData);
+    //   return updatedData;
+    // });
   };
 
   const generatedColumns = React.useMemo(
@@ -72,7 +133,7 @@ const TableForm = <T,>({ data, columns, onChangeData }: TableFormProps<T>) => {
   );
 
   const table = useReactTable({
-    data: localData,
+    data,
     columns: generatedColumns,
     getCoreRowModel: getCoreRowModel(),
   });
@@ -80,13 +141,13 @@ const TableForm = <T,>({ data, columns, onChangeData }: TableFormProps<T>) => {
   return (
     <div className="flex flex-col gap-[10px] w-full">
       <div className="flex justify-between items-center z-40">
-        <p className="text-lg font-bold">Mutated From </p>
+        <p className="text-lg font-bold">Mutated From</p>
         <div>
           <Button
             type="button"
             variant="secondary"
             className="px-[10px]"
-            onClick={() => setShowModalSelectable(true)}
+            onClick={onShowGetDataModal}
           >
             <IconComponent icon={IconTablePlus} size="large" />
             <IconComponent icon={IconChevronDown} size="large" />
@@ -115,7 +176,7 @@ const TableForm = <T,>({ data, columns, onChangeData }: TableFormProps<T>) => {
         </TableHeader>
         <TableBody>
           {table.getRowModel().rows.map((row) => (
-            <TableRow key={row.id}>
+            <TableRow key={getDataModalProps && getDataModalProps.targetIdSelector && row.original[getDataModalProps.targetIdSelector] || row.id}>
               {row.getVisibleCells().map((cell) => (
                 <TableCell key={cell.id}>
                   {cell.getIsPlaceholder()
@@ -131,72 +192,37 @@ const TableForm = <T,>({ data, columns, onChangeData }: TableFormProps<T>) => {
       <div className="w-full flex justify-end mt-[10px]">
         <p className="text-base font-bold">Total 43 Pcs</p>
       </div>
-      {/* <SelectableModal
-        isOpen={showModalSelectable}
-        onClose={() => setShowModalSelectable(false)}
-        title="Select Stock"
-        queryKey={GET_COA}
-        columns={{
-          columns: [
-            {
-              accessor: 'select',
-              header: '',
-              type: 'checkbox',
-              size: 60,
-            },
-            {
-              accessor: 'account',
-              header: 'Coa Code',
-            },
-            {
-              accessor: 'description',
-              header: 'Coa Description',
-            },
-          ],
-          hasAction: false,
-        }}
-        queryFn={getCoa}
-        idSelected=""
-      /> */}
-      <SelectableModal
-        isOpen={showModalSelectable}
-        onClose={() => setShowModalSelectable(false)}
-        title="Select Item"
-        queryKey={GET_MASTER_ITEM_MATERIAL_MANAGEMENT}
-        columns={{
-          columns: [
-            {
-              accessor: 'select',
-              header: '',
-              type: 'checkbox',
-              size: 60,
-            },
-            {
-              accessor: 'number',
-              header: '#',
-            },
-            {
-              accessor: 'item_code',
-              header: "Item's Code",
-            },
-            {
-              accessor: 'item_name',
-              header: "Item's Name",
-            },
-            {
-              accessor: 'local_code',
-              header: 'Local Code',
-            },
-            {
-              accessor: 'foreign_name',
-              header: 'Foreign Name',
-            },
-          ],
-          hasAction: false,
-        }}
-        queryFn={getItem}
-        idSelected=""
-      />
+      {
+        getDataModalProps &&
+        <SelectableModal
+          {...getDataModalProps}
+          // isOpen={showModalSelectable}
+          // onClose={() => setShowModalSelectable(false)}
+          // title="Select Stock"
+          // queryKey={queryKey}
+          // columns={{
+          //   columns: [
+          //     {
+          //       accessor: 'select',
+          //       header: '',
+          //       type: 'checkbox',
+          //       size: 60,
+          //     },
+          //     {
+          //       accessor: 'account',
+          //       header: 'Coa Code',
+          //     },
+          //     {
+          //       accessor: 'description',
+          //       header: 'Coa Description',
+          //     },
+          //   ],
+          //   hasAction: false,
+          // }}
+          // queryFn={queryFn}
+          // idSelected=""
+        />
+      }
     </div>
   );
 };

@@ -15,7 +15,7 @@ import { useSetValueForm } from '@hooks/useFormChanges';
 import { useForm } from 'react-hook-form';
 import { getDetailItem } from '@services/fetcher/configuration/material-item-warehouse-management';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
-import { GET_DETAIL_MASTER_ITEM } from '@constants/queryKey';
+import { GET_DETAIL_STOCK_MUTATION } from '@constants/queryKey';
 // import { useDetailItem } from '@hooks/useDetailItem';
 import BasicForm from '../Form/BasicForm';
 import MutateFromForm from '../Form/MutateFromForm';
@@ -30,7 +30,7 @@ const DetailMasterItemMM = () => {
   const { setValue, watch, register } = useForm<StockMutationFormBody>();
 
   const { isLoading } = useQuery({
-    queryKey: [GET_DETAIL_MASTER_ITEM, detail_data],
+    queryKey: [GET_DETAIL_STOCK_MUTATION, detail_data],
     queryFn: async () => {
       const res = await getDetailItem(detail_data.document as string);
       setDetailData(Object.assign(detail_data, res.data.data));

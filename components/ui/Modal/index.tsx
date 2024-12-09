@@ -1,48 +1,33 @@
 import TableContent from '@components/shared/TableContent';
 import useTable from '@hooks/useTable';
-import { AxiosResponse } from 'axios';
 import React from 'react';
-import { FetcherOptions } from '../../../types/client/fetcher';
-import { GenerateColumnsOption } from '../../../types/client/table';
+
 import {
   Dialog,
   DialogContent,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from '../Dialog';
-
-interface SelectableModalProps {
-  isOpen: boolean;
-  title: string;
-  columns: GenerateColumnsOption;
-  queryKey: string;
-  multipleSelect?: boolean;
-  idSelected?: string;
-  valueSelected?: string[];
-  onClose: () => void;
-  queryFn: (option?: FetcherOptions) => Promise<AxiosResponse<any, any>>;
-  onSelectRow?: (data: any) => void;
-}
+import { SelectableModalProps } from '../../../types/client/table';
 
 const assignSelected = (
   data?: ApiResultResponse<any[]>,
   multipleSelect?: boolean,
   idSelected?: string,
-  valueSelected?: string[]
+  valueSelected?: string[],
+  targetIdSelector?: string
 ): ApiResultResponse<any[]> | undefined => {
-  if (multipleSelect && idSelected) {
+  if (multipleSelect && idSelected && targetIdSelector) {
     const results = (data?.results || []).map((val) => {
-      const newValue = { ...val }; // Salin objek untuk menghindari mutasi langsung
+      const newValue = { ...val };
       valueSelected?.forEach((selectId) => {
-        if (newValue[idSelected] === selectId) {
+        if (newValue[targetIdSelector] === selectId) {
           newValue[idSelected] = true;
         }
       });
       return newValue;
     });
 
-    // Buat salinan data dengan memastikan semua properti sesuai tipe ApiResultResponse
     return {
       results,
       current_page: data?.current_page ?? 1, // Default ke 1 jika undefined
@@ -59,11 +44,13 @@ const assignSelected = (
 const SelectableModal: React.FC<SelectableModalProps> = ({
   multipleSelect,
   idSelected,
+  targetIdSelector,
   valueSelected,
   isOpen,
   title,
   columns,
   queryKey,
+  pinnedColumns,
   onClose,
   queryFn,
   onSelectRow,
@@ -77,6 +64,7 @@ const SelectableModal: React.FC<SelectableModalProps> = ({
     showColumnSelector: false,
     showExport: false,
     showPrint: false,
+    pinnedColumns
   });
 
   return (
@@ -85,17 +73,18 @@ const SelectableModal: React.FC<SelectableModalProps> = ({
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
         </DialogHeader>
-        <DialogFooter className="flex-1 w-full overflow-auto">
+        <div className="flex-1 w-full h-full overflow-auto">
           <TableContent
+            {...tableProps}
             data={assignSelected(
               tableProps.data,
               multipleSelect,
               idSelected,
-              valueSelected
+              valueSelected,
+              targetIdSelector,
             )}
-            {...tableProps}
           />
-        </DialogFooter>
+        </div>
       </DialogContent>
     </Dialog>
   );

@@ -87,6 +87,17 @@ export const InitialStockDefaultValues: InitialStockFormBody = {
   uom_name: '',
   detail: [],
 };
+
+export const StockMutationDefaultValues: StockMutationFormBody = {
+  document: '',
+  date: '',
+  warehouse: '',
+  cancel: false,
+  reason_for_cacellation: '',
+  remark: '',
+  mutated_from: [],
+  mutated_to: [],
+}
 // Transaction Inventory Material Management End
 
 // Configuration Financial Management Start
