@@ -17,7 +17,7 @@ import { useForm } from '@hooks/useForm';
 import { createInitialStock } from '@services/fetcher/transaction/inventory-material-management';
 import { ConfirmationAlert } from '@components/shared/Alert';
 import InitialStockHeaderForm from '../Form/HeaderForm';
-import InitialStockBodyForm from '../Form/BodyForm';
+import InitialStockDetailForm from '../Form/DetailForm';
 
 const CreateInitialStock = () => {
   const {
@@ -78,7 +78,7 @@ const CreateInitialStock = () => {
               handleInputKeyDown={handleInputKeyDown}
               setError={setError}
             />
-            <InitialStockBodyForm
+            <InitialStockDetailForm
               errors={errors}
               watch={watch}
               setValue={setValue}
@@ -95,64 +95,6 @@ const CreateInitialStock = () => {
           onClose={handleCloseConfirmModal}
         />
       </DrawerContent>
-      {/* <SelectableModal
-        isOpen={showModalSource}
-        onClose={() => setShowModalSource(false)}
-        title="Find Master Item"
-        queryKey={GET_MASTER_ITEM_MATERIAL_MANAGEMENT}
-        columns={{
-          columns: [
-            {
-              accessor: 'number',
-              header: '#',
-            },
-            {
-              accessor: 'item_code',
-              header: 'Item Code',
-            },
-            {
-              accessor: 'item_name',
-              header: 'Item Name',
-            },
-            {
-              accessor: 'local_code',
-              header: 'Local Code',
-            },
-            {
-              accessor: 'foreign_name',
-              header: 'Foreign Name',
-            },
-            {
-              accessor: 'old_code',
-              header: 'Old Code',
-            },
-            {
-              accessor: 'category_name',
-              header: 'Category Name',
-            },
-            {
-              accessor: 'spesification',
-              header: 'Specification',
-            },
-            {
-              accessor: 'active',
-              header: 'Active',
-            },
-            {
-              accessor: 'create_date',
-              header: 'Create Date',
-            },
-          ],
-          hasAction: false,
-        }}
-        queryFn={getItem}
-        onSelectRow={(data: MasterItemFormBody) => {
-          setValue('source', data.item_code, {
-            shouldDirty: true,
-          });
-          setShowModalSource(false);
-        }}
-      /> */}
     </Drawer>
   );
 };

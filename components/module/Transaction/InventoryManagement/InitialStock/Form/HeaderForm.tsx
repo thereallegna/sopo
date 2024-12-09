@@ -25,10 +25,10 @@ const InitialStockHeaderForm = ({
     <CardContent className="flex-wrap flex flex-row gap-6 items-center">
       <div className="flex flex-col gap-[14px] flex-1">
         <InputField
-          {...register('document_number')}
+          {...register('document')}
           message={
-            errors?.document_number
-              ? { text: errors.document_number.message!, type: 'danger' }
+            errors?.document
+              ? { text: errors.document.message!, type: 'danger' }
               : undefined
           }
           label="Document Number"
@@ -43,14 +43,8 @@ const InitialStockHeaderForm = ({
         <DatePicker
           label="Date"
           placeholder="Select a Date"
-          value={
-            watch('document_date')
-              ? new Date(watch('document_date'))
-              : undefined
-          }
-          onChange={(date) =>
-            setValue && setValue('document_date', date.toISOString())
-          }
+          value={watch('date') ? new Date(watch('date')) : undefined}
+          onChange={(date) => setValue && setValue('date', date.toISOString())}
           disabled={disableAll}
           className="rounded-md border-shadow"
         />
@@ -73,11 +67,6 @@ const InitialStockHeaderForm = ({
             label: watch('warehouse'),
             value: watch('warehouse_code'),
           }}
-          //   onChange={(val) => {
-          //     setValue('warehouse', val.label);
-          //     setValue('warehouse_code', val.value);
-          //     setError('warehouse', { type: 'disabled' });
-          //   }}
           onChange={(val) => {
             if (!disableAll && setValue) {
               setValue('warehouse', val.label);
@@ -106,11 +95,6 @@ const InitialStockHeaderForm = ({
             label: watch('currency'),
             value: watch('currency_code'),
           }}
-          //   onChange={(val) => {
-          //     setValue('currency', val.label);
-          //     setValue('currency_code', val.value);
-          //     setError('currency', { type: 'disabled' });
-          //   }}
           onChange={(val) => {
             if (!disableAll && setValue) {
               setValue('currency', val.label);
