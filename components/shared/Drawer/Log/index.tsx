@@ -23,7 +23,7 @@ const HistoryLog = () => {
             title="History Log"
             onClick={closeHistoryLogDrawer}
           />
-          <DrawerBody className="p-0 max-h-[830px] custom-scrollbar">
+          <DrawerBody className="p-0 custom-scrollbar h-[90vh]">
             <Timeline />
           </DrawerBody>
         </div>
