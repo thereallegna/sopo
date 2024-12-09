@@ -22,14 +22,15 @@ export const CreateStockMutationSchema = Yup.object().shape({
   document: Yup.string().required('Document is required'),
   date: Yup.date().required('Date is required'),
   warehouse: Yup.string().required('Warehouse is required'),
-  cancel: Yup.boolean().required('Cancel is required'),
-  mutated_from: Yup.array(Yup.object().shape({
-    item_code: Yup.string().required('Item code is required'),
-    item_name: Yup.string().required('Item name is required'),
-    batch: Yup.string().required('Batch is required'),
-    stock: Yup.number().required('Stock is required'),
-    quantity: Yup.number().required('Quantity is required'),
-    currency: Yup.string().required('Currency is required'),
-    unit_price: Yup.string().required('Price is required'),
-  }))
-})
+  mutated_from: Yup.array(
+    Yup.object().shape({
+      item_code: Yup.string().required('Item code is required'),
+      item_name: Yup.string().required('Item name is required'),
+      batch: Yup.string().required('Batch is required'),
+      stock: Yup.number().required('Stock is required'),
+      quantity: Yup.number().required('Quantity is required'),
+      currency: Yup.string().required('Currency is required'),
+      unit_price: Yup.string().required('Price is required'),
+    })
+  ),
+});

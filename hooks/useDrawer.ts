@@ -25,6 +25,7 @@ export const useDrawer = (reset?: UseFormReset<any>, detail_data?: object) => {
 
   const handleClose = useCallback(
     (closeFunction: () => void) => {
+      console.log(changeStatus, 'CEKKKKKK');
       if (changeStatus) {
         setLeavingPage(true);
       } else {

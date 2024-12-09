@@ -20,103 +20,103 @@ import { IconTablePlus, IconChevronDown } from '@tabler/icons-react';
 import { TableFormProps } from '../../../types/client/table';
 import { generateColumns } from '../../../utils/generateColumn';
 
-const TableForm = <T,>({ 
-  data, 
-  columns, 
+const TableForm = <T,>({
+  data,
+  columns,
   onShowGetDataModal,
   getDataModalProps,
   onChangeData,
 }: TableFormProps<T>) => {
   // const [localData, setLocalData] = useState<T[]>(data ?? []);
 
-    // useEffect(() => {
-    //   if(data){
-    //     setLocalData(data)
-    //   }
-    //   // setLocalData(() => {
-    //   //   // const isRowEmpty = (row: any) => {
-    //   //   //   if (row) {
-    //   //   //     const relevantFields = Object.keys(row).filter(
-    //   //   //       (key) => key !== getDataModalProps?.targetIdSelector
-    //   //   //     );
-        
-    //   //   //     console.log("Cek Data => ", row, relevantFields.every((key) => row[key] === '' || row[key] === undefined))
-    //   //   //     return relevantFields.every((key) => row[key] === '' || row[key] === undefined);
-    //   //   //   }
-    //   //   //   return false;
-    //   //   // };
-    //   //   const isRowEmpty = (row: any) =>
-    //   //     row
-    //   //       ? Object.values(row).every((v) => v === '' || v === undefined)
-    //   //       : true;
-      
-    //   //   const lastRow = data?.[data.length - 1];
-    //   //   const isLastRowEmpty = isRowEmpty(lastRow);
-      
-    //   //   const newData = [...(data ?? [])];
-      
-    //   //   // Tambahkan form kosong jika row terakhir kosong
-    //   //   if (!data || data.length <= 0 || !isLastRowEmpty) {
-    //   //     newData.push({} as T);
-    //   //   }
-    //   //   return newData;
-    //   // })
-    
-    // }, [data]);
+  // useEffect(() => {
+  //   if(data){
+  //     setLocalData(data)
+  //   }
+  //   // setLocalData(() => {
+  //   //   // const isRowEmpty = (row: any) => {
+  //   //   //   if (row) {
+  //   //   //     const relevantFields = Object.keys(row).filter(
+  //   //   //       (key) => key !== getDataModalProps?.targetIdSelector
+  //   //   //     );
+
+  //   //   //     console.log("Cek Data => ", row, relevantFields.every((key) => row[key] === '' || row[key] === undefined))
+  //   //   //     return relevantFields.every((key) => row[key] === '' || row[key] === undefined);
+  //   //   //   }
+  //   //   //   return false;
+  //   //   // };
+  //   //   const isRowEmpty = (row: any) =>
+  //   //     row
+  //   //       ? Object.values(row).every((v) => v === '' || v === undefined)
+  //   //       : true;
+
+  //   //   const lastRow = data?.[data.length - 1];
+  //   //   const isLastRowEmpty = isRowEmpty(lastRow);
+
+  //   //   const newData = [...(data ?? [])];
+
+  //   //   // Tambahkan form kosong jika row terakhir kosong
+  //   //   if (!data || data.length <= 0 || !isLastRowEmpty) {
+  //   //     newData.push({} as T);
+  //   //   }
+  //   //   return newData;
+  //   // })
+
+  // }, [data]);
 
   const handleInputChange = (
     rowIndex: number,
     columnId: string,
     value: string
   ) => {
-    const prevData = [...data]
-    prevData[rowIndex] = { ...prevData[rowIndex], [columnId]: value }
-    onChangeData?.(prevData)
+    const prevData = [...data];
+    prevData[rowIndex] = { ...prevData[rowIndex], [columnId]: value };
+    onChangeData?.(prevData);
     // setLocalData((prevData) => {
     //   const updatedData = [...prevData];
     //   updatedData[rowIndex] = { ...updatedData[rowIndex], [columnId]: value };
 
-      // const lastRow = updatedData[updatedData.length - 1];
-      // const secondLastRow = updatedData[updatedData.length - 2];
+    // const lastRow = updatedData[updatedData.length - 1];
+    // const secondLastRow = updatedData[updatedData.length - 2];
 
-      // // const isRowEmpty = (row: any) => {
-      // //   if(row) {
-      // //     const relevantField = Object.keys(row).filter(
-      // //       (key) => key !== getDataModalProps?.targetIdSelector
-      // //     )
+    // // const isRowEmpty = (row: any) => {
+    // //   if(row) {
+    // //     const relevantField = Object.keys(row).filter(
+    // //       (key) => key !== getDataModalProps?.targetIdSelector
+    // //     )
 
-      // //     return relevantField
-      // //       ? Object.values(relevantField).every((v) => v === '' || v === undefined)
-      // //       : false;
-      // //   }
-      // //   return false
-      // // }
+    // //     return relevantField
+    // //       ? Object.values(relevantField).every((v) => v === '' || v === undefined)
+    // //       : false;
+    // //   }
+    // //   return false
+    // // }
 
-      // const isRowEmpty = (row: any) => {
-      //   if (row) {
-      //     const relevantFields = Object.keys(row).filter(
-      //       (key) => key !== getDataModalProps?.targetIdSelector
-      //     );
-      //     return relevantFields.every((key) => row[key] === '' || row[key] === undefined);
-      //   }
-      //   return false;
-      // };
+    // const isRowEmpty = (row: any) => {
+    //   if (row) {
+    //     const relevantFields = Object.keys(row).filter(
+    //       (key) => key !== getDataModalProps?.targetIdSelector
+    //     );
+    //     return relevantFields.every((key) => row[key] === '' || row[key] === undefined);
+    //   }
+    //   return false;
+    // };
 
-      // const isLastRowEmpty = isRowEmpty(lastRow);
-      // const isSecondLastRowEmpty = isRowEmpty(secondLastRow);
+    // const isLastRowEmpty = isRowEmpty(lastRow);
+    // const isSecondLastRowEmpty = isRowEmpty(secondLastRow);
 
-      // if (!isLastRowEmpty) {
-      //   updatedData.push({} as T);
-      // }
+    // if (!isLastRowEmpty) {
+    //   updatedData.push({} as T);
+    // }
 
-      // if (isSecondLastRowEmpty && isLastRowEmpty) {
-      //   if(secondLastRow){
-      //     updatedData[updatedData.length - 2] = {} as T
-      //   }
-      //   updatedData.pop();
-      // }
+    // if (isSecondLastRowEmpty && isLastRowEmpty) {
+    //   if(secondLastRow){
+    //     updatedData[updatedData.length - 2] = {} as T
+    //   }
+    //   updatedData.pop();
+    // }
 
-      // console.log("TEST ", update)
+    // console.log("TEST ", update)
 
     //   onChangeData?.(updatedData);
     //   return updatedData;
@@ -176,7 +176,14 @@ const TableForm = <T,>({
         </TableHeader>
         <TableBody>
           {table.getRowModel().rows.map((row) => (
-            <TableRow key={getDataModalProps && getDataModalProps.targetIdSelector && row.original[getDataModalProps.targetIdSelector] || row.id}>
+            <TableRow
+              key={
+                (getDataModalProps &&
+                  getDataModalProps.targetIdSelector &&
+                  row.original[getDataModalProps.targetIdSelector]) ||
+                row.id
+              }
+            >
               {row.getVisibleCells().map((cell) => (
                 <TableCell key={cell.id}>
                   {cell.getIsPlaceholder()
@@ -192,37 +199,7 @@ const TableForm = <T,>({
       <div className="w-full flex justify-end mt-[10px]">
         <p className="text-base font-bold">Total 43 Pcs</p>
       </div>
-      {
-        getDataModalProps &&
-        <SelectableModal
-          {...getDataModalProps}
-          // isOpen={showModalSelectable}
-          // onClose={() => setShowModalSelectable(false)}
-          // title="Select Stock"
-          // queryKey={queryKey}
-          // columns={{
-          //   columns: [
-          //     {
-          //       accessor: 'select',
-          //       header: '',
-          //       type: 'checkbox',
-          //       size: 60,
-          //     },
-          //     {
-          //       accessor: 'account',
-          //       header: 'Coa Code',
-          //     },
-          //     {
-          //       accessor: 'description',
-          //       header: 'Coa Description',
-          //     },
-          //   ],
-          //   hasAction: false,
-          // }}
-          // queryFn={queryFn}
-          // idSelected=""
-        />
-      }
+      {getDataModalProps && <SelectableModal {...getDataModalProps} />}
     </div>
   );
 };
