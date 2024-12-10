@@ -19,9 +19,9 @@ const getInitialStock = async (option?: FetcherOptions) => {
   }
 };
 
-const createInitialStock = async (body: InitialStockFormBody) => {
+const createInitialStock = async (body: InitialStockFormBody, params?: any) => {
   try {
-    const res = await axios.post(PATH_INITIAL_STOCK, body);
+    const res = await axios.post(PATH_INITIAL_STOCK, body, { params });
     return res.data;
   } catch (error) {
     console.error('Error creating initial stock:', error);
@@ -29,9 +29,15 @@ const createInitialStock = async (body: InitialStockFormBody) => {
   }
 };
 
-const editInitialStock = async (body: InitialStockFormBody) => {
+const editInitialStock = async (body: InitialStockFormBody, params?: any) => {
   try {
-    const res = await axios.put(`${PATH_INITIAL_STOCK}/${body.document}`, body);
+    const res = await axios.put(
+      `${PATH_INITIAL_STOCK}/${body.document}`,
+      body,
+      {
+        params,
+      }
+    );
     return res.data;
   } catch (error) {
     console.error('Error editing initial stock:', error);
@@ -71,9 +77,13 @@ const createStockMutation = async (
 
 const editStockMutation = async (body: StockMutationFormBody, params?: any) => {
   try {
-    const res = await axios.put(`${PATH_STOCK_MUTATION}/${body.document}`, body, {
-      params,
-    });
+    const res = await axios.put(
+      `${PATH_STOCK_MUTATION}/${body.document}`,
+      body,
+      {
+        params,
+      }
+    );
     return res.data;
   } catch (error) {
     console.error('Error editing item category:', error);
@@ -81,11 +91,11 @@ const editStockMutation = async (body: StockMutationFormBody, params?: any) => {
   }
 };
 
-export { 
-  getInitialStock, 
-  createInitialStock, 
-  editInitialStock, 
-  getStockMutation, 
-  createStockMutation, 
-  editStockMutation 
+export {
+  getInitialStock,
+  createInitialStock,
+  editInitialStock,
+  getStockMutation,
+  createStockMutation,
+  editStockMutation,
 };

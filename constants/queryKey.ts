@@ -21,6 +21,7 @@ export const GET_DETAIL_MASTER_ITEM = 'getDetailMasterItemMaterialManagement';
 export const GET_STOCK_MUTATION = 'getStockMutation';
 export const GET_DETAIL_STOCK_MUTATION = 'getDetailStockMutation';
 export const GET_INITIAL_STOCK = 'getInitialStock';
+export const GET_DETAIL_INITIAL_STOCK = 'getDetailInitialStock';
 // TRANSACTION - INVENTORY MANAGEMENT (END)
 
 // lOG HISTORY  START
