@@ -80,6 +80,7 @@ FormType<StockMutationFormBody>) => {
     <Card size="drawer" className="border border-Neutral-200 shadow-none">
       <CardContent className="flex-wrap flex flex-row gap-6 items-center w-full">
         <TableForm
+          title="Mutate From"
           data={watch('mutated_to')}
           columns={mutateToColumn}
           onChangeData={(prev) => {
@@ -127,9 +128,10 @@ FormType<StockMutationFormBody>) => {
             onSelectRow: (data: any) => {
               if (setValue) {
                 // Fetch Detail Initial Stock
-                const convertData = convertStockMutationForm(
-                  data as InitialStockFormBody
-                );
+                // const convertData = convertStockMutationForm(
+                //   data as InitialStockFormBody
+                // );
+                const convertData = data;
                 const prevData = watch('mutated_to') || []; // Default ke array kosong jika undefined
                 const itemExists = prevData.some(
                   (item) => item.document_number === convertData.document_number

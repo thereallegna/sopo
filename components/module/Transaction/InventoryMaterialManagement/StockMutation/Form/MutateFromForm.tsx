@@ -4,6 +4,7 @@ import TableForm from '@components/shared/TableForm';
 import { GET_INITIAL_STOCK } from '@constants/queryKey';
 // import { convertStockMutationForm } from '@utils/converter';
 import { getInitialStock } from '@services/fetcher/transaction/inventory-material-management';
+// import { convertStockMutationForm } from '@utils/converter';
 import { GenerateColumnsOption } from '../../../../../../types/client/table';
 import { FormType } from '../../../../../../types/form';
 
@@ -80,6 +81,7 @@ FormType<StockMutationFormBody>) => {
     <Card size="drawer" className="border border-Neutral-200 shadow-none">
       <CardContent className="flex-wrap flex flex-row gap-6 items-center w-full">
         <TableForm
+          title="Mutate From"
           data={watch('mutated_from')}
           columns={mutateFromColumn}
           onChangeData={(prev) => {
@@ -87,7 +89,15 @@ FormType<StockMutationFormBody>) => {
               setValue('mutated_from', prev);
             }
           }}
-          onShowGetDataModal={() => setShowModal(true)}
+          onShowGetDataModal={() => {
+            if (watch('warehouse_code')) {
+              setShowModal(true);
+            }
+          }}
+          getDataButtonProps={{
+            disabled: !watch('warehouse_code'),
+            variant: !watch('warehouse_code') ? 'disabled' : undefined,
+          }}
           getDataModalProps={{
             isOpen: showModal,
             title: 'Select Initial Stock',
@@ -127,9 +137,10 @@ FormType<StockMutationFormBody>) => {
             onSelectRow: (data: any) => {
               if (setValue) {
                 // Fetch Detail Initial Stock
-                const convertData = convertStockMutationForm(
-                  data as InitialStockFormBody
-                );
+                // const convertData = convertStockMutationForm(
+                //   data as InitialStockFormBody
+                // );
+                const convertData = data;
                 const prevData = watch('mutated_from') || []; // Default ke array kosong jika undefined
                 const itemExists = prevData.some(
                   (item) => item.document_number === convertData.document_number

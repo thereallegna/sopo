@@ -39,6 +39,7 @@ const CreateStockMutation = () => {
     handleConfirm,
     handleCloseConfirmModal,
     confirmMessage,
+    control,
   } = useForm({
     label: 'Stock Mutation',
     queryKey: GET_STOCK_MUTATION,
@@ -78,7 +79,7 @@ const CreateStockMutation = () => {
               register={register}
               handleInputKeyDown={handleInputKeyDown}
               setError={setError}
-              add
+              type="add"
             />
             <MutateFromForm
               errors={errors}
@@ -87,6 +88,7 @@ const CreateStockMutation = () => {
               register={register}
               handleInputKeyDown={handleInputKeyDown}
               setError={setError}
+              control={control}
             />
             <MutateToForm
               errors={errors}
@@ -95,6 +97,7 @@ const CreateStockMutation = () => {
               register={register}
               handleInputKeyDown={handleInputKeyDown}
               setError={setError}
+              control={control}
             />
           </DrawerBody>
         </form>

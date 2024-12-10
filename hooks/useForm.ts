@@ -7,6 +7,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { errorMapping } from '@utils/errorMapping';
 import { AxiosError } from 'axios';
 import { ObjectSchema } from 'yup';
+import isEqual from 'fast-deep-equal';
 import {
   useForm as useReactHookForm,
   SubmitHandler,
@@ -112,6 +113,11 @@ export const useForm = <T extends FieldValues>({
     ) {
       return true;
     }
+
+    if (Array.isArray(value1) && Array.isArray(value2)) {
+      return isEqual(value1, value2);
+    }
+
     return value1 === value2;
   };
 

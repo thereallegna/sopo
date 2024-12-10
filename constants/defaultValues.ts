@@ -84,6 +84,7 @@ export const StockMutationDefaultValues: StockMutationFormBody = {
   document: '',
   date: '',
   warehouse: '',
+  warehouse_code: '',
   cancel: false,
   reason_for_cancellation: '',
   remark: '',
