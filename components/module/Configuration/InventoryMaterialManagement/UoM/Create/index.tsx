@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React from 'react';
 import { Button } from '@components/ui/Button';
 import {
   Drawer,
@@ -11,103 +11,33 @@ import {
 } from '@components/ui/Drawer';
 import { Card, CardContent } from '@components/ui/Card';
 import InputField from '@components/shared/InputField';
-import { useDrawerStore } from '@stores/useDrawerStore';
 import { IconDeviceFloppy } from '@tabler/icons-react';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useForm, SubmitHandler } from 'react-hook-form';
-import useFormStore from '@stores/useFormStore';
-import { useDrawer } from '@hooks/useDrawer';
+import { useForm } from '@hooks/useForm';
 import { UOMDefaultValues } from '@constants/defaultValues';
-import { AxiosError } from 'axios';
-import { errorMapping } from '@utils/errorMapping';
 import { GET_UOM } from '@constants/queryKey';
 import { UOMSchema } from '@constants/schemas/ConfigurationSchema/InventoryMaterialManagement';
 import { createUOM } from '@services/fetcher/configuration/material-item-warehouse-management';
-import useToastStore from '@stores/useToastStore';
-import { useFormSave } from '@hooks/useFormSave';
-import { useFormChanges } from '@hooks/useFormChanges';
 
 const CreateUOM = () => {
-  const formRef = useRef<HTMLFormElement>(null);
-  const { isOpen, closeDrawer, openDetailDrawer } = useDrawerStore();
-  const { setChangeStatus } = useFormStore();
-  const [isLoading, setIsLoading] = React.useState(false);
-  const showToast = useToastStore((state) => state.showToast);
-  const queryClient = useQueryClient();
-
   const {
-    register,
+    handleCloseDrawer,
+    handleInputKeyDown,
+    handleSaveClick,
     handleSubmit,
-    reset,
-    setError,
-    control,
-    formState: { errors },
-  } = useForm<UOMFormBody>({
-    mode: 'onBlur',
-    resolver: yupResolver(UOMSchema),
-    defaultValues: UOMDefaultValues,
-  });
-
-  const { canSave } = useFormChanges({
-    defaultValues: UOMDefaultValues,
-    control,
-    requireAllFields: true,
-  });
-
-  // const code = watch('uom_code');
-  // const name = watch('uom_name');
-
-  // // Memantau perubahan untuk tombol Save
-  // const canSave = Boolean(code && name);
-
-  // // Memantau perubahan untuk modal konfirmasi
-  // useEffect(() => {
-  //   // Set changeStatus true jika salah satu field diisi
-  //   setChangeStatus(Boolean(code || name));
-  // }, [code, name, setChangeStatus]);
-
-  const { handleCloseDrawer } = useDrawer(reset);
-
-  const { mutate: mutationCreateUOM } = useMutation({
-    mutationFn: createUOM,
-    onMutate: () => {
-      setIsLoading(true);
-      console.log('Mutation started...');
-    },
-    onSuccess: (data) => {
-      console.log('Mutation successful:', data);
-      reset();
-      closeDrawer();
-      setIsLoading(false);
-      setChangeStatus(false);
-      openDetailDrawer(data.data);
-      queryClient.invalidateQueries({ queryKey: [GET_UOM] });
-      showToast('UoM successfully added', 'success');
-    },
-    onError: (error: any) => {
-      console.log('Mutation error:', error);
-      setIsLoading(false);
-      const errorRes = error as AxiosError<ErrorResponse>;
-      if (errorRes.status === 500) {
-        showToast('UoM failed to added', 'danger');
-      }
-      if (errorRes.response?.data) {
-        const { errorField } = errorRes.response.data;
-        errorMapping(errorField, setError);
-      }
-    },
-  });
-
-  const onSubmit: SubmitHandler<UOMFormBody> = (data) => {
-    console.log('Form submitted with data:', data);
-    mutationCreateUOM(data);
-  };
-
-  const { handleSaveClick, handleInputKeyDown } = useFormSave({
-    ref: formRef,
     isLoading,
-    hasChanged: canSave, // Menggunakan canSave untuk tombol Save
+    formRef,
+    isOpen,
+    canSave,
+    errors,
+    register,
+  } = useForm({
+    label: 'item UoM',
+    queryKey: GET_UOM,
+    mutationFn: createUOM,
+    validationSchema: UOMSchema,
+    defaultValues: UOMDefaultValues,
+    type: 'add',
+    requireAllFields: true,
   });
 
   return (
@@ -126,7 +56,7 @@ const CreateUOM = () => {
           </DrawerEndHeader>
         </DrawerHeader>
 
-        <form ref={formRef} onSubmit={handleSubmit(onSubmit)} noValidate>
+        <form ref={formRef} onSubmit={handleSubmit}>
           <DrawerBody>
             <Card size="drawer">
               <CardContent className="flex-wrap flex flex-row gap-6 items-start">

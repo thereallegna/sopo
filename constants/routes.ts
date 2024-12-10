@@ -28,8 +28,8 @@ export const PATH_AUTH_RESET_PASSWORD_BE = `${PATH_BACKEND_URL}/reset-password`;
 /* ======================= Auth End ==================== */
 
 /* ======================= General Start ==================== */
-export const PATH_COUNTRY = `${PATH_CONFIGURATION_GENERAL}/country`;
 // country
+export const PATH_COUNTRY = `${PATH_CONFIGURATION_GENERAL}/country`;
 export const PATH_COUNTRY_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/country`;
 
 // city
@@ -73,6 +73,7 @@ export const PATH_WAREHOUSE_CATEGORY_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL
 export const PATH_INITIAL_STOCK = `${PATH_CONFIGURATION_INVENTORY_MATERIAL_MANAGEMENT}/inventory-management/initial-stock`;
 export const PATH_INITIAL_STOCK_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/initial-stock`;
 
+// stock mutation
 export const PATH_STOCK_MUTATION = `${PATH_CONFIGURATION_INVENTORY_MATERIAL_MANAGEMENT}/inventory-management/stock-mutation`;
 export const PATH_STOCK_MUTATION_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/stock-mutation`;
 

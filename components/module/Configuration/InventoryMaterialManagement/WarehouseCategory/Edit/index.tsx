@@ -37,7 +37,7 @@ const EditWarehouseCategory = () => {
     setValue,
     register,
   } = useForm({
-    label: 'Master item',
+    label: 'Warehouse Category',
     queryKey: GET_WAREHOUSE_CATEGORY,
     mutationFn: editWarehouseCatrgory,
     validationSchema: WarehouseCategorySchema,

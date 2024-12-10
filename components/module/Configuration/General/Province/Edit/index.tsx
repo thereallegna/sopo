@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React from 'react';
 import { Button } from '@components/ui/Button';
 import {
   Drawer,
@@ -13,102 +13,45 @@ import { Card, CardContent } from '@components/ui/Card';
 import InputField from '@components/shared/InputField';
 import { useDrawerStore } from '@stores/useDrawerStore';
 import { IconDeviceFloppy } from '@tabler/icons-react';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useForm } from '@hooks/useForm';
 import { provinceSchema } from '@constants/schemas/ConfigurationSchema/general';
 import {
   editProvince,
   getCountry,
 } from '@services/fetcher/configuration/general';
-import { useFormChanges, useSetValueForm } from '@hooks/useFormChanges';
-import { errorMapping } from '@utils/errorMapping';
-import { AxiosError } from 'axios';
+import { useSetValueForm } from '@hooks/useFormChanges';
 import { GET_COUNTRY, GET_PROVINCE } from '@constants/queryKey';
 import Combobox from '@components/shared/Combobox';
-import useToastStore from '@stores/useToastStore';
-import { useFormSave } from '@hooks/useFormSave';
-import useFormStore from '@stores/useFormStore';
-import { useDrawer } from '@hooks/useDrawer';
 
 const EditProvince = () => {
-  const formRef = useRef<HTMLFormElement>(null);
-  const { isOpenEdit, closeEditDrawer, setDetailData, openDetailDrawer } =
-    useDrawerStore();
-  const { setChangeStatus } = useFormStore();
   const detail_data = useDrawerStore(
     (state) => state.detail_data
   ) as ProvinceFormBody;
-  const [isLoading, setIsLoading] = React.useState(false);
-  const showToast = useToastStore((state) => state.showToast);
-  const queryClient = useQueryClient();
 
   const {
-    watch,
-    register,
+    handleCloseDrawerEdit,
+    handleInputKeyDown,
+    handleSaveClick,
     handleSubmit,
-    reset,
-    setError,
-    setValue,
-    control,
-    formState: { errors },
-  } = useForm<ProvinceFormBody>({
-    mode: 'onBlur',
-    resolver: yupResolver(provinceSchema),
-    defaultValues: detail_data,
-  });
-
-  useSetValueForm<ProvinceFormBody>(detail_data, setValue);
-
-  const { canSave } = useFormChanges({
-    defaultValues: detail_data,
-    control,
-  });
-
-  const { handleCloseDrawerEdit } = useDrawer(reset, detail_data);
-
-  const { mutate: mutationEditProvince } = useMutation({
-    mutationFn: editProvince,
-    onMutate: () => {
-      setIsLoading(true);
-    },
-    onSuccess: (data) => {
-      setDetailData(data.data);
-      setChangeStatus(false);
-      closeEditDrawer();
-      setIsLoading(false);
-      openDetailDrawer({
-        ...data.data,
-        country: watch('country'),
-        country_code: watch('country_code'),
-      } as ProvinceFormBody);
-      reset();
-      queryClient.invalidateQueries({ queryKey: [GET_PROVINCE] });
-      showToast('Province successfully edited', 'success');
-    },
-    onError: (error: any) => {
-      console.log('Edit mutation error:', error);
-      setIsLoading(false);
-      const errorRes = error as AxiosError<ErrorResponse>;
-      if (errorRes.status === 500) {
-        showToast('Province failed to edited', 'danger');
-      }
-      if (errorRes.response?.data) {
-        const { errorField } = errorRes.response.data;
-        errorMapping(errorField, setError);
-      }
-    },
-  });
-
-  const onSubmit: SubmitHandler<ProvinceFormBody> = (data) => {
-    mutationEditProvince(data);
-  };
-
-  const { handleSaveClick, handleInputKeyDown } = useFormSave({
-    ref: formRef,
     isLoading,
-    hasChanged: canSave,
+    formRef,
+    isOpenEdit,
+    watch,
+    setError,
+    canSave,
+    errors,
+    setValue,
+    register,
+  } = useForm({
+    label: 'Province',
+    queryKey: GET_PROVINCE,
+    mutationFn: editProvince,
+    validationSchema: provinceSchema,
+    defaultValues: detail_data,
+    type: 'edit',
   });
+
+  useSetValueForm<ProvinceFormBody>(detail_data, setValue, isOpenEdit);
 
   return (
     <Drawer onClose={handleCloseDrawerEdit} open={isOpenEdit}>
@@ -126,7 +69,7 @@ const EditProvince = () => {
           </DrawerEndHeader>
         </DrawerHeader>
 
-        <form ref={formRef} onSubmit={handleSubmit(onSubmit)}>
+        <form ref={formRef} onSubmit={handleSubmit}>
           <DrawerBody>
             <Card size="drawer">
               <CardContent className="flex-wrap flex flex-row gap-6 items-center">

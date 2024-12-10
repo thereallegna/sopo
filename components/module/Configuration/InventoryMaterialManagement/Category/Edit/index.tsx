@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useMemo, useRef } from 'react';
+import React from 'react';
 import { Button } from '@components/ui/Button';
 import {
   Drawer,
@@ -14,139 +14,47 @@ import InputField from '@components/shared/InputField';
 import { Checkbox } from '@components/ui/Checkbox';
 import { useDrawerStore } from '@stores/useDrawerStore';
 import { IconDeviceFloppy, IconSearch, IconX } from '@tabler/icons-react';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useForm } from '@hooks/useForm';
 import useFormStore from '@stores/useFormStore';
-import { useDrawer } from '@hooks/useDrawer';
-import { useFormChanges, useSetValueForm } from '@hooks/useFormChanges';
-import { errorMapping } from '@utils/errorMapping';
-import { AxiosError } from 'axios';
 import { GET_CATEGORY_MATERIAL_MANAGEMENT, GET_COA } from '@constants/queryKey';
 import { editItemCategory } from '@services/fetcher/configuration/material-item-warehouse-management';
 import { ItemCategorySchema } from '@constants/schemas/ConfigurationSchema/InventoryMaterialManagement';
-import useToastStore from '@stores/useToastStore';
-import { useFormSave } from '@hooks/useFormSave';
 import SelectableModal from '@components/ui/Modal';
 import { getCoa } from '@services/fetcher/configuration/general';
 import IconComponent from '@components/ui/Icon';
-import bindCurrentValueAndChangeValue from '@hooks/useBindCurrentValAndChangeVal';
+import { useSetValueForm } from '@hooks/useFormChanges';
 
 const EditCategoryMM = () => {
-  const formRef = useRef<HTMLFormElement>(null);
-  const { isOpenEdit, closeEditDrawer, setDetailData } = useDrawerStore();
-  const detail_data = useDrawerStore(
-    (state) => state.detail_data
-  ) as IItemCategory;
-
-  const { setChangeStatus, changeStatus } = useFormStore();
-
-  const [isLoading, setIsLoading] = React.useState(false);
-  const openToast = useToastStore((state) => state.showToast);
-  const queryClient = useQueryClient();
   const [isModalOpen, setModalOpen] = React.useState(false);
-
-  const {
-    watch,
-    register,
-    handleSubmit,
-    reset,
-    setError,
-    setValue,
-    control,
-    formState: { errors },
-  } = useForm<ItemCategoryFormBody>({
-    mode: 'onBlur',
-    resolver: yupResolver(ItemCategorySchema),
-    defaultValues: detail_data,
-  });
-
   const { coa_form, setCoaForm } = useFormStore();
 
-  useSetValueForm<ItemCategoryFormBody>(detail_data, setValue);
+  const detail_data = useDrawerStore(
+    (state) => state.detail_data
+  ) as ItemCategoryFormBody;
 
-  const { canSave } = useFormChanges({
-    defaultValues: detail_data,
-    control,
-  });
-
-  const code = watch('item_category_code');
-  const name = watch('item_category_name');
-
-  const currentValueMemo = useMemo(
-    () => ({
-      code: detail_data?.item_category_code || '',
-      name: detail_data?.item_category_name || '',
-    }),
-    [detail_data?.item_category_code, detail_data?.item_category_name]
-  );
-
-  const changeValueMemo = useMemo(
-    () => ({
-      code: detail_data?.item_category_code || code,
-      name,
-    }),
-    [detail_data?.item_category_code, code, name]
-  );
-
-  console.log('changeStatus', changeStatus);
-
-  useEffect(() => {
-    if (detail_data) {
-      setChangeStatus(
-        bindCurrentValueAndChangeValue(currentValueMemo, changeValueMemo)
-      );
-    }
-  }, [detail_data, changeValueMemo, setChangeStatus, currentValueMemo]);
-
-  useEffect(() => {
-    if (detail_data) {
-      setValue('item_category_code', detail_data.item_category_code || '');
-      setValue('item_category_name', detail_data.item_category_name || '');
-      setValue('active', detail_data.active || false);
-    }
-  }, [detail_data, setValue]);
-
-  const { handleCloseDrawerEdit } = useDrawer(reset, detail_data);
-
-  const { mutate: mutationEditItemCategory } = useMutation({
-    mutationFn: editItemCategory,
-    onMutate: () => {
-      setIsLoading(true);
-    },
-    onSuccess: (data) => {
-      reset();
-      setDetailData(data.data);
-      closeEditDrawer();
-      setIsLoading(false);
-      setChangeStatus(false);
-      queryClient.invalidateQueries({
-        queryKey: [GET_CATEGORY_MATERIAL_MANAGEMENT],
-      });
-      openToast('Item Category Successfully Edited', 'success');
-    },
-    onError: (error: any) => {
-      setIsLoading(false);
-      const errorRes = error as AxiosError<ErrorResponse>;
-      if (errorRes.status === 500) {
-        openToast('Item Category Failed to Edited', 'danger');
-      }
-      if (errorRes.response?.data) {
-        const { errorField } = errorRes.response.data;
-        errorMapping(errorField, setError);
-      }
-    },
-  });
-
-  const onSubmit: SubmitHandler<ItemCategoryFormBody> = (data) => {
-    mutationEditItemCategory(data);
-  };
-
-  const { handleSaveClick, handleInputKeyDown } = useFormSave({
-    ref: formRef,
+  const {
+    handleCloseDrawerEdit,
+    handleInputKeyDown,
+    handleSaveClick,
+    handleSubmit,
     isLoading,
-    hasChanged: canSave,
+    formRef,
+    isOpenEdit,
+    canSave,
+    errors,
+    setValue,
+    register,
+    watch,
+  } = useForm({
+    label: 'Master item',
+    queryKey: GET_CATEGORY_MATERIAL_MANAGEMENT,
+    mutationFn: editItemCategory,
+    validationSchema: ItemCategorySchema,
+    defaultValues: detail_data,
+    type: 'edit',
   });
+
+  useSetValueForm<ItemCategoryFormBody>(detail_data, setValue, isOpenEdit);
 
   const openModalForField = (fieldName: string) => {
     setModalOpen(true);
@@ -199,7 +107,7 @@ const EditCategoryMM = () => {
           </DrawerEndHeader>
         </DrawerHeader>
 
-        <form ref={formRef} onSubmit={handleSubmit(onSubmit)} noValidate>
+        <form ref={formRef} onSubmit={handleSubmit} noValidate>
           <DrawerBody>
             <Card size="drawer">
               <CardContent className="flex-wrap flex flex-row gap-4">
