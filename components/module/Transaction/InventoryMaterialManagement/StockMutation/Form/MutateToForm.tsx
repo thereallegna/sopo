@@ -13,16 +13,25 @@ const mutateToColumn: GenerateColumnsOption = {
       accessor: 'item_name',
       header: 'Name',
       type: 'input',
+      inputProps: {
+        disabled: true,
+      },
     },
     {
       accessor: 'batch',
       header: 'Batch',
       type: 'input',
+      inputProps: {
+        disabled: true,
+      },
     },
     {
       accessor: 'stock',
       header: 'Stock',
       type: 'input',
+      inputProps: {
+        disabled: true,
+      },
     },
     {
       accessor: 'quantity',
@@ -33,16 +42,25 @@ const mutateToColumn: GenerateColumnsOption = {
       accessor: 'uom',
       header: 'UoM',
       type: 'input',
+      inputProps: {
+        disabled: true,
+      },
     },
     {
       accessor: 'currency',
       header: 'Currency',
       type: 'input',
+      inputProps: {
+        disabled: true,
+      },
     },
     {
       accessor: 'unit_price',
       header: 'Unit Price',
       type: 'input',
+      inputProps: {
+        disabled: true,
+      },
     },
   ],
   hasAction: false,
@@ -62,11 +80,11 @@ FormType<StockMutationFormBody>) => {
     <Card size="drawer" className="border border-Neutral-200 shadow-none">
       <CardContent className="flex-wrap flex flex-row gap-6 items-center w-full">
         <TableForm
-          data={watch('mutated_from')}
+          data={watch('mutated_to')}
           columns={mutateToColumn}
           onChangeData={(prev) => {
             if (setValue) {
-              setValue('mutated_from', prev);
+              setValue('mutated_to', prev);
             }
           }}
           onShowGetDataModal={() => setShowModal(true)}
@@ -102,23 +120,32 @@ FormType<StockMutationFormBody>) => {
             },
             multipleSelect: true,
             idSelected: 'selected',
-            targetIdSelector: 'item_code',
-            valueSelected: watch('mutated_from')?.map((item) => item.item_code),
-            // onSelectRow: (data: any) => {
-            //   if (setValue) {
-            //     // Fetch Detail Initial Stock
-            //     const convertData = convertStockMutationForm(data as InitialStockFormBody);
-            //     const prevData = watch('mutated_from') || []; // Default ke array kosong jika undefined
-            //     const itemExists = prevData.some(item => item.item_code === convertData.item_code);
-            //     let updatedData;
-            //     if (itemExists) {
-            //       updatedData = prevData.filter(item => item.item_code !== convertData.item_code);
-            //     } else {
-            //       updatedData = [...prevData, convertData];
-            //     }
-            //     setValue('mutated_from', updatedData);
-            //   }
-            // }
+            targetIdSelector: 'document_number',
+            valueSelected: watch('mutated_to')?.map(
+              (item) => item.document_number
+            ),
+            onSelectRow: (data: any) => {
+              if (setValue) {
+                // Fetch Detail Initial Stock
+                const convertData = convertStockMutationForm(
+                  data as InitialStockFormBody
+                );
+                const prevData = watch('mutated_to') || []; // Default ke array kosong jika undefined
+                const itemExists = prevData.some(
+                  (item) => item.document_number === convertData.document_number
+                );
+                let updatedData;
+                if (itemExists) {
+                  updatedData = prevData.filter(
+                    (item) =>
+                      item.document_number !== convertData.document_number
+                  );
+                } else {
+                  updatedData = [...prevData, convertData];
+                }
+                setValue('mutated_to', updatedData);
+              }
+            },
           }}
         />
       </CardContent>

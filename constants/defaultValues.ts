@@ -85,7 +85,7 @@ export const StockMutationDefaultValues: StockMutationFormBody = {
   date: '',
   warehouse: '',
   cancel: false,
-  reason_for_cacellation: '',
+  reason_for_cancellation: '',
   remark: '',
   mutated_from: [],
   mutated_to: [],

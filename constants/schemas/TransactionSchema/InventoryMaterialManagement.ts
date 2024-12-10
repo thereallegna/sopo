@@ -25,7 +25,6 @@ export const CreateStockMutationSchema = Yup.object().shape({
   document: Yup.string().required('Document is required'),
   date: Yup.date().required('Date is required'),
   warehouse: Yup.string().required('Warehouse is required'),
-  cancel: Yup.boolean().required('Cancel is required'),
   mutated_from: Yup.array(
     Yup.object().shape({
       item_code: Yup.string().required('Item code is required'),
