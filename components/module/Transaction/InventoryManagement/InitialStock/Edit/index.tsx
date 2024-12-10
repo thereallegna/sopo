@@ -11,20 +11,16 @@ import {
 } from '@components/ui/Drawer';
 import { IconDeviceFloppy } from '@tabler/icons-react';
 import { GET_INITIAL_STOCK } from '@constants/queryKey';
-import { InitialStockSchema } from '@constants/schemas/TransactionSchema/InventoryMaterialManagement';
+import { EditMasterItemMMSchema } from '@constants/schemas/ConfigurationSchema/InventoryMaterialManagement';
 import { useForm } from '@hooks/useForm';
-import { editInitialStock } from '@services/fetcher/transaction/inventory-material-management';
-// import { getItem } from '@services/fetcher/configuration/material-item-warehouse-management';
 import { ConfirmationAlert } from '@components/shared/Alert';
-// import SelectableModal from '@components/ui/Modal';
+import { editInitialStock } from '@services/fetcher/transaction/inventory-material-management';
 import { useSetValueForm } from '@hooks/useFormChanges';
 import { useDrawerStore } from '@stores/useDrawerStore';
 import InitialStockHeaderForm from '../Form/HeaderForm';
 import InitialStockDetailForm from '../Form/DetailForm';
 
 const EditInitialStock = () => {
-  // const [showModalSource, setShowModalSource ] = useState<boolean>(false);
-
   const detail_data = useDrawerStore(
     (state) => state.detail_data
   ) as InitialStockFormBody;
@@ -51,7 +47,7 @@ const EditInitialStock = () => {
     label: 'Edit Initial Stock',
     queryKey: GET_INITIAL_STOCK,
     mutationFn: editInitialStock,
-    validationSchema: InitialStockSchema,
+    validationSchema: EditMasterItemMMSchema,
     defaultValues: detail_data,
     type: 'edit',
     requireAllFields: true,

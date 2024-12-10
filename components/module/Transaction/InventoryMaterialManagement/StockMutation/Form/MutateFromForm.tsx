@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Card, CardContent } from '@components/ui/Card';
 import TableForm from '@components/shared/TableForm';
 import { GET_INITIAL_STOCK } from '@constants/queryKey';
-import { convertStockMutationForm } from '@utils/converter';
+// import { convertStockMutationForm } from '@utils/converter';
 import { getInitialStock } from '@services/fetcher/transaction/inventory-material-management';
 import { GenerateColumnsOption } from '../../../../../../types/client/table';
 import { FormType } from '../../../../../../types/form';
