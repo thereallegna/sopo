@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React from 'react';
 import { Button } from '@components/ui/Button';
 import {
   Drawer,
@@ -11,55 +11,42 @@ import {
 } from '@components/ui/Drawer';
 import { Card, CardContent } from '@components/ui/Card';
 import InputField from '@components/shared/InputField';
-import { useDrawerStore } from '@stores/useDrawerStore';
 import { IconDeviceFloppy, IconSearch, IconX } from '@tabler/icons-react';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useForm } from '@hooks/useForm';
 import useFormStore from '@stores/useFormStore';
-import { useDrawer } from '@hooks/useDrawer';
 import { ItemCategoryDefaultValues } from '@constants/defaultValues';
-import { useFormChanges } from '@hooks/useFormChanges';
-import { AxiosError } from 'axios';
-import { errorMapping } from '@utils/errorMapping';
 import { GET_CATEGORY_MATERIAL_MANAGEMENT, GET_COA } from '@constants/queryKey';
 import { ItemCategorySchema } from '@constants/schemas/ConfigurationSchema/InventoryMaterialManagement';
 import { createItemCategory } from '@services/fetcher/configuration/material-item-warehouse-management';
 import { Checkbox } from '@components/ui/Checkbox';
-import useToastStore from '@stores/useToastStore';
-import { useFormSave } from '@hooks/useFormSave';
 import SelectableModal from '@components/ui/Modal';
 import { getCoa } from '@services/fetcher/configuration/general';
 import IconComponent from '@components/ui/Icon';
 
 const CreateCategoryMM = () => {
-  const formRef = useRef<HTMLFormElement>(null);
-  const { isOpen, closeDrawer, openDetailDrawer } = useDrawerStore();
-  const { setChangeStatus } = useFormStore();
-  const [isLoading, setIsLoading] = React.useState(false);
-  const openToast = useToastStore((state) => state.showToast);
-  const queryClient = useQueryClient();
   const [isModalOpen, setModalOpen] = React.useState(false);
   const { coa_form, setCoaForm } = useFormStore();
 
   const {
-    register,
+    handleCloseDrawer,
+    handleInputKeyDown,
+    handleSaveClick,
     handleSubmit,
-    reset,
-    setError,
+    isLoading,
+    formRef,
+    isOpen,
+    canSave,
+    errors,
     setValue,
+    register,
     watch,
-    control,
-    formState: { errors },
-  } = useForm<ItemCategoryFormBody>({
-    mode: 'onBlur',
-    resolver: yupResolver(ItemCategorySchema),
+  } = useForm({
+    label: 'Items Category',
+    queryKey: GET_CATEGORY_MATERIAL_MANAGEMENT,
+    mutationFn: createItemCategory,
+    validationSchema: ItemCategorySchema,
     defaultValues: ItemCategoryDefaultValues,
-  });
-
-  const { canSave } = useFormChanges<ItemCategoryFormBody>({
-    defaultValues: ItemCategoryDefaultValues,
-    control,
+    type: 'add',
     requireAllFields: true,
     ignoredFields: [
       'coa_stock',
@@ -75,47 +62,6 @@ const CreateCategoryMM = () => {
       'coa_purchase_return_description',
       'coa_consumption_cost_description',
     ],
-  });
-
-  const { handleCloseDrawer } = useDrawer(reset);
-
-  const { mutate: mutationCreateCategoryMM } = useMutation({
-    mutationFn: createItemCategory,
-    onMutate: () => {
-      setIsLoading(true);
-    },
-    onSuccess: (data) => {
-      reset();
-      closeDrawer();
-      setIsLoading(false);
-      setChangeStatus(false);
-      openDetailDrawer(data.data);
-      queryClient.invalidateQueries({
-        queryKey: [GET_CATEGORY_MATERIAL_MANAGEMENT],
-      });
-      openToast('Item Category Successfully Created', 'success');
-    },
-    onError: (error: any) => {
-      setIsLoading(false);
-      const errorRes = error as AxiosError<ErrorResponse>;
-      if (errorRes.status === 500) {
-        openToast('Item Category Failed to Created', 'danger');
-      }
-      if (errorRes.response?.data) {
-        const { errorField } = errorRes.response.data;
-        errorMapping(errorField, setError);
-      }
-    },
-  });
-
-  const onSubmit: SubmitHandler<ItemCategoryFormBody> = (data) => {
-    mutationCreateCategoryMM(data);
-  };
-
-  const { handleSaveClick, handleInputKeyDown } = useFormSave({
-    ref: formRef,
-    isLoading,
-    hasChanged: canSave,
   });
 
   const openModalForField = (fieldName: string) => {
@@ -169,7 +115,7 @@ const CreateCategoryMM = () => {
             </Button>
           </DrawerEndHeader>
         </DrawerHeader>
-        <form ref={formRef} onSubmit={handleSubmit(onSubmit)}>
+        <form ref={formRef} onSubmit={handleSubmit}>
           <DrawerBody>
             <Card
               size="drawer"

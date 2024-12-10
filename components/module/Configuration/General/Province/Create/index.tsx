@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React from 'react';
 import { Button } from '@components/ui/Button';
 import {
   Drawer,
@@ -11,100 +11,41 @@ import {
 } from '@components/ui/Drawer';
 import { Card, CardContent } from '@components/ui/Card';
 import InputField from '@components/shared/InputField';
-import { useDrawerStore } from '@stores/useDrawerStore';
 import { IconDeviceFloppy } from '@tabler/icons-react';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useForm } from '@hooks/useForm';
 import { provinceSchema } from '@constants/schemas/ConfigurationSchema/general';
 import {
   createProvince,
   getCountry,
 } from '@services/fetcher/configuration/general';
-import useFormStore from '@stores/useFormStore'; // Import useFormStore
-import { useDrawer } from '@hooks/useDrawer';
 import { provinceDefaultValues } from '@constants/defaultValues';
-import { useFormChanges } from '@hooks/useFormChanges';
 import Combobox from '@components/shared/Combobox';
-import { errorMapping } from '@utils/errorMapping';
-import { AxiosError } from 'axios';
 import { GET_COUNTRY, GET_PROVINCE } from '@constants/queryKey';
-import useToastStore from '@stores/useToastStore';
-import { useFormSave } from '@hooks/useFormSave';
 
 const CreateCity = () => {
-  const formRef = useRef<HTMLFormElement>(null);
-  const { isOpen, closeDrawer, openDetailDrawer } = useDrawerStore();
-  const { setChangeStatus } = useFormStore();
-  const [isLoading, setIsLoading] = React.useState(false);
-  const showToast = useToastStore((state) => state.showToast);
-  const queryClient = useQueryClient();
-
   const {
-    register,
+    handleCloseDrawer,
+    handleInputKeyDown,
+    handleSaveClick,
     handleSubmit,
-    reset,
-    setError,
-    setValue,
+    isLoading,
+    formRef,
+    isOpen,
+    canSave,
     watch,
-    control,
-    formState: { errors },
-  } = useForm<ProvinceFormBody>({
-    mode: 'onSubmit',
-    resolver: yupResolver(provinceSchema),
+    setValue,
+    setError,
+    errors,
+    register,
+  } = useForm({
+    label: 'Province',
+    queryKey: GET_PROVINCE,
+    mutationFn: createProvince,
+    validationSchema: provinceSchema,
     defaultValues: provinceDefaultValues,
-  });
-
-  const { canSave } = useFormChanges({
-    defaultValues: provinceDefaultValues,
-    control,
+    type: 'add',
     requireAllFields: true,
   });
-
-  const { handleCloseDrawer } = useDrawer(reset);
-
-  const { mutate: mutationCreateCity } = useMutation({
-    mutationFn: createProvince,
-    onMutate: () => {
-      setIsLoading(true);
-    },
-    onSuccess: (data) => {
-      closeDrawer();
-      setIsLoading(false);
-      setChangeStatus(false);
-
-      openDetailDrawer({
-        ...data.data,
-        country: watch('country'),
-        country_code: watch('country_code'),
-      } as ProvinceFormBody);
-      reset();
-      queryClient.invalidateQueries({ queryKey: [GET_PROVINCE] });
-      showToast('Province successfully added', 'success');
-    },
-    onError: (error: any) => {
-      setIsLoading(false);
-      const errorRes = error as AxiosError<ErrorResponse>;
-      if (errorRes.status === 500) {
-        showToast('Province failed to added', 'danger');
-      }
-      if (errorRes.response?.data) {
-        const { errorField } = errorRes.response.data;
-        errorMapping(errorField, setError);
-      }
-    },
-  });
-
-  const onSubmit: SubmitHandler<ProvinceFormBody> = (data) => {
-    mutationCreateCity(data);
-  };
-
-  const { handleSaveClick, handleInputKeyDown } = useFormSave({
-    ref: formRef,
-    isLoading,
-    hasChanged: canSave,
-  });
-
   return (
     <Drawer onClose={handleCloseDrawer} open={isOpen}>
       <DrawerContent>
@@ -121,7 +62,7 @@ const CreateCity = () => {
             </Button>
           </DrawerEndHeader>
         </DrawerHeader>
-        <form ref={formRef} onSubmit={handleSubmit(onSubmit)}>
+        <form ref={formRef} onSubmit={handleSubmit}>
           <DrawerBody>
             <Card
               size="drawer"
