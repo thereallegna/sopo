@@ -52,6 +52,7 @@ const CreateMasterItemMM = () => {
     type: 'add',
     requireAllFields: true,
     ignoredFields: [
+      'source',
       'local_code',
       'tax_liable',
       'foreign_name',
@@ -92,7 +93,7 @@ const CreateMasterItemMM = () => {
               handleInputKeyDown={handleInputKeyDown}
               setError={setError}
               handleShowSource={() => setShowModalSource(true)}
-              add
+              type="add"
             />
             <DetailForm
               errors={errors}

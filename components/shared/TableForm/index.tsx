@@ -21,10 +21,13 @@ import { TableFormProps } from '../../../types/client/table';
 import { generateColumns } from '../../../utils/generateColumn';
 
 const TableForm = <T,>({
+  title,
   data,
+  errors,
   columns,
-  onShowGetDataModal,
+  getDataButtonProps,
   getDataModalProps,
+  onShowGetDataModal,
   onChangeData,
 }: TableFormProps<T>) => {
   // const [localData, setLocalData] = useState<T[]>(data ?? []);
@@ -64,72 +67,83 @@ const TableForm = <T,>({
 
   // }, [data]);
 
-  const handleInputChange = (
-    rowIndex: number,
-    columnId: string,
-    value: string
-  ) => {
-    const prevData = [...data];
-    prevData[rowIndex] = { ...prevData[rowIndex], [columnId]: value };
-    onChangeData?.(prevData);
-    // setLocalData((prevData) => {
-    //   const updatedData = [...prevData];
-    //   updatedData[rowIndex] = { ...updatedData[rowIndex], [columnId]: value };
+  const handleInputChange = React.useCallback(
+    (rowIndex: number, columnId: string, value: string) => {
+      const prevData = [...data];
+      prevData[rowIndex] = { ...prevData[rowIndex], [columnId]: value };
+      onChangeData?.(prevData);
+    },
+    [data, onChangeData] // Tambahkan dependensi yang relevan
+  );
 
-    // const lastRow = updatedData[updatedData.length - 1];
-    // const secondLastRow = updatedData[updatedData.length - 2];
+  // const handleInputChange = (
+  //   rowIndex: number,
+  //   columnId: string,
+  //   value: string,
+  // ) => {
+  //   console.log("Cek Data melalui TableForm => ", data)
+  //   const prevData = [...data];
+  //   prevData[rowIndex] = { ...prevData[rowIndex], [columnId]: value };
+  //   onChangeData?.(prevData);
+  // setLocalData((prevData) => {
+  //   const updatedData = [...prevData];
+  //   updatedData[rowIndex] = { ...updatedData[rowIndex], [columnId]: value };
 
-    // // const isRowEmpty = (row: any) => {
-    // //   if(row) {
-    // //     const relevantField = Object.keys(row).filter(
-    // //       (key) => key !== getDataModalProps?.targetIdSelector
-    // //     )
+  // const lastRow = updatedData[updatedData.length - 1];
+  // const secondLastRow = updatedData[updatedData.length - 2];
 
-    // //     return relevantField
-    // //       ? Object.values(relevantField).every((v) => v === '' || v === undefined)
-    // //       : false;
-    // //   }
-    // //   return false
-    // // }
+  // // const isRowEmpty = (row: any) => {
+  // //   if(row) {
+  // //     const relevantField = Object.keys(row).filter(
+  // //       (key) => key !== getDataModalProps?.targetIdSelector
+  // //     )
 
-    // const isRowEmpty = (row: any) => {
-    //   if (row) {
-    //     const relevantFields = Object.keys(row).filter(
-    //       (key) => key !== getDataModalProps?.targetIdSelector
-    //     );
-    //     return relevantFields.every((key) => row[key] === '' || row[key] === undefined);
-    //   }
-    //   return false;
-    // };
+  // //     return relevantField
+  // //       ? Object.values(relevantField).every((v) => v === '' || v === undefined)
+  // //       : false;
+  // //   }
+  // //   return false
+  // // }
 
-    // const isLastRowEmpty = isRowEmpty(lastRow);
-    // const isSecondLastRowEmpty = isRowEmpty(secondLastRow);
+  // const isRowEmpty = (row: any) => {
+  //   if (row) {
+  //     const relevantFields = Object.keys(row).filter(
+  //       (key) => key !== getDataModalProps?.targetIdSelector
+  //     );
+  //     return relevantFields.every((key) => row[key] === '' || row[key] === undefined);
+  //   }
+  //   return false;
+  // };
 
-    // if (!isLastRowEmpty) {
-    //   updatedData.push({} as T);
-    // }
+  // const isLastRowEmpty = isRowEmpty(lastRow);
+  // const isSecondLastRowEmpty = isRowEmpty(secondLastRow);
 
-    // if (isSecondLastRowEmpty && isLastRowEmpty) {
-    //   if(secondLastRow){
-    //     updatedData[updatedData.length - 2] = {} as T
-    //   }
-    //   updatedData.pop();
-    // }
+  // if (!isLastRowEmpty) {
+  //   updatedData.push({} as T);
+  // }
 
-    // console.log("TEST ", update)
+  // if (isSecondLastRowEmpty && isLastRowEmpty) {
+  //   if(secondLastRow){
+  //     updatedData[updatedData.length - 2] = {} as T
+  //   }
+  //   updatedData.pop();
+  // }
 
-    //   onChangeData?.(updatedData);
-    //   return updatedData;
-    // });
-  };
+  // console.log("TEST ", update)
+
+  //   onChangeData?.(updatedData);
+  //   return updatedData;
+  // });
+  // };
 
   const generatedColumns = React.useMemo(
     () =>
       generateColumns({
         ...columns,
         onInputChange: handleInputChange,
+        errors,
       }),
-    [columns]
+    [columns, data.length]
   );
 
   const table = useReactTable({
@@ -141,13 +155,14 @@ const TableForm = <T,>({
   return (
     <div className="flex flex-col gap-[10px] w-full">
       <div className="flex justify-between items-center z-40">
-        <p className="text-lg font-bold">Mutated From</p>
+        <p className="text-lg font-bold">{title}</p>
         <div>
           <Button
             type="button"
-            variant="secondary"
             className="px-[10px]"
             onClick={onShowGetDataModal}
+            {...getDataButtonProps}
+            variant={getDataButtonProps?.variant || 'secondary'}
           >
             <IconComponent icon={IconTablePlus} size="large" />
             <IconComponent icon={IconChevronDown} size="large" />

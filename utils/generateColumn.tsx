@@ -4,16 +4,18 @@ import {
   ColumnDef,
   createColumnHelper,
 } from '@tanstack/react-table';
-import Input from '@components/ui/Input';
+// import Input from '@components/ui/Input';
 import GoToDetail from '@components/shared/TableContent/ToDetail';
 import { IconCircleCheckFilled } from '@tabler/icons-react';
 import { Checkbox } from '@components/ui/Checkbox';
+import InputField from '@components/shared/InputField';
 import { GenerateColumnsOption } from '../types/client/table';
 
 export const generateColumns = ({
   columns,
   hasAction = true,
   disableAll,
+  errors,
   onInputChange,
   onCheckedChange,
 }: GenerateColumnsOption):
@@ -32,14 +34,26 @@ export const generateColumns = ({
 
         if (column.type === 'input') {
           return (
-            <Input
-              defaultValue={value}
+            <InputField
+              type="small"
+              value={value}
               disabled={disableAll}
               onChange={(e) =>
                 onInputChange &&
                 onInputChange(rowIndex, columnId, e.target.value)
               }
-              {...column.inputProps}
+              message={
+                errors?.[columnId][rowIndex]
+                  ? {
+                      text: errors[columnId][rowIndex].message!,
+                      type: 'danger',
+                    }
+                  : undefined
+              }
+              inputProps={{
+                ...column.inputProps,
+                defaultValue: value,
+              }}
             />
           );
         }
