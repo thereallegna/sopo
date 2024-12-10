@@ -77,14 +77,6 @@ export const InitialStockDefaultValues: InitialStockFormBody = {
   currency_code: '',
   rate: '',
   remark: '',
-  item: '',
-  item_name: '',
-  item_code: '',
-  batch: '',
-  quantity: '',
-  price: '',
-  local_code: '',
-  uom_name: '',
   detail: [],
 };
 
@@ -97,7 +89,7 @@ export const StockMutationDefaultValues: StockMutationFormBody = {
   remark: '',
   mutated_from: [],
   mutated_to: [],
-}
+};
 // Transaction Inventory Material Management End
 
 // Configuration Financial Management Start

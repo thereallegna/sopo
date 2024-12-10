@@ -16,10 +16,8 @@ const InitialStockHeaderForm = ({
   setError,
   handleInputKeyDown,
   disableAll,
-  type = 'add',
 }: FormType<InitialStockFormBody> & {
-  disableAll?: boolean;
-  type?: 'add' | 'edit';
+  add?: boolean;
 }) => (
   <Card size="drawer" className="border border-Neutral-200 shadow-none">
     <CardContent className="flex-wrap flex flex-row gap-6 items-center">
@@ -36,7 +34,7 @@ const InitialStockHeaderForm = ({
           type="text"
           required
           right
-          disabled={disableAll}
+          disabled
           className="w-full gap-2"
           onKeyDown={handleInputKeyDown}
         />
@@ -76,7 +74,7 @@ const InitialStockHeaderForm = ({
               setError('warehouse_code', { type: 'disabled' });
             }
           }}
-          disabled={disableAll || type === 'edit'}
+          disabled={disableAll}
         />
         <Combobox
           label="Currency"
@@ -104,7 +102,7 @@ const InitialStockHeaderForm = ({
               setError('currency_code', { type: 'disabled' });
             }
           }}
-          disabled={disableAll || type === 'edit'}
+          disabled={disableAll}
         />
       </div>
       <div className="flex flex-col gap-[14px] flex-1 h-full justify-between">

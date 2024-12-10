@@ -12,7 +12,7 @@ import {
 import { IconDeviceFloppy } from '@tabler/icons-react';
 import { InitialStockDefaultValues } from '@constants/defaultValues';
 import { GET_INITIAL_STOCK } from '@constants/queryKey';
-import { InitialStockSchema } from '@constants/schemas/TransactionSchema/InventoryMaterialManagement';
+import { CreateInitialStockSchema } from '@constants/schemas/TransactionSchema/InventoryMaterialManagement';
 import { useForm } from '@hooks/useForm';
 import { createInitialStock } from '@services/fetcher/transaction/inventory-material-management';
 import { ConfirmationAlert } from '@components/shared/Alert';
@@ -42,7 +42,7 @@ const CreateInitialStock = () => {
     label: 'Initial Stock',
     queryKey: GET_INITIAL_STOCK,
     mutationFn: createInitialStock,
-    validationSchema: InitialStockSchema,
+    validationSchema: CreateInitialStockSchema,
     defaultValues: InitialStockDefaultValues,
     type: 'add',
     requireAllFields: true,
@@ -77,6 +77,7 @@ const CreateInitialStock = () => {
               register={register}
               handleInputKeyDown={handleInputKeyDown}
               setError={setError}
+              add
             />
             <InitialStockDetailForm
               errors={errors}

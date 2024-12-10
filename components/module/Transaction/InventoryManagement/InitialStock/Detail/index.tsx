@@ -13,14 +13,15 @@ import { IconPencil } from '@tabler/icons-react';
 import { useDrawerStore } from '@stores/useDrawerStore';
 import { useSetValueForm } from '@hooks/useFormChanges';
 import { useForm } from 'react-hook-form';
-// import { getInitialStock } from '@services/fetcher/transaction/inventory-material-management';
-import { useQuery } from '@tanstack/react-query';
-import { GET_INITIAL_STOCK } from '@constants/queryKey';
+import { getDetailItem } from '@services/fetcher/configuration/material-item-warehouse-management';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
+import { GET_DETAIL_INITIAL_STOCK } from '@constants/queryKey';
 import InitialStockHeaderForm from '../Form/HeaderForm';
 import InitialStockBodyForm from '../Form/DetailForm';
 
 const DetailInitialStock = () => {
-  const { isOpenDetail, closeDetailDrawer, openEditDrawer } = useDrawerStore();
+  const { isOpenDetail, closeDetailDrawer, openEditDrawer, setDetailData } =
+    useDrawerStore();
   const detail_data = useDrawerStore(
     (state) => state.detail_data
   ) as InitialStockFormBody;
@@ -28,15 +29,16 @@ const DetailInitialStock = () => {
   const { setValue, watch, register } = useForm<InitialStockFormBody>();
 
   const { isLoading } = useQuery({
-    queryKey: [GET_INITIAL_STOCK, detail_data],
+    queryKey: [GET_DETAIL_INITIAL_STOCK, detail_data],
     queryFn: async () => {
-      // const res = await getInitialStock(detail_data.document as string);
-      // setDetailData(Object.assign(detail_data, res.data.data));
-      // return res.data.data;
+      const res = await getDetailItem(detail_data.document as string);
+      setDetailData(Object.assign(detail_data, res.data.data));
+      return res.data.data;
     },
+    placeholderData: keepPreviousData,
   });
 
-  useSetValueForm<InitialStockFormBody>(detail_data, setValue);
+  useSetValueForm<InitialStockFormBody>(detail_data, setValue, isLoading);
 
   return (
     <Drawer onClose={closeDetailDrawer} open={isOpenDetail}>
@@ -57,7 +59,7 @@ const DetailInitialStock = () => {
             </Button>
           </DrawerEndHeader>
         </DrawerHeader>
-        <form action="">
+        <form>
           <DrawerBody>
             <InitialStockHeaderForm
               watch={watch}
