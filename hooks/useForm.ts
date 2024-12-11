@@ -1,12 +1,13 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useDrawerStore } from '@stores/useDrawerStore';
+import { DetailDataType, useDrawerStore } from '@stores/useDrawerStore';
 import useFormStore from '@stores/useFormStore';
 import useToastStore from '@stores/useToastStore';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { errorMapping } from '@utils/errorMapping';
 import { AxiosError } from 'axios';
 import { ObjectSchema } from 'yup';
+import isEqual from 'fast-deep-equal';
 import {
   useForm as useReactHookForm,
   SubmitHandler,
@@ -112,6 +113,11 @@ export const useForm = <T extends FieldValues>({
     ) {
       return true;
     }
+
+    if (Array.isArray(value1) && Array.isArray(value2)) {
+      return isEqual(value1, value2);
+    }
+
     return value1 === value2;
   };
 
@@ -157,12 +163,12 @@ export const useForm = <T extends FieldValues>({
     requireAllFields,
   ]);
 
-  console.log('Has Changes => ', hasChanges);
-  console.log('Normalized Watched Fields => ', normalizedWatchedFields);
-  console.log('Default Values => ', defaultValues);
-  console.log('Relevant Fields => ', relevantFields);
-  console.log('Can Save => ', canSave);
-  console.log('watch => ', watchedFields);
+  // console.log('Has Changes => ', hasChanges);
+  // console.log('Normalized Watched Fields => ', normalizedWatchedFields);
+  // console.log('Default Values => ', defaultValues);
+  // console.log('Relevant Fields => ', relevantFields);
+  // console.log('Can Save => ', canSave);
+  // console.log('watch => ', watchedFields);
 
   const { mutate: mutation } = useMutation({
     mutationFn: ({ body, params }: { body: T; params?: any }) =>
@@ -170,7 +176,7 @@ export const useForm = <T extends FieldValues>({
     onMutate: () => {
       setIsLoading(true);
     },
-    onSuccess: (data) => {
+    onSuccess: (data: { data: DetailDataType }, { body }) => {
       if (type === 'add') {
         closeDrawer();
       } else {
@@ -178,7 +184,11 @@ export const useForm = <T extends FieldValues>({
       }
       setIsLoading(false);
       setChangeStatus(false);
-      openDetailDrawer(data.data);
+      openDetailDrawer(body as any);
+
+      console.log('Data => ', data);
+      console.log('Body => ', body);
+
       reset();
       queryClient.invalidateQueries({
         queryKey: [queryKey],

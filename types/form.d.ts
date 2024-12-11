@@ -1,4 +1,5 @@
 import {
+  Control,
   FieldErrors,
   UseFormRegister,
   UseFormSetError,
@@ -12,6 +13,7 @@ type FormType<T> = {
   disableAll?: boolean;
   watch: UseFormWatch<T>;
   register: UseFormRegister<T>;
+  control?: Control<T>;
   setValue?: UseFormSetValue<T>;
   setError?: UseFormSetError<T>;
   handleInputKeyDown?: (event: React.KeyboardEvent<HTMLInputElement>) => void;

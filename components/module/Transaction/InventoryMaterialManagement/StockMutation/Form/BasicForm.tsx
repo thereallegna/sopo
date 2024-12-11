@@ -3,17 +3,22 @@ import InputField from '@components/shared/InputField';
 import { Card, CardContent } from '@components/ui/Card';
 import { Checkbox } from '@components/ui/Checkbox';
 import Label from '@components/ui/Label';
+import Combobox from '@components/shared/Combobox';
+import { GET_WAREHOUSE } from '@constants/queryKey';
+import { getWarehouse } from '@services/fetcher/configuration/material-item-warehouse-management';
 import { FormType } from '../../../../../../types/form';
 
 const BasicForm = ({
+  setError,
   errors,
   watch,
   register,
   setValue,
   handleInputKeyDown,
   disableAll, // Pastikan properti ini diterima
+  type = 'add',
 }: FormType<StockMutationFormBody> & {
-  add?: boolean;
+  type?: 'add' | 'edit';
 }) => (
   <Card size="drawer" className="border border-Neutral-200 shadow-none">
     <CardContent className="flex-wrap flex flex-row gap-6 items-center">
@@ -52,7 +57,7 @@ const BasicForm = ({
         />
       </div>
       <div className="flex flex-col gap-[14px] flex-1 h-full justify-between">
-        <InputField
+        {/* <InputField
           {...register('warehouse')}
           message={
             errors?.warehouse
@@ -67,6 +72,34 @@ const BasicForm = ({
           disabled={disableAll} // Disabled berdasarkan disableAll
           className="w-full gap-2"
           onKeyDown={handleInputKeyDown}
+        /> */}
+        <Combobox
+          label="Warehouse"
+          placeholder="Select Warehouse"
+          required
+          queryKey={[GET_WAREHOUSE]}
+          queryFn={getWarehouse}
+          dataLabel="warehouse_name"
+          dataValue="warehouse_code"
+          message={
+            errors?.warehouse
+              ? { text: errors.warehouse.message!, type: 'danger' }
+              : undefined
+          }
+          value={{
+            label: watch('warehouse'),
+            value: watch('warehouse_code'),
+          }}
+          onChange={(val) => {
+            if (!disableAll && setValue) {
+              setValue('warehouse', val.label);
+              setValue('warehouse_code', val.value);
+            }
+            if (setError) {
+              setError('warehouse_code', { type: 'disabled' });
+            }
+          }}
+          disabled={disableAll || type === 'edit'}
         />
         <div className="flex items-center gap-2">
           <Label className="shrink-0 w-[100px] font-semibold">Cancel</Label>

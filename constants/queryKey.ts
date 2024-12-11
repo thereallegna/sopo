@@ -22,6 +22,8 @@ export const GET_STOCK_MUTATION = 'getStockMutation';
 export const GET_DETAIL_STOCK_MUTATION = 'getDetailStockMutation';
 export const GET_INITIAL_STOCK = 'getInitialStock';
 export const GET_DETAIL_INITIAL_STOCK = 'getDetailInitialStock';
+export const GET_DETAIL_BY_WAREHOUSE_INITIAL_STOCK =
+  'getDetailByWarehouseInitialStock';
 // TRANSACTION - INVENTORY MANAGEMENT (END)
 
 // lOG HISTORY  START

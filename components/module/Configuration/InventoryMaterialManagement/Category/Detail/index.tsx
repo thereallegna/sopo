@@ -21,11 +21,13 @@ const DetailCategoryMM = () => {
   const { isOpenDetail, closeDetailDrawer, openEditDrawer } = useDrawerStore();
   const detail_data = useDrawerStore(
     (state) => state.detail_data
-  ) as IItemCategory;
+  ) as ItemCategoryFormBody;
 
-  const { register, setValue } = useForm<IItemCategory>();
+  const { register, setValue } = useForm<ItemCategoryFormBody>();
 
-  useSetValueForm<IItemCategory>(detail_data, setValue);
+  useSetValueForm<ItemCategoryFormBody>(detail_data, setValue);
+
+  console.log('DETAILLL DATAAAAA', detail_data);
 
   return (
     <Drawer onClose={closeDetailDrawer} open={isOpenDetail}>
@@ -202,7 +204,9 @@ const DetailCategoryMM = () => {
                       {...register('coa_consumption_cost')}
                     />
                     <InputField
-                      value={detail_data?.coa_consumption_cost_description}
+                      value={
+                        detail_data?.coa_consumption_cost_description || ''
+                      }
                       placeholder="COA's Account (Consumption Cost)"
                       disabled
                       className="flex-1"

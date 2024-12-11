@@ -8,6 +8,8 @@ import {
   VisibilityState,
 } from '@tanstack/react-table';
 import { AxiosResponse } from 'axios';
+import { FieldError } from 'react-hook-form';
+import { ButtonProps } from '@components/ui/Button';
 import { FetcherOptions } from './fetcher';
 
 type ColumnKey = {
@@ -23,6 +25,7 @@ type GenerateColumnsOption = {
   columns: ColumnKey[];
   hasAction?: boolean;
   disableAll?: boolean;
+  errors?: FieldError<any>;
   onInputChange?: (rowIndex: number, columnId: string, value: string) => void;
   onCheckedChange?: (
     rowIndex: number,
@@ -73,11 +76,14 @@ type TableContentProps<T> = {
 };
 
 type TableFormProps<T> = {
+  title: string;
   data: T[];
   columns: GenerateColumnsOption;
-  getDataModalProps?: SelectableModalProps
+  errors?: FieldError<T>;
+  getDataModalProps?: SelectableModalProps;
+  getDataButtonProps?: ButtonProps;
   onChangeData?: (prev: T[]) => void;
-  onShowGetDataModal?: () => void
+  onShowGetDataModal?: () => void;
 };
 
 type PaginationPartial =
@@ -99,4 +105,4 @@ type SelectableModalProps = {
   onClose: (val: boolean) => void;
   queryFn: (option?: FetcherOptions) => Promise<AxiosResponse<any, any>>;
   onSelectRow?: (data: any) => void;
-}
+};

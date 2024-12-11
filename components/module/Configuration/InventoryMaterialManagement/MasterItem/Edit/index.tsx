@@ -107,6 +107,7 @@ const EditMasterItemMM = () => {
               handleInputKeyDown={handleInputKeyDown}
               setError={setError}
               handleShowSource={() => setShowModalSource(true)}
+              type="edit"
             />
             <DetailForm
               errors={errors}

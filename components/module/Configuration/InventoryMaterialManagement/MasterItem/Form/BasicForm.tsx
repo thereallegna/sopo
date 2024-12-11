@@ -15,10 +15,10 @@ const BasicForm = ({
   handleInputKeyDown,
   handleShowSource,
   disableAll, // Pastikan properti ini diterima
-  add,
+  type = 'add',
 }: FormType<MasterItemFormBody> & {
   handleShowSource?: () => void;
-  add?: boolean;
+  type?: 'add' | 'edit';
 }) => (
   <Card size="drawer" className="border border-Neutral-200 shadow-none">
     <CardContent className="flex-wrap flex flex-row gap-6 items-center">
@@ -44,9 +44,9 @@ const BasicForm = ({
             />
             <Checkbox
               label="Active"
-              checked={watch('active')}
+              checked={type === 'add' ? true : watch('active')}
               onCheckedChange={(val) => setValue && setValue('active', val)}
-              disabled={disableAll || add} // Disabled berdasarkan disableAll
+              disabled={disableAll || type === 'add'} // Disabled berdasarkan disableAll
             />
           </div>
           <div className="flex items-center gap-[10px]">
@@ -60,7 +60,9 @@ const BasicForm = ({
               label="Source"
               type="text"
               right
-              disabled={disableAll || watch('source') === undefined}
+              disabled={
+                disableAll || watch('source') === undefined || type === 'edit'
+              }
               className="w-full gap-2"
               onKeyDown={handleInputKeyDown}
               readOnly={disableAll} // Disabled jika disableAll true
@@ -68,27 +70,32 @@ const BasicForm = ({
                 onClick: handleShowSource,
               }}
             />
-            {watch('source') ? (
-              <Button
-                type="button"
-                className="w-min"
-                variant="backDrawer"
-                icon={{ icon: IconX }}
-                onClick={() =>
-                  !disableAll && setValue && setValue('source', undefined)
-                }
-                disabled={disableAll} // Disabled berdasarkan disableAll
-              />
-            ) : (
-              <Button
-                type="button"
-                className="w-min"
-                variant="backDrawer"
-                icon={{ icon: IconSearch }}
-                onClick={handleShowSource}
-                disabled={disableAll} // Disabled berdasarkan disableAll
-              />
-            )}
+            {(() => {
+              if (type !== 'edit' && !disableAll) {
+                return watch('source') ? (
+                  <Button
+                    type="button"
+                    className="w-min"
+                    variant="backDrawer"
+                    icon={{ icon: IconX }}
+                    onClick={() =>
+                      !disableAll && setValue && setValue('source', undefined)
+                    }
+                    disabled={disableAll} // Disabled berdasarkan disableAll
+                  />
+                ) : (
+                  <Button
+                    type="button"
+                    className="w-min"
+                    variant="backDrawer"
+                    icon={{ icon: IconSearch }}
+                    onClick={handleShowSource}
+                    disabled={disableAll} // Disabled berdasarkan disableAll
+                  />
+                );
+              }
+              return null;
+            })()}
           </div>
         </div>
         <InputField
