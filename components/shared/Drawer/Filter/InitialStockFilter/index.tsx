@@ -5,7 +5,10 @@ import { Drawer, DrawerContent, DrawerBody } from '@components/ui/Drawer';
 
 import { useDrawerStore } from '@stores/useDrawerStore';
 import FilterDrawerHeader from '@components/ui/Drawer/FilterDrawerHeader';
-import InputField from '@components/shared/InputField';
+import { DatePickerRange } from '@components/shared/DatePickerRange';
+import Combobox from '@components/shared/Combobox';
+import { GET_WAREHOUSE } from '@constants/queryKey';
+import { getWarehouse } from '@services/fetcher/configuration/material-item-warehouse-management';
 
 const FilterInitialStock = () => {
   const { isOpenFilter, closeFilterDrawer } = useDrawerStore();
@@ -25,7 +28,16 @@ const FilterInitialStock = () => {
             onClick={closeFilterDrawer}
           />
           <DrawerBody className="p-0">
-            <InputField label="Initial Stock Code" />
+            <Combobox
+              label="Warehouse"
+              placeholder="Select Warehouse"
+              required
+              queryKey={[GET_WAREHOUSE]}
+              queryFn={getWarehouse}
+              dataLabel="warehouse_name"
+              dataValue="warehouse_code" // No predefined value, just for filtering
+            />
+            <DatePickerRange placeholder="Select Date" />
           </DrawerBody>
         </div>
       </DrawerContent>
