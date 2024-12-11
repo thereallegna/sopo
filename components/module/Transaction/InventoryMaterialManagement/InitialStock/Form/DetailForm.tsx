@@ -157,18 +157,25 @@ FormType<InitialStockFormBody>) => {
             valueSelected: watch('detail')?.map((item) => item.item_code),
             // onSelectRow: (data: any) => {
             //   if (setValue) {
-            //     // const convertData = convertInitialStockForm(data as MasterItemFormBody);
-            //     // const prevData = watch('detail') || [];
-            //     // const itemExists = prevData.some(item => item.item_code === convertData.item_code);
-            //     // let updatedData;
-            //     // if (itemExists) {
-            //     //   updatedData = prevData.filter(item => item.item_code !== convertData.item_code);
-            //     // } else {
-            //     //   updatedData = [...prevData, convertData];
-            //     // }
-            //     // setValue('detail', updatedData);
+            //     const convertData = convertStockMutationForm(
+            //       data as MasterItemFormBody
+            //     );
+            //     const prevData = watch('detail') || [];
+            //     const itemExists = prevData.some(
+            //       (item) => item.document === convertData.document
+            //     );
+            //     let updatedData;
+            //     if (itemExists) {
+            //       updatedData = prevData.filter(
+            //         (item) =>
+            //           item.document !== convertData.docuemnt
+            //       );
+            //     } else {
+            //       updatedData = [...prevData, convertData];
+            //     }
+            //     setValue('detail', updatedData);
             //   }
-            // }
+            // },
           }}
         />
       </CardContent>

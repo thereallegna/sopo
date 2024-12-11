@@ -124,28 +124,28 @@ FormType<StockMutationFormBody>) => {
             valueSelected: watch('mutated_from')?.map(
               (item) => item.document_number
             ),
-            onSelectRow: (data: any) => {
-              if (setValue) {
-                // Fetch Detail Initial Stock
-                const convertData = convertStockMutationForm(
-                  data as InitialStockFormBody
-                );
-                const prevData = watch('mutated_from') || []; // Default ke array kosong jika undefined
-                const itemExists = prevData.some(
-                  (item) => item.document_number === convertData.document_number
-                );
-                let updatedData;
-                if (itemExists) {
-                  updatedData = prevData.filter(
-                    (item) =>
-                      item.document_number !== convertData.document_number
-                  );
-                } else {
-                  updatedData = [...prevData, convertData];
-                }
-                setValue('mutated_from', updatedData);
-              }
-            },
+            // onSelectRow: (data: any) => {
+            //   if (setValue) {
+            //     // Fetch Detail Initial Stock
+            //     const convertData = convertStockMutationForm(
+            //       data as InitialStockFormBody
+            //     );
+            //     const prevData = watch('mutated_from') || []; // Default ke array kosong jika undefined
+            //     const itemExists = prevData.some(
+            //       (item) => item.document_number === convertData.document_number
+            //     );
+            //     let updatedData;
+            //     if (itemExists) {
+            //       updatedData = prevData.filter(
+            //         (item) =>
+            //           item.document_number !== convertData.document_number
+            //       );
+            //     } else {
+            //       updatedData = [...prevData, convertData];
+            //     }
+            //     setValue('mutated_from', updatedData);
+            //   }
+            // },
           }}
         />
       </CardContent>

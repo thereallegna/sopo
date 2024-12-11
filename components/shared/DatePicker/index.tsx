@@ -69,7 +69,7 @@ export const DatePicker = ({
               } ${disabled ? 'bg-neutral-100' : ''}`}
               disabled={disabled}
             >
-              {date ? format(date, 'PPP') : <span>{placeholder}</span>}
+              {date ? format(date, 'dd MMM yyyy') : <span>{placeholder}</span>}
             </Button>
           </PopoverTrigger>
           <PopoverContent className="w-auto p-0">
