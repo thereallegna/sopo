@@ -16,8 +16,9 @@ type ColumnKey = {
   accessor: string;
   header: string;
   size?: number;
-  type?: 'default' | 'input' | 'checkbox';
+  type?: 'default' | 'input' | 'checkbox' | 'button';
   inputProps?: InputProps;
+  buttonProps?: ButtonProps;
   checkboxProps?: CheckboxProps;
 };
 
@@ -82,8 +83,10 @@ type TableFormProps<T> = {
   errors?: FieldError<T>;
   getDataModalProps?: SelectableModalProps;
   getDataButtonProps?: ButtonProps;
-  onChangeData?: (prev: T[]) => void;
+  onChangeData?: (rowIndex: number, columnId: string, value: string) => void;
+  // onChangeData?: (prev: T[]) => void;
   onShowGetDataModal?: () => void;
+  onDeleteRow?: (index: number) => void;
 };
 
 type PaginationPartial =

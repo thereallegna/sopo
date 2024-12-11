@@ -9,6 +9,7 @@ import GoToDetail from '@components/shared/TableContent/ToDetail';
 import { IconCircleCheckFilled } from '@tabler/icons-react';
 import { Checkbox } from '@components/ui/Checkbox';
 import InputField from '@components/shared/InputField';
+import { Button } from '@components/ui/Button';
 import { GenerateColumnsOption } from '../types/client/table';
 
 export const generateColumns = ({
@@ -31,6 +32,10 @@ export const generateColumns = ({
         const value = props.renderValue();
         const rowIndex = props.row.index; // Dapatkan indeks baris
         const columnId = props.column.id;
+
+        if (column.type === 'button') {
+          return <Button data-row-index={rowIndex} {...column.buttonProps} />;
+        }
 
         if (column.type === 'input') {
           return (

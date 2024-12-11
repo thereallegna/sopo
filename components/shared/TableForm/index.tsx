@@ -16,7 +16,7 @@ import {
 import SelectableModal from '@components/ui/Modal';
 import { Button } from '@components/ui/Button';
 import IconComponent from '@components/ui/Icon';
-import { IconTablePlus, IconChevronDown } from '@tabler/icons-react';
+import { IconTablePlus, IconChevronDown, IconX } from '@tabler/icons-react';
 import { TableFormProps } from '../../../types/client/table';
 import { generateColumns } from '../../../utils/generateColumn';
 
@@ -29,6 +29,7 @@ const TableForm = <T,>({
   getDataModalProps,
   onShowGetDataModal,
   onChangeData,
+  onDeleteRow,
 }: TableFormProps<T>) => {
   // const [localData, setLocalData] = useState<T[]>(data ?? []);
 
@@ -67,14 +68,14 @@ const TableForm = <T,>({
 
   // }, [data]);
 
-  const handleInputChange = React.useCallback(
-    (rowIndex: number, columnId: string, value: string) => {
-      const prevData = [...data];
-      prevData[rowIndex] = { ...prevData[rowIndex], [columnId]: value };
-      onChangeData?.(prevData);
-    },
-    [data, onChangeData] // Tambahkan dependensi yang relevan
-  );
+  // const handleInputChange = React.useCallback(
+  //   (rowIndex: number, columnId: string, value: string) => {
+  //     const prevData = [...data];
+  //     prevData[rowIndex] = { ...prevData[rowIndex], [columnId]: value };
+  //     onChangeData?.(prevData);
+  //   },
+  //   [data, onChangeData] // Tambahkan dependensi yang relevan
+  // );
 
   // const handleInputChange = (
   //   rowIndex: number,
@@ -136,15 +137,39 @@ const TableForm = <T,>({
   // });
   // };
 
-  const generatedColumns = React.useMemo(
-    () =>
-      generateColumns({
-        ...columns,
-        onInputChange: handleInputChange,
-        errors,
-      }),
-    [columns, data.length]
-  );
+  const generatedColumns = React.useMemo(() => {
+    const option = { ...columns };
+
+    const hasActionColumn = option.columns.some(
+      (column) => column.accessor === 'action'
+    );
+
+    if (!hasActionColumn) {
+      option.columns.push({
+        accessor: 'action',
+        header: '',
+        type: 'button',
+        buttonProps: {
+          icon: { icon: IconX },
+          className: 'w-min',
+          type: 'button',
+          variant: 'backDrawer',
+          onClick: (e) => {
+            const { rowIndex } = e.currentTarget.dataset;
+            if (rowIndex) {
+              onDeleteRow?.(Number(rowIndex));
+            }
+          },
+        },
+      });
+    }
+    // option.columns.push()
+    return generateColumns({
+      ...option,
+      onInputChange: onChangeData,
+      errors,
+    });
+  }, [columns, data.length]);
 
   const table = useReactTable({
     data,

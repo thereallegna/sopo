@@ -83,9 +83,23 @@ FormType<StockMutationFormBody>) => {
           title="Mutate From"
           data={watch('mutated_to')}
           columns={mutateToColumn}
-          onChangeData={(prev) => {
-            if (setValue) {
-              setValue('mutated_to', prev);
+          // onChangeData={(prev) => {
+          //   if (setValue) {
+          //     setValue('mutated_to', prev);
+          //   }
+          // }}
+          onChangeData={(rowIndex, columnId, value) => {
+            const prevData = watch('mutated_to');
+            prevData[rowIndex] = { ...prevData[rowIndex], [columnId]: value };
+            setValue?.('mutated_to', prevData);
+          }}
+          onDeleteRow={(index) => {
+            const data = watch('mutated_to');
+            if (index >= 0) {
+              const filteredData = data.filter(
+                (_, idx) => idx !== Number(index)
+              );
+              setValue?.('mutated_to', filteredData);
             }
           }}
           onShowGetDataModal={() => setShowModal(true)}
