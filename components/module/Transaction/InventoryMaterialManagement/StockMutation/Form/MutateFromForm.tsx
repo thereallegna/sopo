@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Card, CardContent } from '@components/ui/Card';
 import TableForm from '@components/shared/TableForm';
+import { FieldPath } from 'react-hook-form';
 import { GET_INITIAL_STOCK } from '@constants/queryKey';
 // import { convertStockMutationForm } from '@utils/converter';
 import { getInitialStock } from '@services/fetcher/transaction/inventory-material-management';
@@ -68,9 +69,10 @@ const mutateFromColumn: GenerateColumnsOption = {
 };
 
 const MutateFromForm = ({
-  // errors,
+  errors,
   watch,
   setValue,
+  setError,
 }: // setError,
 // handleInputKeyDown,
 // disableAll, // Tambahkan parameter disableAll
@@ -82,17 +84,19 @@ FormType<StockMutationFormBody>) => {
       <CardContent className="flex-wrap flex flex-row gap-6 items-center w-full">
         <TableForm
           title="Mutate From"
+          errors={errors}
           data={watch('mutated_from')}
           columns={mutateFromColumn}
-          // onChangeData={(prev) => {
-          //   if (setValue) {
-          //     setValue('mutated_from', prev);
-          //   }
-          // }}
-          onChangeData={(rowIndex, columnId, value) => {
+          onChangeData={(rowIndex: number, columnId: string, value: string) => {
             const prevData = watch('mutated_from');
             prevData[rowIndex] = { ...prevData[rowIndex], [columnId]: value };
             setValue?.('mutated_from', prevData);
+            if (setError) {
+              setError(
+                `mutated_from.${rowIndex}.${columnId}` as FieldPath<StockMutationFormBody>,
+                { type: 'disabled' }
+              );
+            }
           }}
           onShowGetDataModal={() => {
             if (watch('warehouse_code')) {

@@ -96,7 +96,7 @@ type PaginationPartial =
 type RowSizeType = 'normal' | 'compact' | 'narrow' | null | undefined;
 
 type SelectableModalProps = {
-  isOpen: boolean;
+  isOpen?: boolean;
   title: string;
   columns: GenerateColumnsOption;
   queryKey: string;
@@ -105,7 +105,7 @@ type SelectableModalProps = {
   targetIdSelector?: string;
   valueSelected?: string[];
   pinnedColumns?: string[];
-  onClose: (val: boolean) => void;
+  onClose?: (val: boolean) => void;
   queryFn: (option?: FetcherOptions) => Promise<AxiosResponse<any, any>>;
   onSelectRow?: (data: any) => void;
 };

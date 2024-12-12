@@ -48,7 +48,7 @@ export const generateColumns = ({
                 onInputChange(rowIndex, columnId, e.target.value)
               }
               message={
-                errors?.[columnId][rowIndex]
+                errors && errors[rowIndex] && errors[rowIndex][columnId]
                   ? {
                       text: errors[columnId][rowIndex].message!,
                       type: 'danger',

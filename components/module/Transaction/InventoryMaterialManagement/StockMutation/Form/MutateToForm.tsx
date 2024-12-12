@@ -4,6 +4,7 @@ import TableForm from '@components/shared/TableForm';
 import { GET_INITIAL_STOCK } from '@constants/queryKey';
 // import { convertStockMutationForm } from '@utils/converter';
 import { getInitialStock } from '@services/fetcher/transaction/inventory-material-management';
+import { FieldPath } from 'react-hook-form';
 import { GenerateColumnsOption } from '../../../../../../types/client/table';
 import { FormType } from '../../../../../../types/form';
 
@@ -67,9 +68,10 @@ const mutateToColumn: GenerateColumnsOption = {
 };
 
 const MutateToForm = ({
-  // errors,
+  errors,
   watch,
   setValue,
+  setError,
 }: // setError,
 // handleInputKeyDown,
 // disableAll, // Tambahkan parameter disableAll
@@ -83,15 +85,17 @@ FormType<StockMutationFormBody>) => {
           title="Mutate From"
           data={watch('mutated_to')}
           columns={mutateToColumn}
-          // onChangeData={(prev) => {
-          //   if (setValue) {
-          //     setValue('mutated_to', prev);
-          //   }
-          // }}
+          errors={errors}
           onChangeData={(rowIndex, columnId, value) => {
             const prevData = watch('mutated_to');
             prevData[rowIndex] = { ...prevData[rowIndex], [columnId]: value };
             setValue?.('mutated_to', prevData);
+            if (setError) {
+              setError(
+                `mutated_from.${rowIndex}.${columnId}` as FieldPath<StockMutationFormBody>,
+                { type: 'disabled' }
+              );
+            }
           }}
           onDeleteRow={(index) => {
             const data = watch('mutated_to');
@@ -109,7 +113,6 @@ FormType<StockMutationFormBody>) => {
             queryKey: GET_INITIAL_STOCK,
             queryFn: getInitialStock,
             onClose: (val) => setShowModal(val),
-            // pinnedColumns: ['selected', 'number', 'item_code'],
             columns: {
               columns: [
                 {
@@ -141,12 +144,8 @@ FormType<StockMutationFormBody>) => {
             ),
             onSelectRow: (data: any) => {
               if (setValue) {
-                // Fetch Detail Initial Stock
-                // const convertData = convertStockMutationForm(
-                //   data as InitialStockFormBody
-                // );
                 const convertData = data;
-                const prevData = watch('mutated_to') || []; // Default ke array kosong jika undefined
+                const prevData = watch('mutated_to') || [];
                 const itemExists = prevData.some(
                   (item) => item.document_number === convertData.document_number
                 );
