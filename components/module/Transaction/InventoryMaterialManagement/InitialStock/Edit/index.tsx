@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button } from '@components/ui/Button';
 import {
   Drawer,
@@ -11,12 +11,12 @@ import {
 } from '@components/ui/Drawer';
 import { IconDeviceFloppy } from '@tabler/icons-react';
 import { GET_INITIAL_STOCK } from '@constants/queryKey';
-import { EditMasterItemMMSchema } from '@constants/schemas/ConfigurationSchema/InventoryMaterialManagement';
 import { useForm } from '@hooks/useForm';
 import { ConfirmationAlert } from '@components/shared/Alert';
 import { editInitialStock } from '@services/fetcher/transaction/inventory-material-management';
 import { useSetValueForm } from '@hooks/useFormChanges';
 import { useDrawerStore } from '@stores/useDrawerStore';
+import { CreateInitialStockSchema } from '@constants/schemas/TransactionSchema/InventoryMaterialManagement';
 import InitialStockHeaderForm from '../Form/HeaderForm';
 import InitialStockDetailForm from '../Form/DetailForm';
 
@@ -47,11 +47,15 @@ const EditInitialStock = () => {
     label: 'Edit Initial Stock',
     queryKey: GET_INITIAL_STOCK,
     mutationFn: editInitialStock,
-    validationSchema: EditMasterItemMMSchema,
+    validationSchema: CreateInitialStockSchema,
     defaultValues: detail_data,
     type: 'edit',
     requireAllFields: true,
   });
+
+  useEffect(() => {
+    console.log('Error => ', errors, watch());
+  }, [errors]);
 
   useSetValueForm<InitialStockFormBody>(detail_data, setValue, isOpenEdit);
 
