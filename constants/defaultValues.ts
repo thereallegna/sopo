@@ -69,16 +69,34 @@ export const warehouseCategoryDefaultValues: WarehouseCategoryFormBody = {
 
 // Transaction Inventory Material Management Start
 export const InitialStockDefaultValues: InitialStockFormBody = {
-  document: '',
-  date: '',
-  warehouse: '',
+  document_number: '',
+  document_date: '',
+  warehouse_name: '',
   warehouse_code: '',
-  currency: '',
+  currency_name: '',
   currency_code: '',
   rate: '',
   remark: '',
-  detail: [],
+  details: [],
 };
+
+// export const InitialStockDefaultValues: InitialStockFormBody = {
+//   document_number: '',
+//   document_date: '',
+//   warehouse_name: '',
+//   warehouse_code: '',
+//   currency_name: '',
+//   currency_code: '',
+//   rate: '',
+//   remark: '',
+//   item_code: '',
+//   item_name: '',
+//   local_code: '',
+//   batch: '',
+//   quantity: 0,
+//   uom: '',
+//   unit_price: 0,
+// }
 
 export const StockMutationDefaultValues: StockMutationFormBody = {
   document: '',
@@ -92,6 +110,34 @@ export const StockMutationDefaultValues: StockMutationFormBody = {
   mutated_to: [],
 };
 // Transaction Inventory Material Management End
+
+// Reporting Inventory Material Management Start
+export const StockSummaryDefaultValues: StockSummaryFormBody = {
+  warehouse_code: '',
+  warehouse_name: '',
+  item_category_code: '',
+  item_category_name: '',
+  item_code: '',
+  item_name: '',
+  date: '',
+  local_code: '',
+  active: true,
+  quantity: '',
+  uom: '',
+};
+
+export const StockMovementDefaultValues: StockMovementFormBody = {
+  date: '',
+  warehouse_name: '',
+  warehouse_code: '',
+  type: '',
+  item_category: '',
+  item_code: '',
+  item_name: '',
+  batch: '',
+  document_number: '',
+};
+// Reporting Inventory Material Management End
 
 // Configuration Financial Management Start
 

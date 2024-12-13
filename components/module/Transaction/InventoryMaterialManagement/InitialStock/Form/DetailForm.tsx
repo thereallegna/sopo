@@ -3,6 +3,7 @@ import { Card, CardContent } from '@components/ui/Card';
 import TableForm from '@components/shared/TableForm';
 import { GET_MASTER_ITEM_MATERIAL_MANAGEMENT } from '@constants/queryKey';
 import { getItem } from '@services/fetcher/configuration/material-item-warehouse-management';
+import { convertInitialStockForm } from '@utils/converter';
 import { FieldPath } from 'react-hook-form';
 import { GenerateColumnsOption } from '../../../../../../types/client/table';
 import { FormType } from '../../../../../../types/form';
@@ -53,7 +54,7 @@ const detailFormColumn: GenerateColumnsOption = {
       },
     },
     {
-      accessor: 'unit_price',
+      accessor: 'price',
       header: 'Unit Price',
       type: 'input',
     },
@@ -76,8 +77,8 @@ FormType<InitialStockFormBody>) => {
     <Card size="drawer" className="border border-Neutral-200 shadow-none">
       <CardContent className="flex-wrap flex flex-row gap-6 items-center w-full">
         <TableForm
-          title="Detail"
-          data={watch('detail') || []}
+          title="Detail Item"
+          data={watch('details') || []}
           columns={detailFormColumn}
           errors={errors}
           // onChangeData={(prev) => {
@@ -104,29 +105,6 @@ FormType<InitialStockFormBody>) => {
             queryFn: getItem,
             onClose: (val) => setShowModal(val),
             // pinnedColumns:
-            // columns: {
-            //   columns: [
-            //     {
-            //       accessor: "selected",
-            //       header: "",
-            //       type: "checkbox",
-            //       size: 50,
-            //     },
-            //     {
-            //       accessor: "item_code",
-            //       header: "Item's Code",
-            //     },
-            //     {
-            //       accessor: "item_name",
-            //       header: "Item's Name",
-            //     },
-            //     {
-            //       accessor: "local_code",
-            //       header: "Local Code",
-            //     },
-            //   ],
-            //   hasAction: false
-            // },
             columns: {
               columns: [
                 {
@@ -147,50 +125,36 @@ FormType<InitialStockFormBody>) => {
                   accessor: 'local_code',
                   header: 'Local Code',
                 },
-                {
-                  accessor: 'foreign_name',
-                  header: 'Foreign Name',
-                },
-                {
-                  accessor: 'old_code',
-                  header: 'Old Code',
-                },
-                {
-                  accessor: 'category_name',
-                  header: 'Category Name',
-                },
-                {
-                  accessor: 'spesification',
-                  header: 'Spesification',
-                },
               ],
               hasAction: false,
             },
             multipleSelect: true,
             idSelected: 'selected',
             targetIdSelector: 'item_code',
-            valueSelected: watch('detail')?.map((item) => item.item_code),
-            // onSelectRow: (data: any) => {
-            //   if (setValue) {
-            //     const convertData = convertStockMutationForm(
-            //       data as MasterItemFormBody
-            //     );
-            //     const prevData = watch('detail') || [];
-            //     const itemExists = prevData.some(
-            //       (item) => item.document === convertData.document
-            //     );
-            //     let updatedData;
-            //     if (itemExists) {
-            //       updatedData = prevData.filter(
-            //         (item) =>
-            //           item.document !== convertData.docuemnt
-            //       );
-            //     } else {
-            //       updatedData = [...prevData, convertData];
-            //     }
-            //     setValue('detail', updatedData);
-            //   }
-            // },
+            valueSelected: watch('details')?.map((item) => item.item_code),
+            onSelectRow: (data: any) => {
+              if (setValue) {
+                // const convertData = convertStockMutationForm(
+                //   data as MasterItemFormBody
+                // );
+                const convertData = convertInitialStockForm(
+                  data as MasterItemFormBody
+                );
+                const prevData = watch('details') || [];
+                const itemExists = prevData.some(
+                  (item) => item.item_code === convertData.item_code
+                );
+                let updatedData;
+                if (itemExists) {
+                  updatedData = prevData.filter(
+                    (item) => item.item_code !== convertData.item_code
+                  );
+                } else {
+                  updatedData = [...prevData, convertData];
+                }
+                setValue('details', updatedData);
+              }
+            },
           }}
         />
       </CardContent>

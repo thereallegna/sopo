@@ -9,24 +9,25 @@ import { getCurrency } from '@services/fetcher/configuration/financial-managemen
 import { FormType } from '../../../../../../types/form';
 
 const InitialStockHeaderForm = ({
+  setError,
   errors,
   watch,
   register,
   setValue,
-  setError,
   handleInputKeyDown,
   disableAll,
+  type = 'add',
 }: FormType<InitialStockFormBody> & {
-  add?: boolean;
+  type?: 'add' | 'edit';
 }) => (
   <Card size="drawer" className="border border-Neutral-200 shadow-none">
     <CardContent className="flex-wrap flex flex-row gap-6 items-center">
       <div className="flex flex-col gap-[14px] flex-1">
         <InputField
-          {...register('document')}
+          {...register('document_number')}
           message={
-            errors?.document
-              ? { text: errors.document.message!, type: 'danger' }
+            errors?.document_number
+              ? { text: errors.document_number.message!, type: 'danger' }
               : undefined
           }
           label="Document Number"
@@ -41,8 +42,14 @@ const InitialStockHeaderForm = ({
         <DatePicker
           label="Date"
           placeholder="Select a Date"
-          value={watch('date') ? new Date(watch('date')) : undefined}
-          onChange={(date) => setValue && setValue('date', date.toISOString())}
+          value={
+            watch('document_date')
+              ? new Date(watch('document_date'))
+              : undefined
+          }
+          onChange={(date) =>
+            setValue && setValue('document_date', date.toISOString())
+          }
           disabled={disableAll}
           className="rounded-md border-shadow"
         />
@@ -57,24 +64,24 @@ const InitialStockHeaderForm = ({
           dataLabel="warehouse_name"
           dataValue="warehouse_code"
           message={
-            errors?.warehouse
-              ? { text: errors.warehouse.message!, type: 'danger' }
+            errors?.warehouse_name
+              ? { text: errors.warehouse_name.message!, type: 'danger' }
               : undefined
           }
           value={{
-            label: watch('warehouse'),
+            label: watch('warehouse_name'),
             value: watch('warehouse_code'),
           }}
           onChange={(val) => {
             if (!disableAll && setValue) {
-              setValue('warehouse', val.label);
+              setValue('warehouse_name', val.label);
               setValue('warehouse_code', val.value);
             }
             if (setError) {
               setError('warehouse_code', { type: 'disabled' });
             }
           }}
-          disabled={disableAll}
+          disabled={disableAll || type === 'edit'}
         />
         <Combobox
           label="Currency"
@@ -85,24 +92,24 @@ const InitialStockHeaderForm = ({
           dataLabel="currency_name"
           dataValue="currency_code"
           message={
-            errors?.currency
-              ? { text: errors.currency.message!, type: 'danger' }
+            errors?.currency_name
+              ? { text: errors.currency_name.message!, type: 'danger' }
               : undefined
           }
           value={{
-            label: watch('currency'),
+            label: watch('currency_name'),
             value: watch('currency_code'),
           }}
           onChange={(val) => {
             if (!disableAll && setValue) {
-              setValue('currency', val.label);
+              setValue('currency_name', val.label);
               setValue('currency_code', val.value);
             }
             if (setError) {
               setError('currency_code', { type: 'disabled' });
             }
           }}
-          disabled={disableAll}
+          disabled={disableAll || type === 'edit'}
         />
       </div>
       <div className="flex flex-col gap-[14px] flex-1 h-full justify-between">

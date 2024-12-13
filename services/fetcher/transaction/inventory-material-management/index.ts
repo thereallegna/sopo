@@ -14,7 +14,7 @@ const getInitialStock = async (option?: FetcherOptions) => {
 
     return res;
   } catch (error) {
-    console.error('Error fetching log history:', error);
+    console.error('Error creating initial stock:', error);
     throw error;
   }
 };
@@ -32,7 +32,7 @@ const createInitialStock = async (body: InitialStockFormBody, params?: any) => {
 const editInitialStock = async (body: InitialStockFormBody, params?: any) => {
   try {
     const res = await axios.put(
-      `${PATH_INITIAL_STOCK}/${body.document}`,
+      `${PATH_INITIAL_STOCK}/${body.document_number}`,
       body,
       {
         params,

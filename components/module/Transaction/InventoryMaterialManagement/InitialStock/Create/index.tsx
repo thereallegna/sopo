@@ -38,6 +38,7 @@ const CreateInitialStock = () => {
     handleConfirm,
     handleCloseConfirmModal,
     confirmMessage,
+    control,
   } = useForm({
     label: 'Initial Stock',
     queryKey: GET_INITIAL_STOCK,
@@ -68,7 +69,7 @@ const CreateInitialStock = () => {
             </Button>
           </DrawerEndHeader>
         </DrawerHeader>
-        <form ref={formRef} onSubmit={handleSubmit}>
+        <form ref={formRef} onSubmit={handleSubmit} className="overflow-auto">
           <DrawerBody>
             <InitialStockHeaderForm
               errors={errors}
@@ -77,7 +78,7 @@ const CreateInitialStock = () => {
               register={register}
               handleInputKeyDown={handleInputKeyDown}
               setError={setError}
-              add
+              type="add"
             />
             <InitialStockDetailForm
               errors={errors}
@@ -86,6 +87,7 @@ const CreateInitialStock = () => {
               register={register}
               handleInputKeyDown={handleInputKeyDown}
               setError={setError}
+              control={control}
             />
           </DrawerBody>
         </form>
