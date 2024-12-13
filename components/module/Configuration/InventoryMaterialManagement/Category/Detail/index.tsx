@@ -27,8 +27,6 @@ const DetailCategoryMM = () => {
 
   useSetValueForm<ItemCategoryFormBody>(detail_data, setValue);
 
-  console.log('DETAILLL DATAAAAA', detail_data);
-
   return (
     <Drawer onClose={closeDetailDrawer} open={isOpenDetail}>
       <DrawerContent>

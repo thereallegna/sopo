@@ -1,14 +1,14 @@
 import * as Yup from 'yup';
 
 export const CreateInitialStockSchema = Yup.object().shape({
-  document: Yup.string().required('Document number is required'),
-  date: Yup.string().required('Document date is required'),
-  warehouse: Yup.string().required('Warehouse is required'),
+  document_number: Yup.string().required('Document number is required'),
+  documnet_date: Yup.string().required('Document date is required'),
+  warehouse_name: Yup.string().required('Warehouse is required'),
   warehouse_code: Yup.string().required('Warehouse Code is required'),
-  currency: Yup.string().required('Currency is required'),
+  currency_name: Yup.string().required('Currency is required'),
   currency_code: Yup.string().required('Currency Code is required'),
   rate: Yup.string().required('Rate is required'),
-  detail: Yup.array(
+  details: Yup.array(
     Yup.object().shape({
       item_code: Yup.string().required('Item Code is required'),
       item_name: Yup.string().required('Item Name is required'),
@@ -20,6 +20,23 @@ export const CreateInitialStockSchema = Yup.object().shape({
     })
   ),
 });
+
+// export const CreateInitialStockSchema = Yup.object().shape({
+//   document_number: Yup.string().required('Document number is required'),
+//   documnet_date: Yup.string().required('Document date is required'),
+//   warehouse_name: Yup.string().required('Warehouse is required'),
+//   warehouse_code: Yup.string().required('Warehouse Code is required'),
+//   currency_name: Yup.string().required('Currency is required'),
+//   currency_code: Yup.string().required('Currency Code is required'),
+//   rate: Yup.string().required('Rate is required'),
+//   item_code: Yup.string().required('Item Code is required'),
+//   item_name: Yup.string().required('Item Name is required'),
+//   local_code: Yup.string().required('Local Code is required'),
+//   batch: Yup.string().required('Batch is required'),
+//   quantity: Yup.number().required('Quantity is required'),
+//   uom: Yup.string().required('UOM is required'),
+//   unit_price: Yup.string().required('Price is required'),
+// });
 
 export const CreateStockMutationSchema = Yup.object().shape({
   document_number: Yup.string().required('Document is required'),

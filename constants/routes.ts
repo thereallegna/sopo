@@ -5,7 +5,8 @@ export const PATH_BACKEND_URL_VERSION = '/v1';
 // initial start
 export const PATH_CONFIGURATION_GENERAL = `${PATH_API}/configuration/general`;
 export const PATH_CONFIGURATION_INVENTORY_AND_MATERIAL_MANAGEMENT = `${PATH_API}/configuration/inventory-and-material-management`;
-export const PATH_CONFIGURATION_INVENTORY_MATERIAL_MANAGEMENT = `${PATH_API}/transaction/inventory-material-management`;
+export const PATH_TRANSACTION_INVENTORY_MATERIAL_MANAGEMENT = `${PATH_API}/transaction/inventory-material-management`;
+export const PATH_REPORTING_INVENTORY_MATERIAL_MANAGEMENT = `${PATH_API}/reporting/inventory-material-management`;
 export const PATH_CONFIGURATION_FINANCIAL_MANAGEMENT = `${PATH_API}/configuration/financial-management`;
 // initial end
 
@@ -70,12 +71,23 @@ export const PATH_WAREHOUSE_CATEGORY_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL
 
 /* ======================= Inventory Material Management Start ==================== */
 // initial stock
-export const PATH_INITIAL_STOCK = `${PATH_CONFIGURATION_INVENTORY_MATERIAL_MANAGEMENT}/inventory-management/initial-stock`;
+export const PATH_INITIAL_STOCK = `${PATH_TRANSACTION_INVENTORY_MATERIAL_MANAGEMENT}/inventory-management/initial-stock`;
 export const PATH_INITIAL_STOCK_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/initial-stock`;
 
 // stock mutation
-export const PATH_STOCK_MUTATION = `${PATH_CONFIGURATION_INVENTORY_MATERIAL_MANAGEMENT}/inventory-management/stock-mutation`;
+export const PATH_STOCK_MUTATION = `${PATH_TRANSACTION_INVENTORY_MATERIAL_MANAGEMENT}/inventory-management/stock-mutation`;
 export const PATH_STOCK_MUTATION_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/stock-mutation`;
+
+/* ======================= Inventory Material Management Start ==================== */
+
+/* ======================= Reporting Start ==================== */
+// stock summary
+export const PATH_STOCK_SUMMARY = `${PATH_REPORTING_INVENTORY_MATERIAL_MANAGEMENT}/inventory-management/stock-summary`;
+export const PATH_STOCK_SUMMARY_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/stock-summary`;
+
+// stock movement
+export const PATH_STOCK_MOVEMENT = `${PATH_REPORTING_INVENTORY_MATERIAL_MANAGEMENT}/inventory-management/stock-movement`;
+export const PATH_STOCK_MOVEMENT_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/stock-movement`;
 
 /* ======================= Log History Start ==================== */
 export const PATH_LOG_HISTORY = `${PATH_API}/log`;

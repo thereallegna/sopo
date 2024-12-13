@@ -7,12 +7,16 @@ export type FilterDrawerType =
   | 'filterInitialStock'
   | 'filterCurrency'
   | 'filterWarehouseCategory'
+  | 'filterStockSummary'
+  | 'filterStockMovement'
   | null;
 export type TableDrawerType =
   | 'getCountry'
   | 'getUOM'
   | 'getItemCategory'
   | 'getInitialStock'
+  | 'getStockSummary'
+  | 'getStockMovement'
   | null;
 export type DetailDataType =
   | UOMFormBody
@@ -25,6 +29,8 @@ export type DetailDataType =
   | InitialStockFormBody
   | CurrencyFormBody
   | WarehouseCategoryFormBody
+  | StockSummaryFormBody
+  | StockMovementFormBody
   | null;
 
 type DrawerState = {

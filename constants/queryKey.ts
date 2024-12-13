@@ -26,6 +26,11 @@ export const GET_DETAIL_BY_WAREHOUSE_INITIAL_STOCK =
   'getDetailByWarehouseInitialStock';
 // TRANSACTION - INVENTORY MANAGEMENT (END)
 
+// REPORTING - INVENTORY MANAGEMENT (START)
+export const GET_STOCK_SUMMARY = 'getStockSummary';
+export const GET_STOCK_MOVEMENT = 'getStockMovement';
+// REPORTING - INVENTORY MANAGEMENT (END)
+
 // lOG HISTORY  START
 export const GET_LOG_HISTORY = 'getLogHistory';
 // lOG HISTORY  END

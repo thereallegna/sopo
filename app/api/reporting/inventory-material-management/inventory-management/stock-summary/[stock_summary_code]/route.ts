@@ -1,22 +1,22 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSideSession } from '@utils/session';
 import axios, { AxiosError } from 'axios';
-import { PATH_INITIAL_STOCK_BE } from '@constants/routes';
+import { PATH_STOCK_SUMMARY_BE } from '@constants/routes';
 
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { initial_stock_code: string } }
+  { params }: { params: { stock_summary_code: string } }
 ) {
   try {
     const session = await getServerSideSession();
     console.log('session', session.user?.data?.authorization?.access_token);
 
-    const { initial_stock_code } = params;
+    const { stock_summary_code } = params;
 
-    const body = (await req.json()) as InitialStockFormBody;
+    const body = (await req.json()) as StockSummaryFormBody;
 
     const response = await axios.put(
-      `${PATH_INITIAL_STOCK_BE}/${initial_stock_code}`,
+      `${PATH_STOCK_SUMMARY_BE}/${stock_summary_code}`,
       body,
       {
         headers: {
