@@ -39,7 +39,7 @@ export const CreateInitialStockSchema = Yup.object().shape({
 // });
 
 export const CreateStockMutationSchema = Yup.object().shape({
-  document_number: Yup.string().required('Document is required'),
+  document: Yup.string().required('Document is required'),
   date: Yup.date().required('Date is required'),
   warehouse: Yup.string().required('Warehouse is required'),
   warehouse_code: Yup.string().required('Warehouse is required'),
@@ -54,7 +54,7 @@ export const CreateStockMutationSchema = Yup.object().shape({
       currency: Yup.string().required('Currency is required'),
       unit_price: Yup.string().required('Price is required'),
     })
-  ).min(1),
+  ).optional(),
   mutated_to: Yup.array(
     Yup.object().shape({
       document_number: Yup.string().required('Document is required'),
@@ -66,5 +66,5 @@ export const CreateStockMutationSchema = Yup.object().shape({
       currency: Yup.string().required('Currency is required'),
       unit_price: Yup.string().required('Price is required'),
     })
-  ).min(1),
+  ).optional(),
 });

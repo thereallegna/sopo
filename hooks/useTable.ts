@@ -24,6 +24,7 @@ type UseTableProps<T> = {
   showExport?: boolean;
   showColumnSelector?: boolean;
   showRowSizeSelector?: boolean;
+  group?: boolean;
   onSelectRow?: (data: T) => void;
   onFilter?: () => void;
 };
@@ -35,6 +36,7 @@ const useTable = <T>({
   onSelectRow,
   queryFn,
   onFilter,
+  group = true,
   showPrint,
   showExport,
   showColumnSelector,
@@ -55,9 +57,9 @@ const useTable = <T>({
 
   const isGrouping = option.grouping.length > 0;
 
-  const onGrouping = (group: Updater<GroupingState>) => {
+  const onGrouping = (groups: Updater<GroupingState>) => {
     const groupingState =
-      typeof group === 'function' ? group(option.grouping) : group;
+      typeof groups === 'function' ? groups(option.grouping) : groups;
     setGrouping(queryKey, groupingState);
   };
 
@@ -168,7 +170,7 @@ const useTable = <T>({
     onSearch,
     onFilter,
     onColumnVisibility,
-    onGrouping,
+    onGrouping: group ? onGrouping : undefined,
     onRowSizeChange,
     onSelectRow,
   };

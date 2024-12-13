@@ -139,7 +139,7 @@ const TableContent = <T,>({
                   key={header.id}
                   activeGroup={header.column.getIsGrouped()}
                   onGroup={
-                    header.column.getCanGroup()
+                    onGrouping && header.column.getCanGroup()
                       ? header.column.getToggleGroupingHandler()
                       : undefined
                   }

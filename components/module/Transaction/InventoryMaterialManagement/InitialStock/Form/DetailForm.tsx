@@ -4,6 +4,7 @@ import TableForm from '@components/shared/TableForm';
 import { GET_MASTER_ITEM_MATERIAL_MANAGEMENT } from '@constants/queryKey';
 import { getItem } from '@services/fetcher/configuration/material-item-warehouse-management';
 import { convertInitialStockForm } from '@utils/converter';
+import { FieldPath } from 'react-hook-form';
 import { GenerateColumnsOption } from '../../../../../../types/client/table';
 import { FormType } from '../../../../../../types/form';
 // import { convertInitialStockForm } from '@utils/converter';
@@ -62,9 +63,10 @@ const detailFormColumn: GenerateColumnsOption = {
 };
 
 const InitialStockDetailForm = ({
-  // errors,
+  errors,
   watch,
   setValue,
+  setError,
 }: // setError,
 // handleInputKeyDown,
 // disableAll,
@@ -78,9 +80,21 @@ FormType<InitialStockFormBody>) => {
           title="Detail Item"
           data={watch('details') || []}
           columns={detailFormColumn}
-          onChangeData={(prev) => {
-            if (setValue) {
-              setValue('details', prev);
+          errors={errors}
+          // onChangeData={(prev) => {
+          //   if (setValue) {
+          //     setValue('detail', prev);
+          //   }
+          // }}
+          onChangeData={(rowIndex, columnId, value) => {
+            const prevData = watch('detail');
+            prevData[rowIndex] = { ...prevData[rowIndex], [columnId]: value };
+            setValue?.('detail', prevData);
+            if (setError) {
+              setError(
+                `detail.${rowIndex}.${columnId}` as FieldPath<InitialStockFormBody>,
+                { type: 'disabled' }
+              );
             }
           }}
           onShowGetDataModal={() => setShowModal(true)}

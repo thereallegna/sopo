@@ -67,6 +67,7 @@ const createStockMutation = async (
   params?: any
 ) => {
   try {
+    console.log('Cek Data => ', body);
     const res = await axios.post(PATH_STOCK_MUTATION, body, { params });
     return res.data;
   } catch (error) {
