@@ -2,12 +2,7 @@ import TableContent from '@components/shared/TableContent';
 import useTable from '@hooks/useTable';
 import React from 'react';
 
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from '../Dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../Dialog';
 import { SelectableModalProps } from '../../../types/client/table';
 
 const assignSelected = (
@@ -64,7 +59,8 @@ const SelectableModal: React.FC<SelectableModalProps> = ({
     showColumnSelector: false,
     showExport: false,
     showPrint: false,
-    pinnedColumns
+    pinnedColumns,
+    group: false,
   });
 
   return (
@@ -81,7 +77,7 @@ const SelectableModal: React.FC<SelectableModalProps> = ({
               multipleSelect,
               idSelected,
               valueSelected,
-              targetIdSelector,
+              targetIdSelector
             )}
           />
         </div>
