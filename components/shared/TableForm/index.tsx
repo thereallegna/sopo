@@ -27,6 +27,7 @@ const TableForm = <T,>({
   columns,
   getDataButtonProps,
   getDataModalProps,
+  disableAll,
   onShowGetDataModal,
   onChangeData,
   onDeleteRow,
@@ -144,7 +145,7 @@ const TableForm = <T,>({
       (column) => column.accessor === 'action'
     );
 
-    if (!hasActionColumn) {
+    if (!hasActionColumn && !disableAll) {
       option.columns.push({
         accessor: 'action',
         header: '',
@@ -168,8 +169,9 @@ const TableForm = <T,>({
       ...option,
       onInputChange: onChangeData,
       errors,
+      disableAll,
     });
-  }, [columns, data.length]);
+  }, [columns, errors]);
 
   const table = useReactTable({
     data,
