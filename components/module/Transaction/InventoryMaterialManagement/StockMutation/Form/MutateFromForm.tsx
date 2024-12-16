@@ -15,6 +15,7 @@ const MutateFromForm = ({
   setError,
   type = 'add',
   handleInputKeyDown,
+  disableAll,
 }: FormType<StockMutationFormBody> & { type?: 'add' | 'edit' | 'detail' }) => {
   const [showModal, setShowModal] = useState<boolean>(false);
 
@@ -26,6 +27,9 @@ const MutateFromForm = ({
           accessor: 'item_name',
           header: 'Name',
           type: 'input',
+          inputProps: {
+            disabled: true,
+          },
         },
         {
           accessor: 'batch',
@@ -49,6 +53,7 @@ const MutateFromForm = ({
           type: 'input',
           inputProps: {
             onKeyDown: handleInputKeyDown,
+            disabled: type === 'detail' || disableAll,
           },
         },
         {

@@ -152,6 +152,8 @@ const useTable = <T>({
     },
     placeholderData: keepPreviousData,
     enabled: option.pagination.pageSize !== -1,
+    refetchOnWindowFocus: 'always',
+    refetchOnReconnect: 'always',
   });
 
   const response = queryData?.data;

@@ -7,7 +7,7 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  const session = await getServerSideSession(request);
+  const session = await getServerSideSession({ cookieOptions: request });
   if (!session || !session.user?.isLoggedIn) {
     return NextResponse.redirect(new URL('/login', request.url));
   }

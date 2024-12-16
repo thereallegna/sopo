@@ -96,7 +96,7 @@ type TableFormProps<T> = {
     type?: React.HTMLInputTypeAttribute
   ) => void;
   disableAll?: boolean;
-  // onChangeData?: (prev: T[]) => void;
+  onChangeData?: (rowIndex: number, columnId: string, value: string) => void;
   onShowGetDataModal?: () => void;
   onDeleteRow?: (index: number) => void;
 };
