@@ -28,7 +28,12 @@ type GenerateColumnsOption = {
   hasAction?: boolean;
   disableAll?: boolean;
   errors?: FieldError<any>;
-  onInputChange?: (rowIndex: number, columnId: string, value: string) => void;
+  onInputChange?: (
+    rowIndex: number,
+    columnId: string,
+    value: string,
+    type?: React.HTMLInputTypeAttribute
+  ) => void;
   onCheckedChange?: (
     rowIndex: number,
     columnId: string,
@@ -84,8 +89,13 @@ type TableFormProps<T> = {
   errors?: FieldError<T>;
   getDataModalProps?: SelectableModalProps;
   getDataButtonProps?: ButtonProps;
+  onChangeData?: (
+    rowIndex: number,
+    columnId: string,
+    value: string,
+    type?: React.HTMLInputTypeAttribute
+  ) => void;
   disableAll?: boolean;
-  onChangeData?: (rowIndex: number, columnId: string, value: string) => void;
   // onChangeData?: (prev: T[]) => void;
   onShowGetDataModal?: () => void;
   onDeleteRow?: (index: number) => void;

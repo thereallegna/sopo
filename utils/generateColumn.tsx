@@ -46,7 +46,12 @@ export const generateColumns = ({
               disabled={disableAll}
               onChange={(e) =>
                 onInputChange &&
-                onInputChange(rowIndex, columnId, e.target.value)
+                onInputChange(
+                  rowIndex,
+                  columnId,
+                  e.target.value,
+                  column.inputProps?.type
+                )
               }
               message={
                 errors &&

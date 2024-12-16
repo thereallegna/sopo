@@ -75,28 +75,10 @@ export const InitialStockDefaultValues: InitialStockFormBody = {
   warehouse_code: '',
   currency_name: '',
   currency_code: '',
-  rate: '',
+  rate: 0,
   remark: '',
   details: [],
 };
-
-// export const InitialStockDefaultValues: InitialStockFormBody = {
-//   document_number: '',
-//   document_date: '',
-//   warehouse_name: '',
-//   warehouse_code: '',
-//   currency_name: '',
-//   currency_code: '',
-//   rate: '',
-//   remark: '',
-//   item_code: '',
-//   item_name: '',
-//   local_code: '',
-//   batch: '',
-//   quantity: 0,
-//   uom: '',
-//   unit_price: 0,
-// }
 
 export const StockMutationDefaultValues: StockMutationFormBody = {
   document: '',

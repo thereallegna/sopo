@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button } from '@components/ui/Button';
 import {
   Drawer,
@@ -46,9 +46,13 @@ const CreateInitialStock = () => {
     validationSchema: CreateInitialStockSchema,
     defaultValues: InitialStockDefaultValues,
     type: 'add',
-    requireAllFields: true,
-    ignoredFields: ['remark'],
+    requireAllFields: false,
+    ignoredFields: ['remark', 'document_number', 'details'],
   });
+
+  useEffect(() => {
+    console.log('Error => ', errors, watch());
+  }, [errors]);
 
   return (
     <Drawer onClose={handleCloseDrawer} open={isOpen}>

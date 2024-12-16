@@ -102,11 +102,11 @@ const WarehouseCategory = () => {
               header: '#',
             },
             {
-              accessor: 'whs_ct_code',
+              accessor: 'warehouse_code',
               header: 'Warehouse Category Code',
             },
             {
-              accessor: 'whs_ct_name',
+              accessor: 'warehouse_name',
               header: 'Warehouse Category Name',
             },
             {
