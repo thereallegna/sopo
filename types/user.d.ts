@@ -7,6 +7,7 @@ interface UserData {
 
 interface UserAuthorization {
   access_token: string;
+  duration: number;
 }
 
 interface IUser {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Card, CardContent } from '@components/ui/Card';
 import TableForm from '@components/shared/TableForm';
 import { FieldPath } from 'react-hook-form';
@@ -8,76 +8,80 @@ import { getInitialStock } from '@services/fetcher/transaction/inventory-materia
 import { GenerateColumnsOption } from '../../../../../../types/client/table';
 import { FormType } from '../../../../../../types/form';
 
-const mutateFromColumn: GenerateColumnsOption = {
-  columns: [
-    {
-      accessor: 'item_name',
-      header: 'Name',
-      type: 'input',
-      inputProps: {
-        disabled: true,
-      },
-    },
-    {
-      accessor: 'batch',
-      header: 'Batch',
-      type: 'input',
-      inputProps: {
-        disabled: true,
-      },
-    },
-    {
-      accessor: 'stock',
-      header: 'Stock',
-      type: 'input',
-      inputProps: {
-        disabled: true,
-      },
-    },
-    {
-      accessor: 'quantity',
-      header: 'Quantity',
-      type: 'input',
-    },
-    {
-      accessor: 'uom',
-      header: 'UoM',
-      type: 'input',
-      inputProps: {
-        disabled: true,
-      },
-    },
-    {
-      accessor: 'currency',
-      header: 'Currency',
-      type: 'input',
-      inputProps: {
-        disabled: true,
-      },
-    },
-    {
-      accessor: 'unit_price',
-      header: 'Unit Price',
-      type: 'input',
-      inputProps: {
-        disabled: true,
-      },
-    },
-  ],
-  hasAction: false,
-};
-
 const MutateFromForm = ({
   errors,
   watch,
   setValue,
   setError,
-}: // setError,
-// handleInputKeyDown,
-// disableAll, // Tambahkan parameter disableAll
-// type = 'add'
-FormType<StockMutationFormBody>) => {
+  type = 'add',
+  handleInputKeyDown,
+}: FormType<StockMutationFormBody> & { type?: 'add' | 'edit' | 'detail' }) => {
   const [showModal, setShowModal] = useState<boolean>(false);
+
+  const columns = useMemo(() => {
+    const mutateFromColumn: GenerateColumnsOption = {
+      key: 'mutated_from',
+      columns: [
+        {
+          accessor: 'item_name',
+          header: 'Name',
+          type: 'input',
+        },
+        {
+          accessor: 'batch',
+          header: 'Batch',
+          type: 'input',
+          inputProps: {
+            disabled: true,
+          },
+        },
+        {
+          accessor: 'stock',
+          header: 'Stock',
+          type: 'input',
+          inputProps: {
+            disabled: true,
+          },
+        },
+        {
+          accessor: 'quantity',
+          header: 'Quantity',
+          type: 'input',
+          inputProps: {
+            onKeyDown: handleInputKeyDown,
+          },
+        },
+        {
+          accessor: 'uom',
+          header: 'UoM',
+          type: 'input',
+          inputProps: {
+            disabled: true,
+          },
+        },
+        {
+          accessor: 'currency',
+          header: 'Currency',
+          type: 'input',
+          inputProps: {
+            disabled: true,
+          },
+        },
+        {
+          accessor: 'unit_price',
+          header: 'Unit Price',
+          type: 'input',
+          inputProps: {
+            disabled: true,
+          },
+        },
+      ],
+      hasAction: false,
+    };
+
+    return mutateFromColumn;
+  }, [handleInputKeyDown]);
+
   return (
     <Card size="drawer" className="border border-Neutral-200 shadow-none">
       <CardContent className="flex-wrap flex flex-row gap-6 items-center w-full">
@@ -85,7 +89,8 @@ FormType<StockMutationFormBody>) => {
           title="Mutate From"
           errors={errors}
           data={watch('mutated_from')}
-          columns={mutateFromColumn}
+          columns={columns}
+          disableAll={type === 'detail'}
           onChangeData={(rowIndex: number, columnId: string, value: string) => {
             const prevData = watch('mutated_from');
             prevData[rowIndex] = { ...prevData[rowIndex], [columnId]: value };

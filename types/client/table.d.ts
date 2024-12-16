@@ -23,6 +23,7 @@ type ColumnKey = {
 };
 
 type GenerateColumnsOption = {
+  key?: string;
   columns: ColumnKey[];
   hasAction?: boolean;
   disableAll?: boolean;
@@ -94,6 +95,7 @@ type TableFormProps<T> = {
     value: string,
     type?: React.HTMLInputTypeAttribute
   ) => void;
+  disableAll?: boolean;
   // onChangeData?: (prev: T[]) => void;
   onShowGetDataModal?: () => void;
   onDeleteRow?: (index: number) => void;

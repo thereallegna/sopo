@@ -43,6 +43,7 @@ const LoginPage = () => {
     const savedUsercode = localStorage.getItem('usercode');
     if (savedUsercode) {
       setValue('user_code', savedUsercode);
+      setValue('keepUserId', true);
     }
   }, [setValue]);
 
@@ -72,7 +73,8 @@ const LoginPage = () => {
   });
 
   const handleFormSubmit: SubmitHandler<LoginFormBody> = (data) => {
-    if (watch('keepUserId')) {
+    console.log('Cek Data => ', data);
+    if (data.keepUserId) {
       localStorage.setItem('usercode', watch('user_code'));
     }
     mutationLogin(data);
@@ -129,8 +131,11 @@ const LoginPage = () => {
             />
             <div className="flex justify-between">
               <Checkbox
+                id="keep-user-id"
                 {...authConstant.checkbox}
-                {...register('keepUserId')}
+                // {...register('keepUserId')} // kenapa saat menggunakan register value secara default bernilai "on" bukan true atau false
+                checked={watch('keepUserId')}
+                onCheckedChange={(val) => setValue('keepUserId', val)}
               />
               <Link
                 href="/forgot-password"
