@@ -87,9 +87,9 @@ FormType<InitialStockFormBody>) => {
           //   }
           // }}
           onChangeData={(rowIndex, columnId, value) => {
-            const prevData = watch('detail');
+            const prevData = watch('details');
             prevData[rowIndex] = { ...prevData[rowIndex], [columnId]: value };
-            setValue?.('detail', prevData);
+            setValue?.('details', prevData);
             if (setError) {
               setError(
                 `detail.${rowIndex}.${columnId}` as FieldPath<InitialStockFormBody>,

@@ -19,6 +19,7 @@ import { useSetValueForm } from '@hooks/useFormChanges';
 import { useDrawerStore } from '@stores/useDrawerStore';
 import BasicForm from '../Form/BasicForm';
 import MutateFromForm from '../Form/MutateFromForm';
+import MutateToForm from '../Form/MutateToForm';
 
 const EditMasterItemMM = () => {
   const detail_data = useDrawerStore(
@@ -43,8 +44,9 @@ const EditMasterItemMM = () => {
     handleConfirm,
     handleCloseConfirmModal,
     confirmMessage,
+    control,
   } = useForm({
-    label: 'Master item',
+    label: 'Stock Mutation',
     queryKey: GET_STOCK_MUTATION,
     mutationFn: editStockMutation,
     validationSchema: EditMasterItemMMSchema,
@@ -91,6 +93,16 @@ const EditMasterItemMM = () => {
               register={register}
               handleInputKeyDown={handleInputKeyDown}
               setError={setError}
+              control={control}
+            />
+            <MutateToForm
+              errors={errors}
+              watch={watch}
+              setValue={setValue}
+              register={register}
+              handleInputKeyDown={handleInputKeyDown}
+              setError={setError}
+              control={control}
             />
           </DrawerBody>
         </form>

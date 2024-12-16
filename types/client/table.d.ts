@@ -86,7 +86,6 @@ type TableFormProps<T> = {
   getDataButtonProps?: ButtonProps;
   disableAll?: boolean;
   onChangeData?: (rowIndex: number, columnId: string, value: string) => void;
-  // onChangeData?: (prev: T[]) => void;
   onShowGetDataModal?: () => void;
   onDeleteRow?: (index: number) => void;
 };

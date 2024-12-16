@@ -18,7 +18,13 @@ declare module 'iron-session' {
   }
 }
 
-export const getServerSideSession = (ttl?: number, cookieOptions?: any) => {
+export type SessionParams = {
+  ttl?: number;
+  cookieOptions?: any;
+};
+
+export const getServerSideSession = (params?: SessionParams) => {
+  const { ttl, cookieOptions } = params || {};
   const withSessionOptions: SessionOptions = {
     ...sessionOptions,
     ttl,

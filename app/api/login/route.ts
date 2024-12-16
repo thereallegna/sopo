@@ -10,7 +10,9 @@ export async function POST(req: Request) {
     const response = await axios.post(PATH_AUTH_LOGIN_BE, body);
     const responseData = response.data as BasicResponse<UserAuthorization>;
 
-    const session = await getServerSideSession(responseData.data.duration);
+    const session = await getServerSideSession({
+      ttl: responseData.data.duration,
+    });
     session.user = {
       isLoggedIn: true,
       data: {
