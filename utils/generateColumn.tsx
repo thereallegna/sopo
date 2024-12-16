@@ -13,6 +13,7 @@ import { Button } from '@components/ui/Button';
 import { GenerateColumnsOption } from '../types/client/table';
 
 export const generateColumns = ({
+  key,
   columns,
   hasAction = true,
   disableAll,
@@ -48,9 +49,13 @@ export const generateColumns = ({
                 onInputChange(rowIndex, columnId, e.target.value)
               }
               message={
-                errors && errors[rowIndex] && errors[rowIndex][columnId]
+                errors &&
+                errors[key] &&
+                errors[key][rowIndex] &&
+                errors[key][rowIndex][columnId] &&
+                errors[key][rowIndex][columnId]?.message !== undefined
                   ? {
-                      text: errors[columnId][rowIndex].message!,
+                      text: errors[key][rowIndex][columnId].message,
                       type: 'danger',
                     }
                   : undefined
@@ -70,6 +75,7 @@ export const generateColumns = ({
               onCheckedChange={(check) =>
                 onCheckedChange && onCheckedChange(rowIndex, columnId, check)
               }
+              disabled={disableAll}
               {...column.checkboxProps}
             />
           );

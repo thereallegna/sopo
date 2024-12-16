@@ -23,6 +23,7 @@ type ColumnKey = {
 };
 
 type GenerateColumnsOption = {
+  key?: string;
   columns: ColumnKey[];
   hasAction?: boolean;
   disableAll?: boolean;
@@ -83,6 +84,7 @@ type TableFormProps<T> = {
   errors?: FieldError<T>;
   getDataModalProps?: SelectableModalProps;
   getDataButtonProps?: ButtonProps;
+  disableAll?: boolean;
   onChangeData?: (rowIndex: number, columnId: string, value: string) => void;
   // onChangeData?: (prev: T[]) => void;
   onShowGetDataModal?: () => void;
