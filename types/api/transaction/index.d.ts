@@ -3,10 +3,11 @@ type InitialStockDetailFormBody = {
   item_code: string;
   item_name: string;
   local_code?: string;
-  batch: string;
+  batch?: string;
   quantity: number;
   uom: string;
   unit_price: number;
+  cancel: boolean;
 };
 
 type InitialStockFormBody = {
@@ -16,28 +17,10 @@ type InitialStockFormBody = {
   warehouse_code: string;
   currency_name: string;
   currency_code: string;
-  rate: decimal;
+  rate: number;
   remark?: string;
   details: InitialStockDetailFormBody[];
 };
-
-// type InitialStockFormBody = {
-//   document_number: string;
-//   document_date: string;
-//   warehouse_name: string;
-//   warehouse_code: string;
-//   currency_name: string;
-//   currency_code: string;
-//   rate: decimal;
-//   remark?: string;
-//   item_code: string;
-//   item_name: string;
-//   local_code?: string;
-//   batch: string;
-//   quantity: number;
-//   uom: string;
-//   unit_price: number;
-// };
 
 type StockMutatedFormBody = {
   document_number: string;

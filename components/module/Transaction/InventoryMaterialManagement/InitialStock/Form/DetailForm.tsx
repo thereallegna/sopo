@@ -44,6 +44,9 @@ const detailFormColumn: GenerateColumnsOption = {
       accessor: 'quantity',
       header: 'Quantity',
       type: 'input',
+      inputProps: {
+        type: 'number',
+      },
     },
     {
       accessor: 'uom',
@@ -57,6 +60,9 @@ const detailFormColumn: GenerateColumnsOption = {
       accessor: 'price',
       header: 'Unit Price',
       type: 'input',
+      inputProps: {
+        type: 'number',
+      },
     },
   ],
   hasAction: false,
@@ -86,15 +92,28 @@ FormType<InitialStockFormBody>) => {
           //     setValue('detail', prev);
           //   }
           // }}
-          onChangeData={(rowIndex, columnId, value) => {
+          onChangeData={(rowIndex, columnId, value, type) => {
             const prevData = watch('details');
-            prevData[rowIndex] = { ...prevData[rowIndex], [columnId]: value };
+            let data: string | number = value;
+            if (type === 'number') {
+              data = Number(data);
+            }
+            prevData[rowIndex] = { ...prevData[rowIndex], [columnId]: data };
             setValue?.('details', prevData);
             if (setError) {
               setError(
                 `detail.${rowIndex}.${columnId}` as FieldPath<InitialStockFormBody>,
                 { type: 'disabled' }
               );
+            }
+          }}
+          onDeleteRow={(index) => {
+            const data = watch('details');
+            if (index >= 0) {
+              const filteredData = data.filter(
+                (_, idx) => idx !== Number(index)
+              );
+              setValue?.('details', filteredData);
             }
           }}
           onShowGetDataModal={() => setShowModal(true)}

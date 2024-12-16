@@ -10,6 +10,7 @@ export function convertInitialStockForm(
     quantity: 0,
     uom: item.uom_name,
     unit_price: 0,
+    cancel: false,
   };
 }
 

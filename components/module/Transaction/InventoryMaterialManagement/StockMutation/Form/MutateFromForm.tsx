@@ -108,9 +108,11 @@ const MutateFromForm = ({
             }
           }}
           onShowGetDataModal={() => {
-            if (watch('warehouse_code')) {
-              setShowModal(true);
-            }
+            setShowModal(true);
+
+            // if (watch('warehouse_code')) {
+            //   setShowModal(true);
+            // }
           }}
           onDeleteRow={(index) => {
             const data = watch('mutated_from');
@@ -121,10 +123,10 @@ const MutateFromForm = ({
               setValue?.('mutated_from', filteredData);
             }
           }}
-          getDataButtonProps={{
-            disabled: !watch('warehouse_code'),
-            variant: !watch('warehouse_code') ? 'disabled' : undefined,
-          }}
+          // getDataButtonProps={{
+          //   disabled: !watch('warehouse_code'),
+          //   variant: !watch('warehouse_code') ? 'disabled' : undefined,
+          // }}
           getDataModalProps={{
             isOpen: showModal,
             title: 'Select Initial Stock',

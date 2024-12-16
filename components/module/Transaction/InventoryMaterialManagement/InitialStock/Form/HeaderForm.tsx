@@ -2,7 +2,6 @@ import React from 'react';
 import InputField from '@components/shared/InputField';
 import { Card, CardContent } from '@components/ui/Card';
 import Combobox from '@components/shared/Combobox';
-import DatePicker from '@components/shared/DatePicker';
 import { getWarehouse } from '@services/fetcher/configuration/material-item-warehouse-management';
 import { GET_CURRENCY, GET_WAREHOUSE } from '@constants/queryKey';
 import { getCurrency } from '@services/fetcher/configuration/financial-management';
@@ -39,19 +38,21 @@ const InitialStockHeaderForm = ({
           className="w-full gap-2"
           onKeyDown={handleInputKeyDown}
         />
-        <DatePicker
-          label="Date"
-          placeholder="Select a Date"
-          value={
-            watch('document_date')
-              ? new Date(watch('document_date'))
+        <InputField
+          {...register('document_date')}
+          message={
+            errors?.document_date
+              ? { text: errors.document_date.message!, type: 'danger' }
               : undefined
           }
-          onChange={(date) =>
-            setValue && setValue('document_date', date.toISOString())
-          }
-          disabled={disableAll}
-          className="rounded-md border-shadow"
+          label="Date"
+          placeholder="Text here.."
+          type="date"
+          right
+          required
+          disabled={disableAll} // Disabled berdasarkan disableAll
+          className="w-full gap-2"
+          onKeyDown={handleInputKeyDown}
         />
       </div>
       <div className="flex flex-col gap-[14px] flex-1 h-full justify-between">
@@ -114,7 +115,7 @@ const InitialStockHeaderForm = ({
       </div>
       <div className="flex flex-col gap-[14px] flex-1 h-full justify-between">
         <InputField
-          {...register('rate')}
+          {...register('rate', { valueAsNumber: true })}
           message={
             errors?.rate
               ? { text: errors.rate.message!, type: 'danger' }
@@ -122,7 +123,7 @@ const InitialStockHeaderForm = ({
           }
           label="Rate"
           placeholder="Enter rate"
-          type="text"
+          type="number"
           right
           required
           disabled={disableAll}
