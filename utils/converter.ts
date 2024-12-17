@@ -9,9 +9,13 @@ export function convertInitialStockForm(
     batch: '',
     quantity: 0,
     uom: item.uom_name,
-    unit_price: 0,
+    price: 0,
     cancel: false,
   };
+}
+
+export function replaceSlashes(input: string): string {
+  return input.replace(/\//g, '-');
 }
 
 // export function convertStockMutationForm(

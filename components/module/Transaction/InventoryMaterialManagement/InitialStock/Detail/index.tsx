@@ -56,6 +56,7 @@ const DetailInitialStock = () => {
             <InitialStockBodyForm
               watch={watch}
               register={register}
+              formType="detail"
               disableAll
             />
           </DrawerBody>

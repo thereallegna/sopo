@@ -17,10 +17,10 @@ export const CreateInitialStockSchema = Yup.object().shape({
     Yup.object().shape({
       item_code: Yup.string().required('Item Code is required'),
       item_name: Yup.string().required('Item Name is required'),
-      local_code: Yup.string().required('Local Code is required'),
+      // local_code: Yup.string().required('Local Code is required'),
       quantity: Yup.number().required('Quantity is required'),
       uom: Yup.string().required('UOM is required'),
-      unit_price: Yup.number().required('Price is required'),
+      price: Yup.number().required('Price is required'),
     })
   ),
 });

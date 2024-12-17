@@ -1,5 +1,6 @@
 import { PATH_INITIAL_STOCK, PATH_STOCK_MUTATION } from '@constants/routes';
 import axios from 'axios';
+import { replaceSlashes } from '@utils/converter';
 import { FetcherOptions } from '../../../../types/client/fetcher';
 
 const getInitialStock = async (option?: FetcherOptions) => {
@@ -32,7 +33,7 @@ const createInitialStock = async (body: InitialStockFormBody, params?: any) => {
 const editInitialStock = async (body: InitialStockFormBody, params?: any) => {
   try {
     const res = await axios.put(
-      `${PATH_INITIAL_STOCK}/${body.document_number}`,
+      `${PATH_INITIAL_STOCK}/${replaceSlashes(body.document_number)}`,
       body,
       {
         params,

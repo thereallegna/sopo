@@ -87,6 +87,7 @@ const EditInitialStock = () => {
               register={register}
               handleInputKeyDown={handleInputKeyDown}
               setError={setError}
+              disableAll
             />
             <InitialStockDetailForm
               errors={errors}
@@ -95,6 +96,7 @@ const EditInitialStock = () => {
               register={register}
               handleInputKeyDown={handleInputKeyDown}
               setError={setError}
+              formType="edit"
             />
           </DrawerBody>
         </form>
