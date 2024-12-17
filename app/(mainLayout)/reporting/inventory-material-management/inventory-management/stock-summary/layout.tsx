@@ -6,13 +6,11 @@ type Props = {
 };
 
 export const metadata: Metadata = {
-  title: 'Reporting - RUN System R1',
-  description: 'Reporting page.',
+  title: 'Stock Summary - RUN System R1',
+  description: 'Stock Summary page',
 };
 
 // ?======================================================//
-const ReportingLayout = ({ children }: Props) => <>{children}</>;
+const StockSummaryLayout = ({ children }: Props) => <>{children}</>;
 
-export default ReportingLayout;
-
-// test
+export default StockSummaryLayout;
