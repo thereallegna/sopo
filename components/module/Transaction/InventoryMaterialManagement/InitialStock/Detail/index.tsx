@@ -11,7 +11,7 @@ import {
 } from '@components/ui/Drawer';
 import { IconPencil } from '@tabler/icons-react';
 import { useDrawerStore } from '@stores/useDrawerStore';
-import { useSetValueForm } from '@hooks/useFormChanges';
+import { useSetValueForm } from '@hooks/useSetValueForm';
 import { useForm } from 'react-hook-form';
 import InitialStockHeaderForm from '../Form/HeaderForm';
 import InitialStockBodyForm from '../Form/DetailForm';
@@ -56,6 +56,7 @@ const DetailInitialStock = () => {
             <InitialStockBodyForm
               watch={watch}
               register={register}
+              formType="detail"
               disableAll
             />
           </DrawerBody>

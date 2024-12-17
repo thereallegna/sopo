@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Card, CardContent } from '@components/ui/Card';
 import TableForm from '@components/shared/TableForm';
 import { GET_MASTER_ITEM_MATERIAL_MANAGEMENT } from '@constants/queryKey';
@@ -9,94 +9,167 @@ import { GenerateColumnsOption } from '../../../../../../types/client/table';
 import { FormType } from '../../../../../../types/form';
 // import { convertInitialStockForm } from '@utils/converter';
 
-const detailFormColumn: GenerateColumnsOption = {
-  columns: [
-    {
-      accessor: 'item_code',
-      header: "Item's Code",
-      type: 'input',
-      inputProps: {
-        disabled: true,
-      },
-    },
-    {
-      accessor: 'item_name',
-      header: "Item's Name",
-      type: 'input',
-      inputProps: {
-        disabled: true,
-      },
-    },
-    {
-      accessor: 'local_code',
-      header: 'Local Code',
-      type: 'input',
-      inputProps: {
-        disabled: true,
-      },
-    },
-    {
-      accessor: 'batch',
-      header: 'Batch',
-      type: 'input',
-      inputProps: {
-        disabled: true,
-      },
-    },
-    {
-      accessor: 'quantity',
-      header: 'Quantity',
-      type: 'input',
-      inputProps: {
-        type: 'number',
-        disabled: true,
-      },
-    },
-    {
-      accessor: 'uom',
-      header: 'UOM',
-      type: 'input',
-      inputProps: {
-        disabled: true,
-      },
-    },
-    {
-      accessor: 'price',
-      header: 'Unit Price',
-      type: 'input',
-      inputProps: {
-        type: 'number',
-        disabled: true,
-      },
-    },
-  ],
-  hasAction: false,
-};
+// const detailFormColumn: GenerateColumnsOption = {
+//   columns: [
+//     {
+//       accessor: 'item_code',
+//       header: "Item's Code",
+//       type: 'input',
+//       inputProps: {
+//         disabled: true,
+//       },
+//     },
+//     {
+//       accessor: 'item_name',
+//       header: "Item's Name",
+//       type: 'input',
+//       inputProps: {
+//         disabled: true,
+//       },
+//     },
+//     {
+//       accessor: 'local_code',
+//       header: 'Local Code',
+//       type: 'input',
+//       inputProps: {
+//         disabled: true,
+//       },
+//     },
+//     {
+//       accessor: 'batch',
+//       header: 'Batch',
+//       type: 'input',
+//     },
+//     {
+//       accessor: 'quantity',
+//       header: 'Quantity',
+//       type: 'input',
+//       inputProps: {
+//         type: 'number',
+//       },
+//     },
+//     {
+//       accessor: 'uom',
+//       header: 'UOM',
+//       type: 'input',
+//       inputProps: {
+//         disabled: true,
+//       },
+//     },
+//     {
+//       accessor: 'price',
+//       header: 'Unit Price',
+//       type: 'input',
+//       inputProps: {
+//         type: 'number',
+//       },
+//     },
+//   ],
+//   hasAction: false,
+// };
 
 const InitialStockDetailForm = ({
   errors,
   watch,
   setValue,
   setError,
+  handleInputKeyDown,
+  disableAll,
+  formType = 'add',
 }: // setError,
-// handleInputKeyDown,
 // disableAll,
 // type = 'add'
-FormType<InitialStockFormBody>) => {
+FormType<InitialStockFormBody> & { formType?: 'add' | 'edit' | 'detail' }) => {
   const [showModal, setShowModal] = useState<boolean>(false);
+  const columns = useMemo((): GenerateColumnsOption => {
+    const options: GenerateColumnsOption = {
+      columns: [
+        {
+          accessor: 'item_code',
+          header: "Item's Code",
+          type: 'input',
+          inputProps: {
+            disabled: true,
+          },
+        },
+        {
+          accessor: 'item_name',
+          header: "Item's Name",
+          type: 'input',
+          inputProps: {
+            disabled: true,
+          },
+        },
+        {
+          accessor: 'local_code',
+          header: 'Local Code',
+          type: 'input',
+          inputProps: {
+            disabled: true,
+          },
+        },
+        {
+          accessor: 'batch',
+          header: 'Batch',
+          type: 'input',
+          inputProps: {
+            disabled: formType !== 'add',
+          },
+        },
+        {
+          accessor: 'quantity',
+          header: 'Quantity',
+          type: 'input',
+          inputProps: {
+            type: 'number',
+            disabled: formType !== 'add',
+          },
+        },
+        {
+          accessor: 'uom',
+          header: 'UOM',
+          type: 'input',
+          inputProps: {
+            disabled: true,
+          },
+        },
+        {
+          accessor: 'price',
+          header: 'Unit Price',
+          type: 'input',
+          inputProps: {
+            type: 'number',
+            disabled: formType !== 'add',
+          },
+        },
+      ],
+      hasAction: false,
+    };
+
+    if (formType !== 'add') {
+      options.columns = [
+        {
+          accessor: 'cancel',
+          header: 'Cancel',
+          type: 'checkbox',
+        },
+        ...options.columns,
+      ];
+    }
+
+    return options;
+  }, [handleInputKeyDown]);
   return (
     <Card size="drawer" className="border border-Neutral-200 shadow-none">
       <CardContent className="flex-wrap flex flex-row gap-6 items-center w-full">
         <TableForm
           title="Detail Item"
           data={watch('details') || []}
-          columns={detailFormColumn}
+          columns={columns}
           errors={errors}
-          // onChangeData={(prev) => {
-          //   if (setValue) {
-          //     setValue('detail', prev);
-          //   }
-          // }}
+          disableAll={disableAll}
+          showButtonDeleteRow={formType === 'add'}
+          showButtonDataModal={formType === 'add'}
           onChangeData={(rowIndex, columnId, value, type) => {
             const prevData = watch('details');
             let data: string | number = value;
@@ -107,7 +180,22 @@ FormType<InitialStockFormBody>) => {
             setValue?.('details', prevData);
             if (setError) {
               setError(
-                `detail.${rowIndex}.${columnId}` as FieldPath<InitialStockFormBody>,
+                `details.${rowIndex}.${columnId}` as FieldPath<InitialStockFormBody>,
+                { type: 'disabled' }
+              );
+            }
+          }}
+          onCheckedChange={(
+            rowIndex: number,
+            columnId: string,
+            value: boolean
+          ) => {
+            const prevData = watch('details');
+            prevData[rowIndex] = { ...prevData[rowIndex], [columnId]: value };
+            setValue?.('details', prevData);
+            if (setError) {
+              setError(
+                `details.${rowIndex}.${columnId}` as FieldPath<InitialStockFormBody>,
                 { type: 'disabled' }
               );
             }
@@ -158,9 +246,6 @@ FormType<InitialStockFormBody>) => {
             valueSelected: watch('details')?.map((item) => item.item_code),
             onSelectRow: (data: any) => {
               if (setValue) {
-                // const convertData = convertStockMutationForm(
-                //   data as MasterItemFormBody
-                // );
                 const convertData = convertInitialStockForm(
                   data as MasterItemFormBody
                 );

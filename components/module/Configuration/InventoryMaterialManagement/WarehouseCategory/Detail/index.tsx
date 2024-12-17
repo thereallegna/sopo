@@ -15,7 +15,7 @@ import InputField from '@components/shared/InputField';
 import { useDrawerStore } from '@stores/useDrawerStore';
 import { IconHistory, IconPencil } from '@tabler/icons-react';
 import { useForm } from 'react-hook-form';
-import { useSetValueForm } from '@hooks/useFormChanges';
+import { useSetValueForm } from '@hooks/useSetValueForm';
 
 const DetailWarehouseCategory = () => {
   const {
@@ -54,22 +54,22 @@ const DetailWarehouseCategory = () => {
           <Card size="drawer">
             <CardContent className="flex-wrap flex flex-row gap-6 items-center">
               <InputField
-                value={detail_data?.whs_ct_code || ''}
+                value={detail_data?.warehouse_category_code || ''}
                 label="Warehouse Category Code"
                 placeholder="Warehouse Category Code"
                 right
                 type="text"
                 disabled
-                {...register('whs_ct_code')}
+                {...register('warehouse_category_code')}
               />
               <InputField
-                value={detail_data?.whs_ct_name || ''}
+                value={detail_data?.warehouse_category_name || ''}
                 label="Warehouse Category Name"
                 placeholder="Warehouse Category Name"
                 right
                 type="text"
                 disabled
-                {...register('whs_ct_name')}
+                {...register('warehouse_category_name')}
               />
             </CardContent>
           </Card>
@@ -83,8 +83,8 @@ const DetailWarehouseCategory = () => {
             type="submit"
             onClick={() =>
               openHistoryLogDrawer({
-                code: detail_data?.whs_ct_code,
-                category: 'Warehouse Category',
+                code: detail_data?.warehouse_category_code,
+                category: 'WarehouseCategory',
               })
             }
           />

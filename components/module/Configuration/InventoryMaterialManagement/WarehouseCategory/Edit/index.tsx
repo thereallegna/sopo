@@ -14,9 +14,9 @@ import InputField from '@components/shared/InputField';
 import { useDrawerStore } from '@stores/useDrawerStore';
 import { IconDeviceFloppy } from '@tabler/icons-react';
 import { useForm } from '@hooks/useForm';
-import { useSetValueForm } from '@hooks/useFormChanges';
+import { useSetValueForm } from '@hooks/useSetValueForm';
 import { GET_WAREHOUSE_CATEGORY } from '@constants/queryKey';
-import { WarehouseCategorySchema } from '@constants/schemas/ConfigurationSchema/InventoryMaterialManagement';
+import { warehouseCategorySchema } from '@constants/schemas/ConfigurationSchema/InventoryMaterialManagement';
 import { editWarehouseCatrgory } from '@services/fetcher/configuration/material-item-warehouse-management';
 
 const EditWarehouseCategory = () => {
@@ -40,7 +40,7 @@ const EditWarehouseCategory = () => {
     label: 'Warehouse Category',
     queryKey: GET_WAREHOUSE_CATEGORY,
     mutationFn: editWarehouseCatrgory,
-    validationSchema: WarehouseCategorySchema,
+    validationSchema: warehouseCategorySchema,
     defaultValues: detail_data,
     type: 'edit',
   });
@@ -70,10 +70,13 @@ const EditWarehouseCategory = () => {
             <Card size="drawer">
               <CardContent className="flex-wrap flex flex-row gap-6 items-center">
                 <InputField
-                  {...register('whs_ct_code')}
+                  {...register('warehouse_category_code')}
                   message={
-                    errors.whs_ct_code
-                      ? { text: errors.whs_ct_code.message!, type: 'danger' }
+                    errors.warehouse_category_code
+                      ? {
+                          text: errors.warehouse_category_code.message!,
+                          type: 'danger',
+                        }
                       : undefined
                   }
                   label="Warehouse Category Code"
@@ -84,10 +87,13 @@ const EditWarehouseCategory = () => {
                   onKeyDown={handleInputKeyDown}
                 />
                 <InputField
-                  {...register('whs_ct_name')}
+                  {...register('warehouse_category_name')}
                   message={
-                    errors.whs_ct_name
-                      ? { text: errors.whs_ct_name.message!, type: 'danger' }
+                    errors.warehouse_category_name
+                      ? {
+                          text: errors.warehouse_category_name.message!,
+                          type: 'danger',
+                        }
                       : undefined
                   }
                   label="Warehouse Category Name"

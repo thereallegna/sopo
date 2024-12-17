@@ -28,8 +28,11 @@ const TableForm = <T,>({
   getDataButtonProps,
   getDataModalProps,
   disableAll,
+  showButtonDeleteRow = true,
+  showButtonDataModal = true,
   onShowGetDataModal,
   onChangeData,
+  onCheckedChange,
   onDeleteRow,
 }: TableFormProps<T>) => {
   // const [localData, setLocalData] = useState<T[]>(data ?? []);
@@ -145,7 +148,7 @@ const TableForm = <T,>({
       (column) => column.accessor === 'action'
     );
 
-    if (!hasActionColumn && !disableAll) {
+    if (!hasActionColumn && !disableAll && showButtonDeleteRow) {
       option.columns.push({
         accessor: 'action',
         header: '',
@@ -168,6 +171,7 @@ const TableForm = <T,>({
     return generateColumns({
       ...option,
       onInputChange: onChangeData,
+      onCheckedChange,
       errors,
       disableAll,
     });
@@ -184,16 +188,18 @@ const TableForm = <T,>({
       <div className="flex justify-between items-center z-40">
         <p className="text-lg font-bold">{title}</p>
         <div>
-          <Button
-            type="button"
-            className="px-[10px]"
-            onClick={onShowGetDataModal}
-            {...getDataButtonProps}
-            variant={getDataButtonProps?.variant || 'secondary'}
-          >
-            <IconComponent icon={IconTablePlus} size="large" />
-            <IconComponent icon={IconChevronDown} size="large" />
-          </Button>
+          {showButtonDataModal && (
+            <Button
+              type="button"
+              className="px-[10px]"
+              onClick={onShowGetDataModal}
+              {...getDataButtonProps}
+              variant={getDataButtonProps?.variant || 'secondary'}
+            >
+              <IconComponent icon={IconTablePlus} size="large" />
+              <IconComponent icon={IconChevronDown} size="large" />
+            </Button>
+          )}
         </div>
       </div>
       <Table type="form">

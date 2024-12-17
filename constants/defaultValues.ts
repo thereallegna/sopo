@@ -61,8 +61,25 @@ export const masterItemDefaultValues: MasterItemFormBody = {
 };
 
 export const warehouseCategoryDefaultValues: WarehouseCategoryFormBody = {
-  whs_ct_code: '',
-  whs_ct_name: '',
+  warehouse_category_code: '',
+  warehouse_category_name: '',
+};
+
+export const warehouseDefaultValues: WarehouseFormBody = {
+  warehouse_code: '',
+  warehouse_name: '',
+  warehouse_category_code: '',
+  warehouse_category_name: '',
+  city_code: '',
+  city_name: '',
+  postal_code: '',
+  phone: '',
+  fax: '',
+  address: '',
+  email: '',
+  mobile: '',
+  contact_person: '',
+  remark: '',
 };
 
 // Configuration Material Management End

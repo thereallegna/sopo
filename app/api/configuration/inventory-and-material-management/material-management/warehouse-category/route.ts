@@ -42,6 +42,8 @@ export async function POST(req: Request) {
 
     const body = (await req.json()) as CurrencyFormBody;
 
+    console.log('bodyoawkdoawkdoakdoako', body);
+
     const response = await axios.post(PATH_WAREHOUSE_CATEGORY_BE, body, {
       headers: {
         Authorization: `Bearer ${session.user?.data?.authorization?.access_token}`,

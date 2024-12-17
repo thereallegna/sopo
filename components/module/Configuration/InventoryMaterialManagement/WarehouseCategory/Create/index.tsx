@@ -14,7 +14,7 @@ import InputField from '@components/shared/InputField';
 import { useForm } from '@hooks/useForm';
 import { IconDeviceFloppy } from '@tabler/icons-react';
 import { GET_WAREHOUSE_CATEGORY } from '@constants/queryKey';
-import { WarehouseCategorySchema } from '@constants/schemas/ConfigurationSchema/InventoryMaterialManagement';
+import { warehouseCategorySchema } from '@constants/schemas/ConfigurationSchema/InventoryMaterialManagement';
 import { warehouseCategoryDefaultValues } from '@constants/defaultValues';
 import { createWarehouseCatrgory } from '@services/fetcher/configuration/material-item-warehouse-management';
 
@@ -34,7 +34,7 @@ const CreateWarehouseCategory = () => {
     label: 'Warehouse Category',
     queryKey: GET_WAREHOUSE_CATEGORY,
     mutationFn: createWarehouseCatrgory,
-    validationSchema: WarehouseCategorySchema,
+    validationSchema: warehouseCategorySchema,
     defaultValues: warehouseCategoryDefaultValues,
     type: 'add',
     requireAllFields: true,
@@ -64,10 +64,13 @@ const CreateWarehouseCategory = () => {
             <Card size="drawer">
               <CardContent className="flex-wrap flex flex-row gap-6 items-start">
                 <InputField
-                  {...register('whs_ct_code')}
+                  {...register('warehouse_category_code')}
                   message={
-                    errors.whs_ct_code
-                      ? { text: errors.whs_ct_code.message!, type: 'danger' }
+                    errors.warehouse_category_code
+                      ? {
+                          text: errors.warehouse_category_code.message!,
+                          type: 'danger',
+                        }
                       : undefined
                   }
                   label="Warehouse Category Code"
@@ -77,10 +80,13 @@ const CreateWarehouseCategory = () => {
                   onKeyDown={handleInputKeyDown}
                 />
                 <InputField
-                  {...register('whs_ct_name')}
+                  {...register('warehouse_category_name')}
                   message={
-                    errors.whs_ct_name
-                      ? { text: errors.whs_ct_name.message!, type: 'danger' }
+                    errors.warehouse_category_name
+                      ? {
+                          text: errors.warehouse_category_name.message!,
+                          type: 'danger',
+                        }
                       : undefined
                   }
                   label="Warehouse Category Name"

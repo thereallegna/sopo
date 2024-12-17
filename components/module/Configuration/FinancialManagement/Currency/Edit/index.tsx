@@ -15,7 +15,7 @@ import { useDrawerStore } from '@stores/useDrawerStore';
 import { IconDeviceFloppy } from '@tabler/icons-react';
 import { useForm } from '@hooks/useForm';
 import { currencySchema } from '@constants/schemas/ConfigurationSchema/FinancialManagement';
-import { useSetValueForm } from '@hooks/useFormChanges';
+import { useSetValueForm } from '@hooks/useSetValueForm';
 import { GET_CURRENCY } from '@constants/queryKey';
 import { editCurrency } from '@services/fetcher/configuration/financial-management';
 
