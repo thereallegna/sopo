@@ -8,10 +8,18 @@ export const StockSummarySchema = Yup.object().shape({
   item_code: Yup.string().required('Item Code is required'),
   item_name: Yup.string().required('Item Name is required'),
   date: Yup.string().required('Date is required'),
-  local_code: Yup.string().required('Local code is required'),
-  active: Yup.string().required('Active is required'),
-  quantity: Yup.string().required('Quantity is required'),
-  uom: Yup.string().required('UOM is required'),
+  details: Yup.array(
+    Yup.object().shape({
+      warehouse_code: Yup.string().required('Warehouse Code is required'),
+      warehouse_name: Yup.string().required('Warehouse Name is required'),
+      item_code: Yup.string().required('Item Code is required'),
+      local_code: Yup.string().required('Local Code is required'),
+      item_name: Yup.string().required('Item Name is required'),
+      active: Yup.string().required('Active is required'),
+      quantity: Yup.string().required('Quantity is required'),
+      uom: Yup.string().required('UOM is required'),
+    })
+  ),
 });
 
 export const StockMovementSchema = Yup.object().shape({

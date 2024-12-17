@@ -19,6 +19,7 @@ export async function GET(req: NextRequest) {
         search: params.get('search'),
       },
     });
+    console.log('test', params);
 
     return NextResponse.json(response.data);
   } catch (error: any) {

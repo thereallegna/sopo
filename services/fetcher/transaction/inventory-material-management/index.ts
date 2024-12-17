@@ -14,7 +14,7 @@ const getInitialStock = async (option?: FetcherOptions) => {
 
     return res;
   } catch (error) {
-    console.error('Error creating initial stock:', error);
+    console.error('Error getting initial stock:', error);
     throw error;
   }
 };

@@ -662,7 +662,7 @@ export const sidebarConstant: SidebarItem[] = [
             children: [
               {
                 title: 'Stock Summary',
-                path: '/reporting/inventory-material-management/inventory-management/stock=-summary',
+                path: '/reporting/inventory-material-management/inventory-management/stock-summary',
               },
               {
                 title: 'Stock Movement',
