@@ -5,18 +5,18 @@ import { PATH_WAREHOUSE_CATEGORY_BE } from '@constants/routes';
 
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { whs_ct_code: string } }
+  { params }: { params: { warehouse_category_code: string } }
 ) {
   try {
     const session = await getServerSideSession();
     console.log('session:', session.user?.data?.authorization?.access_token);
 
-    const { whs_ct_code } = params;
+    const { warehouse_category_code } = params;
 
     const body = (await req.json()) as CurrencyFormBody;
 
     const response = await axios.put(
-      `${PATH_WAREHOUSE_CATEGORY_BE}/${whs_ct_code}`,
+      `${PATH_WAREHOUSE_CATEGORY_BE}/${warehouse_category_code}`,
       body,
       {
         headers: {

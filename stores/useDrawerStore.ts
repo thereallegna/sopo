@@ -23,7 +23,6 @@ export type DetailDataType =
   | CountryFormBody
   | ProvinceFormBody
   | CityFormBody
-  | IItemCategory
   | MasterItemFormBody
   | StockMutationFormBody
   | InitialStockFormBody

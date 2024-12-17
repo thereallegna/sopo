@@ -16,7 +16,7 @@ import { useForm } from '@hooks/useForm';
 import { countrySchema } from '@constants/schemas/ConfigurationSchema/general';
 import { editCountry } from '@services/fetcher/configuration/general';
 import { GET_COUNTRY } from '@constants/queryKey';
-import { useSetValueForm } from '@hooks/useFormChanges';
+import { useSetValueForm } from '@hooks/useSetValueForm';
 import { useDrawerStore } from '@stores/useDrawerStore';
 
 const EditCountry = () => {

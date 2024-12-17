@@ -151,7 +151,7 @@ const createWarehouseCatrgory = async (body: WarehouseCategoryFormBody) => {
 const editWarehouseCatrgory = async (body: WarehouseCategoryFormBody) => {
   try {
     const res = await axios.put(
-      `${PATH_WAREHOUSE_CATEGORY}/${body.whs_ct_code}`,
+      `${PATH_WAREHOUSE_CATEGORY}/${body.warehouse_category_code}`,
       body
     );
     return res.data;
@@ -175,6 +175,46 @@ const getWarehouse = async (option?: FetcherOptions) => {
     return res;
   } catch (error) {
     console.error('Error fetching log history:', error);
+    throw error;
+  }
+};
+
+const createWarehouse = async (body: WarehouseFormBody) => {
+  try {
+    const bodyString = {
+      ...body,
+      phone: body.phone?.toString() || '',
+      fax: body.fax?.toString() || '',
+      mobile: body?.mobile?.toString() ?? '',
+      postal_code: body?.postal_code?.toString() || '',
+    };
+
+    const res = await axios.post(PATH_WAREHOUSE, bodyString);
+
+    return res.data;
+  } catch (error) {
+    console.error('Error creating Warehouse:', error);
+    throw error;
+  }
+};
+
+const editWarehouse = async (body: WarehouseFormBody) => {
+  try {
+    const bodyString = {
+      ...body,
+      phone: body.phone?.toString() || '',
+      fax: body.fax?.toString() || '',
+      mobile: body?.mobile?.toString() ?? '',
+      postal_code: body?.postal_code?.toString() || '',
+    };
+
+    const res = await axios.put(
+      `${PATH_WAREHOUSE}/${body.warehouse_code}`,
+      bodyString
+    );
+    return res.data;
+  } catch (error) {
+    console.error('Error editing country:', error);
     throw error;
   }
 };
@@ -204,6 +244,8 @@ export {
   getDetailItem,
   createItem,
   getWarehouse,
+  createWarehouse,
+  editWarehouse,
   getWarehouseCatrgory,
   createWarehouseCatrgory,
   editWarehouseCatrgory,

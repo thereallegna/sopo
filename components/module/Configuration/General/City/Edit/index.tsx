@@ -18,7 +18,7 @@ import { citySchema } from '@constants/schemas/ConfigurationSchema/general';
 import { editCity, getProvince } from '@services/fetcher/configuration/general';
 import { GET_CITY, GET_PROVINCE } from '@constants/queryKey';
 import Combobox from '@components/shared/Combobox';
-import { useSetValueForm } from '@hooks/useFormChanges';
+import { useSetValueForm } from '@hooks/useSetValueForm';
 
 const EditCity = () => {
   const detail_data = useDrawerStore(

@@ -17,7 +17,7 @@ import { useForm } from 'react-hook-form';
 import Combobox from '@components/shared/Combobox';
 import { GET_PROVINCE } from '@constants/queryKey';
 import { getProvince } from '@services/fetcher/configuration/general';
-import { useSetValueForm } from '@hooks/useFormChanges';
+import { useSetValueForm } from '@hooks/useSetValueForm';
 
 const DetailCity = () => {
   const { isOpenDetail, closeDetailDrawer, openEditDrawer } = useDrawerStore();
