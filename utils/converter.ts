@@ -14,6 +14,20 @@ export function convertInitialStockForm(
   };
 }
 
+// export const convertStockAdjustmentForm = (
+//   item: InitialStockDetailFormBody
+// ): StockAdjustmentDetailFormBody => {
+//   return {
+//     item_code: item.item_code,
+//     item_name: item.item_name,
+//     local_code: item.local_code,
+//     batch: item.batch,
+//     stock_system: 0,
+//     stock_actual: 0,
+//     uom: item.uom,
+//   };
+// };
+
 export function replaceSlashes(input: string): string {
   return input.replace(/\//g, '-');
 }

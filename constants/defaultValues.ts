@@ -97,6 +97,15 @@ export const InitialStockDefaultValues: InitialStockFormBody = {
   details: [],
 };
 
+export const StockAdjustmentDefaultValues: StockAdjustmentFormBody = {
+  document_number: '',
+  date: '',
+  warehouse_code: '',
+  warehouse_name: '',
+  remark: '',
+  details: [],
+};
+
 export const StockMutationDefaultValues: StockMutationFormBody = {
   document: '',
   date: '',

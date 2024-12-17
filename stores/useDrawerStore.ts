@@ -29,7 +29,9 @@ export type DetailDataType =
   | CurrencyFormBody
   | WarehouseCategoryFormBody
   | StockSummaryFormBody
+  | ItemCategoryFormBody
   | StockMovementFormBody
+  | StockAdjustmentFormBody
   | null;
 
 type DrawerState = {
