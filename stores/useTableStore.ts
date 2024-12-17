@@ -13,6 +13,7 @@ import {
   GET_WAREHOUSE,
   GET_STOCK_SUMMARY,
   GET_STOCK_MOVEMENT,
+  GET_STOCK_ADJUSTMENT,
 } from '@constants/queryKey';
 import { create } from 'zustand';
 import { paginationStateDefaultValue } from '@constants/defaultValues';
@@ -30,6 +31,7 @@ const initialTableState = {
     [GET_STOCK_MUTATION]: paginationStateDefaultValue,
     [GET_CURRENCY]: paginationStateDefaultValue,
     [GET_INITIAL_STOCK]: paginationStateDefaultValue,
+    [GET_STOCK_ADJUSTMENT]: paginationStateDefaultValue,
     [GET_WAREHOUSE_CATEGORY]: paginationStateDefaultValue,
     [GET_WAREHOUSE]: paginationStateDefaultValue,
     [GET_STOCK_SUMMARY]: paginationStateDefaultValue,
@@ -115,6 +117,20 @@ export const useTableStore = create<TableState>((set) => ({
           [key]: {
             ...currentOption,
             rowSize: size,
+          },
+        },
+      };
+    });
+  },
+  setQuery: (key, query) => {
+    set((state) => {
+      const currentOption = state.options[key];
+      return {
+        options: {
+          ...state.options,
+          [key]: {
+            ...currentOption,
+            query,
           },
         },
       };

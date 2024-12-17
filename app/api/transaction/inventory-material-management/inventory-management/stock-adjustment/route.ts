@@ -1,17 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSideSession } from '@utils/session';
 import axios, { AxiosError } from 'axios';
-import { PATH_STOCK_SUMMARY_BE } from '@constants/routes';
+import { PATH_STOCK_ADJUSTMENT_BE } from '@constants/routes';
 
 export async function GET(req: NextRequest) {
   try {
     const params = req.nextUrl.searchParams;
 
-    const queryParams = Object.fromEntries(params.entries());
-
     const session = await getServerSideSession();
 
-    const response = await axios.get(`${PATH_STOCK_SUMMARY_BE}`, {
+    const response = await axios.get(`${PATH_STOCK_ADJUSTMENT_BE}`, {
       headers: {
         Authorization: `Bearer ${session.user?.data?.authorization?.access_token}`,
       },
@@ -19,10 +17,8 @@ export async function GET(req: NextRequest) {
         page_size: params.get('page_size'),
         page: params.get('current_page'),
         search: params.get('search'),
-        ...queryParams,
       },
     });
-    console.log('test', params);
 
     return NextResponse.json(response.data);
   } catch (error: any) {
@@ -43,9 +39,9 @@ export async function POST(req: Request) {
   try {
     const session = await getServerSideSession();
 
-    const body = (await req.json()) as StockSummaryFormBody;
+    const body = (await req.json()) as InitialStockFormBody;
 
-    const response = await axios.post(PATH_STOCK_SUMMARY_BE, body, {
+    const response = await axios.post(PATH_STOCK_ADJUSTMENT_BE, body, {
       headers: {
         Authorization: `Bearer ${session.user?.data?.authorization?.access_token}`,
       },

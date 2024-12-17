@@ -74,10 +74,17 @@ export const PATH_WAREHOUSE_CATEGORY_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL
 export const PATH_INITIAL_STOCK = `${PATH_TRANSACTION_INVENTORY_MATERIAL_MANAGEMENT}/inventory-management/initial-stock`;
 export const PATH_INITIAL_STOCK_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/initial-stock`;
 
+// stock adjustment
+export const PATH_STOCK_ADJUSTMENT = `${PATH_TRANSACTION_INVENTORY_MATERIAL_MANAGEMENT}/inventory-management/stock-adjustment`;
+export const PATH_STOCK_ADJUSTMENT_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/stock-adjustment`;
+
+// getitem
+export const PATH_GET_ITEM = `${PATH_API}/get-item`;
+export const PATH_GET_ITEM_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/get-item`;
+
 // stock mutation
 export const PATH_STOCK_MUTATION = `${PATH_TRANSACTION_INVENTORY_MATERIAL_MANAGEMENT}/inventory-management/stock-mutation`;
 export const PATH_STOCK_MUTATION_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/stock-mutation`;
-
 /* ======================= Inventory Material Management Start ==================== */
 
 /* ======================= Reporting Start ==================== */

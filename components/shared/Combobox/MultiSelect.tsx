@@ -27,34 +27,29 @@ import IconComponent from '../../ui/Icon';
 import Label, { LabelProps } from '../../ui/Label';
 import { Button } from '../../ui/Button';
 import { FetcherOptions } from '../../../types/client/fetcher';
+import { FrameworkItem } from '.';
 
-export type FrameworkItem = {
-  value: string;
-  label: string;
-};
-
-interface ComboboxProps {
+interface MultiComboboxProps {
   label?: string;
   labelProps?: LabelProps;
   url?: string;
   items?: FrameworkItem[];
-  value?: FrameworkItem;
+  value?: FrameworkItem[];
   placeholder: string;
   message?: MessageInputProps;
-  onChange?: (val: FrameworkItem) => void;
+  onChange?: (val: FrameworkItem[]) => void;
   disabled?: boolean;
   className?: string;
   required?: boolean;
 
   // Query
-  queryKey?: string[]; // Made optional for cases where only manual data is used
+  queryKey: string[];
   queryFn?: (options?: FetcherOptions) => Promise<any>;
-  data?: FrameworkItem[]; // Added property for manual array data
   dataLabel?: string;
   dataValue?: string;
 }
 
-export const Combobox = ({
+export const MultiSelectCombobox = ({
   value,
   label,
   labelProps,
@@ -65,11 +60,10 @@ export const Combobox = ({
   className,
   queryKey,
   queryFn,
-  data, // Manual data
   required,
-  dataLabel = 'label',
-  dataValue = 'value',
-}: ComboboxProps) => {
+  dataLabel = 'label', // nilai default jika dataLabel tidak disediakan
+  dataValue = 'value', // nilai default jika dataValue tidak disediakan
+}: MultiComboboxProps) => {
   const [open, setOpen] = React.useState(false);
 
   const popoverContentId = React.useMemo(
@@ -77,22 +71,16 @@ export const Combobox = ({
     []
   );
 
-  console.log('Combobox Edit => ', disabled);
+  // console.log('Combobox Edit => ', disabled);
 
   const { data: queryData, isLoading } = useQuery<
     AxiosResponse<ApiResponse<any[]>>
   >({
-    queryKey: queryKey || [], // Fallback to an empty array when no queryKey is provided
+    queryKey: [...queryKey],
     queryFn: queryFn ? () => queryFn() : undefined,
     placeholderData: keepPreviousData,
-    enabled: queryFn && !disabled, // Only fetch if queryFn is provided and not disabled
+    enabled: !disabled,
   });
-
-  // Combine query data with manual data (if both are provided)
-  const combinedData = React.useMemo(() => {
-    if (data) return data; // Use manual data if provided
-    return queryData?.data?.data?.results || []; // Otherwise, use fetched data
-  }, [data, queryData]);
 
   return (
     <div className={className}>
@@ -115,7 +103,9 @@ export const Combobox = ({
               }}
               disabled={disabled}
             >
-              <p className="font-normal">{value?.label || placeholder}</p>
+              <p className="max-w-[210px] truncate font-normal text-start">
+                {value?.map((item) => item.label).join(', ') || placeholder}
+              </p>
             </Button>
           </PopoverTrigger>
           <PopoverContent
@@ -141,23 +131,40 @@ export const Combobox = ({
                   {isLoading ? 'Loading..' : 'No data found.'}
                 </CommandEmpty>
                 <CommandGroup>
-                  {combinedData.map((item) => (
+                  {queryData?.data?.data?.results.map((item) => (
                     <CommandItem
                       key={item[dataValue]}
                       value={item[dataLabel]}
                       onSelect={() => {
-                        onChange?.({
-                          label: item[dataLabel],
-                          value: item[dataValue],
-                        });
-                        setOpen(false);
+                        const isSelected = value?.some(
+                          (selectedItem) =>
+                            selectedItem.value === item[dataValue]
+                        );
+
+                        const newValue = isSelected
+                          ? value?.filter(
+                              (selectedItem) =>
+                                selectedItem.value !== item[dataValue]
+                            ) || []
+                          : [
+                              ...(value || []),
+                              {
+                                label: item[dataLabel],
+                                value: item[dataValue],
+                              },
+                            ];
+
+                        onChange?.(newValue);
                       }}
                     >
                       {item[dataLabel]}
                       <Check
                         className={cn(
                           'ml-auto',
-                          value && value?.value === item[dataValue]
+                          value?.some(
+                            (selectedItem) =>
+                              selectedItem.value === item[dataValue]
+                          )
                             ? 'opacity-100'
                             : 'opacity-0'
                         )}
@@ -181,4 +188,4 @@ export const Combobox = ({
   );
 };
 
-export default Combobox;
+export default MultiSelectCombobox;

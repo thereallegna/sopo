@@ -21,6 +21,15 @@ type StockSummaryFormBody = {
   details: StockSummaryDetailFormBody[];
 };
 
+type StockSummaryFilterQuery = {
+  item_category?: string;
+  item_category_name?: string;
+  item_code?: string;
+  item_name?: string;
+  warehouse?: string;
+  date?: string;
+};
+
 type StockMovementDetailFormBody = {
   doc_type: string;
   doc_no: string;
