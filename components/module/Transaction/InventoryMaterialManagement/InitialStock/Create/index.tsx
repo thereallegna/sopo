@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Button } from '@components/ui/Button';
 import {
   Drawer,
@@ -40,19 +40,15 @@ const CreateInitialStock = () => {
     confirmMessage,
     control,
   } = useForm({
+    type: 'add',
     label: 'Initial Stock',
+    requireAllFields: false,
     queryKey: GET_INITIAL_STOCK,
     mutationFn: createInitialStock,
-    validationSchema: CreateInitialStockSchema,
     defaultValues: InitialStockDefaultValues,
-    type: 'add',
-    requireAllFields: false,
+    validationSchema: CreateInitialStockSchema,
     ignoredFields: ['remark', 'document_number', 'details'],
   });
-
-  useEffect(() => {
-    console.log('Error => ', errors, watch());
-  }, [errors]);
 
   return (
     <Drawer onClose={handleCloseDrawer} open={isOpen}>

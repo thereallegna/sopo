@@ -6,7 +6,7 @@ type InitialStockDetailFormBody = {
   batch?: string;
   quantity: number;
   uom: string;
-  unit_price: number;
+  price: number;
   cancel: boolean;
 };
 

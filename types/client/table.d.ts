@@ -1,3 +1,4 @@
+import { ReactElement } from 'react';
 import { CheckboxProps } from '@components/ui/Checkbox';
 import { InputProps } from '@components/ui/Input';
 import { TableActionProps } from '@components/ui/Table/TableAction';
@@ -16,10 +17,11 @@ type ColumnKey = {
   accessor: string;
   header: string;
   size?: number;
-  type?: 'default' | 'input' | 'checkbox' | 'button';
+  type?: 'default' | 'input' | 'checkbox' | 'checkbox-initial-stock' | 'button';
   inputProps?: InputProps;
   buttonProps?: ButtonProps;
   checkboxProps?: CheckboxProps;
+  customComponent?: () => ReactElement;
 };
 
 type GenerateColumnsOption = {
@@ -95,7 +97,14 @@ type TableFormProps<T> = {
     value: string,
     type?: React.HTMLInputTypeAttribute
   ) => void;
+  onCheckedChange?: (
+    rowIndex: number,
+    columnId: string,
+    value: boolean
+  ) => void;
   disableAll?: boolean;
+  showButtonDataModal?: boolean;
+  showButtonDeleteRow?: boolean;
   onChangeData?: (rowIndex: number, columnId: string, value: string) => void;
   onShowGetDataModal?: () => void;
   onDeleteRow?: (index: number) => void;
