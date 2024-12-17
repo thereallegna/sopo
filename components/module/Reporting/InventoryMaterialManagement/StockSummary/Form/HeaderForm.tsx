@@ -53,11 +53,19 @@ const StockSummaryHeaderForm = () => {
                 : undefined
             }
             onChange={(val) => {
-              setQuery(GET_STOCK_SUMMARY, {
-                ...query,
-                item_category: val.value,
-                item_category_name: val.label,
-              });
+              if (query.item_category !== val.value) {
+                setQuery(GET_STOCK_SUMMARY, {
+                  ...query,
+                  item_category: val.value,
+                  item_category_name: val.label,
+                });
+              } else {
+                setQuery(GET_STOCK_SUMMARY, {
+                  ...query,
+                  item_category: undefined,
+                  item_category_name: undefined,
+                });
+              }
             }}
           />
           <InputField

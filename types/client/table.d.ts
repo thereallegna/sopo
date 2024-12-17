@@ -70,6 +70,7 @@ type TableContentProps<T> = {
   columns: GenerateColumnsOption;
   option: TableOptionState;
   pinnedColumns?: string[];
+  showSearch?: boolean;
   showPrint?: boolean;
   showExport?: boolean;
   showColumnSelector?: boolean;

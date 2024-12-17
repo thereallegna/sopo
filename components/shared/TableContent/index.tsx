@@ -70,6 +70,7 @@ const TableContent = <T,>({
   columns,
   option,
   pinnedColumns,
+  showSearch,
   showPrint,
   showExport,
   showColumnSelector,
@@ -110,6 +111,8 @@ const TableContent = <T,>({
     onGroupingChange: onGrouping,
   });
 
+  console.log('Table Kontent', showSearch);
+
   return (
     <div className="flex flex-col gap-[10px] w-full">
       <TableAction
@@ -125,6 +128,7 @@ const TableContent = <T,>({
           onSelectAll: table.getToggleAllColumnsVisibilityHandler(),
           columnVisible: table.getAllLeafColumns(),
         }}
+        showSearch={showSearch}
         showRowSizeSelector={showRowSizeSelector}
         showColumnSelector={showColumnSelector}
         showExport={showExport}
