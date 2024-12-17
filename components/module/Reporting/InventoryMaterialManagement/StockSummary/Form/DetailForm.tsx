@@ -46,6 +46,7 @@ const detailFormColumn: GenerateColumnsOption = {
 
 const StockSummaryDetailForm = () => {
   const tableProps = useTable<any[]>({
+    showSearch: false,
     queryFn: getStockSummary,
     columns: detailFormColumn,
     queryKey: GET_STOCK_SUMMARY,

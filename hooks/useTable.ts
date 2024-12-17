@@ -20,6 +20,7 @@ type UseTableProps<T> = {
   ) => Promise<AxiosResponse<ApiResponse<T[]>>>;
   columns: GenerateColumnsOption;
   pinnedColumns?: string[];
+  showSearch?: boolean;
   showPrint?: boolean;
   showExport?: boolean;
   showColumnSelector?: boolean;
@@ -37,6 +38,7 @@ const useTable = <T>({
   queryFn,
   onFilter,
   group = true,
+  showSearch,
   showPrint,
   showExport,
   showColumnSelector,
@@ -161,11 +163,14 @@ const useTable = <T>({
   const response = queryData?.data;
   const responseData = response?.data;
 
+  console.log('Cek Hooks', showSearch);
+
   return {
     data: responseData,
     columns,
     option,
     pinnedColumns,
+    showSearch,
     showPrint,
     showExport,
     showColumnSelector,

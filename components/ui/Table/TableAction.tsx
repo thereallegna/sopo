@@ -17,6 +17,7 @@ export interface TableActionProps {
   columns: AccessorKeyColumnDef<any, any>[] | ColumnDef<any, any>[];
   columnSelector: SelectColumnDropdownProps;
   rowSize: RowSizeType;
+  showSearch?: boolean;
   showPrint?: boolean;
   showExport?: boolean;
   showColumnSelector?: boolean;
@@ -32,6 +33,7 @@ const TableAction: React.FC<TableActionProps> = ({
   columnSelector,
   rowSize,
   search,
+  showSearch = true,
   showPrint = true,
   showExport = true,
   showColumnSelector = true,
@@ -42,16 +44,18 @@ const TableAction: React.FC<TableActionProps> = ({
 }) => (
   <div className="flex justify-between gap-2 z-20">
     <div className="flex gap-2 flex-1 w-full">
-      <Input
-        placeholder="Search..."
-        end_icon={{
-          icon: IconSearch,
-          className: 'text-[#354052]',
-        }}
-        value={search}
-        onChange={(e) => onSearch(e.target.value)}
-        className="w-min"
-      />
+      {showSearch && (
+        <Input
+          placeholder="Search..."
+          end_icon={{
+            icon: IconSearch,
+            className: 'text-[#354052]',
+          }}
+          value={search}
+          onChange={(e) => onSearch(e.target.value)}
+          className="w-min"
+        />
+      )}
       {onFilter && <FilterButton onClick={onFilter} />}
       {showRowSizeSelector && (
         <RowSizeDropdown active={rowSize} action={onRowSizeChange} />
