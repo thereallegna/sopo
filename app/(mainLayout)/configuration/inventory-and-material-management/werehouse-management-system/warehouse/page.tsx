@@ -7,12 +7,12 @@ import BodyContent from '@components/module/Content/BodyContent';
 import Image from 'next/image';
 import FilterButton from '@components/ui/Table/Action/FilterButton';
 import { useDrawerStore } from '@stores/useDrawerStore';
-import { GET_WAREHOUSE_CATEGORY } from '@constants/queryKey';
+import { GET_WAREHOUSE } from '@constants/queryKey';
 import dynamic from 'next/dynamic';
-import { getWarehouseCatrgory } from '@services/fetcher/configuration/material-item-warehouse-management';
+import { getWarehouse } from '@services/fetcher/configuration/material-item-warehouse-management';
 
 // Dynamically import Drawer components
-const FilterWarehouseCategory = dynamic(
+const FilterWarehouse = dynamic(
   () => import('@components/shared/Drawer/Filter/CountryFilter'),
   { ssr: false }
 );
@@ -20,29 +20,29 @@ const TableDrawer = dynamic(
   () => import('@components/shared/Drawer/Table/TableDrawer'),
   { ssr: false }
 );
-const CreateWarehouseCategory = dynamic(
+const CreateWarehouse = dynamic(
   () =>
     import(
-      '@components/module/Configuration/InventoryMaterialManagement/WarehouseCategory/Create'
+      '@components/module/Configuration/InventoryMaterialManagement/Warehouse/Create'
     ),
   { ssr: false }
 );
-const DetailWarehouseCategory = dynamic(
+const DetailWarehouse = dynamic(
   () =>
     import(
-      '@components/module/Configuration/InventoryMaterialManagement/WarehouseCategory/Detail'
+      '@components/module/Configuration/InventoryMaterialManagement/Warehouse/Detail'
     ),
   { ssr: false }
 );
-const EditWarehouseCategory = dynamic(
+const EditWarehouse = dynamic(
   () =>
     import(
-      '@components/module/Configuration/InventoryMaterialManagement/WarehouseCategory/Edit'
+      '@components/module/Configuration/InventoryMaterialManagement/Warehouse/Edit'
     ),
   { ssr: false }
 );
 
-const WarehouseCategory = () => {
+const Warehouse = () => {
   const { openFilterDrawer, openTableDrawer, closeFilterDrawer, openDrawer } =
     useDrawerStore();
 
@@ -62,7 +62,7 @@ const WarehouseCategory = () => {
   return (
     <>
       <Content>
-        <HeaderContent title="Warehouse Category" onAdd={handleOpenAdd} />
+        <HeaderContent title="Warehouse" onAdd={handleOpenAdd} />
         <BodyContent>
           <div className="flex flex-col gap-4 py-2 items-center">
             <Image
@@ -72,7 +72,7 @@ const WarehouseCategory = () => {
               height={213}
             />
             <p className="text-Neutral-500 text-lg">
-              Filter to find data Warehouse Category
+              Filter to find data Warehouse
             </p>
             <div className="pb-[10px]">
               <FilterButton
@@ -91,10 +91,10 @@ const WarehouseCategory = () => {
           </div>
         </BodyContent>
       </Content>
-      <FilterWarehouseCategory />
+      <FilterWarehouse />
       <TableDrawer
-        title="Find Warehouse Category"
-        queryKey={GET_WAREHOUSE_CATEGORY}
+        title="Find Warehouse"
+        queryKey={GET_WAREHOUSE}
         columns={{
           columns: [
             {
@@ -102,8 +102,12 @@ const WarehouseCategory = () => {
               header: '#',
             },
             {
-              accessor: 'warehouse_category_code',
-              header: 'Warehouse Category Code',
+              accessor: 'warehouse_code',
+              header: 'Warehouse Code',
+            },
+            {
+              accessor: 'warehouse_name',
+              header: 'Warehouse Name',
             },
             {
               accessor: 'warehouse_category_name',
@@ -115,13 +119,13 @@ const WarehouseCategory = () => {
             },
           ],
         }}
-        queryFn={getWarehouseCatrgory}
+        queryFn={getWarehouse}
       />
-      <CreateWarehouseCategory />
-      <DetailWarehouseCategory />
-      <EditWarehouseCategory />
+      <CreateWarehouse />
+      <DetailWarehouse />
+      <EditWarehouse />
     </>
   );
 };
 
-export default WarehouseCategory;
+export default Warehouse;

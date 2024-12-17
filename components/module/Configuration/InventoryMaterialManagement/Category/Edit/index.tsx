@@ -22,7 +22,7 @@ import { ItemCategorySchema } from '@constants/schemas/ConfigurationSchema/Inven
 import SelectableModal from '@components/ui/Modal';
 import { getCoa } from '@services/fetcher/configuration/general';
 import IconComponent from '@components/ui/Icon';
-import { useSetValueForm } from '@hooks/useFormChanges';
+import { useSetValueForm } from '@hooks/useSetValueForm';
 
 const EditCategoryMM = () => {
   const [isModalOpen, setModalOpen] = React.useState(false);

@@ -69,8 +69,25 @@ type MasterItemFormBody = {
 };
 
 type WarehouseCategoryFormBody = {
-  whs_ct_code: string;
-  whs_ct_name: string;
+  warehouse_category_code: string;
+  warehouse_category_name: string;
+};
+
+type WarehouseFormBody = {
+  warehouse_code: string;
+  warehouse_name: string;
+  warehouse_category_code?: string;
+  warehouse_category_name?: string;
+  address?: string;
+  city_code: string;
+  city_name: string;
+  postal_code?: string;
+  phone?: string;
+  fax?: string;
+  email?: string;
+  mobile?: string;
+  contact_person?: string;
+  remark?: string;
 };
 
 /* ======================= Inventory and Material Management End ==================== */

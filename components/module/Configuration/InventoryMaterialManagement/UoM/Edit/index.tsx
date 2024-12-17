@@ -17,7 +17,7 @@ import { useForm } from '@hooks/useForm';
 import { GET_UOM } from '@constants/queryKey';
 import { editUOM } from '@services/fetcher/configuration/material-item-warehouse-management';
 import { UOMSchema } from '@constants/schemas/ConfigurationSchema/InventoryMaterialManagement';
-import { useSetValueForm } from '@hooks/useFormChanges';
+import { useSetValueForm } from '@hooks/useSetValueForm';
 
 const EditUOM = () => {
   const detail_data = useDrawerStore(

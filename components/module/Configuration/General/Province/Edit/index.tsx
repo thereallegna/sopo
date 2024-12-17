@@ -19,7 +19,7 @@ import {
   editProvince,
   getCountry,
 } from '@services/fetcher/configuration/general';
-import { useSetValueForm } from '@hooks/useFormChanges';
+import { useSetValueForm } from '@hooks/useSetValueForm';
 import { GET_COUNTRY, GET_PROVINCE } from '@constants/queryKey';
 import Combobox from '@components/shared/Combobox';
 

@@ -19,7 +19,7 @@ import {
 } from '@services/fetcher/configuration/material-item-warehouse-management';
 import { ConfirmationAlert } from '@components/shared/Alert';
 import SelectableModal from '@components/ui/Modal';
-import { useSetValueForm } from '@hooks/useFormChanges';
+import { useSetValueForm } from '@hooks/useSetValueForm';
 import { useDrawerStore } from '@stores/useDrawerStore';
 import BasicForm from '../Form/BasicForm';
 import DetailForm from '../Form/DetailForm';
