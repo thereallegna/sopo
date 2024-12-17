@@ -12,6 +12,7 @@ import {
   GET_WAREHOUSE_CATEGORY,
   GET_WAREHOUSE,
   GET_STOCK_SUMMARY,
+  GET_STOCK_MOVEMENT,
   GET_STOCK_ADJUSTMENT,
   GET_DETAIL_BY_WAREHOUSE_STOCK_ADJUSTMENT,
 } from '@constants/queryKey';
@@ -36,6 +37,7 @@ const initialTableState = {
     [GET_WAREHOUSE]: paginationStateDefaultValue,
     [GET_STOCK_SUMMARY]: paginationStateDefaultValue,
     [GET_DETAIL_BY_WAREHOUSE_STOCK_ADJUSTMENT]: paginationStateDefaultValue,
+    [GET_STOCK_MOVEMENT]: paginationStateDefaultValue,
   },
 };
 
