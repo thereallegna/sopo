@@ -120,4 +120,18 @@ export const useTableStore = create<TableState>((set) => ({
       };
     });
   },
+  setQuery: (key, query) => {
+    set((state) => {
+      const currentOption = state.options[key];
+      return {
+        options: {
+          ...state.options,
+          [key]: {
+            ...currentOption,
+            query,
+          },
+        },
+      };
+    });
+  },
 }));

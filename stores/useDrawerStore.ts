@@ -32,6 +32,7 @@ export type DetailDataType =
   | ItemCategoryFormBody
   | StockMovementFormBody
   | StockAdjustmentFormBody
+  | ItemCategoryFormBody
   | null;
 
 type DrawerState = {

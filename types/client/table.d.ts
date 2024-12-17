@@ -53,14 +53,16 @@ type TableState = {
   setColumnVisibility: (key: string, val: VisibilityState) => void;
   setGrouping: (key: string, val: GroupingState) => void;
   setRowSize: (key: string, size: RowSizeType) => void;
+  setQuery: (key, query: object) => void;
 };
 
 type TableOptionState = {
   grouping: GroupingState;
   pagination: PaginationState;
   columnVisibility: VisibilityState;
-  search?: string;
   rowSize: RowSizeType;
+  search?: string;
+  query?: object;
 };
 
 type TableContentProps<T> = {

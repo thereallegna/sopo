@@ -7,6 +7,8 @@ export async function GET(req: NextRequest) {
   try {
     const params = req.nextUrl.searchParams;
 
+    const queryParams = Object.fromEntries(params.entries());
+
     const session = await getServerSideSession();
 
     const response = await axios.get(`${PATH_STOCK_SUMMARY_BE}`, {
@@ -17,6 +19,7 @@ export async function GET(req: NextRequest) {
         page_size: params.get('page_size'),
         page: params.get('current_page'),
         search: params.get('search'),
+        ...queryParams,
       },
     });
     console.log('test', params);
