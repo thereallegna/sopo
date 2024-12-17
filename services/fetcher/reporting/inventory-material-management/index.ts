@@ -7,42 +7,15 @@ const getStockSummary = async (option?: FetcherOptions) => {
     const res = await axios.get(`${PATH_STOCK_SUMMARY}`, {
       params: {
         page_size: !option?.all ? option?.pagination?.pageSize : undefined,
-        current_page: !option?.all ? option?.pagination?.pageSize : undefined,
+        current_page: !option?.all ? option?.pagination?.pageIndex : undefined,
         search: option?.search,
       },
     });
+    console.log('res', res);
 
     return res;
   } catch (error) {
-    console.error('Error creating stock summary:', error);
-    throw error;
-  }
-};
-
-const createStockSummary = async (body: InitialStockFormBody, params?: any) => {
-  // disesuaikan bodynya
-  try {
-    const res = await axios.post(PATH_STOCK_SUMMARY, body, { params });
-    return res.data;
-  } catch (error) {
-    console.error('Error creating stock summary:', error);
-    throw error;
-  }
-};
-
-const editStockSummary = async (body: InitialStockFormBody, params?: any) => {
-  // disesuaikan bodynya
-  try {
-    const res = await axios.put(
-      `${PATH_STOCK_SUMMARY}/${body.document_number}`, // disesuaikan bodynya
-      body,
-      {
-        params,
-      }
-    );
-    return res.data;
-  } catch (error) {
-    console.error('Error editing stock summary:', error);
+    console.error('Error getting stock summary:', error);
     throw error;
   }
 };
@@ -64,42 +37,4 @@ const getStockMovement = async (option?: FetcherOptions) => {
   }
 };
 
-const createStockMovement = async (
-  body: InitialStockFormBody,
-  params?: any
-) => {
-  // disesuaikan bodynya
-  try {
-    const res = await axios.post(PATH_STOCK_MOVEMENT, body, { params });
-    return res.data;
-  } catch (error) {
-    console.error('Error creating stock movement:', error);
-    throw error;
-  }
-};
-
-const editStockMovement = async (body: InitialStockFormBody, params?: any) => {
-  // disesuaikan bodynya
-  try {
-    const res = await axios.put(
-      `${PATH_STOCK_MOVEMENT}/${body.document_number}`, // disesuaikan bodynya
-      body,
-      {
-        params,
-      }
-    );
-    return res.data;
-  } catch (error) {
-    console.error('Error editing stock movement:', error);
-    throw error;
-  }
-};
-
-export {
-  getStockSummary,
-  createStockSummary,
-  editStockSummary,
-  getStockMovement,
-  createStockMovement,
-  editStockMovement,
-};
+export { getStockSummary, getStockMovement };
