@@ -77,10 +77,17 @@ export const generateColumns = ({
         }
 
         if (column.type === 'input') {
+          let displayValue = value;
+          // Jika value adalah 0, tampilkan string kosong
+          if (value === 0) {
+            displayValue = '';
+          } else if (column.inputProps?.type === 'number') {
+            displayValue = Number(value);
+          }
           return (
             <InputField
               type="small"
-              value={value}
+              value={displayValue}
               disabled={disableAll}
               onChange={(e) =>
                 onInputChange &&
@@ -105,6 +112,7 @@ export const generateColumns = ({
               }
               inputProps={{
                 ...column.inputProps,
+                placeholder: value,
                 defaultValue: value,
               }}
             />

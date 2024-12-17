@@ -134,6 +134,7 @@ const useTable = <T>({
         option.pagination.pageIndex,
         option.pagination.pageSize,
         option.search,
+        option.query,
       ]
     : [queryKey];
 
@@ -148,6 +149,7 @@ const useTable = <T>({
         pagination: nextPagination,
         search: option.search,
         all: option?.grouping && option.grouping.length > 0,
+        query: option.query,
       });
     },
     placeholderData: keepPreviousData,
