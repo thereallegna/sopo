@@ -12,7 +12,7 @@ import {
 import { IconDeviceFloppy } from '@tabler/icons-react';
 import { StockAdjustmentDefaultValues } from '@constants/defaultValues';
 import { GET_STOCK_ADJUSTMENT } from '@constants/queryKey';
-import { CreateInitialStockSchema } from '@constants/schemas/TransactionSchema/InventoryMaterialManagement';
+import { StockAdjustmentSchema } from '@constants/schemas/TransactionSchema/InventoryMaterialManagement';
 import { useForm } from '@hooks/useForm';
 import { createStockAdjustment } from '@services/fetcher/transaction/inventory-material-management';
 import { ConfirmationAlert } from '@components/shared/Alert';
@@ -46,9 +46,14 @@ const CreateStockAdjustment = () => {
     queryKey: GET_STOCK_ADJUSTMENT,
     mutationFn: createStockAdjustment,
     defaultValues: StockAdjustmentDefaultValues,
-    validationSchema: CreateInitialStockSchema,
-    ignoredFields: ['remark', 'document_number', 'details'],
+    validationSchema: StockAdjustmentSchema,
+    ignoredFields: ['remark', 'document_number'],
   });
+
+  //
+  React.useEffect(() => {
+    console.log('schema', errors);
+  }, [errors]);
 
   return (
     <Drawer onClose={handleCloseDrawer} open={isOpen}>

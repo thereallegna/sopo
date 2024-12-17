@@ -1,7 +1,7 @@
 export function convertInitialStockForm(
   item: MasterItemFormBody
 ): InitialStockDetailFormBody {
-  console.log('Cek Item -> ', item);
+  // console.log('Cek Item -> ', item);
   return {
     item_code: item.item_code || '',
     item_name: item.item_name,
@@ -14,19 +14,22 @@ export function convertInitialStockForm(
   };
 }
 
-// export const convertStockAdjustmentForm = (
-//   item: InitialStockDetailFormBody
-// ): StockAdjustmentDetailFormBody => {
-//   return {
-//     item_code: item.item_code,
-//     item_name: item.item_name,
-//     local_code: item.local_code,
-//     batch: item.batch,
-//     stock_system: 0,
-//     stock_actual: 0,
-//     uom: item.uom,
-//   };
-// };
+export const convertStockAdjustmentForm = (
+  item: TransactionItem
+): StockAdjustmentDetailFormBody => {
+  console.log('Cek Item -> ', item);
+  return {
+    d_no: item.item_code,
+    item_code: item.item_code,
+    item_name: item.item_name,
+    batch: item.batch || '',
+    balance: Number(item.batch) || 0,
+    stock_system: 0,
+    stock_actual: 0,
+    uom_name: item.uom_name,
+    specification: '',
+  };
+};
 
 export function replaceSlashes(input: string): string {
   return input.replace(/\//g, '-');

@@ -2,71 +2,11 @@ import React, { useMemo, useState } from 'react';
 import { Card, CardContent } from '@components/ui/Card';
 import TableForm from '@components/shared/TableForm';
 import { GET_DETAIL_BY_WAREHOUSE_STOCK_ADJUSTMENT } from '@constants/queryKey';
-// import { convertInitialStockForm } from '@utils/converter';
+import { convertStockAdjustmentForm } from '@utils/converter';
 import { FieldPath } from 'react-hook-form';
 import { getItemStockAdjustment } from '@services/fetcher/transaction/inventory-material-management';
 import { GenerateColumnsOption } from '../../../../../../types/client/table';
 import { FormType } from '../../../../../../types/form';
-// import { convertInitialStockForm } from '@utils/converter';
-
-// const detailFormColumn: GenerateColumnsOption = {
-//   columns: [
-//     {
-//       accessor: 'item_code',
-//       header: "Item's Code",
-//       type: 'input',
-//       inputProps: {
-//         disabled: true,
-//       },
-//     },
-//     {
-//       accessor: 'item_name',
-//       header: "Item's Name",
-//       type: 'input',
-//       inputProps: {
-//         disabled: true,
-//       },
-//     },
-//     {
-//       accessor: 'local_code',
-//       header: 'Local Code',
-//       type: 'input',
-//       inputProps: {
-//         disabled: true,
-//       },
-//     },
-//     {
-//       accessor: 'batch',
-//       header: 'Batch',
-//       type: 'input',
-//     },
-//     {
-//       accessor: 'quantity',
-//       header: 'Quantity',
-//       type: 'input',
-//       inputProps: {
-//         type: 'number',
-//       },
-//     },
-//     {
-//       accessor: 'uom',
-//       header: 'UOM',
-//       type: 'input',
-//       inputProps: {
-//         disabled: true,
-//       },
-//     },
-//     {
-//       accessor: 'price',
-//       header: 'Unit Price',
-//       type: 'input',
-//       inputProps: {
-//         type: 'number',
-//       },
-//     },
-//   ],
-//   hasAction: false,
-// };
 
 const StockAdjustmentDetailForm = ({
   errors,
@@ -76,10 +16,7 @@ const StockAdjustmentDetailForm = ({
   handleInputKeyDown,
   disableAll,
   formType = 'add',
-}: // setError,
-// disableAll,
-// type = 'add'
-FormType<StockAdjustmentFormBody> & {
+}: FormType<StockAdjustmentFormBody> & {
   formType?: 'add' | 'edit' | 'detail';
 }) => {
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -251,27 +188,27 @@ FormType<StockAdjustmentFormBody> & {
             multipleSelect: true,
             idSelected: 'selected',
             targetIdSelector: 'item_code',
-            // valueSelected: watch('details')?.map((item) => item.item_code),
-            // onSelectRow: (data: any) => {
-            //   if (setValue) {
-            //     const convertData = convertInitialStockForm(
-            //       data as MasterItemFormBody
-            //     );
-            //     const prevData = watch('details') || [];
-            //     const itemExists = prevData.some(
-            //       (item) => item.item_code === convertData.item_code
-            //     );
-            //     let updatedData;
-            //     if (itemExists) {
-            //       updatedData = prevData.filter(
-            //         (item) => item.item_code !== convertData.item_code
-            //       );
-            //     } else {
-            //       updatedData = [...prevData, convertData];
-            //     }
-            //     setValue('details', updatedData);
-            //   }
-            // },
+            valueSelected: watch('details')?.map((item) => item.item_code),
+            onSelectRow: (data: any) => {
+              if (setValue) {
+                const convertData = convertStockAdjustmentForm(
+                  data as TransactionItem
+                );
+                const prevData = watch('details') || [];
+                const itemExists = prevData.some(
+                  (item) => item.item_code === convertData.item_code
+                );
+                let updatedData;
+                if (itemExists) {
+                  updatedData = prevData.filter(
+                    (item) => item.item_code !== convertData.item_code
+                  );
+                } else {
+                  updatedData = [...prevData, convertData];
+                }
+                setValue('details', updatedData);
+              }
+            },
           }}
         />
       </CardContent>
