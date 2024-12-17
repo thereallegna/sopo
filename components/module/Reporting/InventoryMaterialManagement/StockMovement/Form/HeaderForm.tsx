@@ -12,7 +12,7 @@ import {
   getWarehouse,
 } from '@services/fetcher/configuration/material-item-warehouse-management';
 
-const StockMovementHeaderForm = () => {
+const StockMovementHeaderForm = () => (
   <Card size="drawer" className="border border-Neutral-200 shadow-none">
     <CardContent className="flex-wrap flex flex-row gap-6 items-center">
       <div className="flex flex-col gap-[14px] flex-1">
@@ -25,29 +25,19 @@ const StockMovementHeaderForm = () => {
           dataLabel="warehouse_name"
           dataValue="warehouse_code"
         />
-        {/* <Combobox
-                    label="Type"
-                    placeholder="Select Type"
-                    options={type.map(option => ({
-                        value: option.id,
-                        Label: option.name,
-                    }))}
-                    value={selectedType}
-                    onChange={(value) => SetSelectedType(value)}
-                /> */}
-        {/* <Combobox 
-                    label="Type"
-                    placeholder="Select Type"
-                    data={[
-                        { label: "Initial Stock", value: "initial_stock" },
-                        { label: "Stock Adjustment", value: "stock_adjustment" },
-                        { label: "Stock Mutation", value: "stock_movement" },
-                    ]}
-                    dataLabel="label"
-                    dataValue="value"
-                /> */}
       </div>
-      <div className="flex flex-col gap-[14px] flex-1 h-full justify-between">
+      <div className="flex flex-col gap-[14px] flex-1 h-full">
+        <Combobox
+          label="Type"
+          placeholder="Select Type"
+          data={[
+            { label: 'Initial Stock', value: 'initial_stock' },
+            { label: 'Stock Adjustment', value: 'stock_adjustment' },
+            { label: 'Stock Mutation', value: 'stock_movement' },
+          ]}
+          dataLabel="label"
+          dataValue="value"
+        />
         <Combobox
           label="Item's Category"
           placeholder="Select Item's Category"
@@ -56,6 +46,8 @@ const StockMovementHeaderForm = () => {
           dataLabel="item_category_name"
           dataValue="Item_category_code"
         />
+      </div>
+      <div className="flex flex-col gap-[14px] flex-1 h-full">
         <InputField
           label="Item's Code"
           placeholder="Enter Item's Code"
@@ -81,7 +73,7 @@ const StockMovementHeaderForm = () => {
         />
       </div>
     </CardContent>
-  </Card>;
-};
+  </Card>
+);
 
 export default StockMovementHeaderForm;
