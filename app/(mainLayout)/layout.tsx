@@ -14,7 +14,7 @@ const MainLayout = ({ children }: PropsWithChildren) => (
     <Navbar />
     <div className="flex flex-1 overflow-hidden">
       <Sidebar />
-      <Content className="relative w-full h-full flex-1 flex-grow flex flex-col gap-[10px]">
+      <Content className="relative w-[100px] h-full flex-1 flex-grow flex flex-col gap-[10px]">
         {children}
         <PreventNavigationDialog />
         <HistoryLog />

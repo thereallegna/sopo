@@ -81,7 +81,7 @@ const StockMovementDetailForm = () => {
       className="w-full border border-Neutral-200 shadow-none overflow-hidden"
     >
       <CardContent className="flex-wrap flex flex-row gap-6 items-center w-full">
-        <div className="overflow-hidden">
+        <div className="overflow-x-auto w-full">
           <TableContent {...tableProps} />
         </div>
       </CardContent>
