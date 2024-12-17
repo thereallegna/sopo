@@ -21,19 +21,22 @@ type StockSummaryFormBody = {
   details: StockSummaryDetailFormBody[];
 };
 
-// type StockSummaryFormBody = {
-//   warehouse_code: string;
-//   warehouse_name: string;
-//   item_category_code: string;
-//   item_category_name: string;
-//   item_code: string;
-//   item_name: string;
-//   date: string;
-//   local_code: string;
-//   active: string;
-//   quantity: string;
-//   uom: string;
-// }
+type StockMovementDetailFormBody = {
+  type: string;
+  document_number: string;
+  date: string;
+  warehouse_code: string;
+  warehouse_name: string;
+  item_code: string;
+  item_name: string;
+  batch: string;
+  source: string;
+  quantity: string;
+  uom: string;
+  remark: string;
+  created_by: string;
+  spesification: string;
+};
 
 type StockMovementFormBody = {
   date: string;
@@ -45,5 +48,6 @@ type StockMovementFormBody = {
   item_name: string;
   batch: string;
   document_number: string;
+  details: StockMovementDetailFormBody[];
 };
 /* ======================= Reporting End ==================== */

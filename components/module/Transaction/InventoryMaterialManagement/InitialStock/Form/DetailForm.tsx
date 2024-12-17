@@ -39,6 +39,9 @@ const detailFormColumn: GenerateColumnsOption = {
       accessor: 'batch',
       header: 'Batch',
       type: 'input',
+      inputProps: {
+        disabled: true,
+      },
     },
     {
       accessor: 'quantity',
@@ -46,6 +49,7 @@ const detailFormColumn: GenerateColumnsOption = {
       type: 'input',
       inputProps: {
         type: 'number',
+        disabled: true,
       },
     },
     {
@@ -62,6 +66,7 @@ const detailFormColumn: GenerateColumnsOption = {
       type: 'input',
       inputProps: {
         type: 'number',
+        disabled: true,
       },
     },
   ],
