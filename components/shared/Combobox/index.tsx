@@ -47,8 +47,9 @@ interface ComboboxProps {
   required?: boolean;
 
   // Query
-  queryKey: string[];
+  queryKey?: string[]; // Made optional for cases where only manual data is used
   queryFn?: (options?: FetcherOptions) => Promise<any>;
+  data?: FrameworkItem[]; // Added property for manual array data
   dataLabel?: string;
   dataValue?: string;
 }
@@ -64,9 +65,10 @@ export const Combobox = ({
   className,
   queryKey,
   queryFn,
+  data, // Manual data
   required,
-  dataLabel = 'label', // nilai default jika dataLabel tidak disediakan
-  dataValue = 'value', // nilai default jika dataValue tidak disediakan
+  dataLabel = 'label',
+  dataValue = 'value',
 }: ComboboxProps) => {
   const [open, setOpen] = React.useState(false);
 
@@ -75,16 +77,22 @@ export const Combobox = ({
     []
   );
 
-  // console.log('Combobox Edit => ', disabled);
+  console.log('Combobox Edit => ', disabled);
 
   const { data: queryData, isLoading } = useQuery<
     AxiosResponse<ApiResponse<any[]>>
   >({
-    queryKey: [...queryKey],
+    queryKey: queryKey || [], // Fallback to an empty array when no queryKey is provided
     queryFn: queryFn ? () => queryFn() : undefined,
     placeholderData: keepPreviousData,
-    enabled: !disabled,
+    enabled: queryFn && !disabled, // Only fetch if queryFn is provided and not disabled
   });
+
+  // Combine query data with manual data (if both are provided)
+  const combinedData = React.useMemo(() => {
+    if (data) return data; // Use manual data if provided
+    return queryData?.data?.data?.results || []; // Otherwise, use fetched data
+  }, [data, queryData]);
 
   return (
     <div className={className}>
@@ -133,7 +141,7 @@ export const Combobox = ({
                   {isLoading ? 'Loading..' : 'No data found.'}
                 </CommandEmpty>
                 <CommandGroup>
-                  {queryData?.data?.data?.results.map((item) => (
+                  {combinedData.map((item) => (
                     <CommandItem
                       key={item[dataValue]}
                       value={item[dataLabel]}

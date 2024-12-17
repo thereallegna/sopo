@@ -31,20 +31,20 @@ type StockSummaryFilterQuery = {
 };
 
 type StockMovementDetailFormBody = {
-  type: string;
-  document_number: string;
-  date: string;
+  doc_type: string;
+  doc_no: string;
+  doc_date: string;
   warehouse_code: string;
   warehouse_name: string;
   item_code: string;
   item_name: string;
-  batch: string;
+  batch_no: string;
   source: string;
   quantity: string;
-  uom: string;
+  uom_name: string;
   remark: string;
   created_by: string;
-  spesification: string;
+  item_specification: string;
 };
 
 type StockMovementFormBody = {
