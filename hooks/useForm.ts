@@ -104,12 +104,8 @@ export const useForm = <T extends FieldValues>({
   // Compare values
   const valuesAreEqual = (value1: any, value2: any) => {
     if (
-      (value1 === null ||
-        value1 === '' ||
-        (Array.isArray(value1) && value1.length === 0)) &&
-      (value2 === null ||
-        value2 === '' ||
-        (Array.isArray(value2) && value1.length === 0))
+      (value1 === null || value1 === '') &&
+      (value2 === null || value2 === '')
     ) {
       return true;
     }

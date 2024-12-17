@@ -1,4 +1,14 @@
 /* ======================= Reporting Start ==================== */
+type StockSummaryDetailFormBody = {
+  warehouse_code: string;
+  warehouse_name: string;
+  item_code: string;
+  local_code: string;
+  item_name: string;
+  active: string;
+  quantity: string;
+  uom: string;
+};
 
 type StockSummaryFormBody = {
   warehouse_code: string;
@@ -8,11 +18,22 @@ type StockSummaryFormBody = {
   item_code: string;
   item_name: string;
   date: string;
-  local_code: string;
-  active: boolean;
-  quantity: string;
-  uom: string;
+  details: StockSummaryDetailFormBody[];
 };
+
+// type StockSummaryFormBody = {
+//   warehouse_code: string;
+//   warehouse_name: string;
+//   item_category_code: string;
+//   item_category_name: string;
+//   item_code: string;
+//   item_name: string;
+//   date: string;
+//   local_code: string;
+//   active: string;
+//   quantity: string;
+//   uom: string;
+// }
 
 type StockMovementFormBody = {
   date: string;

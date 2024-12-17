@@ -12,6 +12,44 @@ import InputField from '@components/shared/InputField';
 import { Button } from '@components/ui/Button';
 import { GenerateColumnsOption } from '../types/client/table';
 
+// const CheckboxInitialStock = ({
+//   keyId,
+//   value,
+//   disableAll,
+//   ...props
+// }: {
+//   keyId: string;
+//   value: boolean;
+//   disableAll?: boolean;
+// } & CheckboxProps) => {
+//   const [isChecked, setIsChecked] = useState(value);
+
+//   // Menggunakan useEffect untuk melacak perubahan value setelah render pertama
+//   useEffect(() => {
+//     // Update isChecked hanya ketika value berubah dan menjadi true
+//     if (value) {
+//       setIsChecked(true); // Menjaga value tetap checked meskipun tidak disable
+//     }
+//   }, [value]);
+
+//   return (
+//     <Checkbox
+//       checked={isChecked} // Kontrol status checked berdasarkan isChecked
+//       {...props}
+//       disabled={disableAll} // Disable global jika diperlukan
+//       onCheckedChange={(checked) => {
+//         // Checkbox dapat di-check/uncheck jika isChecked masih false
+//         if (!checked || !value) {
+//           setIsChecked(checked);
+//         }
+//         if (props.onCheckedChange) {
+//           props.onCheckedChange(checked);
+//         }
+//       }}
+//     />
+//   );
+// };
+
 export const generateColumns = ({
   key,
   columns,
@@ -85,6 +123,22 @@ export const generateColumns = ({
             />
           );
         }
+
+        // if (column.type === 'checkbox-initial-stock') {
+        //   return (
+        //     <CheckboxInitialStock
+        //       key={key}
+        //       keyId={key as string}
+        //       value={value}
+        //       checked={value}
+        //       onCheckedChange={(check) =>
+        //         onCheckedChange && onCheckedChange(rowIndex, columnId, check)
+        //       }
+        //       disabled={disableAll}
+        //       {...column.checkboxProps}
+        //     />
+        //   );
+        // }
 
         if (typeof value === 'boolean') {
           return value ? (

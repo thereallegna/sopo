@@ -110,34 +110,6 @@ export const StockMutationDefaultValues: StockMutationFormBody = {
 };
 // Transaction Inventory Material Management End
 
-// Reporting Inventory Material Management Start
-export const StockSummaryDefaultValues: StockSummaryFormBody = {
-  warehouse_code: '',
-  warehouse_name: '',
-  item_category_code: '',
-  item_category_name: '',
-  item_code: '',
-  item_name: '',
-  date: '',
-  local_code: '',
-  active: true,
-  quantity: '',
-  uom: '',
-};
-
-export const StockMovementDefaultValues: StockMovementFormBody = {
-  date: '',
-  warehouse_name: '',
-  warehouse_code: '',
-  type: '',
-  item_category: '',
-  item_code: '',
-  item_name: '',
-  batch: '',
-  document_number: '',
-};
-// Reporting Inventory Material Management End
-
 // Configuration Financial Management Start
 
 export const currencyDefaultValues: CurrencyFormBody = {

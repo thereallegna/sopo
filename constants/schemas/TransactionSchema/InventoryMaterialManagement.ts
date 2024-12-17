@@ -1,7 +1,6 @@
 import * as Yup from 'yup';
 
 export const CreateInitialStockSchema = Yup.object().shape({
-  // document_number: Yup.string().required('Document number is required'),
   document_date: Yup.string().required('Document date is required'),
   warehouse_name: Yup.string().required('Warehouse is required'),
   warehouse_code: Yup.string().required('Warehouse Code is required'),
@@ -17,10 +16,10 @@ export const CreateInitialStockSchema = Yup.object().shape({
     Yup.object().shape({
       item_code: Yup.string().required('Item Code is required'),
       item_name: Yup.string().required('Item Name is required'),
-      local_code: Yup.string().required('Local Code is required'),
+      // local_code: Yup.string().required('Local Code is required'),
       quantity: Yup.number().required('Quantity is required'),
       uom: Yup.string().required('UOM is required'),
-      unit_price: Yup.number().required('Price is required'),
+      price: Yup.number().required('Price is required'),
     })
   ),
 });
