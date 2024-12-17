@@ -22,6 +22,26 @@ type InitialStockFormBody = {
   details: InitialStockDetailFormBody[];
 };
 
+type StockAdjustmentDetailFormBody = {
+  d_no: string;
+  item_name: string;
+  batch: string;
+  stock_system: number;
+  stock_actual: number;
+  balance: number;
+  uom_name: string;
+  specification: string;
+};
+
+type StockAdjustmentFormBody = {
+  document_number: string;
+  date: string;
+  warehouse_code: string;
+  warehouse_name: string;
+  remark: string;
+  details: StockAdjustmentDetailFormBody[];
+};
+
 type StockMutatedFormBody = {
   document_number: string;
   item_code: string;
@@ -45,5 +65,13 @@ type StockMutationFormBody = {
   remark?: string;
   mutated_from: StockMutatedFormBody[];
   mutated_to: StockMutatedFormBody[];
+};
+
+type ItemsQuery = {
+  page?: string;
+  page_size?: string;
+  warehouse: string;
+  item_category: string;
+  item_name?: string;
 };
 /* ======================= Inventory Material Management End ==================== */
