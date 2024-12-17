@@ -6,6 +6,7 @@ import { PATH_GET_ITEM_BE } from '@constants/routes';
 export async function GET(req: NextRequest) {
   try {
     const params = req.nextUrl.searchParams;
+    console.log('param', params);
 
     const session = await getServerSideSession();
 
@@ -21,6 +22,8 @@ export async function GET(req: NextRequest) {
         item_name: params.get('item_name'),
       },
     });
+
+    console.log('ressponm', response.data);
 
     return NextResponse.json(response.data);
   } catch (error: any) {

@@ -25,6 +25,7 @@ type InitialStockFormBody = {
 type StockAdjustmentDetailFormBody = {
   d_no: string;
   item_name: string;
+  item_code: string;
   batch: string;
   stock_system: number;
   stock_actual: number;
@@ -40,6 +41,14 @@ type StockAdjustmentFormBody = {
   warehouse_name: string;
   remark: string;
   details: StockAdjustmentDetailFormBody[];
+};
+
+type TransactionItem = {
+  item_code: string;
+  item_name: string;
+  batch: string;
+  stock: number;
+  uom_name: string;
 };
 
 type StockMutatedFormBody = {
@@ -68,10 +77,8 @@ type StockMutationFormBody = {
 };
 
 type ItemsQuery = {
-  page?: string;
-  page_size?: string;
-  warehouse: string;
-  item_category: string;
+  warehouse?: string;
+  item_category?: string;
   item_name?: string;
 };
 /* ======================= Inventory Material Management End ==================== */

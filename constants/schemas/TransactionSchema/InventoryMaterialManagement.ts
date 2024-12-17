@@ -36,14 +36,6 @@ export const StockAdjustmentSchema = Yup.object().shape({
   date: Yup.string().required('Document date is required'),
   warehouse_name: Yup.string().required('Warehouse is required'),
   warehouse_code: Yup.string().required('Warehouse Code is required'),
-  currency_name: Yup.string().required('Currency is required'),
-  currency_code: Yup.string().required('Currency Code is required'),
-  rate: Yup.number()
-    .nullable()
-    .transform((value, originalValue) =>
-      originalValue === '' ? null : Number(originalValue)
-    )
-    .required('Rate is required'),
   details: Yup.array(
     Yup.object().shape({
       item_code: Yup.string().required('Item Code is required'),
