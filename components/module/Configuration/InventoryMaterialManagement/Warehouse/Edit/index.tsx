@@ -101,6 +101,7 @@ const EditWarehouse = () => {
                     type="text"
                     required
                     className="w-full gap-2"
+                    disabled
                     onKeyDown={handleInputKeyDown}
                   />
                   <InputField
