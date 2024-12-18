@@ -159,6 +159,11 @@ FormType<InitialStockFormBody> & { formType?: 'add' | 'edit' | 'detail' }) => {
 
     return options;
   }, [handleInputKeyDown]);
+
+  const total = watch('details')
+    .map((detail) => detail.quantity)
+    .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+
   return (
     <Card size="drawer" className="border border-Neutral-200 shadow-none">
       <CardContent className="flex-wrap flex flex-row gap-6 items-center w-full">
@@ -265,6 +270,7 @@ FormType<InitialStockFormBody> & { formType?: 'add' | 'edit' | 'detail' }) => {
               }
             },
           }}
+          total={`${total} Quantity`}
         />
       </CardContent>
     </Card>

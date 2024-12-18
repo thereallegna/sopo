@@ -94,6 +94,7 @@ type TableFormProps<T> = {
   errors?: FieldError<T>;
   getDataModalProps?: SelectableModalProps;
   getDataButtonProps?: ButtonProps;
+  total?: string;
   onChangeData?: (
     rowIndex: number,
     columnId: string,

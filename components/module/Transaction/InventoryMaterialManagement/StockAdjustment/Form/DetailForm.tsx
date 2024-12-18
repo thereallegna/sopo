@@ -96,6 +96,11 @@ const StockAdjustmentDetailForm = ({
 
     return options;
   }, [handleInputKeyDown]);
+
+  const total = watch('details')
+    .map((detail) => detail.stock_actual)
+    .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+
   return (
     <Card size="drawer" className="border border-Neutral-200 shadow-none">
       <CardContent className="flex-wrap flex flex-row gap-6 items-center w-full">
@@ -107,6 +112,15 @@ const StockAdjustmentDetailForm = ({
           disableAll={disableAll}
           showButtonDeleteRow={formType === 'add'}
           showButtonDataModal={formType === 'add'}
+          getDataButtonProps={{
+            disabled: !watch('warehouse_code'),
+            variant: !watch('warehouse_code') ? 'disabled' : undefined,
+          }}
+          onShowGetDataModal={() => {
+            if (watch('warehouse_code')) {
+              setShowModal(true);
+            }
+          }}
           onChangeData={(rowIndex, columnId, value, type) => {
             const prevData = watch('details');
             let data: string | number = value;
@@ -146,7 +160,6 @@ const StockAdjustmentDetailForm = ({
               setValue?.('details', filteredData);
             }
           }}
-          onShowGetDataModal={() => setShowModal(true)}
           getDataModalProps={{
             isOpen: showModal,
             title: 'Select Item',
@@ -210,6 +223,7 @@ const StockAdjustmentDetailForm = ({
               }
             },
           }}
+          total={`${total}`}
         />
       </CardContent>
     </Card>

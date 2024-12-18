@@ -30,6 +30,7 @@ const TableForm = <T,>({
   disableAll,
   showButtonDeleteRow = true,
   showButtonDataModal = true,
+  total,
   onShowGetDataModal,
   onChangeData,
   onCheckedChange,
@@ -245,7 +246,7 @@ const TableForm = <T,>({
       </Table>
       <hr />
       <div className="w-full flex justify-end mt-[10px]">
-        <p className="text-base font-bold">Total 43 Pcs</p>
+        <p className="text-base font-bold">Total {total}</p>
       </div>
       {getDataModalProps && <SelectableModal {...getDataModalProps} />}
     </div>
