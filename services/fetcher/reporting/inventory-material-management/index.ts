@@ -12,7 +12,6 @@ const getStockSummary = async (option?: FetcherOptions) => {
         ...option?.query,
       },
     });
-    console.log('res', res);
 
     return res;
   } catch (error) {
@@ -28,6 +27,7 @@ const getStockMovement = async (option?: FetcherOptions) => {
         page_size: !option?.all ? option?.pagination?.pageSize : undefined,
         current_page: !option?.all ? option?.pagination?.pageIndex : undefined,
         search: option?.search,
+        ...option?.query,
       },
     });
 

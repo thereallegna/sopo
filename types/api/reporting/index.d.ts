@@ -59,4 +59,15 @@ type StockMovementFormBody = {
   document_number: string;
   details: StockMovementDetailFormBody[];
 };
+
+type StockMovementFilterQuery = {
+  warehouse?: string;
+  doc_type?: string;
+  type_name: ?string;
+  item_code?: string;
+  item_name?: string;
+  batch?: string;
+  item_category?: string;
+  item_category_name?: string;
+};
 /* ======================= Reporting End ==================== */

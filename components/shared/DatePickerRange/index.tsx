@@ -23,12 +23,14 @@ interface DatePickerRangeProps {
   disabled?: boolean;
   className?: string;
   required?: boolean;
+  right?: boolean;
 }
 
 export const DatePickerRange = ({
   label,
   value,
   placeholder,
+  right,
   onChange,
   disabled,
   className,
@@ -58,29 +60,45 @@ export const DatePickerRange = ({
   return (
     <div className={className}>
       <div className="w-full flex">
-        {label && (
+        {/* {label && (
           <Label
             required={required}
             className="shrink-0 w-[100px] font-semibold"
           >
             {label}
           </Label>
-        )}
+        )} */}
         <Popover open={open} onOpenChange={setOpen}>
           <PopoverTrigger asChild>
-            <Button
-              variant="outline"
-              type="button"
-              className={cn(
-                'w-full justify-between font-normal',
-                !dateRange?.from && 'text-muted-foreground',
-                disabled && 'bg-neutral-100'
-              )}
-              disabled={disabled}
+            <div
+              className={`flex w-full ${
+                right
+                  ? 'flex-row  items-center gap-2 self-stretch'
+                  : 'flex-col gap-1'
+              }`}
             >
-              <CalendarIcon className="mr-2 h-4 w-4" />
-              <span>{getFormattedDateRange()}</span>
-            </Button>
+              {label && (
+                <Label
+                  required={required}
+                  className="shrink-0 w-[100px] font-semibold"
+                >
+                  {label}
+                </Label>
+              )}
+              <Button
+                variant="outline"
+                type="button"
+                className={cn(
+                  'flex-1 w-full justify-between font-normal',
+                  !dateRange?.from && 'text-muted-foreground',
+                  disabled && 'bg-neutral-100'
+                )}
+                disabled={disabled}
+              >
+                <CalendarIcon className="mr-2 h-4 w-4" />
+                <span>{getFormattedDateRange()}</span>
+              </Button>
+            </div>
           </PopoverTrigger>
           <PopoverContent className="w-auto p-0" align="start">
             <Calendar

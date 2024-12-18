@@ -137,4 +137,5 @@ export const paginationStateDefaultValue = {
   },
   grouping: [],
   rowSize: undefined,
+  query: {},
 };
