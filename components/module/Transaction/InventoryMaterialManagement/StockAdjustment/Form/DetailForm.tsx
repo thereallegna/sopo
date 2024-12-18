@@ -59,9 +59,12 @@ const StockAdjustmentDetailForm = ({
           accessor: 'balance',
           header: 'Balance',
           type: 'input',
-          inputProps: {
+          inputProps: (rowIndex) => ({
+            value:
+              watch(`details.${rowIndex}.stock_actual`) -
+              watch(`details.${rowIndex}.stock_system`),
             disabled: true,
-          },
+          }),
         },
         {
           accessor: 'uom_name',
@@ -98,7 +101,7 @@ const StockAdjustmentDetailForm = ({
   }, [handleInputKeyDown]);
 
   const total = watch('details')
-    .map((detail) => detail.stock_actual)
+    .map((detail) => detail.stock_actual - detail.stock_system)
     .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
 
   return (

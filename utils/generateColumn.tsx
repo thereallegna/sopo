@@ -78,12 +78,19 @@ export const generateColumns = ({
 
         if (column.type === 'input') {
           let displayValue = value;
+
+          // Tentukan inputProps berdasarkan tipe (fungsi atau objek)
+          const resolvedInputProps =
+            typeof column.inputProps === 'function'
+              ? column.inputProps(rowIndex, columnId)
+              : column.inputProps;
           // Jika value adalah 0, tampilkan string kosong
           if (value === 0) {
             displayValue = '';
-          } else if (column.inputProps?.type === 'number') {
+          } else if (resolvedInputProps?.type === 'number') {
             displayValue = Number(value);
           }
+
           return (
             <InputField
               type="small"
@@ -95,7 +102,7 @@ export const generateColumns = ({
                   rowIndex,
                   columnId,
                   e.target.value,
-                  column.inputProps?.type
+                  resolvedInputProps?.type
                 )
               }
               message={
@@ -111,7 +118,7 @@ export const generateColumns = ({
                   : undefined
               }
               inputProps={{
-                ...column.inputProps,
+                ...resolvedInputProps,
                 placeholder: value,
                 defaultValue: value,
               }}

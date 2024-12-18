@@ -1,3 +1,5 @@
+import { parse, isValid, format } from 'date-fns';
+
 export function convertInitialStockForm(
   item: MasterItemFormBody
 ): InitialStockDetailFormBody {
@@ -52,3 +54,18 @@ export function replaceSlashes(input: string): string {
 //     unit_price: item.unit_price,
 //   };
 // }
+
+export const convertDate = (date: string): string => {
+  const inputFormat = 'dd/MMM/yyyy'; // Format input
+  const outputFormat = 'yyyy-MM-dd'; // Format output
+
+  // Parsing string menjadi objek Date
+  const parsedDate = parse(date, inputFormat, new Date());
+
+  // Validasi apakah hasil parsing adalah tanggal yang valid
+  if (isValid(parsedDate)) {
+    return format(parsedDate, outputFormat); // Format menjadi YYYY/MM/DD
+  }
+
+  return date; // Mengembalikan string kosong jika tanggal tidak valid
+};
