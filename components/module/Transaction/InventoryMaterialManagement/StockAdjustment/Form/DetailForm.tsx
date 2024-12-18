@@ -100,9 +100,15 @@ const StockAdjustmentDetailForm = ({
     return options;
   }, [handleInputKeyDown]);
 
-  const total = watch('details')
-    .map((detail) => detail.stock_actual - detail.stock_system)
-    .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+  const total = useMemo(() => {
+    const details = watch('details');
+    if (details) {
+      return watch('details')
+        .map((detail) => detail.stock_actual - detail.stock_system)
+        .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+    }
+    return 0;
+  }, [watch('details')]);
 
   return (
     <Card size="drawer" className="border border-Neutral-200 shadow-none">

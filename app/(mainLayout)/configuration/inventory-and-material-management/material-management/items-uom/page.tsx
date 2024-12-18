@@ -70,9 +70,7 @@ const Country = () => {
               width={213}
               height={213}
             />
-            <p className="text-Neutral-500 text-lg">
-              Filter to find data Country
-            </p>
+            <p className="text-Neutral-500 text-lg">Filter to find data UoM</p>
             <div className="pb-[10px]">
               <FilterButton
                 iconColor="secondary"

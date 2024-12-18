@@ -7,11 +7,12 @@ import {
   DrawerBody,
   DrawerContent,
   DrawerEndHeader,
+  DrawerFooter,
   DrawerHeader,
 } from '@components/ui/Drawer';
 import { Card, CardContent } from '@components/ui/Card';
 import InputField from '@components/shared/InputField';
-import { IconPencil } from '@tabler/icons-react';
+import { IconHistory, IconPencil } from '@tabler/icons-react';
 import { getCity } from '@services/fetcher/configuration/general';
 import { getWarehouseCatrgory } from '@services/fetcher/configuration/material-item-warehouse-management';
 import Combobox from '@components/shared/Combobox';
@@ -21,7 +22,12 @@ import { useDrawerStore } from '@stores/useDrawerStore';
 import { useSetValueForm } from '@hooks/useSetValueForm';
 
 const DetailWarehouse = () => {
-  const { isOpenDetail, closeDetailDrawer, openEditDrawer } = useDrawerStore();
+  const {
+    isOpenDetail,
+    closeDetailDrawer,
+    openEditDrawer,
+    openHistoryLogDrawer,
+  } = useDrawerStore();
   const detail_data = useDrawerStore(
     (state) => state.detail_data
   ) as WarehouseFormBody;
@@ -184,6 +190,21 @@ const DetailWarehouse = () => {
           </Card>
         </DrawerBody>
       </DrawerContent>
+      <DrawerFooter>
+        <Button
+          variant="backDrawer"
+          className="w-7"
+          size="icon"
+          icon={{ size: 'large', icon: IconHistory, color: 'dark' }}
+          type="submit"
+          onClick={() => {
+            openHistoryLogDrawer({
+              code: detail_data?.warehouse_code,
+              category: 'Warehouse',
+            });
+          }}
+        />
+      </DrawerFooter>
     </Drawer>
   );
 };
