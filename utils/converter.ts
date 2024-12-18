@@ -24,7 +24,7 @@ export const convertStockAdjustmentForm = (
     item_name: item.item_name,
     batch: item.batch || '',
     balance: Number(item.batch) || 0,
-    stock_system: 0,
+    stock_system: item.stock,
     stock_actual: 0,
     uom_name: item.uom_name,
     specification: '',

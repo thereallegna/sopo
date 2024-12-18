@@ -21,7 +21,7 @@ export const CreateInitialStockSchema = Yup.object().shape({
       uom: Yup.string().required('UOM is required'),
       price: Yup.number().required('Price is required'),
     })
-  ),
+  ).required('Details is required'),
 });
 
 export const EditInitialStockSchema = Yup.object().shape({
