@@ -9,65 +9,6 @@ import { GenerateColumnsOption } from '../../../../../../types/client/table';
 import { FormType } from '../../../../../../types/form';
 // import { convertInitialStockForm } from '@utils/converter';
 
-// const detailFormColumn: GenerateColumnsOption = {
-//   columns: [
-//     {
-//       accessor: 'item_code',
-//       header: "Item's Code",
-//       type: 'input',
-//       inputProps: {
-//         disabled: true,
-//       },
-//     },
-//     {
-//       accessor: 'item_name',
-//       header: "Item's Name",
-//       type: 'input',
-//       inputProps: {
-//         disabled: true,
-//       },
-//     },
-//     {
-//       accessor: 'local_code',
-//       header: 'Local Code',
-//       type: 'input',
-//       inputProps: {
-//         disabled: true,
-//       },
-//     },
-//     {
-//       accessor: 'batch',
-//       header: 'Batch',
-//       type: 'input',
-//     },
-//     {
-//       accessor: 'quantity',
-//       header: 'Quantity',
-//       type: 'input',
-//       inputProps: {
-//         type: 'number',
-//       },
-//     },
-//     {
-//       accessor: 'uom',
-//       header: 'UOM',
-//       type: 'input',
-//       inputProps: {
-//         disabled: true,
-//       },
-//     },
-//     {
-//       accessor: 'price',
-//       header: 'Unit Price',
-//       type: 'input',
-//       inputProps: {
-//         type: 'number',
-//       },
-//     },
-//   ],
-//   hasAction: false,
-// };
-
 const InitialStockDetailForm = ({
   errors,
   watch,
@@ -160,9 +101,13 @@ FormType<InitialStockFormBody> & { formType?: 'add' | 'edit' | 'detail' }) => {
     return options;
   }, [handleInputKeyDown]);
 
-  const total = watch('details')
-    .map((detail) => detail.quantity)
-    .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+  const total = useMemo(
+    () =>
+      watch('details')
+        .map((detail) => detail.quantity)
+        .reduce((accumulator, currentValue) => accumulator + currentValue, 0),
+    [watch('details')]
+  );
 
   return (
     <Card size="drawer" className="border border-Neutral-200 shadow-none">

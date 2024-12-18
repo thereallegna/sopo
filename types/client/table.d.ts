@@ -18,7 +18,9 @@ type ColumnKey = {
   header: string;
   size?: number;
   type?: 'default' | 'input' | 'checkbox' | 'checkbox-initial-stock' | 'button';
-  inputProps?: InputProps;
+  inputProps?:
+    | InputProps
+    | ((rowIndex: number, columnId: string) => InputProps);
   buttonProps?: ButtonProps;
   checkboxProps?: CheckboxProps;
   customComponent?: () => ReactElement;
