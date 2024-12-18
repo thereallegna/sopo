@@ -15,6 +15,7 @@ import {
   GET_STOCK_MOVEMENT,
   GET_STOCK_ADJUSTMENT,
   GET_DETAIL_BY_WAREHOUSE_STOCK_ADJUSTMENT,
+  GET_DETAIL_STOCK_MUTATION,
 } from '@constants/queryKey';
 import { create } from 'zustand';
 import { paginationStateDefaultValue } from '@constants/defaultValues';
@@ -38,6 +39,7 @@ const initialTableState = {
     [GET_STOCK_SUMMARY]: paginationStateDefaultValue,
     [GET_DETAIL_BY_WAREHOUSE_STOCK_ADJUSTMENT]: paginationStateDefaultValue,
     [GET_STOCK_MOVEMENT]: paginationStateDefaultValue,
+    [GET_DETAIL_STOCK_MUTATION]: paginationStateDefaultValue,
   },
 };
 
