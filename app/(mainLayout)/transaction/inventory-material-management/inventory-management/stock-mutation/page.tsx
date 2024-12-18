@@ -113,11 +113,11 @@ const StockMutation = () => {
               header: 'Cancel',
             },
             {
-              accessor: 'werehouse',
+              accessor: 'warehouse',
               header: 'Werehouse',
             },
             {
-              accessor: 'from/to',
+              accessor: 'from_to',
               header: 'From/To',
             },
             {
