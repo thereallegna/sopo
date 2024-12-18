@@ -70,6 +70,7 @@ const detailFormColumn: GenerateColumnsOption = {
 
 const StockMovementDetailForm = () => {
   const tableProps = useTable<any[]>({
+    showSearch: false,
     queryFn: getStockMovement,
     columns: detailFormColumn,
     queryKey: GET_STOCK_MOVEMENT,

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import InputField from '@components/shared/InputField';
 import { Card, CardContent } from '@components/ui/Card';
 import Combobox, { FrameworkItem } from '@components/shared/Combobox';
@@ -28,10 +28,6 @@ const StockSummaryHeaderForm = () => {
       [key]: val,
     });
   };
-
-  useEffect(() => {
-    console.log(query);
-  }, [query]);
 
   return (
     <Card size="drawer" className="border border-Neutral-200 shadow-none">
