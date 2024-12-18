@@ -3,13 +3,9 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 export async function middleware(request: NextRequest) {
-  if (request.nextUrl.pathname.startsWith('/login')) {
-    return NextResponse.next();
-  }
-  if (request.nextUrl.pathname.startsWith('/forgot-password')) {
-    return NextResponse.next();
-  }
-  if (request.nextUrl.pathname.startsWith('/reset-password')) {
+  const excludedPaths = ['/login', '/forgot-password', '/reset-password'];
+
+  if (excludedPaths.some((path) => request.nextUrl.pathname.startsWith(path))) {
     return NextResponse.next();
   }
 
