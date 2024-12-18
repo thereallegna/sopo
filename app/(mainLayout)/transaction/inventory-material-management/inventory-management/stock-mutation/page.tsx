@@ -101,7 +101,7 @@ const StockMutation = () => {
               header: '#',
             },
             {
-              accessor: 'document',
+              accessor: 'document_number',
               header: 'Document',
             },
             {
