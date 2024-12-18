@@ -6,6 +6,12 @@ export async function middleware(request: NextRequest) {
   if (request.nextUrl.pathname.startsWith('/login')) {
     return NextResponse.next();
   }
+  if (request.nextUrl.pathname.startsWith('/forgot-password')) {
+    return NextResponse.next();
+  }
+  if (request.nextUrl.pathname.startsWith('/reset-password')) {
+    return NextResponse.next();
+  }
 
   const session = await getServerSideSession({ cookieOptions: request });
   if (!session || !session.user?.isLoggedIn) {

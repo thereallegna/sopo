@@ -138,6 +138,7 @@ const LoginPage = () => {
                 onCheckedChange={(val) => setValue('keepUserId', val)}
               />
               <Link
+                onClick={() => console.log('clicked')}
                 href="/forgot-password"
                 className="text-blue-500 font-normal text-[11px] justify-end"
               >
