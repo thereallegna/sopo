@@ -71,22 +71,22 @@ const DetailUOM = () => {
             </CardContent>
           </Card>
         </DrawerBody>
+        <DrawerFooter>
+          <Button
+            variant="backDrawer"
+            className="w-7"
+            size="icon"
+            icon={{ size: 'large', icon: IconHistory, color: 'dark' }}
+            type="submit"
+            onClick={() => {
+              openHistoryLogDrawer({
+                code: detail_data?.uom_code,
+                category: 'Uom',
+              });
+            }}
+          />
+        </DrawerFooter>
       </DrawerContent>
-      <DrawerFooter>
-        <Button
-          variant="backDrawer"
-          className="w-7"
-          size="icon"
-          icon={{ size: 'large', icon: IconHistory, color: 'dark' }}
-          type="submit"
-          onClick={() => {
-            openHistoryLogDrawer({
-              code: detail_data?.uom_code,
-              category: 'Uom',
-            });
-          }}
-        />
-      </DrawerFooter>
     </Drawer>
   );
 };
