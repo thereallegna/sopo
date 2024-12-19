@@ -7,9 +7,10 @@ import {
   DrawerBody,
   DrawerContent,
   DrawerEndHeader,
+  DrawerFooter,
   DrawerHeader,
 } from '@components/ui/Drawer';
-import { IconPencil } from '@tabler/icons-react';
+import { IconHistory, IconPencil } from '@tabler/icons-react';
 import { useDrawerStore } from '@stores/useDrawerStore';
 import { useSetValueForm } from '@hooks/useSetValueForm';
 import { useForm } from 'react-hook-form';
@@ -21,8 +22,13 @@ import BasicForm from '../Form/BasicForm';
 import DetailForm from '../Form/DetailForm';
 
 const DetailMasterItemMM = () => {
-  const { isOpenDetail, closeDetailDrawer, openEditDrawer, setDetailData } =
-    useDrawerStore();
+  const {
+    isOpenDetail,
+    closeDetailDrawer,
+    openEditDrawer,
+    setDetailData,
+    openHistoryLogDrawer,
+  } = useDrawerStore();
   const detail_data = useDrawerStore(
     (state) => state.detail_data
   ) as MasterItemFormBody;
@@ -67,6 +73,21 @@ const DetailMasterItemMM = () => {
           </DrawerBody>
         </form>
       </DrawerContent>
+      <DrawerFooter>
+        <Button
+          variant="backDrawer"
+          className="w-7"
+          size="icon"
+          icon={{ size: 'large', icon: IconHistory, color: 'dark' }}
+          type="submit"
+          onClick={() => {
+            openHistoryLogDrawer({
+              code: detail_data?.item_code || '',
+              category: 'Item',
+            });
+          }}
+        />
+      </DrawerFooter>
     </Drawer>
   );
 };

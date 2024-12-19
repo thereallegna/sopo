@@ -101,13 +101,15 @@ FormType<InitialStockFormBody> & { formType?: 'add' | 'edit' | 'detail' }) => {
     return options;
   }, [handleInputKeyDown]);
 
-  const total = useMemo(
-    () =>
-      watch('details')
+  const total = useMemo(() => {
+    const details = watch('details');
+    if (details) {
+      return watch('details')
         .map((detail) => detail.quantity)
-        .reduce((accumulator, currentValue) => accumulator + currentValue, 0),
-    [watch('details')]
-  );
+        .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+    }
+    return 0;
+  }, [watch('details')]);
 
   return (
     <Card size="drawer" className="border border-Neutral-200 shadow-none">

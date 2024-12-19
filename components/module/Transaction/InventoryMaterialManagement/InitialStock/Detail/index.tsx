@@ -7,9 +7,10 @@ import {
   DrawerBody,
   DrawerContent,
   DrawerEndHeader,
+  DrawerFooter,
   DrawerHeader,
 } from '@components/ui/Drawer';
-import { IconPencil } from '@tabler/icons-react';
+import { IconHistory, IconPencil } from '@tabler/icons-react';
 import { useDrawerStore } from '@stores/useDrawerStore';
 import { useSetValueForm } from '@hooks/useSetValueForm';
 import { useForm } from 'react-hook-form';
@@ -17,7 +18,12 @@ import InitialStockHeaderForm from '../Form/HeaderForm';
 import InitialStockBodyForm from '../Form/DetailForm';
 
 const DetailInitialStock = () => {
-  const { isOpenDetail, closeDetailDrawer, openEditDrawer } = useDrawerStore();
+  const {
+    isOpenDetail,
+    closeDetailDrawer,
+    openEditDrawer,
+    openHistoryLogDrawer,
+  } = useDrawerStore();
   const detail_data = useDrawerStore(
     (state) => state.detail_data
   ) as InitialStockFormBody;
@@ -61,6 +67,21 @@ const DetailInitialStock = () => {
             />
           </DrawerBody>
         </form>
+        <DrawerFooter>
+          <Button
+            variant="backDrawer"
+            className="w-7"
+            size="icon"
+            icon={{ size: 'large', icon: IconHistory, color: 'dark' }}
+            type="submit"
+            onClick={() => {
+              openHistoryLogDrawer({
+                code: detail_data?.document_number,
+                category: 'StockInitial',
+              });
+            }}
+          />
+        </DrawerFooter>
       </DrawerContent>
     </Drawer>
   );
