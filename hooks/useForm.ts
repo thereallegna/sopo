@@ -180,7 +180,7 @@ export const useForm = <T extends FieldValues>({
       }
       setIsLoading(false);
       setChangeStatus(false);
-      openDetailDrawer(body as any);
+      openDetailDrawer({ ...(body as any), ...data.data });
 
       console.log('Data => ', data);
       console.log('Body => ', body);
