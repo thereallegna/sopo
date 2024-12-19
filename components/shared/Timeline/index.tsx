@@ -7,14 +7,20 @@ import { GET_LOG_HISTORY } from '@constants/queryKey';
 import { getLogHistory } from '@services/fetcher/log';
 
 const Timeline: React.FC = () => {
-  const { data_log_history_query } = useDrawerStore();
+  const { data_log_history_query, detail_data } = useDrawerStore();
 
   const {
     data: data_log_history,
     isLoading,
     isError,
   } = useQuery({
-    queryKey: [GET_LOG_HISTORY, data_log_history_query?.data],
+    queryKey: [
+      GET_LOG_HISTORY,
+      data_log_history_query?.data,
+      data_log_history_query?.data?.code,
+      data_log_history_query?.data?.category,
+      detail_data,
+    ],
 
     queryFn: () =>
       getLogHistory({

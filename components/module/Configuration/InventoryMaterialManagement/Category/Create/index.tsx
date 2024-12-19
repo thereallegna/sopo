@@ -137,6 +137,7 @@ const CreateCategoryMM = () => {
                     label="Item Category Code"
                     placeholder="Item Category Code"
                     right
+                    required
                     type="text"
                     onKeyDown={handleInputKeyDown}
                   />
@@ -154,6 +155,7 @@ const CreateCategoryMM = () => {
                     label="Item Category Name"
                     placeholder="Item Category Name"
                     right
+                    required
                     type="text"
                     onKeyDown={handleInputKeyDown}
                   />

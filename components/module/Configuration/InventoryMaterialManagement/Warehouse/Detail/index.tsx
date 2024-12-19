@@ -189,22 +189,22 @@ const DetailWarehouse = () => {
             </CardContent>
           </Card>
         </DrawerBody>
+        <DrawerFooter>
+          <Button
+            variant="backDrawer"
+            className="w-7"
+            size="icon"
+            icon={{ size: 'large', icon: IconHistory, color: 'dark' }}
+            type="submit"
+            onClick={() => {
+              openHistoryLogDrawer({
+                code: detail_data?.warehouse_code,
+                category: 'Warehouse',
+              });
+            }}
+          />
+        </DrawerFooter>
       </DrawerContent>
-      <DrawerFooter>
-        <Button
-          variant="backDrawer"
-          className="w-7"
-          size="icon"
-          icon={{ size: 'large', icon: IconHistory, color: 'dark' }}
-          type="submit"
-          onClick={() => {
-            openHistoryLogDrawer({
-              code: detail_data?.warehouse_code,
-              category: 'Warehouse',
-            });
-          }}
-        />
-      </DrawerFooter>
     </Drawer>
   );
 };
