@@ -46,6 +46,8 @@ const EditCity = () => {
     validationSchema: citySchema,
     defaultValues: detail_data,
     type: 'edit',
+    requireAllFields: true,
+    ignoredFields: ['location', 'ring_area'],
   });
 
   useSetValueForm<CityFormBody>(detail_data, setValue, isOpenEdit);
