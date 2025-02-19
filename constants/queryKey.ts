@@ -30,6 +30,13 @@ export const GET_DETAIL_BY_WAREHOUSE_STOCK_ADJUSTMENT =
   'getDetailByWarehouseStockAdjustment';
 // TRANSACTION - INVENTORY MANAGEMENT (END)
 
+// TRANSACTION - MATERIAL MANAGEMENT (START)
+export const GET_DIRECT_PURCHASE_RECEIVE = 'getDirectPurchaseReceive';
+export const GET_DIRECT_SALES_DELIVERY = 'getDirectSalesDelivery';
+export const GET_DETAIL_BY_WAREHOUSE_DIRECT_SALES_DELIVERY =
+  'getDetailByWarehouseDirectSalesDelivery';
+// TRANSACTION - MATERIAL MANAGEMENT (END)
+
 // REPORTING - INVENTORY MANAGEMENT (START)
 export const GET_STOCK_SUMMARY = 'getStockSummary';
 export const GET_STOCK_MOVEMENT = 'getStockMovement';

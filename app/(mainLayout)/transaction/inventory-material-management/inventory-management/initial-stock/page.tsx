@@ -7,7 +7,7 @@ import BodyContent from '@components/module/Content/BodyContent';
 import Image from 'next/image';
 import FilterButton from '@components/ui/Table/Action/FilterButton';
 import { useDrawerStore } from '@stores/useDrawerStore';
-import { getInitialStock } from '@services/fetcher/transaction/inventory-material-management';
+import { getInitialStock } from '@services/fetcher/transaction/inventory-material-management/inventory-management';
 import { GET_INITIAL_STOCK } from '@constants/queryKey';
 import dynamic from 'next/dynamic';
 
@@ -22,21 +22,21 @@ const TableDrawer = dynamic(
 const CreateInitialStock = dynamic(
   () =>
     import(
-      '@components/module/Transaction/InventoryMaterialManagement/InitialStock/Create'
+      '@components/module/Transaction/InventoryMaterialManagement/InventoryManagement/InitialStock/Create'
     ),
   { ssr: false }
 );
 const DetailInitialStock = dynamic(
   () =>
     import(
-      '@components/module/Transaction/InventoryMaterialManagement/InitialStock/Detail'
+      '@components/module/Transaction/InventoryMaterialManagement/InventoryManagement/InitialStock/Detail'
     ),
   { ssr: false }
 );
 const EditInitialStock = dynamic(
   () =>
     import(
-      '@components/module/Transaction/InventoryMaterialManagement/InitialStock/Edit'
+      '@components/module/Transaction/InventoryMaterialManagement/InventoryManagement/InitialStock/Edit'
     ),
   { ssr: false }
 );

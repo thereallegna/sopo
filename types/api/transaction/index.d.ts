@@ -81,4 +81,82 @@ type ItemsQuery = {
   item_category?: string;
   item_name?: string;
 };
+
+type DirectPurchaseReceiveDetailFormBody = {
+  item_name: string;
+  local_code: string;
+  batch: string;
+  price?: number;
+  quantity?: number;
+  uom: string;
+  discount?: number;
+  rounding?: number;
+  total: number;
+  remark: string;
+  expired?: string;
+  cancel: boolean;
+  cancel_reason: string;
+};
+
+type DirectPurchaseReceiveFormBody = {
+  document_number: string;
+  date: string;
+  local_code?: string;
+  department: string;
+  warehouse_name: string;
+  warehouse_code: string;
+  vendor: string;
+  do?: string;
+  site?: string;
+  term_of_payment: string;
+  currency_name: string;
+  currency_code: string;
+  tax?: number;
+  total_tax?: number;
+  discount_amount?: number;
+  grand_total?: number;
+  remark?: string;
+  project?: string;
+  details: DirectPurchaseReceiveDetailFormBody[];
+};
+
+type DirectSalesDeliveryDetailFormBody = {
+  item_name: string;
+  batch: string;
+  stock: number;
+  quantity?: number;
+  uom: string;
+  do_price?: number;
+  amount: number;
+  remark: string;
+};
+
+type DirectSalesDeliveryFormBody = {
+  document_number: string;
+  date: string;
+  status?: string;
+  warehouse_name: string;
+  warehouse_code: string;
+  customer: string;
+  local_doc?: string;
+  receipt?: string;
+  shipping_name: string;
+  address?: string;
+  city?: string;
+  country?: string;
+  postal_code?: string;
+  phone?: string;
+  fax?: string;
+  email?: string;
+  mobile?: string;
+  total_amount?: string;
+  currency_name: string;
+  currency_code: string;
+  driver?: string;
+  expedition?: string;
+  vehicle_req?: string;
+  remark?: string;
+  details: DirectSalesDeliveryDetailFormBody[];
+};
+
 /* ======================= Inventory Material Management End ==================== */

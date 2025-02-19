@@ -117,6 +117,57 @@ export const StockMutationDefaultValues: StockMutationFormBody = {
   mutated_from: [],
   mutated_to: [],
 };
+
+export const DirectPurchaseReceiveDefaultValues: DirectPurchaseReceiveFormBody =
+  {
+    document_number: '',
+    date: '',
+    local_code: '',
+    department: '',
+    warehouse_name: '',
+    warehouse_code: '',
+    vendor: '',
+    do: '',
+    site: '',
+    term_of_payment: '',
+    currency_name: '',
+    currency_code: '',
+    tax: 0,
+    total_tax: 0,
+    discount_amount: 0,
+    grand_total: 0,
+    remark: '',
+    project: '',
+    details: [],
+  };
+
+export const DirectSalesDeliveryDefaultValues: DirectSalesDeliveryFormBody = {
+  document_number: '',
+  date: '',
+  status: '',
+  warehouse_name: '',
+  warehouse_code: '',
+  customer: '',
+  local_doc: '',
+  receipt: '',
+  shipping_name: '',
+  address: '',
+  city: '',
+  country: '',
+  postal_code: '',
+  phone: '',
+  fax: '',
+  email: '',
+  mobile: '',
+  total_amount: '',
+  currency_name: '',
+  currency_code: '',
+  driver: '',
+  expedition: '',
+  vehicle_req: '',
+  remark: '',
+  details: [],
+};
 // Transaction Inventory Material Management End
 
 // Configuration Financial Management Start

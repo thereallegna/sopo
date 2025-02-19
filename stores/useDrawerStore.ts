@@ -9,6 +9,8 @@ export type FilterDrawerType =
   | 'filterWarehouseCategory'
   | 'filterStockSummary'
   | 'filterStockMovement'
+  | 'filterDirectPurchaseReceive'
+  | 'filterDirectSalesDelivery'
   | null;
 export type TableDrawerType =
   | 'getCountry'
@@ -17,6 +19,8 @@ export type TableDrawerType =
   | 'getInitialStock'
   | 'getStockSummary'
   | 'getStockMovement'
+  | 'getDirectPurchaseReceive'
+  | 'getDirectSalesDelivery'
   | null;
 export type DetailDataType =
   | UOMFormBody
@@ -30,9 +34,10 @@ export type DetailDataType =
   | WarehouseCategoryFormBody
   | StockSummaryFormBody
   | ItemCategoryFormBody
+  | DirectPurchaseReceiveFormBody
+  | DirectSalesDeliveryFormBody
   | StockMovementFormBody
   | StockAdjustmentFormBody
-  | ItemCategoryFormBody
   | null;
 
 type DrawerState = {

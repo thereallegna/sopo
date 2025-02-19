@@ -7,41 +7,41 @@ import BodyContent from '@components/module/Content/BodyContent';
 import Image from 'next/image';
 import FilterButton from '@components/ui/Table/Action/FilterButton';
 import { useDrawerStore } from '@stores/useDrawerStore';
-import { GET_STOCK_MUTATION } from '@constants/queryKey';
+import { GET_DIRECT_SALES_DELIVERY } from '@constants/queryKey';
 import dynamic from 'next/dynamic';
-import { getStockMutation } from '@services/fetcher/transaction/inventory-material-management/inventory-management';
+import { getDirectSalesDelivery } from '@services/fetcher/transaction/inventory-material-management/material-management';
 
-const FilterUOM = dynamic(
-  () => import('@components/shared/Drawer/Filter/UOMFilter'),
+const FilterDirectSalesDelivery = dynamic(
+  () => import('@components/shared/Drawer/Filter/DirectSalesDelivery'),
   { ssr: false }
 );
 const TableDrawer = dynamic(
   () => import('@components/shared/Drawer/Table/TableDrawer'),
   { ssr: false }
 );
-const CreateStockMutation = dynamic(
+const CreateDirectSalesDelivery = dynamic(
   () =>
     import(
-      '@components/module/Transaction/InventoryMaterialManagement/InventoryManagement/StockMutation/Create'
+      '@components/module/Transaction/InventoryMaterialManagement/MaterialManagement/OutboundMaterialManagement/DirectSalesDelivery/Create'
     ),
   { ssr: false }
 );
-const DetailStockMutation = dynamic(
+const DetailDirectSalesDelivery = dynamic(
   () =>
     import(
-      '@components/module/Transaction/InventoryMaterialManagement/InventoryManagement/StockMutation/Detail'
+      '@components/module/Transaction/InventoryMaterialManagement/MaterialManagement/OutboundMaterialManagement/DirectSalesDelivery/Detail'
     ),
   { ssr: false }
 );
-const EditStockMutation = dynamic(
+const EditDirectSalesDelivery = dynamic(
   () =>
     import(
-      '@components/module/Transaction/InventoryMaterialManagement/InventoryManagement/StockMutation/Edit'
+      '@components/module/Transaction/InventoryMaterialManagement/MaterialManagement/OutboundMaterialManagement/DirectSalesDelivery/Edit'
     ),
   { ssr: false }
 );
 
-const StockMutation = () => {
+const DirectSalesDelivery = () => {
   const { openFilterDrawer, openTableDrawer, closeFilterDrawer, openDrawer } =
     useDrawerStore();
 
@@ -50,7 +50,7 @@ const StockMutation = () => {
   };
 
   const handleOpenFilter = () => {
-    openFilterDrawer('filterUOM');
+    openFilterDrawer('filterDirectSalesDelivery');
   };
 
   const handleOpenTable = () => {
@@ -61,7 +61,7 @@ const StockMutation = () => {
   return (
     <>
       <Content>
-        <HeaderContent title="Stock Mutation" onAdd={handleOpenAdd} />
+        <HeaderContent title="Direct Sales Delivery" onAdd={handleOpenAdd} />
         <BodyContent>
           <div className="flex flex-col gap-4 py-2 items-center">
             <Image
@@ -71,7 +71,7 @@ const StockMutation = () => {
               height={213}
             />
             <p className="text-Neutral-500 text-lg">
-              Filter to find data Stock Mutation
+              Filter to find data Direct Sales Delivery
             </p>
             <div className="pb-[10px]">
               <FilterButton
@@ -90,53 +90,58 @@ const StockMutation = () => {
           </div>
         </BodyContent>
       </Content>
-      <FilterUOM />
+      <FilterDirectSalesDelivery />
       <TableDrawer
-        title="Find Stock Mutation"
-        queryKey={GET_STOCK_MUTATION}
+        title="Find Direct Sales Delivery"
+        queryKey={GET_DIRECT_SALES_DELIVERY}
         columns={{
           columns: [
             {
               accessor: 'number',
               header: '#',
-            },
-            {
-              accessor: 'document_number',
-              header: 'Document',
-            },
-            {
-              accessor: 'date',
-              header: 'Date',
-            },
-            {
-              accessor: 'cancel',
-              header: 'Cancel',
-            },
-            {
-              accessor: 'warehouse',
-              header: 'Werehouse',
-            },
-            {
-              accessor: 'from_to',
-              header: 'From/To',
+              size: 65,
             },
             {
               accessor: 'item_name',
-              header: 'Item Name',
+              header: "Item's Name",
             },
             {
               accessor: 'batch',
-              header: 'Batch',
+              header: 'Batch#',
+            },
+            {
+              accessor: 'stock',
+              header: 'Stock',
+            },
+            {
+              accessor: 'quantity',
+              header: 'Quantity',
+            },
+            {
+              accessor: 'uom',
+              header: 'UOM',
+            },
+            {
+              accessor: 'do_price',
+              header: "DO's Price",
+            },
+            {
+              accessor: 'amount',
+              header: 'Amount',
+            },
+            {
+              accessor: 'remark',
+              header: 'Remark',
             },
           ],
         }}
-        queryFn={getStockMutation}
+        queryFn={getDirectSalesDelivery}
       />
-      <CreateStockMutation />
-      <DetailStockMutation />
-      <EditStockMutation />
+      <CreateDirectSalesDelivery />
+      <DetailDirectSalesDelivery />
+      <EditDirectSalesDelivery />
     </>
   );
 };
 
-export default StockMutation;
+export default DirectSalesDelivery;

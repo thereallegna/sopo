@@ -7,7 +7,7 @@ import BodyContent from '@components/module/Content/BodyContent';
 import Image from 'next/image';
 import FilterButton from '@components/ui/Table/Action/FilterButton';
 import { useDrawerStore } from '@stores/useDrawerStore';
-import { getStockAdjustment } from '@services/fetcher/transaction/inventory-material-management';
+import { getStockAdjustment } from '@services/fetcher/transaction/inventory-material-management/inventory-management';
 import { GET_STOCK_ADJUSTMENT } from '@constants/queryKey';
 import dynamic from 'next/dynamic';
 
@@ -22,14 +22,14 @@ const TableDrawer = dynamic(
 const CreateStockAdjustment = dynamic(
   () =>
     import(
-      '@components/module/Transaction/InventoryMaterialManagement/StockAdjustment/Create'
+      '@components/module/Transaction/InventoryMaterialManagement/InventoryManagement/StockAdjustment/Create'
     ),
   { ssr: false }
 );
 const DetailStockAdjustment = dynamic(
   () =>
     import(
-      '@components/module/Transaction/InventoryMaterialManagement/StockAdjustment/Detail'
+      '@components/module/Transaction/InventoryMaterialManagement/InventoryManagement/StockAdjustment/Detail'
     ),
   { ssr: false }
 );

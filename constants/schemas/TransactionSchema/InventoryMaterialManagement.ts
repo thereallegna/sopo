@@ -76,3 +76,76 @@ export const CreateStockMutationSchema = Yup.object().shape({
     })
   ).optional(),
 });
+
+export const CreateDirectPurchaseReceiveSchema = Yup.object().shape({
+  date: Yup.string().required('Date is required'),
+  department: Yup.string().required('Department is required'),
+  warehouse_name: Yup.string().required('Warehouse Name is required'),
+  warehouse_code: Yup.string().required('Warehouse Code is required'),
+  vendor: Yup.string().required('Vendor is required'),
+  term_of_peyment: Yup.string().required('Term of Payment is required'),
+  currency_name: Yup.string().required('Currency Name is required'),
+  currency_code: Yup.string().required('Currency Code is required'),
+  details: Yup.array(
+    Yup.object().shape({
+      item_name: Yup.string().required('Item Name is required'),
+      local_code: Yup.string().required('Local Code is required'),
+      batch: Yup.string().required('Batch is required'),
+      uom: Yup.string().required('UOM is required'),
+      total: Yup.number()
+        .nullable()
+        .transform((value, originalValue) =>
+          originalValue === '' ? null : Number(originalValue)
+        )
+        .required('Total is required'),
+      remark: Yup.string().required('Remark is required'),
+    })
+  ).required('Details is required'),
+});
+
+export const EditDirectPurchaseReceiveSchema = Yup.object().shape({
+  details: Yup.array(
+    Yup.object().shape({
+      cancel: Yup.boolean().required('Cancel is required'),
+      cancel_reason: Yup.boolean().required('Cancel Reason is required'),
+    })
+  ),
+});
+
+export const CreateDirectSalesDeliverySchema = Yup.object().shape({
+  date: Yup.string().required('Date is required'),
+  warehouse_name: Yup.string().required('Warehouse Name is required'),
+  warehouse_code: Yup.string().required('Warehouse Code is required'),
+  customer: Yup.string().required('Customer is required'),
+  shipping_name: Yup.string().required('Shipping Name is required'),
+  currency_name: Yup.string().required('Currency Name is required'),
+  currency_code: Yup.string().required('Currency Code is required'),
+  details: Yup.array(
+    Yup.object().shape({
+      item_name: Yup.string().required('Item Name is required'),
+      batch: Yup.string().required('Batch is required'),
+      stock: Yup.number()
+        .nullable()
+        .transform((value, originalValue) =>
+          originalValue === '' ? null : Number(originalValue)
+        )
+        .required('Stock is required'),
+      uom: Yup.string().required('UOM is required'),
+      amount: Yup.number()
+        .nullable()
+        .transform((value, originalValue) =>
+          originalValue === '' ? null : Number(originalValue)
+        )
+        .required('Amount is required'),
+      remark: Yup.string().required('Remark is required'),
+    })
+  ),
+});
+
+export const EditDirectSalesDeliverySchema = Yup.object().shape({
+  details: Yup.array(
+    Yup.object().shape({
+      cancel: Yup.boolean().required('Cancel is required'),
+    })
+  ),
+});

@@ -69,3 +69,36 @@ export const convertDate = (date: string): string => {
 
   return date; // Mengembalikan string kosong jika tanggal tidak valid
 };
+
+export function convertDirectPurchaseReceiveForm(
+  item: MasterItemFormBody
+): DirectPurchaseReceiveDetailFormBody {
+  return {
+    item_name: item.item_name,
+    local_code: item.local_code || '',
+    batch: '',
+    price: 0,
+    quantity: 0,
+    uom: item.uom_name,
+    discount: 0,
+    rounding: 0,
+    total: 0,
+    remark: '',
+    expired: '',
+    cancel: false,
+    cancel_reason: '',
+  };
+}
+
+export const convertDirectSalesDeliveryForm = (
+  item: TransactionItem
+): DirectSalesDeliveryDetailFormBody => ({
+  item_name: item.item_name,
+  batch: item.batch || '',
+  stock: item.stock,
+  quantity: 0,
+  uom: item.uom_name,
+  do_price: 0,
+  amount: 0,
+  remark: '',
+});
