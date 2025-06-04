@@ -31,7 +31,7 @@ const CreateCurrency = () => {
     errors,
     register,
   } = useForm({
-    label: 'Master item',
+    label: 'Currency',
     queryKey: GET_CURRENCY,
     mutationFn: createCurrency,
     validationSchema: currencySchema,
@@ -55,10 +55,12 @@ const CreateCurrency = () => {
             </Button>
           </DrawerEndHeader>
         </DrawerHeader>
-
         <form ref={formRef} onSubmit={handleSubmit}>
           <DrawerBody>
-            <Card size="drawer">
+            <Card
+              size="drawer"
+              className="border border-Neutral-200 shadow-none"
+            >
               <CardContent className="flex-wrap flex flex-row gap-6 items-start">
                 <InputField
                   {...register('currency_code')}
@@ -71,6 +73,8 @@ const CreateCurrency = () => {
                   placeholder="Currency Code"
                   right
                   type="text"
+                  required
+                  className="flex-1 gap-2"
                   onKeyDown={handleInputKeyDown}
                 />
                 <InputField
@@ -84,6 +88,8 @@ const CreateCurrency = () => {
                   placeholder="Currency Name"
                   right
                   type="text"
+                  required
+                  className="flex-1 gap-2"
                   onKeyDown={handleInputKeyDown}
                 />
               </CardContent>

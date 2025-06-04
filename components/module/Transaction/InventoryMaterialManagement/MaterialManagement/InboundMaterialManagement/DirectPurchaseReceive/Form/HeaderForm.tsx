@@ -2,7 +2,7 @@ import React from 'react';
 import InputField from '@components/shared/InputField';
 import { Card, CardContent } from '@components/ui/Card';
 import Combobox from '@components/shared/Combobox';
-import { getWarehouse } from '@services/fetcher/configuration/material-item-warehouse-management';
+import { getWarehouse } from '@services/fetcher/configuration/inventory-management';
 import { getCurrency } from '@services/fetcher/configuration/financial-management';
 import { GET_WAREHOUSE, GET_CURRENCY } from '@constants/queryKey';
 import { FormType } from '../../../../../../../../types/form';

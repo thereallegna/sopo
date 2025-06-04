@@ -13,7 +13,7 @@ import { Card, CardContent } from '@components/ui/Card';
 import InputField from '@components/shared/InputField';
 import { IconDeviceFloppy } from '@tabler/icons-react';
 import { useForm } from '@hooks/useForm';
-import { provinceSchema } from '@constants/schemas/ConfigurationSchema/general';
+import { provinceSchema } from '@constants/schemas/ConfigurationSchema/General';
 import {
   createProvince,
   getCountry,
@@ -46,6 +46,7 @@ const CreateCity = () => {
     type: 'add',
     requireAllFields: true,
   });
+
   return (
     <Drawer onClose={handleCloseDrawer} open={isOpen}>
       <DrawerContent>
@@ -77,7 +78,7 @@ const CreateCity = () => {
                       : undefined
                   }
                   label="Province Code"
-                  placeholder="INA09-10"
+                  placeholder="Province Code"
                   right
                   type="text"
                   required
@@ -100,7 +101,7 @@ const CreateCity = () => {
                   onKeyDown={handleInputKeyDown}
                 />
                 <Combobox
-                  className="flex-1"
+                  className="flex-1 gap-2"
                   label="Country"
                   placeholder="Select Country"
                   queryKey={[GET_COUNTRY]}

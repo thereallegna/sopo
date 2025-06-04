@@ -89,16 +89,3 @@ export function convertDirectPurchaseReceiveForm(
     cancel_reason: '',
   };
 }
-
-export const convertDirectSalesDeliveryForm = (
-  item: TransactionItem
-): DirectSalesDeliveryDetailFormBody => ({
-  item_name: item.item_name,
-  batch: item.batch || '',
-  stock: item.stock,
-  quantity: 0,
-  uom: item.uom_name,
-  do_price: 0,
-  amount: 0,
-  remark: '',
-});

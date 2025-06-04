@@ -2,42 +2,69 @@ import { create } from 'zustand';
 
 export type FilterDrawerType =
   | 'filterCountry'
+  | 'filterProvince'
+  | 'filterCity'
+  | 'filterCurrency'
+  | 'filterSite'
+  | 'filterTaxGroup'
+  | 'filterTax'
+  | 'filterVendorCategory'
+  | 'filterVendor'
   | 'filterUOM'
   | 'filterItemCategory'
-  | 'filterInitialStock'
-  | 'filterCurrency'
+  | 'filterMasterItem'
   | 'filterWarehouseCategory'
+  | 'filterWarehouse'
+  | 'filterInitialStock'
+  | 'filterStockAdjustment'
+  | 'filterStockMutation'
+  | 'filterDirectPurchaseReceive'
   | 'filterStockSummary'
   | 'filterStockMovement'
-  | 'filterDirectPurchaseReceive'
-  | 'filterDirectSalesDelivery'
   | null;
 export type TableDrawerType =
   | 'getCountry'
+  | 'getProvince'
+  | 'getCity'
+  | 'getCurrency'
+  | 'getSite'
+  | 'getTaxGroup'
+  | 'getTax'
+  | 'getVendorCategory'
+  | 'getVendor'
   | 'getUOM'
   | 'getItemCategory'
+  | 'getMasterItem'
+  | 'getWarehouseCategory'
+  | 'getWarehouse'
   | 'getInitialStock'
+  | 'getStockAdjustment'
+  | 'getStockMutation'
+  | 'getDirectPurchaseReceive'
   | 'getStockSummary'
   | 'getStockMovement'
-  | 'getDirectPurchaseReceive'
-  | 'getDirectSalesDelivery'
   | null;
 export type DetailDataType =
-  | UOMFormBody
   | CountryFormBody
   | ProvinceFormBody
   | CityFormBody
-  | MasterItemFormBody
-  | StockMutationFormBody
-  | InitialStockFormBody
   | CurrencyFormBody
-  | WarehouseCategoryFormBody
-  | StockSummaryFormBody
+  | SiteFormBody
+  | TaxGroupFormBody
+  | TaxFormBody
+  | VendorCategoryFormBody
+  | VendorFormBody
+  | UOMFormBody
   | ItemCategoryFormBody
-  | DirectPurchaseReceiveFormBody
-  | DirectSalesDeliveryFormBody
-  | StockMovementFormBody
+  | MasterItemFormBody
+  | WarehouseCategoryFormBody
+  | WarehouseFormBody
+  | InitialStockFormBody
   | StockAdjustmentFormBody
+  | StockMutationFormBody
+  | StockSummaryFormBody
+  | StockMovementFormBody
+  | DirectPurchaseReceiveFormBody
   | null;
 
 type DrawerState = {

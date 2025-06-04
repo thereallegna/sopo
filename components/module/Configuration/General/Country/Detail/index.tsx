@@ -48,7 +48,7 @@ const DetailCountry = () => {
           </DrawerEndHeader>
         </DrawerHeader>
         <DrawerBody>
-          <Card size="drawer">
+          <Card size="drawer" className="border border-Neutral-200 shadow-none">
             <CardContent className="flex-wrap flex flex-row gap-6 items-center">
               <InputField
                 value={detail_data?.country_code || ''}
@@ -56,6 +56,7 @@ const DetailCountry = () => {
                 placeholder="Country Code"
                 right
                 type="text"
+                className="w-full gap-2"
                 disabled
                 {...register('country_code')}
               />
@@ -65,7 +66,7 @@ const DetailCountry = () => {
                 placeholder="Country Name"
                 right
                 type="text"
-                disabled
+                className="w-full gap-2"
                 {...register('country_name')}
               />
             </CardContent>
@@ -83,7 +84,6 @@ const DetailCountry = () => {
                 code: detail_data?.country_code,
                 category: 'Country',
               });
-              console.log(detail_data?.country_code);
             }}
           />
         </DrawerFooter>

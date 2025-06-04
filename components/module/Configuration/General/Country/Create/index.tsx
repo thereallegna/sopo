@@ -13,7 +13,7 @@ import { Card, CardContent } from '@components/ui/Card';
 import InputField from '@components/shared/InputField';
 import { IconDeviceFloppy } from '@tabler/icons-react';
 import { useForm } from '@hooks/useForm';
-import { countrySchema } from '@constants/schemas/ConfigurationSchema/general';
+import { countrySchema } from '@constants/schemas/ConfigurationSchema/General';
 import { createCountry } from '@services/fetcher/configuration/general';
 import { countryDefaultValues } from '@constants/defaultValues';
 import { GET_COUNTRY } from '@constants/queryKey';
@@ -54,10 +54,12 @@ const CreateCountry = () => {
             </Button>
           </DrawerEndHeader>
         </DrawerHeader>
-
         <form ref={formRef} onSubmit={handleSubmit}>
           <DrawerBody>
-            <Card size="drawer">
+            <Card
+              size="drawer"
+              className="border border-Neutral-200 shadow-none"
+            >
               <CardContent className="flex-wrap flex flex-row gap-6 items-start">
                 <InputField
                   {...register('country_code')}
@@ -69,8 +71,9 @@ const CreateCountry = () => {
                   label="Country Code"
                   placeholder="Country Code"
                   right
-                  required
                   type="text"
+                  required
+                  className="flex-1 gap-2"
                   onKeyDown={handleInputKeyDown}
                 />
                 <InputField
@@ -83,8 +86,9 @@ const CreateCountry = () => {
                   label="Country Name"
                   placeholder="Country Name"
                   right
-                  required
                   type="text"
+                  required
+                  className="flex-1 gap-2"
                   onKeyDown={handleInputKeyDown}
                 />
               </CardContent>

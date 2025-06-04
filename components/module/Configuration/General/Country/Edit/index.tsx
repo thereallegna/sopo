@@ -13,7 +13,7 @@ import { Card, CardContent } from '@components/ui/Card';
 import InputField from '@components/shared/InputField';
 import { IconDeviceFloppy } from '@tabler/icons-react';
 import { useForm } from '@hooks/useForm';
-import { countrySchema } from '@constants/schemas/ConfigurationSchema/general';
+import { countrySchema } from '@constants/schemas/ConfigurationSchema/General';
 import { editCountry } from '@services/fetcher/configuration/general';
 import { GET_COUNTRY } from '@constants/queryKey';
 import { useSetValueForm } from '@hooks/useSetValueForm';
@@ -66,7 +66,6 @@ const EditCountry = () => {
             </Button>
           </DrawerEndHeader>
         </DrawerHeader>
-
         <form ref={formRef} onSubmit={handleSubmit}>
           <DrawerBody>
             <Card size="drawer">
@@ -82,6 +81,8 @@ const EditCountry = () => {
                   placeholder="Country Code"
                   right
                   type="text"
+                  required
+                  className="w-full gap-2"
                   disabled
                   onKeyDown={handleInputKeyDown}
                 />
@@ -96,6 +97,8 @@ const EditCountry = () => {
                   placeholder="Country Name"
                   right
                   type="text"
+                  required
+                  className="w-full gap-2"
                   onKeyDown={handleInputKeyDown}
                 />
               </CardContent>

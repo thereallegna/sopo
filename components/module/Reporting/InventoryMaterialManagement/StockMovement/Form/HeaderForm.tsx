@@ -11,7 +11,7 @@ import {
 import {
   getItemCategory,
   getWarehouse,
-} from '@services/fetcher/configuration/material-item-warehouse-management';
+} from '@services/fetcher/configuration/inventory-management';
 import { useTableStore } from '@stores/useTableStore';
 import MultiSelectCombobox from '@components/shared/Combobox/MultiSelect';
 

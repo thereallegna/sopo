@@ -1,6 +1,6 @@
-type ICoa = {
-  account: string;
-  number?: number;
-  description: string;
-};
+// type ICoa = {
+//   account: string;
+//   number?: number;
+//   description: string;
+// };
 /* ======================= Inventory and Material Management End ==================== */

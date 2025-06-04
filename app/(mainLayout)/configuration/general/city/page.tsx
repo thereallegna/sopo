@@ -13,7 +13,7 @@ import dynamic from 'next/dynamic';
 
 // Dynamically import Drawer components
 const FilterCountry = dynamic(
-  () => import('@components/shared/Drawer/Filter/CountryFilter'),
+  () => import('@components/shared/Drawer/Filter/CityFilter'),
   { ssr: false }
 );
 const TableDrawer = dynamic(

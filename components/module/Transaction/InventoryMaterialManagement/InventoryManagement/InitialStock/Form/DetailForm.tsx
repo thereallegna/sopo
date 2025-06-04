@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { Card, CardContent } from '@components/ui/Card';
 import TableForm from '@components/shared/TableForm';
 import { GET_MASTER_ITEM_MATERIAL_MANAGEMENT } from '@constants/queryKey';
-import { getItem } from '@services/fetcher/configuration/material-item-warehouse-management';
+import { getItem } from '@services/fetcher/configuration/inventory-management';
 import { convertInitialStockForm } from '@utils/converter';
 import { FieldPath } from 'react-hook-form';
 import { GenerateColumnsOption } from '../../../../../../../types/client/table';

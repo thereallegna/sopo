@@ -4,7 +4,8 @@ export const SESSION_USER = 'userSession';
 export const GET_COUNTRY = 'getCountry';
 export const GET_CITY = 'getCity';
 export const GET_PROVINCE = 'getProvince';
-export const GET_COA = 'getCoa';
+export const GET_SITE = 'getSite';
+// export const GET_COA = 'getCoa';
 // CONFIGURATION GENERAL END
 
 // CONFIGURATION INVENTORY AND MATERIAL MANAGEMENT START
@@ -16,6 +17,17 @@ export const GET_WAREHOUSE = 'getWarehouse';
 export const GET_WAREHOUSE_CATEGORY = 'getWarehouseCategory';
 export const GET_DETAIL_MASTER_ITEM = 'getDetailMasterItemMaterialManagement';
 // CONFIGURATION INVENTORY AND MATERIAL MANAGEMENT END
+
+// CONFIGURATION FINANCIAL MANAGEMENT START
+export const GET_CURRENCY = 'getCurrency';
+export const GET_TAX_GROUP = 'getTaxGroup';
+export const GET_TAX = 'getTax';
+// CONFIGURATION FINANCIAL MANAGEMENT END
+
+// CONFIGURATION PROCUREMENT MANAGEMENT START
+export const GET_VENDOR_CATEGORY = 'getVendorCategory';
+export const GET_VENDOR = 'getVendor';
+// CONFIGURATION PROCUREMENT MANAGEMENT END
 
 // TRANSACTION - INVENTORY MANAGEMENT (START)
 export const GET_STOCK_MUTATION = 'getStockMutation';
@@ -32,9 +44,6 @@ export const GET_DETAIL_BY_WAREHOUSE_STOCK_ADJUSTMENT =
 
 // TRANSACTION - MATERIAL MANAGEMENT (START)
 export const GET_DIRECT_PURCHASE_RECEIVE = 'getDirectPurchaseReceive';
-export const GET_DIRECT_SALES_DELIVERY = 'getDirectSalesDelivery';
-export const GET_DETAIL_BY_WAREHOUSE_DIRECT_SALES_DELIVERY =
-  'getDetailByWarehouseDirectSalesDelivery';
 // TRANSACTION - MATERIAL MANAGEMENT (END)
 
 // REPORTING - INVENTORY MANAGEMENT (START)
@@ -45,7 +54,3 @@ export const GET_STOCK_MOVEMENT = 'getStockMovement';
 // lOG HISTORY  START
 export const GET_LOG_HISTORY = 'getLogHistory';
 // lOG HISTORY  END
-
-// CONFIGURATION FINANCIAL MANAGEMENT START
-export const GET_CURRENCY = 'getCurrency';
-// CONFIGURATION FINANCIAL MANAGEMENT END

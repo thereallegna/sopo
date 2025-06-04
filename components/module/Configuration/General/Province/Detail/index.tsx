@@ -17,6 +17,8 @@ import { IconHistory, IconPencil } from '@tabler/icons-react';
 import { useForm } from 'react-hook-form';
 import { useSetValueForm } from '@hooks/useSetValueForm';
 import Combobox from '@components/shared/Combobox';
+import { GET_COUNTRY } from '@constants/queryKey';
+import { getCountry } from '@services/fetcher/configuration/general';
 
 const DetailProvince = () => {
   const {
@@ -25,6 +27,7 @@ const DetailProvince = () => {
     openEditDrawer,
     openHistoryLogDrawer,
   } = useDrawerStore();
+
   const detail_data = useDrawerStore(
     (state) => state.detail_data
   ) as ProvinceFormBody;
@@ -49,21 +52,19 @@ const DetailProvince = () => {
           </DrawerEndHeader>
         </DrawerHeader>
         <DrawerBody>
-          <Card size="drawer">
+          <Card size="drawer" className="border border-Neutral-200 shadow-none">
             <CardContent className="flex-wrap flex flex-row gap-6 items-center">
               <InputField
-                {...register('province_code')}
                 value={detail_data?.province_code || ''}
                 label="Province Code"
-                placeholder="INA09-10"
                 right
                 type="text"
                 required
                 className="flex-1 gap-2"
                 disabled
+                {...register('province_code')}
               />
               <InputField
-                {...register('province_name')}
                 value={detail_data?.province_name || ''}
                 label="Province Name"
                 right
@@ -71,17 +72,22 @@ const DetailProvince = () => {
                 required
                 className="flex-1 gap-2"
                 disabled
+                {...register('province_name')}
               />
               <Combobox
                 className="flex-1 gap-2"
+                label="Country"
+                placeholder="Select Country"
+                queryKey={[GET_COUNTRY]}
+                queryFn={getCountry}
+                required
+                dataLabel="country"
+                dataValue="country_code"
+                disabled
                 value={{
                   label: detail_data?.country,
                   value: detail_data?.country_code,
                 }}
-                label="Country"
-                placeholder="Select Country"
-                disabled
-                queryKey={[]}
               />
             </CardContent>
           </Card>

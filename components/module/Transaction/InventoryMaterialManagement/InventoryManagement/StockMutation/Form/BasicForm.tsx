@@ -5,7 +5,7 @@ import { Checkbox } from '@components/ui/Checkbox';
 import Label from '@components/ui/Label';
 import Combobox from '@components/shared/Combobox';
 import { GET_WAREHOUSE } from '@constants/queryKey';
-import { getWarehouse } from '@services/fetcher/configuration/material-item-warehouse-management';
+import { getWarehouse } from '@services/fetcher/configuration/inventory-management';
 import { FormType } from '../../../../../../../types/form';
 
 const BasicForm = ({

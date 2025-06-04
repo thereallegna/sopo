@@ -120,43 +120,4 @@ type DirectPurchaseReceiveFormBody = {
   details: DirectPurchaseReceiveDetailFormBody[];
 };
 
-type DirectSalesDeliveryDetailFormBody = {
-  item_name: string;
-  batch: string;
-  stock: number;
-  quantity?: number;
-  uom: string;
-  do_price?: number;
-  amount: number;
-  remark: string;
-};
-
-type DirectSalesDeliveryFormBody = {
-  document_number: string;
-  date: string;
-  status?: string;
-  warehouse_name: string;
-  warehouse_code: string;
-  customer: string;
-  local_doc?: string;
-  receipt?: string;
-  shipping_name: string;
-  address?: string;
-  city?: string;
-  country?: string;
-  postal_code?: string;
-  phone?: string;
-  fax?: string;
-  email?: string;
-  mobile?: string;
-  total_amount?: string;
-  currency_name: string;
-  currency_code: string;
-  driver?: string;
-  expedition?: string;
-  vehicle_req?: string;
-  remark?: string;
-  details: DirectSalesDeliveryDetailFormBody[];
-};
-
 /* ======================= Inventory Material Management End ==================== */

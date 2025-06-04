@@ -13,7 +13,7 @@ import { IconPencil } from '@tabler/icons-react';
 import { useDrawerStore } from '@stores/useDrawerStore';
 import { useSetValueForm } from '@hooks/useSetValueForm';
 import { useForm } from 'react-hook-form';
-import { getDetailItem } from '@services/fetcher/configuration/material-item-warehouse-management';
+import { getDetailItem } from '@services/fetcher/configuration/inventory-management';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { GET_DETAIL_STOCK_MUTATION } from '@constants/queryKey';
 // import { useDetailItem } from '@hooks/useDetailItem';

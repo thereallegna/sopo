@@ -12,8 +12,8 @@ import {
 import { Card, CardContent } from '@components/ui/Card';
 import InputField from '@components/shared/InputField';
 import { IconDeviceFloppy } from '@tabler/icons-react';
-// import { useForm, SubmitHandler } from 'react-hook-form';
-import { citySchema } from '@constants/schemas/ConfigurationSchema/general';
+// import { useForm, SubmitHandler } from "react-hook-form";
+import { citySchema } from '@constants/schemas/ConfigurationSchema/General';
 import {
   createCity,
   getProvince,
@@ -106,11 +106,12 @@ const CreateCity = () => {
                 </div>
                 <div className="flex flex-col gap-[14px] flex-1 h-full justify-between">
                   <Combobox
+                    className="flex-1"
                     label="Province"
                     placeholder="Select Province"
                     queryKey={[GET_PROVINCE]}
                     queryFn={getProvince}
-                    dataLabel="province_name"
+                    dataLabel="province"
                     dataValue="province_code"
                     message={
                       errors.province
@@ -122,27 +123,27 @@ const CreateCity = () => {
                       value: watch('province_code'),
                     }}
                     onChange={(val) => {
-                      setValue('province', val.label);
-                      setValue('province_code', val.value);
+                      setValue('province', val.label, { shouldDirty: true });
+                      setValue('province_code', val.value, {
+                        shouldDirty: true,
+                      });
                       setError('province', { type: 'disabled' });
                     }}
                   />
-                  <InputField
-                    {...register('ring_area')}
-                    message={
-                      errors.ring_area
-                        ? { text: errors.ring_area.message!, type: 'danger' }
-                        : undefined
-                    }
-                    label="Ring Area"
-                    placeholder="Text here.."
-                    right
-                    type="text"
-                    className="w-full gap-2"
-                    onKeyDown={handleInputKeyDown}
-                  />
-                </div>
-                <div className="flex flex-col gap-[14px] flex-1">
+                  {/* <InputField
+                                        {...register("ring_area")}
+                                        message={
+                                            errors.ring_area
+                                                ? { text: errors.ring_area.message!, type: "danger" }
+                                                : undefined
+                                        }
+                                        label="Ring Area"
+                                        placeholder="Text here.."
+                                        right
+                                        type="text"
+                                        className="w-full gap-2"
+                                        onKeyDown={handleInputKeyDown}
+                                    /> */}
                   <InputField
                     {...register('location')}
                     message={
@@ -158,6 +159,22 @@ const CreateCity = () => {
                     onKeyDown={handleInputKeyDown}
                   />
                 </div>
+                {/* <div className="flex flex-col gap-[14px] flex-1">
+                                    <InputField
+                                        {...register("location")}
+                                        message={
+                                            errors.location
+                                                ? { text: errors.location.message!, type: "danger" }
+                                                : undefined
+                                        }
+                                        label="Location"
+                                        placeholder="Text here.."
+                                        right
+                                        type="text"
+                                        className="w-full gap-2"
+                                        onKeyDown={handleInputKeyDown}
+                                    />
+                                </div> */}
               </CardContent>
             </Card>
           </DrawerBody>

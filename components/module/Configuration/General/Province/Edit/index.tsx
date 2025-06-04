@@ -14,7 +14,7 @@ import InputField from '@components/shared/InputField';
 import { useDrawerStore } from '@stores/useDrawerStore';
 import { IconDeviceFloppy } from '@tabler/icons-react';
 import { useForm } from '@hooks/useForm';
-import { provinceSchema } from '@constants/schemas/ConfigurationSchema/general';
+import { provinceSchema } from '@constants/schemas/ConfigurationSchema/General';
 import {
   editProvince,
   getCountry,
@@ -68,7 +68,6 @@ const EditProvince = () => {
             </Button>
           </DrawerEndHeader>
         </DrawerHeader>
-
         <form ref={formRef} onSubmit={handleSubmit}>
           <DrawerBody>
             <Card size="drawer">
@@ -81,7 +80,6 @@ const EditProvince = () => {
                       : undefined
                   }
                   label="Province Code"
-                  placeholder="INA09-10"
                   right
                   type="text"
                   required
@@ -104,7 +102,7 @@ const EditProvince = () => {
                   onKeyDown={handleInputKeyDown}
                 />
                 <Combobox
-                  className="flex-1"
+                  className="flex-1 gap-2"
                   label="Country"
                   placeholder="Select Country"
                   queryKey={[GET_COUNTRY]}

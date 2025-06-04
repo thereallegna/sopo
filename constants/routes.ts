@@ -42,8 +42,12 @@ export const PATH_PROVINCE = `${PATH_CONFIGURATION_GENERAL}/province`;
 export const PATH_PROVINCE_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/province`;
 
 // coa
-export const PATH_COA = `${PATH_CONFIGURATION_GENERAL}/coa`;
-export const PATH_COA_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/coa`;
+// export const PATH_COA = `${PATH_CONFIGURATION_GENERAL}/coa`;
+// export const PATH_COA_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/coa`;
+
+// site
+export const PATH_SITE = `${PATH_CONFIGURATION_GENERAL}/site`;
+export const PATH_SITE_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/site`;
 /* ======================= General End ==================== */
 
 /* ======================= Inventory and Material Management Start ==================== */
@@ -111,8 +115,26 @@ export const PATH_LOG_HISTORY_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSIO
 /* ======================= Log History End ==================== */
 
 /* ======================= Financial Management Start ==================== */
-
 // currency
 export const PATH_CURRENCY = `${PATH_CONFIGURATION_FINANCIAL_MANAGEMENT}/currency`;
 export const PATH_CURRENCY_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/currency`;
+
+// tax group
+export const PATH_TAX_GROUP = `${PATH_CONFIGURATION_FINANCIAL_MANAGEMENT}/tax-group`;
+export const PATH_TAX_GROUP_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/tax-group`;
+
+// tax
+export const PATH_TAX = `${PATH_CONFIGURATION_FINANCIAL_MANAGEMENT}/tax`;
+export const PATH_TAX_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/tax`;
 /* ======================= Financial Management End ==================== */
+
+/* ======================= Procurement Management Start ==================== */
+// vendor
+export const PATH_VENDOR = `${PATH_API}/procurement-management/vendor`;
+export const PATH_VENDOR_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/vendor`;
+
+// vendor category
+export const PATH_VENDOR_CATEGORY = `${PATH_API}/procurement-management/vendor-category`;
+export const PATH_VENDOR_CATEGORY_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/vendor-category`;
+
+/* ======================= Procurement Management End ==================== */

@@ -2,7 +2,7 @@ import React from 'react';
 import InputField from '@components/shared/InputField';
 import { Card, CardContent } from '@components/ui/Card';
 import Combobox from '@components/shared/Combobox';
-import { getWarehouse } from '@services/fetcher/configuration/material-item-warehouse-management';
+import { getWarehouse } from '@services/fetcher/configuration/inventory-management';
 import { useTableStore } from '@stores/useTableStore';
 import {
   GET_DETAIL_BY_WAREHOUSE_STOCK_ADJUSTMENT,

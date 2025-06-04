@@ -7,8 +7,8 @@ export const countryDefaultValues: CountryFormBody = {
 export const provinceDefaultValues: ProvinceFormBody = {
   province_code: '',
   province_name: '',
-  country_code: '',
   country: '',
+  country_code: '',
 };
 
 export const cityDefaultValues: CityFormBody = {
@@ -18,6 +18,14 @@ export const cityDefaultValues: CityFormBody = {
   province_code: '',
   ring_area: '',
   location: '',
+};
+
+export const siteDefaultValues: SiteFormBody = {
+  site_code: '',
+  site_name: '',
+  address: '',
+  active: true,
+  remark: '',
 };
 // Configuration General End
 
@@ -31,12 +39,12 @@ export const ItemCategoryDefaultValues: ItemCategoryFormBody = {
   item_category_code: '',
   item_category_name: '',
   active: true,
-  coa_stock: '',
-  coa_sales: '',
-  coa_cogs: '',
-  coa_sales_return: '',
-  coa_purchase_return: '',
-  coa_consumption_cost: '',
+  // coa_stock: '',
+  // coa_sales: '',
+  // coa_cogs: '',
+  // coa_sales_return: '',
+  // coa_purchase_return: '',
+  // coa_consumption_cost: '',
 };
 
 export const masterItemDefaultValues: MasterItemFormBody = {
@@ -69,7 +77,7 @@ export const warehouseDefaultValues: WarehouseFormBody = {
   warehouse_code: '',
   warehouse_name: '',
   warehouse_category_code: '',
-  warehouse_category_name: '',
+  warehouse_category: '',
   city_code: '',
   city_name: '',
   postal_code: '',
@@ -140,34 +148,6 @@ export const DirectPurchaseReceiveDefaultValues: DirectPurchaseReceiveFormBody =
     project: '',
     details: [],
   };
-
-export const DirectSalesDeliveryDefaultValues: DirectSalesDeliveryFormBody = {
-  document_number: '',
-  date: '',
-  status: '',
-  warehouse_name: '',
-  warehouse_code: '',
-  customer: '',
-  local_doc: '',
-  receipt: '',
-  shipping_name: '',
-  address: '',
-  city: '',
-  country: '',
-  postal_code: '',
-  phone: '',
-  fax: '',
-  email: '',
-  mobile: '',
-  total_amount: '',
-  currency_name: '',
-  currency_code: '',
-  driver: '',
-  expedition: '',
-  vehicle_req: '',
-  remark: '',
-  details: [],
-};
 // Transaction Inventory Material Management End
 
 // Configuration Financial Management Start
@@ -177,7 +157,45 @@ export const currencyDefaultValues: CurrencyFormBody = {
   currency_name: '',
 };
 
+export const taxGroupDefaultValues: TaxGroupFormBody = {
+  tax_group_code: '',
+  tax_group_name: '',
+};
+
+export const taxDefaultValues: TaxFormBody = {
+  tax_code: '',
+  tax_name: '',
+  tax_rate: '',
+  tax_group: '',
+  tax_group_code: '',
+};
+
 // Configuration Financial Management End
+
+// Configuration Procurememnt Management Start
+
+export const vendorCategoryDefaultValues: VendorCategoryFormBody = {
+  vendor_category_code: '',
+  vendor_category_name: '',
+};
+
+export const vendorDefaultValues: VendorFormBody = {
+  vendor_name: '',
+  vendor_code: '',
+  vendor_category: '',
+  vendor_category_code: '',
+  address: '',
+  city: '',
+  postal_code: '',
+  website: '',
+  head_office: '',
+  phone: '',
+  mobile: '',
+  email: '',
+  remark: '',
+};
+
+// Configuration Procurement Management End
 
 // Zustand Pagination State
 export const paginationStateDefaultValue = {
