@@ -68,6 +68,7 @@ const EditProvince = () => {
             </Button>
           </DrawerEndHeader>
         </DrawerHeader>
+
         <form ref={formRef} onSubmit={handleSubmit}>
           <DrawerBody>
             <Card size="drawer">
@@ -80,6 +81,7 @@ const EditProvince = () => {
                       : undefined
                   }
                   label="Province Code"
+                  placeholder="INA09-10"
                   right
                   type="text"
                   required
@@ -102,7 +104,7 @@ const EditProvince = () => {
                   onKeyDown={handleInputKeyDown}
                 />
                 <Combobox
-                  className="flex-1 gap-2"
+                  className="flex-1"
                   label="Country"
                   placeholder="Select Country"
                   queryKey={[GET_COUNTRY]}

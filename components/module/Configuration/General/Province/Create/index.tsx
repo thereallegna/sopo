@@ -18,7 +18,7 @@ import {
   createProvince,
   getCountry,
 } from '@services/fetcher/configuration/general';
-import { provinceDefaultValues } from '@constants/defaultValues';
+import { ProvinceDefaultValues } from '@constants/defaultValues';
 import Combobox from '@components/shared/Combobox';
 import { GET_COUNTRY, GET_PROVINCE } from '@constants/queryKey';
 
@@ -42,11 +42,10 @@ const CreateCity = () => {
     queryKey: GET_PROVINCE,
     mutationFn: createProvince,
     validationSchema: provinceSchema,
-    defaultValues: provinceDefaultValues,
+    defaultValues: ProvinceDefaultValues,
     type: 'add',
     requireAllFields: true,
   });
-
   return (
     <Drawer onClose={handleCloseDrawer} open={isOpen}>
       <DrawerContent>
@@ -78,7 +77,7 @@ const CreateCity = () => {
                       : undefined
                   }
                   label="Province Code"
-                  placeholder="Province Code"
+                  placeholder="INA09-10"
                   right
                   type="text"
                   required
@@ -101,7 +100,7 @@ const CreateCity = () => {
                   onKeyDown={handleInputKeyDown}
                 />
                 <Combobox
-                  className="flex-1 gap-2"
+                  className="flex-1"
                   label="Country"
                   placeholder="Select Country"
                   queryKey={[GET_COUNTRY]}

@@ -31,7 +31,7 @@ const DetailCity = () => {
     (state) => state.detail_data
   ) as CityFormBody;
 
-  const { register, setValue } = useForm<CityFormBody>();
+  const { setValue } = useForm<CityFormBody>();
 
   useSetValueForm<CityFormBody>(detail_data, setValue);
 
@@ -57,11 +57,12 @@ const DetailCity = () => {
                 <InputField
                   value={detail_data?.city_code || ''}
                   label="City Code"
+                  placeholder="INA09-10"
                   right
                   type="text"
+                  required
                   className="w-full gap-2"
                   disabled
-                  {...register('city_code')}
                 />
                 <InputField
                   value={detail_data?.city_name || ''}
@@ -71,46 +72,32 @@ const DetailCity = () => {
                   required
                   className="w-full gap-2"
                   disabled
-                  {...register('city_name')}
                 />
               </div>
               <div className="flex flex-col gap-[14px] flex-1 h-full justify-between">
-                {/* <Combobox
-                                label="Province"
-                                placeholder="Select Province"
-                                queryKey={[GET_PROVINCE]}
-                                queryFn={() => getProvince()}
-                                dataLabel="province_name"
-                                dataValue="province_code"
-                                value={{
-                                    label: detail_data?.province,
-                                    value: detail_data?.province_code,
-                                }}
-                                disabled
-                            /> */}
                 <Combobox
-                  className="flex-1 gap-2"
                   label="Province"
                   placeholder="Select Province"
                   queryKey={[GET_PROVINCE]}
-                  queryFn={getProvince}
-                  required
-                  dataLabel="province"
+                  queryFn={() => getProvince()}
+                  dataLabel="province_name"
                   dataValue="province_code"
-                  disabled
                   value={{
                     label: detail_data?.province,
                     value: detail_data?.province_code,
                   }}
+                  disabled
                 />
-                {/* <InputField
-                                value={detail_data?.ring_area || ""}
-                                label="Ring Area"
-                                right
-                                type="text"
-                                className="w-full gap-2"
-                                disabled
-                            /> */}
+                <InputField
+                  value={detail_data?.ring_area || ''}
+                  label="Ring Area"
+                  right
+                  type="text"
+                  className="w-full gap-2"
+                  disabled
+                />
+              </div>
+              <div className="flex flex-col gap-[14px] flex-1">
                 <InputField
                   value={detail_data?.location || ''}
                   label="Location"
@@ -120,16 +107,6 @@ const DetailCity = () => {
                   disabled
                 />
               </div>
-              {/* <div className="flex flex-col gap-[14px] flex-1">
-                            <InputField
-                                value={detail_data?.location || ""}
-                                label="Location"
-                                right
-                                type="text"
-                                className="w-full gap-2"
-                                disabled
-                            />
-                        </div> */}
             </CardContent>
           </Card>
         </DrawerBody>

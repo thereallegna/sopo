@@ -132,7 +132,7 @@ const editCity = async (body: CityFormBody) => {
 
 //     return res;
 //   } catch (error) {
-//     console.error('Error fetching log history:', error);
+//     console.error("Error fetching log history:", error);
 //     throw error;
 //   }
 // };

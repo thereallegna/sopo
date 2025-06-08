@@ -184,9 +184,9 @@ const createWarehouse = async (body: WarehouseFormBody) => {
     const bodyString = {
       ...body,
       phone: body.phone?.toString() || '',
-      // fax: body.fax?.toString() || '',
-      // mobile: body?.mobile?.toString() ?? '',
-      // postal_code: body?.postal_code?.toString() || '',
+      // fax: body.fax?.toString() || "",
+      // mobile: body?.mobile?.toString() ?? "",
+      // postal_code: body?.postal_code?.toString() || "",
     };
 
     const res = await axios.post(PATH_WAREHOUSE, bodyString);
@@ -203,9 +203,9 @@ const editWarehouse = async (body: WarehouseFormBody) => {
     const bodyString = {
       ...body,
       phone: body.phone?.toString() || '',
-      // fax: body.fax?.toString() || '',
-      // mobile: body?.mobile?.toString() ?? '',
-      // postal_code: body?.postal_code?.toString() || '',
+      // fax: body.fax?.toString() || "",
+      // mobile: body?.mobile?.toString() ?? "",
+      // postal_code: body?.postal_code?.toString() || "",
     };
 
     const res = await axios.put(

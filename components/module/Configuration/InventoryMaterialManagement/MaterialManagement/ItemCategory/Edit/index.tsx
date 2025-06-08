@@ -18,7 +18,7 @@ import { useForm } from '@hooks/useForm';
 // import useFormStore from '@stores/useFormStore';
 import { GET_CATEGORY_MATERIAL_MANAGEMENT } from '@constants/queryKey';
 import { editItemCategory } from '@services/fetcher/configuration/inventory-management';
-import { itemCategorySchema } from '@constants/schemas/ConfigurationSchema/InventoryMaterialManagement';
+import { ItemCategorySchema } from '@constants/schemas/ConfigurationSchema/InventoryMaterialManagement';
 // import SelectableModal from '@components/ui/Modal';
 // import { getCoa } from '@services/fetcher/configuration/general';
 import { useSetValueForm } from '@hooks/useSetValueForm';
@@ -48,7 +48,7 @@ const EditItemCategory = () => {
     label: 'Master item',
     queryKey: GET_CATEGORY_MATERIAL_MANAGEMENT,
     mutationFn: editItemCategory,
-    validationSchema: itemCategorySchema,
+    validationSchema: ItemCategorySchema,
     defaultValues: detail_data,
     type: 'edit',
   });

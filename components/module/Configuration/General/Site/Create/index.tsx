@@ -16,7 +16,7 @@ import { IconDeviceFloppy } from '@tabler/icons-react';
 import { useForm } from '@hooks/useForm';
 import { siteSchema } from '@constants/schemas/ConfigurationSchema/General';
 import { createSite } from '@services/fetcher/configuration/general';
-import { siteDefaultValues } from '@constants/defaultValues';
+import { SiteDefaultValues } from '@constants/defaultValues';
 import { GET_SITE } from '@constants/queryKey';
 
 const CreateSite = () => {
@@ -38,7 +38,7 @@ const CreateSite = () => {
     queryKey: GET_SITE,
     mutationFn: createSite,
     validationSchema: siteSchema,
-    defaultValues: siteDefaultValues,
+    defaultValues: SiteDefaultValues,
     type: 'add',
     requireAllFields: true,
   });

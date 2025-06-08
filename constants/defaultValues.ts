@@ -1,17 +1,17 @@
 // Configuration General Start
-export const countryDefaultValues: CountryFormBody = {
+export const CountryDefaultValues: CountryFormBody = {
   country_code: '',
   country_name: '',
 };
 
-export const provinceDefaultValues: ProvinceFormBody = {
+export const ProvinceDefaultValues: ProvinceFormBody = {
   province_code: '',
   province_name: '',
-  country: '',
   country_code: '',
+  country: '',
 };
 
-export const cityDefaultValues: CityFormBody = {
+export const CityDefaultValues: CityFormBody = {
   city_code: '',
   city_name: '',
   province: '',
@@ -20,7 +20,7 @@ export const cityDefaultValues: CityFormBody = {
   location: '',
 };
 
-export const siteDefaultValues: SiteFormBody = {
+export const SiteDefaultValues: SiteFormBody = {
   site_code: '',
   site_name: '',
   address: '',
@@ -47,7 +47,7 @@ export const ItemCategoryDefaultValues: ItemCategoryFormBody = {
   // coa_consumption_cost: '',
 };
 
-export const masterItemDefaultValues: MasterItemFormBody = {
+export const MasterItemDefaultValues: MasterItemFormBody = {
   item_name: '',
   category_name: '',
   category_code: '',
@@ -68,16 +68,16 @@ export const masterItemDefaultValues: MasterItemFormBody = {
   tax_liable: false,
 };
 
-export const warehouseCategoryDefaultValues: WarehouseCategoryFormBody = {
+export const WarehouseCategoryDefaultValues: WarehouseCategoryFormBody = {
   warehouse_category_code: '',
   warehouse_category_name: '',
 };
 
-export const warehouseDefaultValues: WarehouseFormBody = {
+export const WarehouseDefaultValues: WarehouseFormBody = {
   warehouse_code: '',
   warehouse_name: '',
   warehouse_category_code: '',
-  warehouse_category: '',
+  warehouse_category_name: '',
   city_code: '',
   city_name: '',
   postal_code: '',
@@ -152,17 +152,17 @@ export const DirectPurchaseReceiveDefaultValues: DirectPurchaseReceiveFormBody =
 
 // Configuration Financial Management Start
 
-export const currencyDefaultValues: CurrencyFormBody = {
+export const CurrencyDefaultValues: CurrencyFormBody = {
   currency_code: '',
   currency_name: '',
 };
 
-export const taxGroupDefaultValues: TaxGroupFormBody = {
+export const TaxGroupDefaultValues: TaxGroupFormBody = {
   tax_group_code: '',
   tax_group_name: '',
 };
 
-export const taxDefaultValues: TaxFormBody = {
+export const TaxDefaultValues: TaxFormBody = {
   tax_code: '',
   tax_name: '',
   tax_rate: '',
@@ -174,12 +174,12 @@ export const taxDefaultValues: TaxFormBody = {
 
 // Configuration Procurememnt Management Start
 
-export const vendorCategoryDefaultValues: VendorCategoryFormBody = {
+export const VendorCategoryDefaultValues: VendorCategoryFormBody = {
   vendor_category_code: '',
   vendor_category_name: '',
 };
 
-export const vendorDefaultValues: VendorFormBody = {
+export const VendorDefaultValues: VendorFormBody = {
   vendor_name: '',
   vendor_code: '',
   vendor_category: '',
@@ -198,7 +198,7 @@ export const vendorDefaultValues: VendorFormBody = {
 // Configuration Procurement Management End
 
 // Zustand Pagination State
-export const paginationStateDefaultValue = {
+export const PaginationStateDefaultValue = {
   columnVisibility: {},
   pagination: {
     pageIndex: 0,

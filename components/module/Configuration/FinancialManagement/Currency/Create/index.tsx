@@ -16,7 +16,7 @@ import { IconDeviceFloppy } from '@tabler/icons-react';
 import { GET_CURRENCY } from '@constants/queryKey';
 import { createCurrency } from '@services/fetcher/configuration/financial-management';
 import { currencySchema } from '@constants/schemas/ConfigurationSchema/FinancialManagement';
-import { currencyDefaultValues } from '@constants/defaultValues';
+import { CurrencyDefaultValues } from '@constants/defaultValues';
 
 const CreateCurrency = () => {
   const {
@@ -31,11 +31,11 @@ const CreateCurrency = () => {
     errors,
     register,
   } = useForm({
-    label: 'Currency',
+    label: 'Master item',
     queryKey: GET_CURRENCY,
     mutationFn: createCurrency,
     validationSchema: currencySchema,
-    defaultValues: currencyDefaultValues,
+    defaultValues: CurrencyDefaultValues,
     type: 'add',
     requireAllFields: true,
   });
@@ -57,10 +57,7 @@ const CreateCurrency = () => {
         </DrawerHeader>
         <form ref={formRef} onSubmit={handleSubmit}>
           <DrawerBody>
-            <Card
-              size="drawer"
-              className="border border-Neutral-200 shadow-none"
-            >
+            <Card size="drawer">
               <CardContent className="flex-wrap flex flex-row gap-6 items-start">
                 <InputField
                   {...register('currency_code')}
@@ -73,8 +70,6 @@ const CreateCurrency = () => {
                   placeholder="Currency Code"
                   right
                   type="text"
-                  required
-                  className="flex-1 gap-2"
                   onKeyDown={handleInputKeyDown}
                 />
                 <InputField
@@ -88,8 +83,6 @@ const CreateCurrency = () => {
                   placeholder="Currency Name"
                   right
                   type="text"
-                  required
-                  className="flex-1 gap-2"
                   onKeyDown={handleInputKeyDown}
                 />
               </CardContent>

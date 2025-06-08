@@ -37,7 +37,7 @@ const EditCurrency = () => {
     setValue,
     register,
   } = useForm({
-    label: 'Currency',
+    label: 'Master item',
     queryKey: GET_CURRENCY,
     mutationFn: editCurrency,
     validationSchema: currencySchema,
@@ -46,7 +46,6 @@ const EditCurrency = () => {
   });
 
   useSetValueForm<CurrencyFormBody>(detail_data, setValue, isOpenEdit);
-
   return (
     <Drawer onClose={handleCloseDrawerEdit} open={isOpenEdit}>
       <DrawerContent>
@@ -67,10 +66,7 @@ const EditCurrency = () => {
         </DrawerHeader>
         <form ref={formRef} onSubmit={handleSubmit}>
           <DrawerBody>
-            <Card
-              size="drawer"
-              className="border border-Neutral-200 shadow-none"
-            >
+            <Card size="drawer">
               <CardContent className="flex-wrap flex flex-row gap-6 items-center">
                 <InputField
                   {...register('currency_code')}
@@ -83,8 +79,6 @@ const EditCurrency = () => {
                   placeholder="Currency Code"
                   right
                   type="text"
-                  required
-                  className="w-full gap-2"
                   disabled
                   onKeyDown={handleInputKeyDown}
                 />
@@ -99,8 +93,6 @@ const EditCurrency = () => {
                   placeholder="Currency Name"
                   right
                   type="text"
-                  required
-                  className="w-full gap-2"
                   onKeyDown={handleInputKeyDown}
                 />
               </CardContent>

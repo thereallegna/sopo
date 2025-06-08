@@ -1,39 +1,17 @@
 import * as Yup from 'yup';
 
 export const UOMSchema = Yup.object().shape({
-  uom_code: Yup.string().required('UoM code is required'),
-  uom_name: Yup.string().required('UoM name is required'),
+  uom_code: Yup.string().required('Country code is required'), // Corrected typo here
+  uom_name: Yup.string().required('Country name is required'),
 });
 
-export const itemCategorySchema = Yup.object().shape({
-  item_category_code: Yup.string().required('Item Category code is required'),
-  item_category_name: Yup.string().required('Item Category name is required'),
+export const ItemCategorySchema = Yup.object().shape({
+  item_category_code: Yup.string().required('Category MM code is required'),
+  item_category_name: Yup.string().required('Category MM name is required'),
   active: Yup.boolean().required('Active is required'),
 });
 
-// export const createMasterItemSchema = Yup.object().shape({
-//     item_code: Yup.string().required("Item code is required"),
-//     item_name: Yup.string().required("Item name is required"),
-//     source: Yup.string().required("Source is required"),
-//     local_code: Yup.string().required("Local code is required"),
-//     foreign_name: Yup.string().required("Foreign name is required"),
-//     inventory_item: Yup.boolean().required("Inventory item is required"),
-//     sales_item: Yup.boolean().required("Sales item is required"),
-//     purchase_item: Yup.boolean().required("Purchase item is required"),
-//     item_category: Yup.string().required("Item category is required"),
-//     item_category_code: Yup.string().required("Item category code is required"),
-//     uom: Yup.string().required("uom is required"),
-//     uom_code: Yup.string().required("uom_code is required"),
-//     specification: Yup.string().required("specification is required"),
-//     remark: Yup.string().required("Remark is required"),
-// });
-
-// export const editMasterItemSchema = Yup.object().shape({
-//     item_code: Yup.string().required("Item code is required"),
-//     item_name: Yup.string().required("Item name is required"),
-// })
-
-export const createMasterItemSchema = Yup.object().shape({
+export const CreateMasterItemMMSchema = Yup.object().shape({
   item_name: Yup.string().required('Item name is required'),
   category_name: Yup.string().required('Category is required'),
   category_code: Yup.string().required('Category is required'),
@@ -42,12 +20,12 @@ export const createMasterItemSchema = Yup.object().shape({
   active: Yup.boolean().required('Active is required'),
 });
 
-export const editMasterItemSchema = Yup.object().shape({
+export const EditMasterItemMMSchema = Yup.object().shape({
   item_name: Yup.string().required('Item name is required'),
   active: Yup.boolean().required('Active is required'),
 });
 
-export const warehouseCategorySchema = Yup.object().shape({
+export const WarehouseCategorySchema = Yup.object().shape({
   warehouse_category_code: Yup.string().required(
     'Warehouse category code is required'
   ),
@@ -56,15 +34,60 @@ export const warehouseCategorySchema = Yup.object().shape({
   ),
 });
 
-export const warehouseSchema = Yup.object().shape({
+export const WarehouseSchema = Yup.object().shape({
   warehouse_code: Yup.string().required('Warehouse code is required'),
   warehouse_name: Yup.string().required('Warehouse name is required'),
-  warehouse_category: Yup.string().required('Warehouse category is required'),
+  warehouse_category_name: Yup.string().required(
+    'Warehouse category is required'
+  ),
   warehouse_category_code: Yup.string().required(
     'Warehouse category is required'
   ),
-  address: Yup.string().required('Address is required'),
-  city: Yup.string().required('City is required'),
+  city_name: Yup.string().required('City name is required'),
   city_code: Yup.string().required('City code is required'),
-  phone: Yup.string().required('Phone number is required'),
+  postal_code: Yup.number()
+    .nullable()
+    .transform((value, originalValue) =>
+      originalValue === '' ? null : Number(originalValue)
+    )
+    .test('length', 'Kode pos harus 5 digit', (value) => {
+      if (!value) return true; // Allow empty/null value
+      return value.toString().length === 5;
+    }),
+
+  phone: Yup.string()
+    .nullable()
+    .transform((value) => (value === '' ? null : value))
+    .test('numeric', 'Phone number must contain only numbers', (val) => {
+      if (!val) return true; // Skip validation if empty/null
+      return /^\d+$/.test(val);
+    })
+    .test('len', 'Phone number must be between 10-13 characters', (val) => {
+      if (!val) return true; // Skip validation if empty/null
+      return val.length >= 10 && val.length <= 13;
+    }),
+
+  fax: Yup.string()
+    .nullable()
+    .transform((value) => (value === '' ? null : value))
+    .test('numeric', 'Fax number must contain only numbers', (val) => {
+      if (!val) return true; // Skip validation if empty/null
+      return /^\d+$/.test(val);
+    })
+    .test('len', 'Fax number must be between 10-13 characters', (val) => {
+      if (!val) return true; // Skip validation if empty/null
+      return val.length >= 10 && val.length <= 13;
+    }),
+
+  mobile: Yup.string()
+    .nullable()
+    .transform((value) => (value === '' ? null : value))
+    .test('numeric', 'Mobile number must contain only numbers', (val) => {
+      if (!val) return true; // Skip validation if empty/null
+      return /^\d+$/.test(val);
+    })
+    .test('len', 'Mobile number must be between 10-13 characters', (val) => {
+      if (!val) return true; // Skip validation if empty/null
+      return val.length >= 10 && val.length <= 13;
+    }),
 });

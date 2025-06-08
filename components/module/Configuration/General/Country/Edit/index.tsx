@@ -37,7 +37,7 @@ const EditCountry = () => {
     setValue,
     register,
   } = useForm({
-    label: 'Warehouse Category',
+    label: 'Country',
     queryKey: GET_COUNTRY,
     mutationFn: editCountry,
     validationSchema: countrySchema,
@@ -66,6 +66,7 @@ const EditCountry = () => {
             </Button>
           </DrawerEndHeader>
         </DrawerHeader>
+
         <form ref={formRef} onSubmit={handleSubmit}>
           <DrawerBody>
             <Card size="drawer">
@@ -81,8 +82,6 @@ const EditCountry = () => {
                   placeholder="Country Code"
                   right
                   type="text"
-                  required
-                  className="w-full gap-2"
                   disabled
                   onKeyDown={handleInputKeyDown}
                 />
@@ -97,8 +96,6 @@ const EditCountry = () => {
                   placeholder="Country Name"
                   right
                   type="text"
-                  required
-                  className="w-full gap-2"
                   onKeyDown={handleInputKeyDown}
                 />
               </CardContent>

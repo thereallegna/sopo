@@ -48,7 +48,7 @@ const DetailCurrency = () => {
           </DrawerEndHeader>
         </DrawerHeader>
         <DrawerBody>
-          <Card size="drawer" className="border border-Neutral-200 shadow-none">
+          <Card size="drawer">
             <CardContent className="flex-wrap flex flex-row gap-6 items-center">
               <InputField
                 value={detail_data?.currency_code || ''}
@@ -56,7 +56,6 @@ const DetailCurrency = () => {
                 placeholder="Currency Code"
                 right
                 type="text"
-                className="w-full gap-2"
                 disabled
                 {...register('currency_code')}
               />
@@ -66,7 +65,7 @@ const DetailCurrency = () => {
                 placeholder="Currency Name"
                 right
                 type="text"
-                className="w-full gap-2"
+                disabled
                 {...register('currency_name')}
               />
             </CardContent>

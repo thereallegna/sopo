@@ -110,7 +110,7 @@ const EditSite = () => {
                                         checked={watch("active")}
                                         onCheckedChange={(val: boolean) => setValue && setValue("active", val)}
                                         disabled={false}
-                                /> */}
+                                    /> */}
                 </div>
                 <div className="flex flex-col gap-[14px] flex-1 h-full justify-between">
                   <InputField

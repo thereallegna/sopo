@@ -15,7 +15,7 @@ import { IconDeviceFloppy } from '@tabler/icons-react';
 import { useForm } from '@hooks/useForm';
 import { countrySchema } from '@constants/schemas/ConfigurationSchema/General';
 import { createCountry } from '@services/fetcher/configuration/general';
-import { countryDefaultValues } from '@constants/defaultValues';
+import { CountryDefaultValues } from '@constants/defaultValues';
 import { GET_COUNTRY } from '@constants/queryKey';
 
 const CreateCountry = () => {
@@ -35,7 +35,7 @@ const CreateCountry = () => {
     queryKey: GET_COUNTRY,
     mutationFn: createCountry,
     validationSchema: countrySchema,
-    defaultValues: countryDefaultValues,
+    defaultValues: CountryDefaultValues,
     type: 'add',
     requireAllFields: true,
   });
@@ -56,10 +56,7 @@ const CreateCountry = () => {
         </DrawerHeader>
         <form ref={formRef} onSubmit={handleSubmit}>
           <DrawerBody>
-            <Card
-              size="drawer"
-              className="border border-Neutral-200 shadow-none"
-            >
+            <Card size="drawer">
               <CardContent className="flex-wrap flex flex-row gap-6 items-start">
                 <InputField
                   {...register('country_code')}
@@ -71,9 +68,8 @@ const CreateCountry = () => {
                   label="Country Code"
                   placeholder="Country Code"
                   right
-                  type="text"
                   required
-                  className="flex-1 gap-2"
+                  type="text"
                   onKeyDown={handleInputKeyDown}
                 />
                 <InputField
@@ -86,9 +82,8 @@ const CreateCountry = () => {
                   label="Country Name"
                   placeholder="Country Name"
                   right
-                  type="text"
                   required
-                  className="flex-1 gap-2"
+                  type="text"
                   onKeyDown={handleInputKeyDown}
                 />
               </CardContent>

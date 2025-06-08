@@ -18,7 +18,7 @@ import {
   createTax,
   getTaxGroup,
 } from '@services/fetcher/configuration/financial-management';
-import { taxDefaultValues } from '@constants/defaultValues';
+import { TaxDefaultValues } from '@constants/defaultValues';
 import Combobox from '@components/shared/Combobox';
 import { GET_TAX_GROUP, GET_TAX } from '@constants/queryKey';
 
@@ -42,7 +42,7 @@ const CreateTax = () => {
     queryKey: GET_TAX,
     mutationFn: createTax,
     validationSchema: taxSchema,
-    defaultValues: taxDefaultValues,
+    defaultValues: TaxDefaultValues,
     type: 'add',
     requireAllFields: true,
   });

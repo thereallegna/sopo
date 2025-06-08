@@ -16,7 +16,7 @@ import { IconDeviceFloppy } from '@tabler/icons-react';
 import { GET_TAX_GROUP } from '@constants/queryKey';
 import { createTaxGroup } from '@services/fetcher/configuration/financial-management';
 import { taxGroupSchema } from '@constants/schemas/ConfigurationSchema/FinancialManagement';
-import { taxGroupDefaultValues } from '@constants/defaultValues';
+import { TaxGroupDefaultValues } from '@constants/defaultValues';
 
 const CreateTaxGroup = () => {
   const {
@@ -35,7 +35,7 @@ const CreateTaxGroup = () => {
     queryKey: GET_TAX_GROUP,
     mutationFn: createTaxGroup,
     validationSchema: taxGroupSchema,
-    defaultValues: taxGroupDefaultValues,
+    defaultValues: TaxGroupDefaultValues,
     type: 'add',
     requireAllFields: true,
   });
