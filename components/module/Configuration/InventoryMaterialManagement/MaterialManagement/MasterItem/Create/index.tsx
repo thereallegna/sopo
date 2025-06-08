@@ -10,9 +10,9 @@ import {
   DrawerHeader,
 } from '@components/ui/Drawer';
 import { IconDeviceFloppy } from '@tabler/icons-react';
-import { masterItemDefaultValues } from '@constants/defaultValues';
+import { MasterItemDefaultValues } from '@constants/defaultValues';
 import { GET_MASTER_ITEM_MATERIAL_MANAGEMENT } from '@constants/queryKey';
-import { createMasterItemSchema } from '@constants/schemas/ConfigurationSchema/InventoryMaterialManagement';
+import { CreateMasterItemMMSchema } from '@constants/schemas/ConfigurationSchema/InventoryMaterialManagement';
 import { useForm } from '@hooks/useForm';
 import {
   createItem,
@@ -47,22 +47,22 @@ const CreateMasterItem = () => {
     label: 'Master item',
     queryKey: GET_MASTER_ITEM_MATERIAL_MANAGEMENT,
     mutationFn: createItem,
-    validationSchema: createMasterItemSchema,
-    defaultValues: masterItemDefaultValues,
+    validationSchema: CreateMasterItemMMSchema,
+    defaultValues: MasterItemDefaultValues,
     type: 'add',
     requireAllFields: true,
     ignoredFields: [
       'source',
       'local_code',
-      // 'tax_liable',
+      'tax_liable',
       'foreign_name',
-      // 'hs_code',
+      'hs_code',
       'inventory_item',
-      // 'old_code',
+      'old_code',
       'sales_item',
-      // 'service_item',
+      'service_item',
       'purchase_item',
-      'specification',
+      'spesification',
       'remark',
     ],
   });

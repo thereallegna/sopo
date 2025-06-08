@@ -21,7 +21,7 @@ import { GET_DETAIL_MASTER_ITEM } from '@constants/queryKey';
 import BasicForm from '../Form/BasicForm';
 import DetailForm from '../Form/DetailForm';
 
-const DetailMasterItemMM = () => {
+const DetailMasterItem = () => {
   const {
     isOpenDetail,
     closeDetailDrawer,
@@ -92,4 +92,4 @@ const DetailMasterItemMM = () => {
   );
 };
 
-export default DetailMasterItemMM;
+export default DetailMasterItem;

@@ -16,7 +16,7 @@ import { IconDeviceFloppy } from '@tabler/icons-react';
 import { useForm } from '@hooks/useForm';
 import { useSetValueForm } from '@hooks/useSetValueForm';
 import { GET_WAREHOUSE_CATEGORY } from '@constants/queryKey';
-import { warehouseCategorySchema } from '@constants/schemas/ConfigurationSchema/InventoryMaterialManagement';
+import { WarehouseCategorySchema } from '@constants/schemas/ConfigurationSchema/InventoryMaterialManagement';
 import { editWarehouseCategory } from '@services/fetcher/configuration/inventory-management';
 
 const EditWarehouseCategory = () => {
@@ -40,7 +40,7 @@ const EditWarehouseCategory = () => {
     label: 'Warehouse Category',
     queryKey: GET_WAREHOUSE_CATEGORY,
     mutationFn: editWarehouseCategory,
-    validationSchema: warehouseCategorySchema,
+    validationSchema: WarehouseCategorySchema,
     defaultValues: detail_data,
     type: 'edit',
   });

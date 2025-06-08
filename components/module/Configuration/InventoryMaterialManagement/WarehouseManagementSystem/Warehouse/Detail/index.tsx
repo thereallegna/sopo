@@ -88,7 +88,7 @@ const DetailWarehouse = () => {
                   dataValue="warehouse_category_code"
                   disabled
                   value={{
-                    label: detail_data?.warehouse_category ?? '',
+                    label: detail_data?.warehouse_category_name ?? '',
                     value: detail_data?.warehouse_category_code ?? '',
                   }}
                 />
@@ -106,15 +106,15 @@ const DetailWarehouse = () => {
               <div className="flex flex-col gap-[14px] flex-1 h-full justify-between">
                 <Combobox
                   label="City"
-                  placeholder="Select City"
+                  placeholder="Pilih Kota"
                   queryKey={[GET_CITY]}
                   queryFn={getCity}
                   required
-                  dataLabel="city"
+                  dataLabel="city_name"
                   dataValue="city_code"
                   disabled
                   value={{
-                    label: detail_data?.city,
+                    label: detail_data?.city_name,
                     value: detail_data?.city_code,
                   }}
                 />

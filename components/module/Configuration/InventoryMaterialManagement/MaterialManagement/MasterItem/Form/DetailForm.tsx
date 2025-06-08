@@ -8,7 +8,7 @@ import {
   getUOM,
 } from '@services/fetcher/configuration/inventory-management';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@components/ui/Tabs';
-// import { Checkbox } from '@components/ui/Checkbox';
+import { Checkbox } from '@components/ui/Checkbox';
 import { FormType } from '../../../../../../../types/form';
 
 const DetailForm = ({
@@ -46,21 +46,21 @@ const DetailForm = ({
               dataLabel="item_category_name"
               dataValue="item_category_code"
               message={
-                errors?.item_category_code
-                  ? { text: errors.item_category_code.message!, type: 'danger' }
+                errors?.category_code
+                  ? { text: errors.category_code.message!, type: 'danger' }
                   : undefined
               }
               value={{
-                label: watch('item_category'),
-                value: watch('item_category_code'),
+                label: watch('category_name'),
+                value: watch('category_code'),
               }}
               onChange={(val) => {
                 if (!disableAll && setValue) {
-                  setValue('item_category', val.label);
-                  setValue('item_category_code', val.value);
+                  setValue('category_name', val.label);
+                  setValue('category_code', val.value);
                 }
                 if (setError) {
-                  setError('item_category_code', { type: 'disabled' });
+                  setError('category_code', { type: 'disabled' });
                 }
               }}
               disabled={disableAll || type === 'edit'} // Disabled berdasarkan disableAll
@@ -79,12 +79,12 @@ const DetailForm = ({
                   : undefined
               }
               value={{
-                label: watch('uom'),
+                label: watch('uom_name'),
                 value: watch('uom_code'),
               }}
               onChange={(val) => {
                 if (!disableAll && setValue) {
-                  setValue('uom', val.label);
+                  setValue('uom_name', val.label);
                   setValue('uom_code', val.value);
                 }
                 if (setError) {
@@ -94,11 +94,11 @@ const DetailForm = ({
               disabled={disableAll || type === 'edit'} // Disabled berdasarkan disableAll
             />
             <InputField
-              {...register('specification')}
+              {...register('spesification')}
               message={
-                errors?.specification
+                errors?.spesification
                   ? {
-                      text: errors.specification.message!,
+                      text: errors.spesification.message!,
                       type: 'danger',
                     }
                   : undefined
@@ -114,7 +114,7 @@ const DetailForm = ({
             />
           </div>
           <div className="flex flex-col gap-[14px] flex-1">
-            {/* <InputField
+            <InputField
               {...register('hs_code')}
               message={
                 errors?.hs_code
@@ -128,7 +128,7 @@ const DetailForm = ({
               className="w-full gap-2"
               onKeyDown={handleInputKeyDown}
               disabled={disableAll} // Disabled berdasarkan disableAll
-            /> */}
+            />
             <InputField
               {...register('remark')}
               message={
@@ -145,14 +145,14 @@ const DetailForm = ({
               onKeyDown={handleInputKeyDown}
               disabled={disableAll} // Disabled berdasarkan disableAll
             />
-            {/* <Checkbox
+            <Checkbox
               label="Tax Liable"
               checked={watch('tax_liable')}
               onCheckedChange={(val) =>
                 !disableAll && setValue && setValue('tax_liable', val)
               }
               disabled={disableAll} // Disabled berdasarkan disableAll
-            /> */}
+            />
           </div>
         </TabsContent>
       </Tabs>

@@ -13,19 +13,22 @@ import { Card, CardContent } from '@components/ui/Card';
 import InputField from '@components/shared/InputField';
 import { Checkbox } from '@components/ui/Checkbox';
 import { useDrawerStore } from '@stores/useDrawerStore';
+// import { IconDeviceFloppy, IconSearch, IconX } from '@tabler/icons-react';
 import { IconDeviceFloppy } from '@tabler/icons-react';
 import { useForm } from '@hooks/useForm';
 // import useFormStore from '@stores/useFormStore';
+// import { GET_CATEGORY_MATERIAL_MANAGEMENT, GET_COA } from '@constants/queryKey';
 import { GET_CATEGORY_MATERIAL_MANAGEMENT } from '@constants/queryKey';
 import { editItemCategory } from '@services/fetcher/configuration/inventory-management';
 import { ItemCategorySchema } from '@constants/schemas/ConfigurationSchema/InventoryMaterialManagement';
 // import SelectableModal from '@components/ui/Modal';
 // import { getCoa } from '@services/fetcher/configuration/general';
+// import IconComponent from '@components/ui/Icon';
 import { useSetValueForm } from '@hooks/useSetValueForm';
 
 const EditItemCategory = () => {
   // const [isModalOpen, setModalOpen] = React.useState(false);
-  // // const { coa_form, setCoaForm } = useFormStore();
+  // const { coa_form, setCoaForm } = useFormStore();
 
   const detail_data = useDrawerStore(
     (state) => state.detail_data

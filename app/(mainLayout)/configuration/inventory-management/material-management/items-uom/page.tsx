@@ -41,7 +41,7 @@ const EditUOM = dynamic(
   { ssr: false }
 );
 
-const UOM = () => {
+const Country = () => {
   const { openFilterDrawer, openTableDrawer, closeFilterDrawer, openDrawer } =
     useDrawerStore();
 
@@ -121,4 +121,4 @@ const UOM = () => {
   );
 };
 
-export default UOM;
+export default Country;

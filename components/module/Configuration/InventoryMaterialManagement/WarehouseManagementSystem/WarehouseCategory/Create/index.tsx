@@ -14,8 +14,8 @@ import InputField from '@components/shared/InputField';
 import { useForm } from '@hooks/useForm';
 import { IconDeviceFloppy } from '@tabler/icons-react';
 import { GET_WAREHOUSE_CATEGORY } from '@constants/queryKey';
-import { warehouseCategorySchema } from '@constants/schemas/ConfigurationSchema/InventoryMaterialManagement';
-import { warehouseCategoryDefaultValues } from '@constants/defaultValues';
+import { WarehouseCategorySchema } from '@constants/schemas/ConfigurationSchema/InventoryMaterialManagement';
+import { WarehouseCategoryDefaultValues } from '@constants/defaultValues';
 import { createWarehouseCategory } from '@services/fetcher/configuration/inventory-management';
 
 const CreateWarehouseCategory = () => {
@@ -34,8 +34,8 @@ const CreateWarehouseCategory = () => {
     label: 'Warehouse Category',
     queryKey: GET_WAREHOUSE_CATEGORY,
     mutationFn: createWarehouseCategory,
-    validationSchema: warehouseCategorySchema,
-    defaultValues: warehouseCategoryDefaultValues,
+    validationSchema: WarehouseCategorySchema,
+    defaultValues: WarehouseCategoryDefaultValues,
     type: 'add',
     requireAllFields: true,
   });

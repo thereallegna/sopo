@@ -12,8 +12,8 @@ import { GET_PROVINCE } from '@constants/queryKey';
 import dynamic from 'next/dynamic';
 
 // Dynamically import Drawer components
-const FilterCountry = dynamic(
-  () => import('@components/shared/Drawer/Filter/CountryFilter'),
+const FilterProvince = dynamic(
+  () => import('@components/shared/Drawer/Filter/ProvinceFilter'),
   { ssr: false }
 );
 const TableDrawer = dynamic(
@@ -42,7 +42,7 @@ const Province = () => {
   };
 
   const handleOpenFilter = () => {
-    openFilterDrawer('filterCountry');
+    openFilterDrawer('filterProvince');
   };
 
   const handleOpenTable = () => {
@@ -82,7 +82,7 @@ const Province = () => {
           </div>
         </BodyContent>
       </Content>
-      <FilterCountry />
+      <FilterProvince />
       <TableDrawer
         title="Find Province"
         queryKey={GET_PROVINCE}

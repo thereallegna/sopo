@@ -19,21 +19,21 @@ const TableDrawer = dynamic(
   () => import('@components/shared/Drawer/Table/TableDrawer'),
   { ssr: false }
 );
-const CreateCategory = dynamic(
+const CreateItemCategory = dynamic(
   () =>
     import(
       '@components/module/Configuration/InventoryMaterialManagement/MaterialManagement/ItemCategory/Create'
     ),
   { ssr: false }
 );
-const DetailCategory = dynamic(
+const DetailItemCategory = dynamic(
   () =>
     import(
       '@components/module/Configuration/InventoryMaterialManagement/MaterialManagement/ItemCategory/Detail'
     ),
   { ssr: false }
 );
-const EditCategory = dynamic(
+const EditItemCategory = dynamic(
   () =>
     import(
       '@components/module/Configuration/InventoryMaterialManagement/MaterialManagement/ItemCategory/Edit'
@@ -170,9 +170,9 @@ const ItemCategory = () => {
         pinnedColumns={['number', 'item_category_code']}
         queryFn={getItemCategory}
       />
-      <CreateCategory />
-      <DetailCategory />
-      <EditCategory />
+      <CreateItemCategory />
+      <DetailItemCategory />
+      <EditItemCategory />
     </>
   );
 };

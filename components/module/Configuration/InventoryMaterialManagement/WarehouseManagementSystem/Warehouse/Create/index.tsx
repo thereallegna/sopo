@@ -12,13 +12,13 @@ import {
 import { Card, CardContent } from '@components/ui/Card';
 import InputField from '@components/shared/InputField';
 import { IconDeviceFloppy } from '@tabler/icons-react';
-import { warehouseSchema } from '@constants/schemas/ConfigurationSchema/InventoryMaterialManagement';
+import { WarehouseSchema } from '@constants/schemas/ConfigurationSchema/InventoryMaterialManagement';
 import { getCity } from '@services/fetcher/configuration/general';
 import {
   createWarehouse,
   getWarehouseCategory,
 } from '@services/fetcher/configuration/inventory-management';
-import { warehouseDefaultValues } from '@constants/defaultValues';
+import { WarehouseDefaultValues } from '@constants/defaultValues';
 import Combobox from '@components/shared/Combobox';
 import {
   GET_WAREHOUSE,
@@ -46,8 +46,8 @@ const CreateWarehouse = () => {
     label: 'Warehouse',
     queryKey: GET_WAREHOUSE,
     mutationFn: createWarehouse,
-    validationSchema: warehouseSchema,
-    defaultValues: warehouseDefaultValues,
+    validationSchema: WarehouseSchema,
+    defaultValues: WarehouseDefaultValues,
     type: 'add',
     ignoredFields: [
       'address',
@@ -139,13 +139,13 @@ const CreateWarehouse = () => {
                         : undefined
                     }
                     value={{
-                      label: watch('warehouse_category') || '',
+                      label: watch('warehouse_category_name') || '',
                       value: watch('warehouse_category_code') || '',
                     }}
                     onChange={(val) => {
-                      setValue('warehouse_category', val.label);
+                      setValue('warehouse_category_name', val.label);
                       setValue('warehouse_category_code', val.value);
-                      setError('warehouse_category', { type: 'disabled' });
+                      setError('warehouse_category_name', { type: 'disabled' });
                     }}
                   />
                   <InputField
@@ -286,7 +286,7 @@ const CreateWarehouse = () => {
                         : undefined
                     }
                     label="Remark"
-                    placeholder="Remark"
+                    placeholder="Pilih Kateogri Biaya"
                     right
                     type="text"
                     textarea

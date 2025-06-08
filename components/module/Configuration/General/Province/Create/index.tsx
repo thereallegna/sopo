@@ -77,7 +77,7 @@ const CreateCity = () => {
                       : undefined
                   }
                   label="Province Code"
-                  placeholder="INA09-10"
+                  placeholder="Province Code"
                   right
                   type="text"
                   required
@@ -92,7 +92,7 @@ const CreateCity = () => {
                       : undefined
                   }
                   label="Province Name"
-                  placeholder="Text here.."
+                  placeholder="Province Name"
                   right
                   type="text"
                   required

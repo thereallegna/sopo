@@ -8,30 +8,30 @@ import Image from 'next/image';
 import FilterButton from '@components/ui/Table/Action/FilterButton';
 import { useDrawerStore } from '@stores/useDrawerStore';
 import dynamic from 'next/dynamic';
-import TableMasterItem from '@components/module/Configuration/InventoryMaterialManagement/MasterItem/Table';
+import TableMasterItem from '@components/module/Configuration/InventoryMaterialManagement/MaterialManagement/MasterItem/Table';
 
 const FilterUOM = dynamic(
   () => import('@components/shared/Drawer/Filter/UOMFilter'),
   { ssr: false }
 );
-const CreateMasterItemMM = dynamic(
+const CreateMasterItem = dynamic(
   () =>
     import(
-      '@components/module/Configuration/InventoryMaterialManagement/MasterItem/Create'
+      '@components/module/Configuration/InventoryMaterialManagement/MaterialManagement/MasterItem/Create'
     ),
   { ssr: false }
 );
-const DetailMasterItemMM = dynamic(
+const DetailMasterItem = dynamic(
   () =>
     import(
-      '@components/module/Configuration/InventoryMaterialManagement/MasterItem/Detail'
+      '@components/module/Configuration/InventoryMaterialManagement/MaterialManagement/MasterItem/Detail'
     ),
   { ssr: false }
 );
-const EditMasterItemMM = dynamic(
+const EditMasterItem = dynamic(
   () =>
     import(
-      '@components/module/Configuration/InventoryMaterialManagement/MasterItem/Edit'
+      '@components/module/Configuration/InventoryMaterialManagement/MaterialManagement/MasterItem/Edit'
     ),
   { ssr: false }
 );
@@ -87,9 +87,9 @@ const Country = () => {
       </Content>
       <FilterUOM />
       <TableMasterItem />
-      <CreateMasterItemMM />
-      <DetailMasterItemMM />
-      <EditMasterItemMM />
+      <CreateMasterItem />
+      <DetailMasterItem />
+      <EditMasterItem />
     </>
   );
 };

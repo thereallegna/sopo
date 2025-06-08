@@ -24,7 +24,7 @@ import { useDrawerStore } from '@stores/useDrawerStore';
 import BasicForm from '../Form/BasicForm';
 import DetailForm from '../Form/DetailForm';
 
-const EditMasterItemMM = () => {
+const EditMasterItem = () => {
   const [showModalSource, setShowModalSource] = useState<boolean>(false);
   const detail_data = useDrawerStore(
     (state) => state.detail_data
@@ -187,4 +187,4 @@ const EditMasterItemMM = () => {
   );
 };
 
-export default EditMasterItemMM;
+export default EditMasterItem;

@@ -37,7 +37,6 @@ const BasicForm = ({
               }
               label="Item Code"
               type="text"
-              required
               right
               disabled={disableAll || true} // Disabled berdasarkan disableAll
               className="w-full gap-2"
