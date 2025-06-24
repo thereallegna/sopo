@@ -102,6 +102,10 @@ const Site = () => {
               header: 'Address',
             },
             {
+              accessor: 'active',
+              header: 'Active',
+            },
+            {
               accessor: 'create_date',
               header: 'Create Date',
             },

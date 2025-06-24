@@ -53,25 +53,29 @@ const DetailTaxGroup = () => {
         <DrawerBody>
           <Card size="drawer" className="border border-Neutral-200 shadow-none">
             <CardContent className="flex-wrap flex flex-row gap-6 items-center">
-              <InputField
-                value={detail_data?.tax_group_code || ''}
-                label="Tax Group Code"
-                placeholder="Tax Group Code"
-                right
-                type="text"
-                className="w-full gap-2"
-                disabled
-                {...register('tax_group_code')}
-              />
-              <InputField
-                value={detail_data?.tax_group_name || ''}
-                label="Tax Group Name"
-                placeholder="Tax Group Name"
-                right
-                type="text"
-                className="w-full gap-2"
-                {...register('tax_group_name')}
-              />
+              <div className="flex flex-col gap-[14px] flex-1">
+                <InputField
+                  value={detail_data?.tax_group_code || ''}
+                  label="Tax Group Code"
+                  placeholder="Tax Group Code"
+                  right
+                  type="text"
+                  className="w-full gap-2"
+                  disabled
+                  {...register('tax_group_code')}
+                />
+              </div>
+              <div className="flex flex-col gap-[14px] flex-1 h-full justify-between">
+                <InputField
+                  value={detail_data?.tax_group_name || ''}
+                  label="Tax Group Name"
+                  placeholder="Tax Group Name"
+                  right
+                  type="text"
+                  className="w-full gap-2"
+                  {...register('tax_group_name')}
+                />
+              </div>
             </CardContent>
           </Card>
         </DrawerBody>

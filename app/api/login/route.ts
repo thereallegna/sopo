@@ -6,8 +6,13 @@ import { PATH_AUTH_LOGIN_BE } from '@constants/routes';
 export async function POST(req: Request) {
   try {
     const body = (await req.json()) as LoginFormBody;
+    console.log('Menerima request dari frontend:', body);
+
+    console.log('Mengirim request ke backend:', PATH_AUTH_LOGIN_BE);
 
     const response = await axios.post(PATH_AUTH_LOGIN_BE, body);
+    console.log('Response dari backend:', response.data);
+
     const responseData = response.data as BasicResponse<UserAuthorization>;
 
     const session = await getServerSideSession({
@@ -25,6 +30,7 @@ export async function POST(req: Request) {
     await session.save();
     return NextResponse.json(response.data);
   } catch (error: any) {
+    console.error('Error saat login:', error?.response?.data || error);
     if (error?.response?.data) {
       return NextResponse.json(error?.response?.data, { status: 400 });
     }

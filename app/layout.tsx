@@ -8,6 +8,19 @@ import { ToastProvider } from '@radix-ui/react-toast';
 import { ToastApp } from '@components/ui/Toast';
 import useToastStore from '@stores/useToastStore';
 
+// Komponen khusus client untuk Toast
+const ToastClient = () => {
+  const { show, title, theme, setToast } = useToastStore();
+  return (
+    <ToastApp
+      title={title}
+      open={show}
+      theme={theme}
+      onOpenChange={(open) => setToast(open)}
+    />
+  );
+};
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -18,26 +31,18 @@ const queryClient = new QueryClient({
   },
 });
 
-const RootLayout = ({ children }: { children: React.ReactNode }) => {
-  const { show, title, theme, setToast } = useToastStore();
-  return (
-    <QueryClientProvider client={queryClient}>
-      <html lang="en">
-        <body>
-          <ToastProvider>
-            {children}
-            <ToastApp
-              title={title}
-              open={show}
-              theme={theme}
-              onOpenChange={(open) => setToast(open)}
-            />
-          </ToastProvider>
-        </body>
+const RootLayout = ({ children }: { children: React.ReactNode }) => (
+  <html lang="en" suppressHydrationWarning>
+    <body>
+      <QueryClientProvider client={queryClient}>
+        <ToastProvider>
+          {children}
+          <ToastClient />
+        </ToastProvider>
         <ReactQueryDevtools initialIsOpen={false} />
-      </html>
-    </QueryClientProvider>
-  );
-};
+      </QueryClientProvider>
+    </body>
+  </html>
+);
 
 export default RootLayout;

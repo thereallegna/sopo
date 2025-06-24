@@ -65,7 +65,7 @@ const VendorCategory = () => {
         <BodyContent>
           <div className="flex flex-col gap-4 py-2 items-center">
             <Image
-              src="images/api-empty-state.png"
+              src="/images/api-empty-state.png"
               alt="Empty State"
               width={200}
               height={200}

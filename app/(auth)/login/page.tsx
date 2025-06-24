@@ -23,6 +23,8 @@ import { authConstant } from '@constants/authConstant';
 import Link from 'next/link';
 
 const LoginPage = () => {
+  console.log('Komponen LoginPage dirender');
+
   const [isLoading, setIsLoading] = React.useState(false);
   const {
     register,
@@ -72,11 +74,24 @@ const LoginPage = () => {
     },
   });
 
+  // const handleFormSubmit: SubmitHandler<LoginFormBody> = (data) => {
+  //   console.log('Cek Data => ', data);
+
+  //   if (data.keepUserId) {
+  //     localStorage.setItem('usercode', watch('user_code'));
+  //   }
+  //   mutationLogin(data);
+  // };
+
   const handleFormSubmit: SubmitHandler<LoginFormBody> = (data) => {
+    console.log('Tombol Login Ditekan');
     console.log('Cek Data => ', data);
+
     if (data.keepUserId) {
       localStorage.setItem('usercode', watch('user_code'));
     }
+
+    console.log('Mengirim data ke backend:', data);
     mutationLogin(data);
   };
 

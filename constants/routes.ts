@@ -8,10 +8,15 @@ export const PATH_CONFIGURATION_INVENTORY_AND_MATERIAL_MANAGEMENT = `${PATH_API}
 export const PATH_TRANSACTION_INVENTORY_MATERIAL_MANAGEMENT = `${PATH_API}/transaction/inventory-material-management`;
 export const PATH_REPORTING_INVENTORY_MATERIAL_MANAGEMENT = `${PATH_API}/reporting/inventory-material-management`;
 export const PATH_CONFIGURATION_FINANCIAL_MANAGEMENT = `${PATH_API}/configuration/financial-management`;
+export const PATH_CONFIGURATION_PROCUREMENT_MANAGEMENT = `${PATH_API}/configuration/procurement-management`;
 // initial end
 
 /* ======================= Auth Start ==================== */
 // login
+// export const PATH_AUTH_LOGIN = `${PATH_API}/login`;
+// export const PATH_AUTH_LOGIN = `http://localhost:8000/login`;
+// export const PATH_AUTH_LOGIN_BE = `${PATH_BACKEND_URL}/login`;
+
 export const PATH_AUTH_LOGIN = `${PATH_API}/login`;
 export const PATH_AUTH_LOGIN_BE = `${PATH_BACKEND_URL}/login`;
 
@@ -130,11 +135,11 @@ export const PATH_TAX_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/tax`;
 
 /* ======================= Procurement Management Start ==================== */
 // vendor
-export const PATH_VENDOR = `${PATH_API}/procurement-management/vendor`;
+export const PATH_VENDOR = `${PATH_CONFIGURATION_PROCUREMENT_MANAGEMENT}/vendor`;
 export const PATH_VENDOR_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/vendor`;
 
 // vendor category
-export const PATH_VENDOR_CATEGORY = `${PATH_API}/procurement-management/vendor-category`;
+export const PATH_VENDOR_CATEGORY = `${PATH_CONFIGURATION_PROCUREMENT_MANAGEMENT}/vendor-category`;
 export const PATH_VENDOR_CATEGORY_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/vendor-category`;
 
 /* ======================= Procurement Management End ==================== */

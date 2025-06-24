@@ -53,7 +53,7 @@ const CreateSite = () => {
               onClick={handleSaveClick}
               disabled={isLoading}
             >
-              {isLoading}
+              {isLoading ? 'saving...' : 'save'}
             </Button>
           </DrawerEndHeader>
         </DrawerHeader>

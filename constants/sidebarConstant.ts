@@ -24,6 +24,10 @@ export const sidebarConstant: SidebarItem[] = [
             path: '/configuration/general/document-approval',
           },
           {
+            title: 'Site',
+            path: '/configuration/general/site',
+          },
+          {
             title: 'Country',
             path: '/configuration/general/country',
           },
@@ -128,7 +132,7 @@ export const sidebarConstant: SidebarItem[] = [
           },
           {
             title: 'Master Vendor',
-            path: '/configuration/procurement-management/master-vendor',
+            path: '/configuration/procurement-management/vendor',
           },
           {
             title: "Vendor's Sector",

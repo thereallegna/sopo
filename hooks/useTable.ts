@@ -61,7 +61,8 @@ const useTable = <T>({
 
   const onGrouping = (groups: Updater<GroupingState>) => {
     const groupingState =
-      typeof groups === 'function' ? groups(option.grouping) : groups;
+      // typeof groups === 'function' ? groups(option.grouping) : groups;
+      typeof groups === 'function' ? groups(option?.grouping ?? []) : groups;
     setGrouping(queryKey, groupingState);
   };
 

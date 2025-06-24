@@ -8,6 +8,14 @@ export async function GET(req: NextRequest) {
     const params = req.nextUrl.searchParams;
 
     const session = await getServerSideSession();
+    console.log('Session:', session);
+
+    console.log('Request params:', {
+      page_size: params.get('page_size'),
+      page: params.get('current_page'),
+      search: params.get('search'),
+    });
+    console.log('PATH_SITE_BE:', PATH_SITE_BE);
 
     const response = await axios.get(`${PATH_SITE_BE}`, {
       headers: {
@@ -20,8 +28,11 @@ export async function GET(req: NextRequest) {
       },
     });
 
+    console.log('Response from backend:', response.data);
+
     return NextResponse.json(response.data);
   } catch (error: any) {
+    console.error('Error fetching site:', error);
     const axiosError = error as AxiosError;
     if (error?.response?.data) {
       return NextResponse.json(error?.response?.data, {
