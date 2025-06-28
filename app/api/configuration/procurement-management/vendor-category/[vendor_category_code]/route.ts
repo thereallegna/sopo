@@ -1,22 +1,25 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSideSession } from "@utils/session";
 import axios, { AxiosError } from "axios";
-import { PATH_VENDOR_BE } from "@constants/routes";
+import { PATH_VENDOR_CATEGORY_BE } from "@constants/routes";
 
 export async function PUT(
     req: NextRequest,
-    { params }: { params: { vendor_code: string } }
+    { params }: { params: { vendor_category_code: string } }
 ) {
     try {
         const session = await getServerSideSession();
+        console.log(
+            "session:",
+            session.user?.data?.authorization?.access_token
+        );
 
-        const { vendor_code } = params;
+        const { vendor_category_code } = params;
 
-        const body = (await req.json()) as VendorFormBody;
-        body.vendor_category = body.vendor_category_code;
+        const body = (await req.json()) as VendorCategoryFormBody;
 
         const response = await axios.put(
-            `${PATH_VENDOR_BE}/${vendor_code}`,
+            `${PATH_VENDOR_CATEGORY_BE}/${vendor_category_code}`,
             body,
             {
                 headers: {
