@@ -1,13 +1,13 @@
 type TimelineItem = {
-  log: string;
-  date: string;
+    log: string;
+    date: string;
 };
 
 type TimelineProps = {
-  data: TimelineItem[];
+    data: TimelineItem[];
 };
 
 type TimelineQuery = {
-  code: string;
-  category: string;
+    code: string;
+    category: string;
 };

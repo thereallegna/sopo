@@ -1,15 +1,15 @@
 type LoginFormBody = {
-  companyId?: string;
-  user_code: string;
-  password: string;
-  keepUserId?: boolean;
+    companyId?: string;
+    user_code: string;
+    password: string;
+    keepUserId?: boolean;
 };
 
 type ForgotPasswordBody = {
-  email: string;
+    email: string;
 };
 
 type ResetPasswordBody = {
-  new_password: string;
-  confirm_password: string;
+    new_password: string;
+    confirm_password: string;
 };

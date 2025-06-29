@@ -1,16 +1,16 @@
-import React from 'react';
+import React from "react";
 import {
-  AccessorKeyColumnDef,
-  ColumnDef,
-  createColumnHelper,
-} from '@tanstack/react-table';
+    AccessorKeyColumnDef,
+    ColumnDef,
+    createColumnHelper,
+} from "@tanstack/react-table";
 // import Input from '@components/ui/Input';
-import GoToDetail from '@components/shared/TableContent/ToDetail';
-import { IconCircleCheckFilled } from '@tabler/icons-react';
-import { Checkbox } from '@components/ui/Checkbox';
-import InputField from '@components/shared/InputField';
-import { Button } from '@components/ui/Button';
-import { GenerateColumnsOption } from '../types/client/table';
+import GoToDetail from "@components/shared/TableContent/ToDetail";
+import { IconCircleCheckFilled } from "@tabler/icons-react";
+import { Checkbox } from "@components/ui/Checkbox";
+import InputField from "@components/shared/InputField";
+import { Button } from "@components/ui/Button";
+import { GenerateColumnsOption } from "../types/client/table";
 
 // const CheckboxInitialStock = ({
 //   keyId,
@@ -51,131 +51,142 @@ import { GenerateColumnsOption } from '../types/client/table';
 // };
 
 export const generateColumns = ({
-  key,
-  columns,
-  hasAction = true,
-  disableAll,
-  errors,
-  onInputChange,
-  onCheckedChange,
+    key,
+    columns,
+    hasAction = true,
+    disableAll,
+    errors,
+    onInputChange,
+    onCheckedChange,
 }: GenerateColumnsOption):
-  | AccessorKeyColumnDef<any, any>[]
-  | ColumnDef<any, any>[] => {
-  const columnHelper = createColumnHelper<any>();
+    | AccessorKeyColumnDef<any, any>[]
+    | ColumnDef<any, any>[] => {
+    const columnHelper = createColumnHelper<any>();
 
-  const resultColumns: ColumnDef<any, any>[] = columns.map((column) =>
-    columnHelper.accessor(column.accessor, {
-      id: column.accessor,
-      header: column.header,
-      cell: (props) => {
-        const value = props.renderValue();
-        const rowIndex = props.row.index; // Dapatkan indeks baris
-        const columnId = props.column.id;
+    const resultColumns: ColumnDef<any, any>[] = columns.map((column) =>
+        columnHelper.accessor(column.accessor, {
+            id: column.accessor,
+            header: column.header,
+            cell: (props) => {
+                const value = props.renderValue();
+                const rowIndex = props.row.index; // Dapatkan indeks baris
+                const columnId = props.column.id;
 
-        if (column.type === 'button') {
-          return <Button data-row-index={rowIndex} {...column.buttonProps} />;
-        }
+                if (column.type === "button") {
+                    return (
+                        <Button
+                            data-row-index={rowIndex}
+                            {...column.buttonProps}
+                        />
+                    );
+                }
 
-        if (column.type === 'input') {
-          let displayValue = value;
+                if (column.type === "input") {
+                    let displayValue = value;
 
-          // Tentukan inputProps berdasarkan tipe (fungsi atau objek)
-          const resolvedInputProps =
-            typeof column.inputProps === 'function'
-              ? column.inputProps(rowIndex, columnId)
-              : column.inputProps;
-          // Jika value adalah 0, tampilkan string kosong
-          if (value === 0) {
-            displayValue = '';
-          } else if (resolvedInputProps?.type === 'number') {
-            displayValue = Number(value);
-          }
-
-          return (
-            <InputField
-              type="small"
-              value={displayValue}
-              disabled={disableAll}
-              onChange={(e) =>
-                onInputChange &&
-                onInputChange(
-                  rowIndex,
-                  columnId,
-                  e.target.value,
-                  resolvedInputProps?.type
-                )
-              }
-              message={
-                errors &&
-                errors[key] &&
-                errors[key][rowIndex] &&
-                errors[key][rowIndex][columnId] &&
-                errors[key][rowIndex][columnId]?.message !== undefined
-                  ? {
-                      text: errors[key][rowIndex][columnId].message,
-                      type: 'danger',
+                    // Tentukan inputProps berdasarkan tipe (fungsi atau objek)
+                    const resolvedInputProps =
+                        typeof column.inputProps === "function"
+                            ? column.inputProps(rowIndex, columnId)
+                            : column.inputProps;
+                    // Jika value adalah 0, tampilkan string kosong
+                    if (value === 0) {
+                        displayValue = "";
+                    } else if (resolvedInputProps?.type === "number") {
+                        displayValue = Number(value);
                     }
-                  : undefined
-              }
-              inputProps={{
-                ...resolvedInputProps,
-                placeholder: value,
-                defaultValue: value,
-              }}
-            />
-          );
-        }
 
-        if (column.type === 'checkbox') {
-          return (
-            <Checkbox
-              checked={value}
-              onCheckedChange={(check) =>
-                onCheckedChange && onCheckedChange(rowIndex, columnId, check)
-              }
-              disabled={disableAll}
-              {...column.checkboxProps}
-            />
-          );
-        }
+                    return (
+                        <InputField
+                            type="small"
+                            value={displayValue}
+                            disabled={disableAll}
+                            onChange={(e) =>
+                                onInputChange &&
+                                onInputChange(
+                                    rowIndex,
+                                    columnId,
+                                    e.target.value,
+                                    resolvedInputProps?.type
+                                )
+                            }
+                            message={
+                                errors &&
+                                errors[key] &&
+                                errors[key][rowIndex] &&
+                                errors[key][rowIndex][columnId] &&
+                                errors[key][rowIndex][columnId]?.message !==
+                                    undefined
+                                    ? {
+                                          text: errors[key][rowIndex][columnId]
+                                              .message,
+                                          type: "danger",
+                                      }
+                                    : undefined
+                            }
+                            inputProps={{
+                                ...resolvedInputProps,
+                                placeholder: value,
+                                defaultValue: value,
+                            }}
+                        />
+                    );
+                }
 
-        // if (column.type === 'checkbox-initial-stock') {
-        //   return (
-        //     <CheckboxInitialStock
-        //       key={key}
-        //       keyId={key as string}
-        //       value={value}
-        //       checked={value}
-        //       onCheckedChange={(check) =>
-        //         onCheckedChange && onCheckedChange(rowIndex, columnId, check)
-        //       }
-        //       disabled={disableAll}
-        //       {...column.checkboxProps}
-        //     />
-        //   );
-        // }
+                if (column.type === "checkbox") {
+                    return (
+                        <Checkbox
+                            checked={value}
+                            onCheckedChange={(check) =>
+                                onCheckedChange &&
+                                onCheckedChange(rowIndex, columnId, check)
+                            }
+                            disabled={disableAll}
+                            {...column.checkboxProps}
+                        />
+                    );
+                }
 
-        if (typeof value === 'boolean') {
-          return value ? (
-            <IconCircleCheckFilled size={16} className="text-Green-500" />
-          ) : null;
-        }
+                // if (column.type === 'checkbox-initial-stock') {
+                //   return (
+                //     <CheckboxInitialStock
+                //       key={key}
+                //       keyId={key as string}
+                //       value={value}
+                //       checked={value}
+                //       onCheckedChange={(check) =>
+                //         onCheckedChange && onCheckedChange(rowIndex, columnId, check)
+                //       }
+                //       disabled={disableAll}
+                //       {...column.checkboxProps}
+                //     />
+                //   );
+                // }
 
-        return value;
-      },
-      enableGrouping: true,
-      size: column.size,
-    })
-  );
+                if (typeof value === "boolean") {
+                    return value ? (
+                        <IconCircleCheckFilled
+                            size={16}
+                            className="text-Green-500"
+                        />
+                    ) : null;
+                }
 
-  if (hasAction) {
-    resultColumns.push(
-      columnHelper.display({
-        id: 'action',
-        cell: (props) => <GoToDetail data={props.row.original} />,
-      })
+                return value;
+            },
+            enableGrouping: true,
+            size: column.size,
+        })
     );
-  }
 
-  return resultColumns;
+    if (hasAction) {
+        resultColumns.push(
+            columnHelper.display({
+                id: "action",
+                cell: (props) => <GoToDetail data={props.row.original} />,
+            })
+        );
+    }
+
+    return resultColumns;
 };

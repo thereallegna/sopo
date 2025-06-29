@@ -1,195 +1,206 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { Button } from '@components/ui/Button';
+import React from "react";
+import { Button } from "@components/ui/Button";
 import {
-  Drawer,
-  DrawerBody,
-  DrawerContent,
-  DrawerEndHeader,
-  DrawerHeader,
-} from '@components/ui/Drawer';
-import { Card, CardContent } from '@components/ui/Card';
-import InputField from '@components/shared/InputField';
+    Drawer,
+    DrawerBody,
+    DrawerContent,
+    DrawerEndHeader,
+    DrawerHeader,
+} from "@components/ui/Drawer";
+import { Card, CardContent } from "@components/ui/Card";
+import InputField from "@components/shared/InputField";
 // import { IconDeviceFloppy, IconSearch, IconX } from '@tabler/icons-react';
-import { IconDeviceFloppy } from '@tabler/icons-react';
-import { useForm } from '@hooks/useForm';
+import { IconDeviceFloppy } from "@tabler/icons-react";
+import { useForm } from "@hooks/useForm";
 // import useFormStore from '@stores/useFormStore';
-import { ItemCategoryDefaultValues } from '@constants/defaultValues';
+import { ItemCategoryDefaultValues } from "@constants/defaultValues";
 // import { GET_CATEGORY_MATERIAL_MANAGEMENT, GET_COA } from '@constants/queryKey';
-import { GET_CATEGORY_MATERIAL_MANAGEMENT } from '@constants/queryKey';
-import { ItemCategorySchema } from '@constants/schemas/ConfigurationSchema/InventoryMaterialManagement';
-import { createItemCategory } from '@services/fetcher/configuration/inventory-management';
-import { Checkbox } from '@components/ui/Checkbox';
+import { GET_CATEGORY_MATERIAL_MANAGEMENT } from "@constants/queryKey";
+import { ItemCategorySchema } from "@constants/schemas/ConfigurationSchema/InventoryMaterialManagement";
+import { createItemCategory } from "@services/fetcher/configuration/inventory-management";
+import { Checkbox } from "@components/ui/Checkbox";
 // import SelectableModal from '@components/ui/Modal';
 // import { getCoa } from '@services/fetcher/configuration/general';
 // import IconComponent from '@components/ui/Icon';
 
 const CreateItemCategory = () => {
-  // const [isModalOpen, setModalOpen] = React.useState(false);
-  // const { coa_form, setCoaForm } = useFormStore();
+    // const [isModalOpen, setModalOpen] = React.useState(false);
+    // const { coa_form, setCoaForm } = useFormStore();
 
-  const {
-    handleCloseDrawer,
-    handleInputKeyDown,
-    handleSaveClick,
-    handleSubmit,
-    isLoading,
-    formRef,
-    isOpen,
-    canSave,
-    errors,
-    setValue,
-    register,
-    // watch,
-  } = useForm({
-    label: 'Items Category',
-    queryKey: GET_CATEGORY_MATERIAL_MANAGEMENT,
-    mutationFn: createItemCategory,
-    validationSchema: ItemCategorySchema,
-    defaultValues: ItemCategoryDefaultValues,
-    type: 'add',
-    requireAllFields: true,
-    // ignoredFields: [
-    //   'coa_stock',
-    //   'coa_sales',
-    //   'coa_cogs',
-    //   'coa_sales_return',
-    //   'coa_purchase_return',
-    //   'coa_consumption_cost',
-    //   'coa_stock_description',
-    //   'coa_sales_description',
-    //   'coa_cogs_description',
-    //   'coa_sales_return_description',
-    //   'coa_purchase_return_description',
-    //   'coa_consumption_cost_description',
-    // ],
-  });
+    const {
+        handleCloseDrawer,
+        handleInputKeyDown,
+        handleSaveClick,
+        handleSubmit,
+        isLoading,
+        formRef,
+        isOpen,
+        canSave,
+        errors,
+        setValue,
+        register,
+        // watch,
+    } = useForm({
+        label: "Items Category",
+        queryKey: GET_CATEGORY_MATERIAL_MANAGEMENT,
+        mutationFn: createItemCategory,
+        validationSchema: ItemCategorySchema,
+        defaultValues: ItemCategoryDefaultValues,
+        type: "add",
+        requireAllFields: true,
+        // ignoredFields: [
+        //   'coa_stock',
+        //   'coa_sales',
+        //   'coa_cogs',
+        //   'coa_sales_return',
+        //   'coa_purchase_return',
+        //   'coa_consumption_cost',
+        //   'coa_stock_description',
+        //   'coa_sales_description',
+        //   'coa_cogs_description',
+        //   'coa_sales_return_description',
+        //   'coa_purchase_return_description',
+        //   'coa_consumption_cost_description',
+        // ],
+    });
 
-  //   const openModalForField = (fieldName: string) => {
-  //     setModalOpen(true);
-  //     // setCoaForm(fieldName);
-  //   };
+    //   const openModalForField = (fieldName: string) => {
+    //     setModalOpen(true);
+    //     // setCoaForm(fieldName);
+    //   };
 
-  //   const clearField = (fieldName: keyof ItemCategoryFormBody) => {
-  //     setValue(fieldName, '');
-  //     setValue(`${fieldName}_description` as keyof ItemCategoryFormBody, '');
-  //   };
+    //   const clearField = (fieldName: keyof ItemCategoryFormBody) => {
+    //     setValue(fieldName, '');
+    //     setValue(`${fieldName}_description` as keyof ItemCategoryFormBody, '');
+    //   };
 
-  //   const renderIcon = (fieldName: keyof ItemCategoryFormBody) => {
-  //     const fieldValue = watch(fieldName);
-  //     if (fieldValue) {
-  //       return (
-  //         <IconComponent
-  //           onClick={() => clearField(fieldName)}
-  //           size="medium"
-  //           icon={IconX}
-  //           className="curdor-pointer"
-  //         />
-  //       );
-  //     }
-  //     return (
-  //       <IconComponent
-  //         onClick={() => openModalForField(fieldName)}
-  //         size="medium"
-  //         icon={IconSearch}
-  //         className="cirsor-pointer"
-  //       />
-  //     );
-  //   };
+    //   const renderIcon = (fieldName: keyof ItemCategoryFormBody) => {
+    //     const fieldValue = watch(fieldName);
+    //     if (fieldValue) {
+    //       return (
+    //         <IconComponent
+    //           onClick={() => clearField(fieldName)}
+    //           size="medium"
+    //           icon={IconX}
+    //           className="curdor-pointer"
+    //         />
+    //       );
+    //     }
+    //     return (
+    //       <IconComponent
+    //         onClick={() => openModalForField(fieldName)}
+    //         size="medium"
+    //         icon={IconSearch}
+    //         className="cirsor-pointer"
+    //       />
+    //     );
+    //   };
 
-  return (
-    <Drawer onClose={handleCloseDrawer} open={isOpen}>
-      <DrawerContent>
-        <DrawerHeader
-          onClick={handleCloseDrawer}
-          drawerTitle="Add Item Category"
-        >
-          <DrawerEndHeader>
-            <Button
-              variant={!canSave ? 'disabled' : 'primary'}
-              icon={{ size: 'large', icon: IconDeviceFloppy, color: 'White' }}
-              type="submit"
-              onClick={handleSaveClick}
-              disabled={isLoading}
-            >
-              {isLoading ? 'saving...' : 'save'}
-            </Button>
-          </DrawerEndHeader>
-        </DrawerHeader>
-        <form ref={formRef} onSubmit={handleSubmit}>
-          <DrawerBody>
-            <Card
-              size="drawer"
-              className="border border-Neutral-200 shadow-none"
-            >
-              <CardContent className="flex-wrap flex flex-row gap-4">
-                <div className="flex flex-row gap-[10px] flex-1 h-full">
-                  <InputField
-                    {...register('item_category_code')}
-                    className="flex-grow"
-                    message={
-                      errors.item_category_code
-                        ? {
-                            text: errors.item_category_code.message!,
-                            type: 'danger',
-                          }
-                        : undefined
-                    }
-                    label="Item Category Code"
-                    placeholder="Item Category Code"
-                    right
-                    required
-                    type="text"
-                    onKeyDown={handleInputKeyDown}
-                  />
-                  <InputField
-                    {...register('item_category_name')}
-                    className="flex-grow"
-                    message={
-                      errors.item_category_name
-                        ? {
-                            text: errors.item_category_name.message!,
-                            type: 'danger',
-                          }
-                        : undefined
-                    }
-                    label="Item Category Name"
-                    placeholder="Item Category Name"
-                    right
-                    required
-                    type="text"
-                    onKeyDown={handleInputKeyDown}
-                  />
-                  <div className="flex items-start gap-2 ml-[10px] mt-[8px]">
-                    <label
-                      htmlFor="active"
-                      className="cursor-pointer text-base font-semibold"
-                    >
-                      Active
-                    </label>
-                    <Checkbox
-                      {...register('active')}
-                      message={
-                        errors.active
-                          ? {
-                              text: errors.active.message!,
-                              type: 'danger',
-                            }
-                          : undefined
-                      }
-                      label=""
-                      checked={ItemCategoryDefaultValues.active}
-                      disabled
-                      onCheckedChange={(checked) =>
-                        setValue('active', !!checked)
-                      }
-                    />
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-            {/* <Card
+    return (
+        <Drawer onClose={handleCloseDrawer} open={isOpen}>
+            <DrawerContent>
+                <DrawerHeader
+                    onClick={handleCloseDrawer}
+                    drawerTitle="Add Item Category"
+                >
+                    <DrawerEndHeader>
+                        <Button
+                            variant={!canSave ? "disabled" : "primary"}
+                            icon={{
+                                size: "large",
+                                icon: IconDeviceFloppy,
+                                color: "White",
+                            }}
+                            type="submit"
+                            onClick={handleSaveClick}
+                            disabled={isLoading}
+                        >
+                            {isLoading ? "saving..." : "save"}
+                        </Button>
+                    </DrawerEndHeader>
+                </DrawerHeader>
+                <form ref={formRef} onSubmit={handleSubmit}>
+                    <DrawerBody>
+                        <Card
+                            size="drawer"
+                            className="border border-Neutral-200 shadow-none"
+                        >
+                            <CardContent className="flex-wrap flex flex-row gap-4">
+                                <div className="flex flex-row gap-[10px] flex-1 h-full">
+                                    <InputField
+                                        {...register("item_category_code")}
+                                        className="flex-grow"
+                                        message={
+                                            errors.item_category_code
+                                                ? {
+                                                      text: errors
+                                                          .item_category_code
+                                                          .message!,
+                                                      type: "danger",
+                                                  }
+                                                : undefined
+                                        }
+                                        label="Item Category Code"
+                                        placeholder="Item Category Code"
+                                        right
+                                        required
+                                        type="text"
+                                        onKeyDown={handleInputKeyDown}
+                                    />
+                                    <InputField
+                                        {...register("item_category_name")}
+                                        className="flex-grow"
+                                        message={
+                                            errors.item_category_name
+                                                ? {
+                                                      text: errors
+                                                          .item_category_name
+                                                          .message!,
+                                                      type: "danger",
+                                                  }
+                                                : undefined
+                                        }
+                                        label="Item Category Name"
+                                        placeholder="Item Category Name"
+                                        right
+                                        required
+                                        type="text"
+                                        onKeyDown={handleInputKeyDown}
+                                    />
+                                    <div className="flex items-start gap-2 ml-[10px] mt-[8px]">
+                                        <label
+                                            htmlFor="active"
+                                            className="cursor-pointer text-base font-semibold"
+                                        >
+                                            Active
+                                        </label>
+                                        <Checkbox
+                                            {...register("active")}
+                                            message={
+                                                errors.active
+                                                    ? {
+                                                          text: errors.active
+                                                              .message!,
+                                                          type: "danger",
+                                                      }
+                                                    : undefined
+                                            }
+                                            label=""
+                                            checked={
+                                                ItemCategoryDefaultValues.active
+                                            }
+                                            disabled
+                                            onCheckedChange={(checked) =>
+                                                setValue("active", !!checked)
+                                            }
+                                        />
+                                    </div>
+                                </div>
+                            </CardContent>
+                        </Card>
+                        {/* <Card
               size="drawer"
               className="border border-Neutral-200 shadow-none"
             >
@@ -413,10 +424,10 @@ const CreateItemCategory = () => {
                 </div>
               </CardContent>
             </Card> */}
-          </DrawerBody>
-        </form>
-      </DrawerContent>
-      {/* <SelectableModal
+                    </DrawerBody>
+                </form>
+            </DrawerContent>
+            {/* <SelectableModal
         isOpen={isModalOpen}
         onClose={() => setModalOpen(false)}
         title="Find Coa"
@@ -451,8 +462,8 @@ const CreateItemCategory = () => {
           setModalOpen(false);
         }}
       /> */}
-    </Drawer>
-  );
+        </Drawer>
+    );
 };
 
 export default CreateItemCategory;

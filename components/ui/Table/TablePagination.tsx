@@ -1,74 +1,74 @@
-'use client';
+"use client";
 
-import React from 'react';
+import React from "react";
 import {
-  IconChevronCompactLeft,
-  IconChevronCompactRight,
-} from '@tabler/icons-react';
-import { Button, ButtonProps } from '../Button';
-import PageSizeInput from './PageSizeInput';
+    IconChevronCompactLeft,
+    IconChevronCompactRight,
+} from "@tabler/icons-react";
+import { Button, ButtonProps } from "../Button";
+import PageSizeInput from "./PageSizeInput";
 
 export interface TablePaginationProps {
-  page_index: number;
-  page_size: number;
-  total_records?: number;
-  total_pages?: number;
-  nextButtonProps?: ButtonProps;
-  prevButtonProps?: ButtonProps;
-  onNext: () => void;
-  onPrev: () => void;
-  onChangePageSize: (size: number) => void;
+    page_index: number;
+    page_size: number;
+    total_records?: number;
+    total_pages?: number;
+    nextButtonProps?: ButtonProps;
+    prevButtonProps?: ButtonProps;
+    onNext: () => void;
+    onPrev: () => void;
+    onChangePageSize: (size: number) => void;
 }
 
 const TablePagination = ({
-  page_index,
-  total_records,
-  page_size,
-  total_pages,
-  onChangePageSize,
-  onNext,
-  onPrev,
-  nextButtonProps,
-  prevButtonProps,
+    page_index,
+    total_records,
+    page_size,
+    total_pages,
+    onChangePageSize,
+    onNext,
+    onPrev,
+    nextButtonProps,
+    prevButtonProps,
 }: TablePaginationProps) => (
-  <div className="flex justify-between items-center">
-    <div>
-      <span className="text-base text-Neutral-500 font-normal flex items-center gap-1">
-        Showing{' '}
-        <PageSizeInput
-          helperValues={[10, 50, 100, 200]}
-          type="number"
-          value={page_size >= 0 ? page_size : undefined}
-          placeholder="0"
-          onChangePageSize={(val) => onChangePageSize(val)}
-        />{' '}
-        from {total_records} entries.
-      </span>
+    <div className="flex justify-between items-center">
+        <div>
+            <span className="text-base text-Neutral-500 font-normal flex items-center gap-1">
+                Showing{" "}
+                <PageSizeInput
+                    helperValues={[10, 50, 100, 200]}
+                    type="number"
+                    value={page_size >= 0 ? page_size : undefined}
+                    placeholder="0"
+                    onChangePageSize={(val) => onChangePageSize(val)}
+                />{" "}
+                from {total_records} entries.
+            </span>
+        </div>
+        <div className="flex items-center gap-[10px]">
+            <div className="flex">
+                <Button
+                    size="icon"
+                    variant="secondary"
+                    onClick={onPrev}
+                    icon={{ icon: IconChevronCompactLeft }}
+                    className="rounded-none rounded-s-rounded-1 px-[7px] py-[6px]"
+                    {...prevButtonProps}
+                />
+                <Button
+                    size="icon"
+                    variant="secondary"
+                    onClick={onNext}
+                    icon={{ icon: IconChevronCompactRight }}
+                    className="rounded-none rounded-e-rounded-1 px-[7px] py-[6px]"
+                    {...nextButtonProps}
+                />
+            </div>
+            <p className="text-base text-Neutral-500 font-normal">
+                Page {page_index} of {total_pages}{" "}
+            </p>
+        </div>
     </div>
-    <div className="flex items-center gap-[10px]">
-      <div className="flex">
-        <Button
-          size="icon"
-          variant="secondary"
-          onClick={onPrev}
-          icon={{ icon: IconChevronCompactLeft }}
-          className="rounded-none rounded-s-rounded-1 px-[7px] py-[6px]"
-          {...prevButtonProps}
-        />
-        <Button
-          size="icon"
-          variant="secondary"
-          onClick={onNext}
-          icon={{ icon: IconChevronCompactRight }}
-          className="rounded-none rounded-e-rounded-1 px-[7px] py-[6px]"
-          {...nextButtonProps}
-        />
-      </div>
-      <p className="text-base text-Neutral-500 font-normal">
-        Page {page_index} of {total_pages}{' '}
-      </p>
-    </div>
-  </div>
 );
 
 export default TablePagination;

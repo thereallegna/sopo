@@ -1,16 +1,16 @@
 interface UserData {
-  companyId?: string;
-  usercode?: string;
-  authorization?: UserAuthorization;
-  imageUrl?: string;
+    companyId?: string;
+    usercode?: string;
+    authorization?: UserAuthorization;
+    imageUrl?: string;
 }
 
 interface UserAuthorization {
-  access_token: string;
-  duration: number;
+    access_token: string;
+    duration: number;
 }
 
 interface IUser {
-  isLoggedIn: boolean;
-  data: UserData | null;
+    isLoggedIn: boolean;
+    data: UserData | null;
 }

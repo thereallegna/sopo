@@ -1,183 +1,192 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { Button } from '@components/ui/Button';
+import React from "react";
+import { Button } from "@components/ui/Button";
 import {
-  Drawer,
-  DrawerBody,
-  DrawerContent,
-  DrawerEndHeader,
-  DrawerHeader,
-} from '@components/ui/Drawer';
-import { Card, CardContent } from '@components/ui/Card';
-import InputField from '@components/shared/InputField';
-import { Checkbox } from '@components/ui/Checkbox';
-import { useDrawerStore } from '@stores/useDrawerStore';
+    Drawer,
+    DrawerBody,
+    DrawerContent,
+    DrawerEndHeader,
+    DrawerHeader,
+} from "@components/ui/Drawer";
+import { Card, CardContent } from "@components/ui/Card";
+import InputField from "@components/shared/InputField";
+import { Checkbox } from "@components/ui/Checkbox";
+import { useDrawerStore } from "@stores/useDrawerStore";
 // import { IconDeviceFloppy, IconSearch, IconX } from '@tabler/icons-react';
-import { IconDeviceFloppy } from '@tabler/icons-react';
-import { useForm } from '@hooks/useForm';
+import { IconDeviceFloppy } from "@tabler/icons-react";
+import { useForm } from "@hooks/useForm";
 // import useFormStore from '@stores/useFormStore';
 // import { GET_CATEGORY_MATERIAL_MANAGEMENT, GET_COA } from '@constants/queryKey';
-import { GET_CATEGORY_MATERIAL_MANAGEMENT } from '@constants/queryKey';
-import { editItemCategory } from '@services/fetcher/configuration/inventory-management';
-import { ItemCategorySchema } from '@constants/schemas/ConfigurationSchema/InventoryMaterialManagement';
+import { GET_CATEGORY_MATERIAL_MANAGEMENT } from "@constants/queryKey";
+import { editItemCategory } from "@services/fetcher/configuration/inventory-management";
+import { ItemCategorySchema } from "@constants/schemas/ConfigurationSchema/InventoryMaterialManagement";
 // import SelectableModal from '@components/ui/Modal';
 // import { getCoa } from '@services/fetcher/configuration/general';
 // import IconComponent from '@components/ui/Icon';
-import { useSetValueForm } from '@hooks/useSetValueForm';
+import { useSetValueForm } from "@hooks/useSetValueForm";
 
 const EditItemCategory = () => {
-  // const [isModalOpen, setModalOpen] = React.useState(false);
-  // const { coa_form, setCoaForm } = useFormStore();
+    // const [isModalOpen, setModalOpen] = React.useState(false);
+    // const { coa_form, setCoaForm } = useFormStore();
 
-  const detail_data = useDrawerStore(
-    (state) => state.detail_data
-  ) as ItemCategoryFormBody;
+    const detail_data = useDrawerStore(
+        (state) => state.detail_data
+    ) as ItemCategoryFormBody;
 
-  const {
-    handleCloseDrawerEdit,
-    handleInputKeyDown,
-    handleSaveClick,
-    handleSubmit,
-    isLoading,
-    formRef,
-    isOpenEdit,
-    canSave,
-    errors,
-    setValue,
-    register,
-    watch,
-  } = useForm({
-    label: 'Master item',
-    queryKey: GET_CATEGORY_MATERIAL_MANAGEMENT,
-    mutationFn: editItemCategory,
-    validationSchema: ItemCategorySchema,
-    defaultValues: detail_data,
-    type: 'edit',
-  });
+    const {
+        handleCloseDrawerEdit,
+        handleInputKeyDown,
+        handleSaveClick,
+        handleSubmit,
+        isLoading,
+        formRef,
+        isOpenEdit,
+        canSave,
+        errors,
+        setValue,
+        register,
+        watch,
+    } = useForm({
+        label: "Master item",
+        queryKey: GET_CATEGORY_MATERIAL_MANAGEMENT,
+        mutationFn: editItemCategory,
+        validationSchema: ItemCategorySchema,
+        defaultValues: detail_data,
+        type: "edit",
+    });
 
-  useSetValueForm<ItemCategoryFormBody>(detail_data, setValue, isOpenEdit);
+    useSetValueForm<ItemCategoryFormBody>(detail_data, setValue, isOpenEdit);
 
-  // const openModalForField = (fieldName: string) => {
-  //   setModalOpen(true);
-  //   // setCoaForm(fieldName);
-  // };
+    // const openModalForField = (fieldName: string) => {
+    //   setModalOpen(true);
+    //   // setCoaForm(fieldName);
+    // };
 
-  // const clearField = (fieldName: keyof ItemCategoryFormBody) => {
-  //   setValue(fieldName, '');
-  //   setValue(`${fieldName}_description` as keyof ItemCategoryFormBody, '');
-  // };
+    // const clearField = (fieldName: keyof ItemCategoryFormBody) => {
+    //   setValue(fieldName, '');
+    //   setValue(`${fieldName}_description` as keyof ItemCategoryFormBody, '');
+    // };
 
-  // const renderIcon = (fieldName: keyof ItemCategoryFormBody) => {
-  //   const fieldValue = watch(fieldName);
-  //   if (fieldValue) {
-  //     return (
-  //       <IconComponent
-  //         onClick={() => clearField(fieldName)}
-  //         size="medium"
-  //         icon={IconX}
-  //         className="curdor-pointer"
-  //       />
-  //     );
-  //   }
-  //   return (
-  //     <IconComponent
-  //       onClick={() => openModalForField(fieldName)}
-  //       size="medium"
-  //       icon={IconSearch}
-  //       className="cirsor-pointer"
-  //     />
-  //   );
-  // };
+    // const renderIcon = (fieldName: keyof ItemCategoryFormBody) => {
+    //   const fieldValue = watch(fieldName);
+    //   if (fieldValue) {
+    //     return (
+    //       <IconComponent
+    //         onClick={() => clearField(fieldName)}
+    //         size="medium"
+    //         icon={IconX}
+    //         className="curdor-pointer"
+    //       />
+    //     );
+    //   }
+    //   return (
+    //     <IconComponent
+    //       onClick={() => openModalForField(fieldName)}
+    //       size="medium"
+    //       icon={IconSearch}
+    //       className="cirsor-pointer"
+    //     />
+    //   );
+    // };
 
-  return (
-    <Drawer onClose={handleCloseDrawerEdit} open={isOpenEdit}>
-      <DrawerContent>
-        <DrawerHeader
-          onClick={handleCloseDrawerEdit}
-          drawerTitle="Edit Item's Category"
-        >
-          <DrawerEndHeader>
-            <Button
-              variant={!canSave ? 'disabled' : 'primary'}
-              icon={{ size: 'large', icon: IconDeviceFloppy, color: 'White' }}
-              onClick={handleSaveClick}
-              disabled={isLoading}
-            >
-              {isLoading ? 'saving' : 'save'}
-            </Button>
-          </DrawerEndHeader>
-        </DrawerHeader>
+    return (
+        <Drawer onClose={handleCloseDrawerEdit} open={isOpenEdit}>
+            <DrawerContent>
+                <DrawerHeader
+                    onClick={handleCloseDrawerEdit}
+                    drawerTitle="Edit Item's Category"
+                >
+                    <DrawerEndHeader>
+                        <Button
+                            variant={!canSave ? "disabled" : "primary"}
+                            icon={{
+                                size: "large",
+                                icon: IconDeviceFloppy,
+                                color: "White",
+                            }}
+                            onClick={handleSaveClick}
+                            disabled={isLoading}
+                        >
+                            {isLoading ? "saving" : "save"}
+                        </Button>
+                    </DrawerEndHeader>
+                </DrawerHeader>
 
-        <form ref={formRef} onSubmit={handleSubmit} noValidate>
-          <DrawerBody>
-            <Card size="drawer">
-              <CardContent className="flex-wrap flex flex-row gap-4">
-                <div className="flex flex-row gap-[10px] flex-1 h-full">
-                  <InputField
-                    {...register('item_category_code')}
-                    className="flex-grow"
-                    message={
-                      errors.item_category_code
-                        ? {
-                            text: errors.item_category_code.message!,
-                            type: 'danger',
-                          }
-                        : undefined
-                    }
-                    label="Item Category Code"
-                    placeholder="Item Category Code"
-                    right
-                    disabled
-                    type="text"
-                    onKeyDown={handleInputKeyDown}
-                  />
-                  <InputField
-                    {...register('item_category_name')}
-                    className="flex-grow"
-                    message={
-                      errors.item_category_name
-                        ? {
-                            text: errors.item_category_name.message!,
-                            type: 'danger',
-                          }
-                        : undefined
-                    }
-                    label="Item Category Name"
-                    placeholder="Item Category Name"
-                    right
-                    required
-                    type="text"
-                    onKeyDown={handleInputKeyDown}
-                  />
-                  <div className="flex items-start gap-2 ml-[14px] mt-[10px]">
-                    <label
-                      htmlFor="active"
-                      className="cursor-pointer text-base font-semibold"
-                    >
-                      Active
-                    </label>
-                    <Checkbox
-                      checked={watch('active')}
-                      {...register('active')}
-                      message={
-                        errors.active
-                          ? {
-                              text: errors.active.message!,
-                              type: 'danger',
-                            }
-                          : undefined
-                      }
-                      label=""
-                      onCheckedChange={(checked) =>
-                        setValue('active', !!checked)
-                      }
-                    />
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-            {/* <Card
+                <form ref={formRef} onSubmit={handleSubmit} noValidate>
+                    <DrawerBody>
+                        <Card size="drawer">
+                            <CardContent className="flex-wrap flex flex-row gap-4">
+                                <div className="flex flex-row gap-[10px] flex-1 h-full">
+                                    <InputField
+                                        {...register("item_category_code")}
+                                        className="flex-grow"
+                                        message={
+                                            errors.item_category_code
+                                                ? {
+                                                      text: errors
+                                                          .item_category_code
+                                                          .message!,
+                                                      type: "danger",
+                                                  }
+                                                : undefined
+                                        }
+                                        label="Item Category Code"
+                                        placeholder="Item Category Code"
+                                        right
+                                        disabled
+                                        type="text"
+                                        onKeyDown={handleInputKeyDown}
+                                    />
+                                    <InputField
+                                        {...register("item_category_name")}
+                                        className="flex-grow"
+                                        message={
+                                            errors.item_category_name
+                                                ? {
+                                                      text: errors
+                                                          .item_category_name
+                                                          .message!,
+                                                      type: "danger",
+                                                  }
+                                                : undefined
+                                        }
+                                        label="Item Category Name"
+                                        placeholder="Item Category Name"
+                                        right
+                                        required
+                                        type="text"
+                                        onKeyDown={handleInputKeyDown}
+                                    />
+                                    <div className="flex items-start gap-2 ml-[14px] mt-[10px]">
+                                        <label
+                                            htmlFor="active"
+                                            className="cursor-pointer text-base font-semibold"
+                                        >
+                                            Active
+                                        </label>
+                                        <Checkbox
+                                            checked={watch("active")}
+                                            {...register("active")}
+                                            message={
+                                                errors.active
+                                                    ? {
+                                                          text: errors.active
+                                                              .message!,
+                                                          type: "danger",
+                                                      }
+                                                    : undefined
+                                            }
+                                            label=""
+                                            onCheckedChange={(checked) =>
+                                                setValue("active", !!checked)
+                                            }
+                                        />
+                                    </div>
+                                </div>
+                            </CardContent>
+                        </Card>
+                        {/* <Card
               size="drawer"
               className="border border-Neutral-200 shadow-none"
             >
@@ -401,10 +410,10 @@ const EditItemCategory = () => {
                 </div>
               </CardContent>
             </Card> */}
-          </DrawerBody>
-        </form>
-      </DrawerContent>
-      {/* <SelectableModal
+                    </DrawerBody>
+                </form>
+            </DrawerContent>
+            {/* <SelectableModal
         isOpen={isModalOpen}
         onClose={() => setModalOpen(false)}
         title="Find Coa"
@@ -439,8 +448,8 @@ const EditItemCategory = () => {
           setModalOpen(false);
         }}
       /> */}
-    </Drawer>
-  );
+        </Drawer>
+    );
 };
 
 export default EditItemCategory;

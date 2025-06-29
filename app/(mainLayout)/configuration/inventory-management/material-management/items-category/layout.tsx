@@ -1,13 +1,13 @@
-import React from 'react';
-import { Metadata } from 'next';
+import React from "react";
+import { Metadata } from "next";
 
 type Props = {
-  children?: React.ReactNode;
+    children?: React.ReactNode;
 };
 
 export const metadata: Metadata = {
-  title: 'Items Category - RUN System R1',
-  description: 'Items Category page',
+    title: "Items Category - RUN System R1",
+    description: "Items Category page",
 };
 
 // ?======================================================//

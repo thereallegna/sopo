@@ -1,13 +1,13 @@
-import React from 'react';
-import { Metadata } from 'next';
+import React from "react";
+import { Metadata } from "next";
 
 type Props = {
-  children?: React.ReactNode;
+    children?: React.ReactNode;
 };
 
 export const metadata: Metadata = {
-  title: 'Items UoM - RUN System R1',
-  description: 'Items UoM page.',
+    title: "Items UoM - RUN System R1",
+    description: "Items UoM page.",
 };
 
 // ?======================================================//

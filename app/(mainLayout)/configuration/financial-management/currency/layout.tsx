@@ -1,13 +1,13 @@
-import React from 'react';
-import { Metadata } from 'next';
+import React from "react";
+import { Metadata } from "next";
 
 type Props = {
-  children?: React.ReactNode;
+    children?: React.ReactNode;
 };
 
 export const metadata: Metadata = {
-  title: 'Currency - RUN System R1',
-  description: 'Currency page.',
+    title: "Currency - RUN System R1",
+    description: "Currency page.",
 };
 
 // ?======================================================//

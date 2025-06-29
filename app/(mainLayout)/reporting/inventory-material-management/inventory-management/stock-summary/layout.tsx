@@ -1,13 +1,13 @@
-import React from 'react';
-import { Metadata } from 'next';
+import React from "react";
+import { Metadata } from "next";
 
 type Props = {
-  children?: React.ReactNode;
+    children?: React.ReactNode;
 };
 
 export const metadata: Metadata = {
-  title: 'Stock Summary - RUN System R1',
-  description: 'Stock Summary page',
+    title: "Stock Summary - RUN System R1",
+    description: "Stock Summary page",
 };
 
 // ?======================================================//

@@ -1,16 +1,16 @@
-'use client';
+"use client";
 
-import { useUserSession } from '@hooks/useUserSession';
-import React from 'react';
+import { useUserSession } from "@hooks/useUserSession";
+import React from "react";
 
 const Dashboard = () => {
-  const { isLoading, data } = useUserSession();
+    const { isLoading, data } = useUserSession();
 
-  return (
-    <div>
-      <div>Dashboard {isLoading ? 'loading...' : data?.usercode}</div>
-    </div>
-  );
+    return (
+        <div>
+            <div>Dashboard {isLoading ? "loading..." : data?.usercode}</div>
+        </div>
+    );
 };
 
 export default Dashboard;

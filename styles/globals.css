@@ -3,28 +3,28 @@
 @tailwind utilities;
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-  .custom-scrollbar::-webkit-scrollbar {
-    width: 4px;
-  }
-  .custom-scrollbar::-webkit-scrollbar-thumb {
-    background-color: #3b82f6;
-    border-radius: 4px;
-  }
-  .custom-scrollbar::-webkit-scrollbar-track {
-    background-color: #e5e7eb;
-    margin-left: 4px; /* Adjust this value to move the track to the right */
-  }
+    .text-balance {
+        text-wrap: balance;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+        width: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background-color: #3b82f6;
+        border-radius: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+        background-color: #e5e7eb;
+        margin-left: 4px; /* Adjust this value to move the track to the right */
+    }
 }
 
 @layer base {
-  :root {
-    --radius: 0.5rem;
-  }
+    :root {
+        --radius: 0.5rem;
+    }
 }
