@@ -31,7 +31,7 @@ const CreateCurrency = () => {
         errors,
         register,
     } = useForm({
-        label: "Master item",
+        label: "Currency",
         queryKey: GET_CURRENCY,
         mutationFn: createCurrency,
         validationSchema: currencySchema,
@@ -82,6 +82,7 @@ const CreateCurrency = () => {
                                     placeholder="Currency Code"
                                     right
                                     type="text"
+                                    className="flex-1 gap-2"
                                     onKeyDown={handleInputKeyDown}
                                 />
                                 <InputField
@@ -99,6 +100,7 @@ const CreateCurrency = () => {
                                     placeholder="Currency Name"
                                     right
                                     type="text"
+                                    className="flex-1 gap-2"
                                     onKeyDown={handleInputKeyDown}
                                 />
                             </CardContent>

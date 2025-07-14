@@ -38,7 +38,7 @@ const CreateVendor = () => {
         errors,
         register,
     } = useForm({
-        label: "Tax",
+        label: "Vendor",
         queryKey: GET_VENDOR,
         mutationFn: createVendor,
         validationSchema: vendorSchema,
@@ -128,6 +128,7 @@ const CreateVendor = () => {
                                     <Combobox
                                         className="flex-1"
                                         label="Vendor Category"
+                                        required
                                         placeholder="Select Vendor Category"
                                         queryKey={[GET_VENDOR_CATEGORY]}
                                         queryFn={() =>

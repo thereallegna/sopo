@@ -7,11 +7,9 @@ export async function GET(req: NextRequest) {
     try {
         const params = req.nextUrl.searchParams;
 
-        console.log(params.get("search"));
-
         const session = await getServerSideSession();
 
-        const response = await axios.get(`${PATH_WAREHOUSE_BE}`, {
+        const response = await axios.get(PATH_WAREHOUSE_BE, {
             headers: {
                 Authorization: `Bearer ${session.user?.data?.authorization?.access_token}`,
             },
@@ -42,6 +40,7 @@ export async function POST(req: Request) {
         const session = await getServerSideSession();
 
         const body = (await req.json()) as WarehouseFormBody;
+        body.warehouse_category = body.warehouse_category_code;
 
         const response = await axios.post(PATH_WAREHOUSE_BE, body, {
             headers: {

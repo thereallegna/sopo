@@ -18,7 +18,7 @@ const getVendorCategory = async (option?: FetcherOptions) => {
 
         return res;
     } catch (error) {
-        console.error("Error getching log history:", error);
+        console.error("Error fetching log history:", error);
         throw error;
     }
 };

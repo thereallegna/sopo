@@ -88,6 +88,7 @@ const EditCurrency = () => {
                                     placeholder="Currency Code"
                                     right
                                     type="text"
+                                    className="flex-1 gap-2"
                                     disabled
                                     onKeyDown={handleInputKeyDown}
                                 />
@@ -106,6 +107,7 @@ const EditCurrency = () => {
                                     placeholder="Currency Name"
                                     right
                                     type="text"
+                                    className="flex-1 gap-2"
                                     onKeyDown={handleInputKeyDown}
                                 />
                             </CardContent>

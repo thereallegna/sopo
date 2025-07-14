@@ -15,9 +15,6 @@ import InputField from "@components/shared/InputField";
 import { useDrawerStore } from "@stores/useDrawerStore";
 import { IconHistory, IconPencil } from "@tabler/icons-react";
 import { useForm } from "react-hook-form";
-import Combobox from "@components/shared/Combobox";
-import { GET_VENDOR_CATEGORY } from "@constants/queryKey";
-import { getVendorCategory } from "@services/fetcher/configuration/procurement-management";
 import { useSetValueForm } from "@hooks/useSetValueForm";
 
 const DetailVendor = () => {
@@ -84,19 +81,15 @@ const DetailVendor = () => {
                                     disabled
                                     {...register("vendor_name")}
                                 />
-                                <Combobox
+                                <InputField
+                                    value={detail_data?.vendor_category || ""}
                                     label="Vendor Category"
-                                    placeholder="Select Vendor Category"
-                                    queryKey={[GET_VENDOR_CATEGORY]}
-                                    queryFn={getVendorCategory}
-                                    required
-                                    dataLabel="vendor_category"
-                                    dataValue="vendor_category_code"
+                                    placeholder="Vendor Category"
+                                    right
+                                    type="text"
+                                    className="w-full gap-2"
                                     disabled
-                                    value={{
-                                        label: detail_data?.vendor_category,
-                                        value: detail_data?.vendor_category_code,
-                                    }}
+                                    {...register("vendor_category")}
                                 />
                                 <InputField
                                     value={detail_data?.address || ""}

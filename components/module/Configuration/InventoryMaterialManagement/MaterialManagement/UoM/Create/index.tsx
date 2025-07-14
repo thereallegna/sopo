@@ -31,7 +31,7 @@ const CreateUOM = () => {
         errors,
         register,
     } = useForm({
-        label: "item UoM",
+        label: "Item UoM",
         queryKey: GET_UOM,
         mutationFn: createUOM,
         validationSchema: UOMSchema,
@@ -82,6 +82,7 @@ const CreateUOM = () => {
                                     placeholder="UoM Code"
                                     right
                                     type="text"
+                                    className="flex-1 gap-2"
                                     onKeyDown={handleInputKeyDown}
                                 />
                                 <InputField
@@ -99,6 +100,7 @@ const CreateUOM = () => {
                                     placeholder="UoM Name"
                                     right
                                     type="text"
+                                    className="flex-1 gap-2"
                                     onKeyDown={handleInputKeyDown}
                                 />
                             </CardContent>

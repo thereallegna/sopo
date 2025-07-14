@@ -181,7 +181,6 @@ const getWarehouse = async (option?: FetcherOptions) => {
     try {
         const res = await axios.get(`${PATH_WAREHOUSE}`, {
             params: {
-                all: option?.all,
                 page_size: !option?.all
                     ? option?.pagination?.pageSize
                     : undefined,
@@ -201,16 +200,7 @@ const getWarehouse = async (option?: FetcherOptions) => {
 
 const createWarehouse = async (body: WarehouseFormBody) => {
     try {
-        const bodyString = {
-            ...body,
-            phone: body.phone?.toString() || "",
-            // fax: body.fax?.toString() || "",
-            // mobile: body?.mobile?.toString() ?? "",
-            // postal_code: body?.postal_code?.toString() || "",
-        };
-
-        const res = await axios.post(PATH_WAREHOUSE, bodyString);
-
+        const res = await axios.post(PATH_WAREHOUSE, body);
         return res.data;
     } catch (error) {
         console.error("Error creating Warehouse:", error);
@@ -220,21 +210,23 @@ const createWarehouse = async (body: WarehouseFormBody) => {
 
 const editWarehouse = async (body: WarehouseFormBody) => {
     try {
-        const bodyString = {
-            ...body,
-            phone: body.phone?.toString() || "",
-            // fax: body.fax?.toString() || "",
-            // mobile: body?.mobile?.toString() ?? "",
-            // postal_code: body?.postal_code?.toString() || "",
-        };
+        // Log the request
+        console.log("Editing warehouse:", {
+            code: body.warehouse_code,
+            body,
+        });
 
-        const res = await axios.put(
-            `${PATH_WAREHOUSE}/${body.warehouse_code}`,
-            bodyString
+        const response = await axios.put(
+            `/api/configuration/inventory-management/warehouse-management-system/warehouse/${body.warehouse_code}`,
+            body
         );
-        return res.data;
-    } catch (error) {
-        console.error("Error editing country:", error);
+
+        return response.data;
+    } catch (error: any) {
+        console.error("Edit warehouse error:", {
+            code: body.warehouse_code,
+            error: error.response?.data || error.message,
+        });
         throw error;
     }
 };

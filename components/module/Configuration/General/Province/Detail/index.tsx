@@ -16,7 +16,6 @@ import { useDrawerStore } from "@stores/useDrawerStore";
 import { IconHistory, IconPencil } from "@tabler/icons-react";
 import { useForm } from "react-hook-form";
 import { useSetValueForm } from "@hooks/useSetValueForm";
-import Combobox from "@components/shared/Combobox";
 
 const DetailProvince = () => {
     const {
@@ -58,38 +57,40 @@ const DetailProvince = () => {
                 <DrawerBody>
                     <Card size="drawer">
                         <CardContent className="flex-wrap flex flex-row gap-6 items-center">
-                            <InputField
-                                {...register("province_code")}
-                                value={detail_data?.province_code || ""}
-                                label="Province Code"
-                                placeholder="Province Code"
-                                right
-                                type="text"
-                                required
-                                className="flex-1 gap-2"
-                                disabled
-                            />
-                            <InputField
-                                {...register("province_name")}
-                                value={detail_data?.province_name || ""}
-                                label="Province Name"
-                                right
-                                type="text"
-                                required
-                                className="flex-1 gap-2"
-                                disabled
-                            />
-                            <Combobox
-                                className="flex-1 gap-2"
-                                value={{
-                                    label: detail_data?.country,
-                                    value: detail_data?.country_code,
-                                }}
-                                label="Country"
-                                placeholder="Select Country"
-                                disabled
-                                queryKey={[]}
-                            />
+                            <div className="flex flex-col gap-[14px] flex-1">
+                                <InputField
+                                    value={detail_data?.province_code || ""}
+                                    label="Province Code"
+                                    placeholder="Province Code"
+                                    right
+                                    type="text"
+                                    className="flex-1 gap-2"
+                                    disabled
+                                    {...register("province_code")}
+                                />
+                                <InputField
+                                    value={detail_data?.province_name || ""}
+                                    label="Province Name"
+                                    placeholder="Province Name"
+                                    right
+                                    type="text"
+                                    className="flex-1 gap-2"
+                                    disabled
+                                    {...register("province_name")}
+                                />
+                            </div>
+                            <div className="flex flex-col gap-[14px] flex-1 self-start">
+                                <InputField
+                                    value={detail_data?.country || ""}
+                                    label="Country"
+                                    placeholder="Country"
+                                    right
+                                    type="text"
+                                    className="flex-1 gap-2"
+                                    disabled
+                                    {...register("country")}
+                                />
+                            </div>
                         </CardContent>
                     </Card>
                 </DrawerBody>

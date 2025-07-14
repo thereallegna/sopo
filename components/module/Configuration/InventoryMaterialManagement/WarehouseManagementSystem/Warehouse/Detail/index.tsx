@@ -13,10 +13,6 @@ import {
 import { Card, CardContent } from "@components/ui/Card";
 import InputField from "@components/shared/InputField";
 import { IconHistory, IconPencil } from "@tabler/icons-react";
-import { getCity } from "@services/fetcher/configuration/general";
-import { getWarehouseCategory } from "@services/fetcher/configuration/inventory-management";
-import Combobox from "@components/shared/Combobox";
-import { GET_CITY, GET_WAREHOUSE_CATEGORY } from "@constants/queryKey";
 import { useForm } from "react-hook-form";
 import { useDrawerStore } from "@stores/useDrawerStore";
 import { useSetValueForm } from "@hooks/useSetValueForm";
@@ -28,11 +24,12 @@ const DetailWarehouse = () => {
         openEditDrawer,
         openHistoryLogDrawer,
     } = useDrawerStore();
+
     const detail_data = useDrawerStore(
         (state) => state.detail_data
     ) as WarehouseFormBody;
 
-    const { setValue } = useForm<WarehouseFormBody>();
+    const { register, setValue } = useForm<WarehouseFormBody>();
 
     useSetValueForm<WarehouseFormBody>(detail_data, setValue);
 
@@ -68,75 +65,69 @@ const DetailWarehouse = () => {
                                 <InputField
                                     value={detail_data?.warehouse_code || ""}
                                     label="Warehouse Code"
-                                    placeholder="Kode Gudang"
+                                    placeholder="Warehouse Code"
                                     right
                                     type="text"
                                     required
                                     className="w-full gap-2"
                                     disabled
+                                    {...register("warehouse_code")}
                                 />
                                 <InputField
                                     value={detail_data?.warehouse_name || ""}
                                     label="Warehouse Name"
-                                    placeholder="Nama Gudang"
+                                    placeholder="Warehouse Name"
                                     right
                                     type="text"
                                     required
                                     className="w-full gap-2"
                                     disabled
+                                    {...register("warehouse_name")}
                                 />
-                                <Combobox
+                                <InputField
+                                    value={
+                                        detail_data?.warehouse_category || ""
+                                    }
                                     label="Warehouse Category"
-                                    placeholder="Pilih Kateogri Gudang"
-                                    queryKey={[GET_WAREHOUSE_CATEGORY]}
-                                    queryFn={getWarehouseCategory}
+                                    placeholder="Warehouse Category"
+                                    right
+                                    type="text"
                                     required
-                                    dataLabel="warehouse_category_name"
-                                    dataValue="warehouse_category_code"
+                                    className="w-full gap-2"
                                     disabled
-                                    value={{
-                                        label:
-                                            detail_data?.warehouse_category_name ??
-                                            "",
-                                        value:
-                                            detail_data?.warehouse_category_code ??
-                                            "",
-                                    }}
+                                    {...register("warehouse_category")}
                                 />
                                 <InputField
                                     value={detail_data?.address || ""}
                                     label="Address"
-                                    placeholder="Alamat Gudang"
+                                    placeholder="Address"
                                     type="text"
                                     right
-                                    textarea
                                     className="w-full gap-2"
                                     disabled
+                                    {...register("address")}
                                 />
                             </div>
                             <div className="flex flex-col gap-[14px] flex-1 h-full justify-between">
-                                <Combobox
+                                <InputField
+                                    value={detail_data?.city || ""}
                                     label="City"
-                                    placeholder="Pilih Kota"
-                                    queryKey={[GET_CITY]}
-                                    queryFn={getCity}
-                                    required
-                                    dataLabel="city_name"
-                                    dataValue="city_code"
+                                    placeholder="City"
+                                    right
+                                    type="text"
+                                    className="w-full gap-2"
                                     disabled
-                                    value={{
-                                        label: detail_data?.city_name,
-                                        value: detail_data?.city_code,
-                                    }}
+                                    {...register("city")}
                                 />
                                 <InputField
-                                    value={detail_data?.postal_code || ""}
+                                    value={detail_data?.postal_cd || ""}
                                     label="Postal Code"
-                                    placeholder="55762"
+                                    placeholder="Postal Code"
                                     right
                                     type="number"
                                     className="w-full gap-2"
                                     disabled
+                                    {...register("postal_cd")}
                                 />
                                 <InputField
                                     value={detail_data?.phone || ""}
@@ -146,55 +137,59 @@ const DetailWarehouse = () => {
                                     type="number"
                                     className="w-full gap-2"
                                     disabled
+                                    {...register("phone")}
                                 />
                                 <InputField
                                     value={detail_data?.email || ""}
                                     label="Email"
-                                    placeholder="warehouse@aditama.idd"
+                                    placeholder="Email"
                                     right
                                     type="email"
                                     className="w-full gap-2"
                                     disabled
+                                    {...register("email")}
                                 />
                             </div>
                             <div className="flex flex-col gap-[14px] flex-1">
                                 <InputField
                                     value={detail_data?.fax || ""}
                                     label="Fax"
-                                    placeholder="0891234567890"
+                                    placeholder="Fax"
                                     right
                                     type="number"
                                     className="w-full gap-2"
                                     disabled
+                                    {...register("fax")}
                                 />
                                 <InputField
                                     value={detail_data?.mobile || ""}
                                     label="Mobile"
-                                    placeholder="0891234567890"
+                                    placeholder="Mobile"
                                     right
                                     type="number"
                                     className="w-full gap-2"
                                     disabled
+                                    {...register("mobile")}
                                 />
                                 <InputField
                                     value={detail_data?.contact_person || ""}
                                     label="Contact Person"
-                                    placeholder="Nama Penanggungjawab Gudang"
+                                    placeholder="Contact Person"
                                     right
-                                    textarea
                                     type="text"
                                     className="w-full gap-2"
                                     disabled
+                                    {...register("contact_person")}
                                 />
                                 <InputField
                                     value={detail_data?.remark || ""}
                                     label="Remark"
-                                    placeholder="Pilih Kateogri Biaya"
+                                    placeholder="Remark"
                                     right
                                     type="text"
-                                    textarea
                                     className="w-full gap-2"
                                     disabled
+                                    {...register("remark")}
                                 />
                             </div>
                         </CardContent>

@@ -4,7 +4,7 @@ export const PATH_BACKEND_URL_VERSION = "/v1";
 
 // initial start
 export const PATH_CONFIGURATION_GENERAL = `${PATH_API}/configuration/general`;
-export const PATH_CONFIGURATION_INVENTORY_AND_MATERIAL_MANAGEMENT = `${PATH_API}/configuration/inventory-and-material-management`;
+export const PATH_CONFIGURATION_INVENTORY_MANAGEMENT = `${PATH_API}/configuration/inventory-management`;
 export const PATH_TRANSACTION_INVENTORY_MATERIAL_MANAGEMENT = `${PATH_API}/transaction/inventory-material-management`;
 export const PATH_REPORTING_INVENTORY_MATERIAL_MANAGEMENT = `${PATH_API}/reporting/inventory-material-management`;
 export const PATH_CONFIGURATION_FINANCIAL_MANAGEMENT = `${PATH_API}/configuration/financial-management`;
@@ -53,23 +53,23 @@ export const PATH_SITE_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/site
 
 /* ======================= Inventory and Material Management Start ==================== */
 // items master
-export const PATH_ITEMS_MASTER = `${PATH_CONFIGURATION_INVENTORY_AND_MATERIAL_MANAGEMENT}/material-management/item`;
+export const PATH_ITEMS_MASTER = `${PATH_CONFIGURATION_INVENTORY_MANAGEMENT}/material-management/item`;
 export const PATH_ITEMS_MASTER_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/item`;
 
 // item uom
-export const PATH_ITEMS_UOM = `${PATH_CONFIGURATION_INVENTORY_AND_MATERIAL_MANAGEMENT}/material-management/uom`;
+export const PATH_ITEMS_UOM = `${PATH_CONFIGURATION_INVENTORY_MANAGEMENT}/material-management/uom`;
 export const PATH_ITEMS_UOM_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/uom`;
 
 // items category
-export const PATH_ITEMS_CATEGORY = `${PATH_CONFIGURATION_INVENTORY_AND_MATERIAL_MANAGEMENT}/material-management/category`;
+export const PATH_ITEMS_CATEGORY = `${PATH_CONFIGURATION_INVENTORY_MANAGEMENT}/material-management/category`;
 export const PATH_ITEMS_CATEGORY_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/item-category`;
 
 // warehouse
-export const PATH_WAREHOUSE = `${PATH_CONFIGURATION_INVENTORY_AND_MATERIAL_MANAGEMENT}/material-management/warehouse`;
+export const PATH_WAREHOUSE = `${PATH_CONFIGURATION_INVENTORY_MANAGEMENT}/warehouse-management-system/warehouse`;
 export const PATH_WAREHOUSE_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/warehouse`;
 
 // warehouse category
-export const PATH_WAREHOUSE_CATEGORY = `${PATH_CONFIGURATION_INVENTORY_AND_MATERIAL_MANAGEMENT}/material-management/warehouse-category`;
+export const PATH_WAREHOUSE_CATEGORY = `${PATH_CONFIGURATION_INVENTORY_MANAGEMENT}/warehouse-management-system/warehouse-category`;
 export const PATH_WAREHOUSE_CATEGORY_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/warehouse-category`;
 
 /* ======================= Inventory and Material Management End ==================== */

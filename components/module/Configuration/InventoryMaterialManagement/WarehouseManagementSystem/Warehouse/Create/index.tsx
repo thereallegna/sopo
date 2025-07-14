@@ -12,20 +12,20 @@ import {
 import { Card, CardContent } from "@components/ui/Card";
 import InputField from "@components/shared/InputField";
 import { IconDeviceFloppy } from "@tabler/icons-react";
-import { WarehouseSchema } from "@constants/schemas/ConfigurationSchema/InventoryMaterialManagement";
-import { getCity } from "@services/fetcher/configuration/general";
+import { useForm } from "@hooks/useForm";
+import { warehouseSchema } from "@constants/schemas/ConfigurationSchema/InventoryMaterialManagement";
 import {
     createWarehouse,
     getWarehouseCategory,
 } from "@services/fetcher/configuration/inventory-management";
+import { getCity } from "@services/fetcher/configuration/general";
 import { WarehouseDefaultValues } from "@constants/defaultValues";
 import Combobox from "@components/shared/Combobox";
 import {
     GET_WAREHOUSE,
-    GET_CITY,
     GET_WAREHOUSE_CATEGORY,
+    GET_CITY,
 } from "@constants/queryKey";
-import { useForm } from "@hooks/useForm";
 
 const CreateWarehouse = () => {
     const {
@@ -37,29 +37,27 @@ const CreateWarehouse = () => {
         formRef,
         isOpen,
         canSave,
-        errors,
-        setError,
-        setValue,
-        register,
         watch,
+        setValue,
+        setError,
+        errors,
+        register,
     } = useForm({
         label: "Warehouse",
         queryKey: GET_WAREHOUSE,
         mutationFn: createWarehouse,
-        validationSchema: WarehouseSchema,
+        validationSchema: warehouseSchema,
         defaultValues: WarehouseDefaultValues,
         type: "add",
         ignoredFields: [
-            "address",
-            "contact_person",
-            "email",
-            "fax",
-            "mobile",
+            "postal_cd",
             "phone",
-            "postal_code",
+            "fax",
+            "email",
+            "mobile",
+            "contact_person",
             "remark",
         ],
-        requireAllFields: true,
     });
 
     return (
@@ -81,7 +79,7 @@ const CreateWarehouse = () => {
                             onClick={handleSaveClick}
                             disabled={isLoading}
                         >
-                            {isLoading ? "saving..." : "save"}
+                            {isLoading ? "saving..." : "Save"}
                         </Button>
                     </DrawerEndHeader>
                 </DrawerHeader>
@@ -91,7 +89,7 @@ const CreateWarehouse = () => {
                             size="drawer"
                             className="border border-Neutral-200 shadow-none"
                         >
-                            <CardContent className="flex-wrap flex flex-row gap-6">
+                            <CardContent className="flex-wrap flex flex-row- gap-6 items-center">
                                 <div className="flex flex-col gap-[14px] flex-1">
                                     <InputField
                                         {...register("warehouse_code")}
@@ -106,11 +104,11 @@ const CreateWarehouse = () => {
                                                 : undefined
                                         }
                                         label="Warehouse Code"
-                                        placeholder="Kode Gudang"
+                                        placeholder="Warehouse Code"
                                         right
                                         type="text"
                                         required
-                                        className="w-full gap-2"
+                                        className="flex-1 gap-2"
                                         onKeyDown={handleInputKeyDown}
                                     />
                                     <InputField
@@ -126,60 +124,64 @@ const CreateWarehouse = () => {
                                                 : undefined
                                         }
                                         label="Warehouse Name"
-                                        placeholder="Nama Gudang"
+                                        placeholder="Warehouse Name"
                                         right
                                         type="text"
                                         required
-                                        className="w-full gap-2"
+                                        className="flex-1 gap-2"
                                         onKeyDown={handleInputKeyDown}
                                     />
                                     <Combobox
+                                        className="flex-1"
                                         label="Warehouse Category"
-                                        placeholder="Pilih Kateogri Gudang"
-                                        queryKey={[GET_WAREHOUSE_CATEGORY]}
-                                        queryFn={getWarehouseCategory}
                                         required
+                                        placeholder="Select Warehouse Category"
+                                        queryKey={[GET_WAREHOUSE_CATEGORY]}
+                                        queryFn={() =>
+                                            getWarehouseCategory({ all: true })
+                                        }
                                         dataLabel="warehouse_category_name"
                                         dataValue="warehouse_category_code"
                                         message={
-                                            errors.warehouse_name
+                                            errors.warehouse_category
                                                 ? {
                                                       text: errors
-                                                          .warehouse_name
+                                                          .warehouse_category
                                                           .message!,
                                                       type: "danger",
                                                   }
                                                 : undefined
                                         }
                                         value={{
-                                            label:
-                                                watch(
-                                                    "warehouse_category_name"
-                                                ) || "",
-                                            value:
-                                                watch(
-                                                    "warehouse_category_code"
-                                                ) || "",
+                                            label: watch("warehouse_category"),
+                                            value: watch(
+                                                "warehouse_category_code"
+                                            ),
                                         }}
                                         onChange={(val) => {
                                             setValue(
-                                                "warehouse_category_name",
-                                                val.label
+                                                "warehouse_category",
+                                                val.label,
+                                                {
+                                                    shouldDirty: true,
+                                                }
                                             );
                                             setValue(
                                                 "warehouse_category_code",
-                                                val.value
+                                                val.value,
+                                                {
+                                                    shouldDirty: true,
+                                                }
                                             );
-                                            setError(
-                                                "warehouse_category_name",
-                                                { type: "disabled" }
-                                            );
+                                            setError("warehouse_category", {
+                                                type: "disabled",
+                                            });
                                         }}
                                     />
                                     <InputField
                                         {...register("address")}
                                         message={
-                                            errors?.address
+                                            errors.address
                                                 ? {
                                                       text: errors.address
                                                           .message!,
@@ -188,60 +190,64 @@ const CreateWarehouse = () => {
                                                 : undefined
                                         }
                                         label="Address"
-                                        placeholder="Alamat Gudang"
-                                        type="text"
+                                        placeholder="Address"
                                         right
-                                        textarea
-                                        className="w-full gap-2"
+                                        type="text"
+                                        className="flex-1 gap-2"
                                         onKeyDown={handleInputKeyDown}
                                     />
                                 </div>
                                 <div className="flex flex-col gap-[14px] flex-1 h-full justify-between">
                                     <Combobox
+                                        className="flex-1 gap-2"
                                         label="City"
-                                        placeholder="Pilih Kota"
-                                        queryKey={[GET_CITY]}
-                                        queryFn={getCity}
                                         required
+                                        placeholder="Select City"
+                                        queryKey={[GET_CITY]}
+                                        queryFn={() => getCity({ all: true })}
                                         dataLabel="city_name"
                                         dataValue="city_code"
                                         message={
-                                            errors.city_name
+                                            errors.city
                                                 ? {
-                                                      text: errors.city_name
+                                                      text: errors.city
                                                           .message!,
                                                       type: "danger",
                                                   }
                                                 : undefined
                                         }
                                         value={{
-                                            label: watch("city_name"),
+                                            label: watch("city"),
                                             value: watch("city_code"),
                                         }}
                                         onChange={(val) => {
-                                            setValue("city_name", val.label);
-                                            setValue("city_code", val.value);
-                                            setError("city_name", {
+                                            setValue("city", val.label, {
+                                                shouldDirty: true,
+                                            });
+                                            setValue("city_code", val.value, {
+                                                shouldDirty: true,
+                                            });
+                                            setError("city", {
                                                 type: "disabled",
                                             });
                                         }}
                                     />
                                     <InputField
-                                        {...register("postal_code")}
+                                        {...register("postal_cd")}
                                         message={
-                                            errors.postal_code
+                                            errors.postal_cd
                                                 ? {
-                                                      text: errors.postal_code
+                                                      text: errors.postal_cd
                                                           .message!,
                                                       type: "danger",
                                                   }
                                                 : undefined
                                         }
                                         label="Postal Code"
-                                        placeholder="55762"
+                                        placeholder="Postal Code"
                                         right
-                                        type="number"
-                                        className="w-full gap-2"
+                                        type="text"
+                                        className="flex-1 gap-2"
                                         onKeyDown={handleInputKeyDown}
                                     />
                                     <InputField
@@ -258,10 +264,29 @@ const CreateWarehouse = () => {
                                         label="Phone"
                                         placeholder="Phone"
                                         right
-                                        type="number"
-                                        className="w-full gap-2"
+                                        type="text"
+                                        className="flex-1 gap-2"
                                         onKeyDown={handleInputKeyDown}
                                     />
+                                    <InputField
+                                        {...register("fax")}
+                                        message={
+                                            errors.fax
+                                                ? {
+                                                      text: errors.fax.message!,
+                                                      type: "danger",
+                                                  }
+                                                : undefined
+                                        }
+                                        label="Fax"
+                                        placeholder="Fax"
+                                        right
+                                        type="text"
+                                        className="flex-1 gap-2"
+                                        onKeyDown={handleInputKeyDown}
+                                    />
+                                </div>
+                                <div className="flex flex-col gap-[14px] flex-1">
                                     <InputField
                                         {...register("email")}
                                         message={
@@ -274,29 +299,10 @@ const CreateWarehouse = () => {
                                                 : undefined
                                         }
                                         label="Email"
-                                        placeholder="warehouse@aditama.idd"
+                                        placeholder="Email"
                                         right
                                         type="email"
-                                        className="w-full gap-2"
-                                        onKeyDown={handleInputKeyDown}
-                                    />
-                                </div>
-                                <div className="flex flex-col gap-[14px] flex-1">
-                                    <InputField
-                                        {...register("fax")}
-                                        message={
-                                            errors.fax
-                                                ? {
-                                                      text: errors.fax.message!,
-                                                      type: "danger",
-                                                  }
-                                                : undefined
-                                        }
-                                        label="Fax"
-                                        placeholder="0891234567890"
-                                        right
-                                        type="number"
-                                        className="w-full gap-2"
+                                        className="flex-1 gap-2"
                                         onKeyDown={handleInputKeyDown}
                                     />
                                     <InputField
@@ -311,10 +317,10 @@ const CreateWarehouse = () => {
                                                 : undefined
                                         }
                                         label="Mobile"
-                                        placeholder="0891234567890"
+                                        placeholder="Mobile"
                                         right
-                                        type="number"
-                                        className="w-full gap-2"
+                                        type="text"
+                                        className="flex-1 gap-2"
                                         onKeyDown={handleInputKeyDown}
                                     />
                                     <InputField
@@ -330,11 +336,10 @@ const CreateWarehouse = () => {
                                                 : undefined
                                         }
                                         label="Contact Person"
-                                        placeholder="Nama Penanggungjawab Gudang"
+                                        placeholder="Contact Person"
                                         right
-                                        textarea
                                         type="text"
-                                        className="w-full gap-2"
+                                        className="flex-1 gap-2"
                                         onKeyDown={handleInputKeyDown}
                                     />
                                     <InputField
@@ -349,11 +354,11 @@ const CreateWarehouse = () => {
                                                 : undefined
                                         }
                                         label="Remark"
-                                        placeholder="Pilih Kateogri Biaya"
+                                        placeholder="Remark"
                                         right
                                         type="text"
                                         textarea
-                                        className="w-full gap-2"
+                                        className="flex-1 gap-2"
                                         onKeyDown={handleInputKeyDown}
                                     />
                                 </div>

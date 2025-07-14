@@ -96,38 +96,6 @@ const Vendor = () => {
                             header: "Address",
                         },
                         {
-                            accessor: "city",
-                            header: "City",
-                        },
-                        {
-                            accessor: "postal_code",
-                            header: "Postal Code",
-                        },
-                        {
-                            accessor: "wesbsite",
-                            header: "Website",
-                        },
-                        {
-                            accessor: "head_office",
-                            header: "Head Office",
-                        },
-                        {
-                            accessor: "phone",
-                            header: "Phone",
-                        },
-                        {
-                            accessor: "mobile",
-                            header: "Mobile",
-                        },
-                        {
-                            accessor: "email",
-                            header: "Email",
-                        },
-                        {
-                            accessor: "remark",
-                            header: "Remark",
-                        },
-                        {
                             accessor: "create_date",
                             header: "Create Date",
                         },

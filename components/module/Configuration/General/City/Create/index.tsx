@@ -92,7 +92,7 @@ const CreateCity = () => {
                                                 : undefined
                                         }
                                         label="City Code"
-                                        placeholder="INA09-10"
+                                        placeholder="City Code"
                                         right
                                         type="text"
                                         required
@@ -111,7 +111,7 @@ const CreateCity = () => {
                                                 : undefined
                                         }
                                         label="City Name"
-                                        placeholder="Text here.."
+                                        placeholder="City Name"
                                         right
                                         type="text"
                                         required
@@ -163,7 +163,7 @@ const CreateCity = () => {
                                                 : undefined
                                         }
                                         label="Ring Area"
-                                        placeholder="Text here.."
+                                        placeholder="Ring Area"
                                         right
                                         type="text"
                                         className="w-full gap-2"
@@ -183,7 +183,7 @@ const CreateCity = () => {
                                                 : undefined
                                         }
                                         label="Location"
-                                        placeholder="Text here.."
+                                        placeholder="Location"
                                         right
                                         type="text"
                                         className="w-full gap-2"

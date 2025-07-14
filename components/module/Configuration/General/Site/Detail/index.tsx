@@ -82,6 +82,7 @@ const DetailSite = () => {
                                     right
                                     type="text"
                                     className="w-full gap-2"
+                                    disabled
                                     {...register("site_name")}
                                 />
                                 {/* <Checkbox 
@@ -99,6 +100,7 @@ const DetailSite = () => {
                                     right
                                     type="text"
                                     className="w-full gap-2"
+                                    disabled
                                     {...register("address")}
                                 />
                                 <InputField
@@ -108,6 +110,7 @@ const DetailSite = () => {
                                     right
                                     type="text"
                                     className="w-full gap-2"
+                                    disabled
                                     {...register("remark")}
                                 />
                             </div>

@@ -63,6 +63,7 @@ const DetailUOM = () => {
                                 placeholder="Country Code"
                                 right
                                 type="text"
+                                className="flex-1 gap-2"
                                 disabled
                                 {...register("uom_code")}
                             />
@@ -72,6 +73,7 @@ const DetailUOM = () => {
                                 placeholder="Country Name"
                                 right
                                 type="text"
+                                className="flex-1 gap-2"
                                 disabled
                                 {...register("uom_name")}
                             />

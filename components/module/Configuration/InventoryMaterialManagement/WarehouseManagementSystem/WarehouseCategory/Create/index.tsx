@@ -65,7 +65,10 @@ const CreateWarehouseCategory = () => {
 
                 <form ref={formRef} onSubmit={handleSubmit}>
                     <DrawerBody>
-                        <Card size="drawer">
+                        <Card
+                            size="drawer"
+                            className="border border-neutral-200 shadow-none"
+                        >
                             <CardContent className="flex-wrap flex flex-row gap-6 items-start">
                                 <InputField
                                     {...register("warehouse_category_code")}
@@ -83,6 +86,8 @@ const CreateWarehouseCategory = () => {
                                     placeholder="Warehouse Category Code"
                                     right
                                     type="text"
+                                    required
+                                    className="flex-1 gap-2"
                                     onKeyDown={handleInputKeyDown}
                                 />
                                 <InputField
@@ -101,6 +106,8 @@ const CreateWarehouseCategory = () => {
                                     placeholder="Warehouse Category Name"
                                     right
                                     type="text"
+                                    required
+                                    className="flex-1 gap-2"
                                     onKeyDown={handleInputKeyDown}
                                 />
                             </CardContent>

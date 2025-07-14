@@ -65,6 +65,7 @@ const DetailWarehouseCategory = () => {
                                 placeholder="Warehouse Category Code"
                                 right
                                 type="text"
+                                className="flex-1 gap-2"
                                 disabled
                                 {...register("warehouse_category_code")}
                             />
@@ -76,6 +77,7 @@ const DetailWarehouseCategory = () => {
                                 placeholder="Warehouse Category Name"
                                 right
                                 type="text"
+                                className="flex-1 gap-2"
                                 disabled
                                 {...register("warehouse_category_name")}
                             />

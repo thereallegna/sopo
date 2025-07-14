@@ -91,7 +91,7 @@ const EditCity = () => {
                                                 : undefined
                                         }
                                         label="City Code"
-                                        placeholder="INA09-10"
+                                        placeholder="City Code"
                                         right
                                         type="text"
                                         required
@@ -111,6 +111,7 @@ const EditCity = () => {
                                                 : undefined
                                         }
                                         label="City Name"
+                                        placeholder="City Name"
                                         right
                                         type="text"
                                         required
@@ -167,6 +168,7 @@ const EditCity = () => {
                                                 : undefined
                                         }
                                         label="Ring Area"
+                                        placeholder="Ring Area"
                                         right
                                         type="text"
                                         className="w-full gap-2"
@@ -176,7 +178,17 @@ const EditCity = () => {
                                 <div className="flex flex-col gap-[14px] flex-1">
                                     <InputField
                                         {...register("location")}
+                                        message={
+                                            errors.location
+                                                ? {
+                                                      text: errors.location
+                                                          .message!,
+                                                      type: "danger",
+                                                  }
+                                                : undefined
+                                        }
                                         label="Location"
+                                        placeholder="Location"
                                         right
                                         type="text"
                                         className="w-full gap-2"

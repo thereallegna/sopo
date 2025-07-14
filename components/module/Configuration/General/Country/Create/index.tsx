@@ -82,6 +82,7 @@ const CreateCountry = () => {
                                     right
                                     required
                                     type="text"
+                                    className="flex-1 gap-2"
                                     onKeyDown={handleInputKeyDown}
                                 />
                                 <InputField
@@ -100,6 +101,7 @@ const CreateCountry = () => {
                                     right
                                     required
                                     type="text"
+                                    className="flex-1 gap-2"
                                     onKeyDown={handleInputKeyDown}
                                 />
                             </CardContent>

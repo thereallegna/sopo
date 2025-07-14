@@ -90,6 +90,7 @@ const EditCountry = () => {
                                     placeholder="Country Code"
                                     right
                                     type="text"
+                                    className="flex-1 gap-2"
                                     disabled
                                     onKeyDown={handleInputKeyDown}
                                 />
@@ -108,6 +109,7 @@ const EditCountry = () => {
                                     placeholder="Country Name"
                                     right
                                     type="text"
+                                    className="flex-1 gap-2"
                                     onKeyDown={handleInputKeyDown}
                                 />
                             </CardContent>

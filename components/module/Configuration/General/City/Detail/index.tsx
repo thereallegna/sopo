@@ -15,9 +15,6 @@ import InputField from "@components/shared/InputField";
 import { useDrawerStore } from "@stores/useDrawerStore";
 import { IconHistory, IconPencil } from "@tabler/icons-react";
 import { useForm } from "react-hook-form";
-import Combobox from "@components/shared/Combobox";
-import { GET_PROVINCE } from "@constants/queryKey";
-import { getProvince } from "@services/fetcher/configuration/general";
 import { useSetValueForm } from "@hooks/useSetValueForm";
 
 const DetailCity = () => {
@@ -27,11 +24,12 @@ const DetailCity = () => {
         openEditDrawer,
         openHistoryLogDrawer,
     } = useDrawerStore();
+
     const detail_data = useDrawerStore(
         (state) => state.detail_data
     ) as CityFormBody;
 
-    const { setValue } = useForm<CityFormBody>();
+    const { register, setValue } = useForm<CityFormBody>();
 
     useSetValueForm<CityFormBody>(detail_data, setValue);
 
@@ -64,54 +62,56 @@ const DetailCity = () => {
                                 <InputField
                                     value={detail_data?.city_code || ""}
                                     label="City Code"
-                                    placeholder="INA09-10"
+                                    placeholder="City Code"
                                     right
                                     type="text"
-                                    required
                                     className="w-full gap-2"
                                     disabled
+                                    {...register("city_code")}
                                 />
                                 <InputField
                                     value={detail_data?.city_name || ""}
                                     label="City Name"
+                                    placeholder="City Name"
                                     right
                                     type="text"
-                                    required
                                     className="w-full gap-2"
                                     disabled
+                                    {...register("city_name")}
                                 />
                             </div>
                             <div className="flex flex-col gap-[14px] flex-1 h-full justify-between">
-                                <Combobox
+                                <InputField
+                                    value={detail_data?.province || ""}
                                     label="Province"
-                                    placeholder="Select Province"
-                                    queryKey={[GET_PROVINCE]}
-                                    queryFn={() => getProvince()}
-                                    dataLabel="province_name"
-                                    dataValue="province_code"
-                                    value={{
-                                        label: detail_data?.province,
-                                        value: detail_data?.province_code,
-                                    }}
+                                    placeholder="Province"
+                                    right
+                                    type="text"
+                                    className="w-full gap-2"
                                     disabled
+                                    {...register("province")}
                                 />
                                 <InputField
                                     value={detail_data?.ring_area || ""}
                                     label="Ring Area"
+                                    placeholder="Ring Area"
                                     right
                                     type="text"
                                     className="w-full gap-2"
                                     disabled
+                                    {...register("ring_area")}
                                 />
                             </div>
                             <div className="flex flex-col gap-[14px] flex-1">
                                 <InputField
                                     value={detail_data?.location || ""}
                                     label="Location"
+                                    placeholder="Location"
                                     right
                                     type="text"
                                     className="w-full gap-2"
                                     disabled
+                                    {...register("location")}
                                 />
                             </div>
                         </CardContent>

@@ -90,7 +90,7 @@ const CreateVendorCategory = () => {
                                     onKeyDown={handleInputKeyDown}
                                 />
                                 <InputField
-                                    {...register("vendor_category_code")}
+                                    {...register("vendor_category_name")}
                                     message={
                                         errors.vendor_category_name
                                             ? {

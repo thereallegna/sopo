@@ -9,14 +9,11 @@ export async function PUT(
 ) {
     try {
         const session = await getServerSideSession();
-        console.log(
-            "session:",
-            session.user?.data?.authorization?.access_token
-        );
 
         const { warehouse_code } = params;
 
-        const body = (await req.json()) as CurrencyFormBody;
+        const body = (await req.json()) as WarehouseFormBody;
+        body.warehouse_category = body.warehouse_category_code;
 
         const response = await axios.put(
             `${PATH_WAREHOUSE_BE}/${warehouse_code}`,

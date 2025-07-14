@@ -88,8 +88,12 @@ const Warehouse = () => {
                             header: "Warehouse Name",
                         },
                         {
-                            accessor: "warehouse_category_name",
-                            header: "Warehouse Category Name",
+                            accessor: "warehouse_category",
+                            header: "Warehouse Category",
+                        },
+                        {
+                            accessor: "city",
+                            header: "City",
                         },
                         {
                             accessor: "create_date",

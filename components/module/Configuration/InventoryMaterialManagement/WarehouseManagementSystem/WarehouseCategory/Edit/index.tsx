@@ -93,6 +93,7 @@ const EditWarehouseCategory = () => {
                                     placeholder="Warehouse Category Code"
                                     right
                                     type="text"
+                                    className="flex-1 gap-2"
                                     disabled
                                     onKeyDown={handleInputKeyDown}
                                 />
@@ -112,6 +113,8 @@ const EditWarehouseCategory = () => {
                                     placeholder="Warehouse Category Name"
                                     right
                                     type="text"
+                                    required
+                                    className="flex-1 gap-2"
                                     onKeyDown={handleInputKeyDown}
                                 />
                             </CardContent>

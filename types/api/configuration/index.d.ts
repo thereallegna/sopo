@@ -84,12 +84,12 @@ type WarehouseCategoryFormBody = {
 type WarehouseFormBody = {
     warehouse_code: string;
     warehouse_name: string;
-    warehouse_category_code?: string;
-    warehouse_category_name?: string;
+    warehouse_category_code: string;
+    warehouse_category: string;
     address?: string;
     city_code: string;
-    city_name: string;
-    postal_code?: string;
+    city: string;
+    postal_cd?: string;
     phone?: string;
     fax?: string;
     email?: string;

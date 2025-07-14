@@ -89,6 +89,7 @@ const EditUOM = () => {
                                     placeholder="UoM Code"
                                     right
                                     type="text"
+                                    className="flex-1 gap-2"
                                     disabled
                                     onKeyDown={handleInputKeyDown}
                                 />
@@ -107,6 +108,7 @@ const EditUOM = () => {
                                     placeholder="UoM Name"
                                     right
                                     type="text"
+                                    className="flex-1 gap-2"
                                     onKeyDown={handleInputKeyDown}
                                 />
                             </CardContent>

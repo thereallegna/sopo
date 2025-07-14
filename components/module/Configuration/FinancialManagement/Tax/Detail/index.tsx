@@ -16,9 +16,6 @@ import { useDrawerStore } from "@stores/useDrawerStore";
 import { IconHistory, IconPencil } from "@tabler/icons-react";
 import { useForm } from "react-hook-form";
 import { useSetValueForm } from "@hooks/useSetValueForm";
-import Combobox from "@components/shared/Combobox";
-import { GET_TAX_GROUP } from "@constants/queryKey";
-import { getTaxGroup } from "@services/fetcher/configuration/financial-management";
 
 const DetailTax = () => {
     const {
@@ -97,20 +94,15 @@ const DetailTax = () => {
                                     disabled
                                     {...register("tax_rate")}
                                 />
-                                <Combobox
-                                    className="flex-1 gap-2"
+                                <InputField
+                                    value={detail_data?.tax_group || ""}
                                     label="Tax Group"
-                                    placeholder="Select Tax Group"
-                                    queryKey={[GET_TAX_GROUP]}
-                                    queryFn={getTaxGroup}
-                                    required
-                                    dataLabel="tax_group"
-                                    dataValue="tax_group_code"
+                                    placeholder="Tax Group"
+                                    right
+                                    type="text"
+                                    className="w-full gap-2"
                                     disabled
-                                    value={{
-                                        label: detail_data?.tax_group,
-                                        value: detail_data?.tax_group_code,
-                                    }}
+                                    {...register("tax_group")}
                                 />
                             </div>
                         </CardContent>

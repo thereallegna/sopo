@@ -76,76 +76,87 @@ const CreateCity = () => {
                             className="border border-Neutral-200 shadow-none"
                         >
                             <CardContent className="flex-wrap flex flex-row gap-6 items-center">
-                                <InputField
-                                    {...register("province_code")}
-                                    message={
-                                        errors.province_code
-                                            ? {
-                                                  text: errors.province_code
-                                                      .message!,
-                                                  type: "danger",
-                                              }
-                                            : undefined
-                                    }
-                                    label="Province Code"
-                                    placeholder="Province Code"
-                                    right
-                                    type="text"
-                                    required
-                                    className="flex-1 gap-2"
-                                    onKeyDown={handleInputKeyDown}
-                                />
-                                <InputField
-                                    {...register("province_name")}
-                                    message={
-                                        errors.province_name
-                                            ? {
-                                                  text: errors.province_name
-                                                      .message!,
-                                                  type: "danger",
-                                              }
-                                            : undefined
-                                    }
-                                    label="Province Name"
-                                    placeholder="Province Name"
-                                    right
-                                    type="text"
-                                    required
-                                    className="flex-1 gap-2"
-                                    onKeyDown={handleInputKeyDown}
-                                />
-                                <Combobox
-                                    className="flex-1"
-                                    label="Country"
-                                    placeholder="Select Country"
-                                    queryKey={[GET_COUNTRY]}
-                                    queryFn={() => getCountry({ all: true })}
-                                    dataLabel="country_name"
-                                    dataValue="country_code"
-                                    message={
-                                        errors.country
-                                            ? {
-                                                  text: errors.country.message!,
-                                                  type: "danger",
-                                              }
-                                            : undefined
-                                    }
-                                    value={{
-                                        label: watch("country"),
-                                        value: watch("country_code"),
-                                    }}
-                                    onChange={(val) => {
-                                        setValue("country", val.label, {
-                                            shouldDirty: true,
-                                        });
-                                        setValue("country_code", val.value, {
-                                            shouldDirty: true,
-                                        });
-                                        setError("country", {
-                                            type: "disabled",
-                                        });
-                                    }}
-                                />
+                                <div className="flex flex-col gap-[14px] flex-1">
+                                    <InputField
+                                        {...register("province_code")}
+                                        message={
+                                            errors.province_code
+                                                ? {
+                                                      text: errors.province_code
+                                                          .message!,
+                                                      type: "danger",
+                                                  }
+                                                : undefined
+                                        }
+                                        label="Province Code"
+                                        placeholder="Province Code"
+                                        right
+                                        type="text"
+                                        required
+                                        className="flex-1 gap-2"
+                                        onKeyDown={handleInputKeyDown}
+                                    />
+                                    <InputField
+                                        {...register("province_name")}
+                                        message={
+                                            errors.province_name
+                                                ? {
+                                                      text: errors.province_name
+                                                          .message!,
+                                                      type: "danger",
+                                                  }
+                                                : undefined
+                                        }
+                                        label="Province Name"
+                                        placeholder="Province Name"
+                                        right
+                                        type="text"
+                                        required
+                                        className="flex-1 gap-2"
+                                        onKeyDown={handleInputKeyDown}
+                                    />
+                                </div>
+                                <div className="flex flex-col gap-[14px] flex-1 self-start">
+                                    <Combobox
+                                        className="flex-1"
+                                        label="Country"
+                                        placeholder="Select Country"
+                                        queryKey={[GET_COUNTRY]}
+                                        queryFn={() =>
+                                            getCountry({ all: true })
+                                        }
+                                        dataLabel="country_name"
+                                        dataValue="country_code"
+                                        message={
+                                            errors.country
+                                                ? {
+                                                      text: errors.country
+                                                          .message!,
+                                                      type: "danger",
+                                                  }
+                                                : undefined
+                                        }
+                                        value={{
+                                            label: watch("country"),
+                                            value: watch("country_code"),
+                                        }}
+                                        onChange={(val) => {
+                                            setValue("country", val.label, {
+                                                shouldDirty: true,
+                                            });
+                                            setValue(
+                                                "country_code",
+                                                val.value,
+                                                {
+                                                    shouldDirty: true,
+                                                }
+                                            );
+                                            setError("country", {
+                                                type: "disabled",
+                                            });
+                                        }}
+                                    />
+                                </div>
                             </CardContent>
                         </Card>
                     </DrawerBody>
