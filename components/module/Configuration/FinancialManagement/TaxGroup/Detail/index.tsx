@@ -102,7 +102,7 @@ const DetailTaxGroup = () => {
                         onClick={() =>
                             openHistoryLogDrawer({
                                 code: detail_data?.tax_group_code,
-                                category: "Tax Group",
+                                category: "TaxGroup",
                             })
                         }
                     />

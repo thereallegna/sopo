@@ -60,7 +60,7 @@ export const MasterItemDefaultValues: MasterItemFormBody = {
     hs_code: "",
     remark: "",
     source: undefined,
-    active: false,
+    active: true,
     inventory_item: false,
     purchase_item: false,
     service_item: false,

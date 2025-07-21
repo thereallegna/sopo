@@ -17,7 +17,7 @@ import {
     IconHistory,
     IconPencil,
 } from "@node_modules/@tabler/icons-react/dist/esm/tabler-icons-react";
-// import { Checkbox } from "@components/ui/Checkbox";
+import { Checkbox } from "@components/ui/Checkbox";
 import { useForm } from "react-hook-form";
 import { useSetValueForm } from "@hooks/useSetValueForm";
 
@@ -112,6 +112,19 @@ const DetailSite = () => {
                                     className="w-full gap-2"
                                     disabled
                                     {...register("remark")}
+                                />
+                            </div>
+                            <div className="flex items-start gap-2 ml-[14px] mt-[10px]">
+                                <label
+                                    htmlFor="active"
+                                    className="cursor-pointer text-base font-semibold"
+                                >
+                                    Active
+                                </label>
+                                <Checkbox
+                                    checked={detail_data?.active}
+                                    disabled
+                                    {...register("active")}
                                 />
                             </div>
                         </CardContent>

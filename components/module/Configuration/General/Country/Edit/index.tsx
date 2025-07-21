@@ -13,7 +13,7 @@ import { Card, CardContent } from "@components/ui/Card";
 import InputField from "@components/shared/InputField";
 import { IconDeviceFloppy } from "@tabler/icons-react";
 import { useForm } from "@hooks/useForm";
-import { countrySchema } from "@constants/schemas/ConfigurationSchema/General";
+import { CountrySchema } from "@constants/schemas/ConfigurationSchema/General";
 import { editCountry } from "@services/fetcher/configuration/general";
 import { GET_COUNTRY } from "@constants/queryKey";
 import { useSetValueForm } from "@hooks/useSetValueForm";
@@ -40,7 +40,7 @@ const EditCountry = () => {
         label: "Country",
         queryKey: GET_COUNTRY,
         mutationFn: editCountry,
-        validationSchema: countrySchema,
+        validationSchema: CountrySchema,
         defaultValues: detail_data,
         type: "edit",
         requireAllFields: true,
@@ -89,6 +89,7 @@ const EditCountry = () => {
                                     label="Country Code"
                                     placeholder="Country Code"
                                     right
+                                    required
                                     type="text"
                                     className="flex-1 gap-2"
                                     disabled
@@ -108,6 +109,7 @@ const EditCountry = () => {
                                     label="Country Name"
                                     placeholder="Country Name"
                                     right
+                                    required
                                     type="text"
                                     className="flex-1 gap-2"
                                     onKeyDown={handleInputKeyDown}

@@ -14,7 +14,7 @@ import InputField from "@components/shared/InputField";
 import { useDrawerStore } from "@stores/useDrawerStore";
 import { IconDeviceFloppy } from "@tabler/icons-react";
 import { useForm } from "@hooks/useForm";
-import { vendorSchema } from "@constants/schemas/ConfigurationSchema/ProcurementManagement";
+import { VendorSchema } from "@constants/schemas/ConfigurationSchema/ProcurementManagement";
 import {
     editVendor,
     getVendorCategory,
@@ -46,9 +46,19 @@ const EditVendor = () => {
         label: "Vendor",
         queryKey: GET_VENDOR,
         mutationFn: editVendor,
-        validationSchema: vendorSchema,
+        validationSchema: VendorSchema,
         defaultValues: detail_data,
         type: "edit",
+        ignoredFields: [
+            "city",
+            "postal_code",
+            "website",
+            "head_office",
+            "phone",
+            "mobile",
+            "email",
+            "remark",
+        ],
     });
 
     useSetValueForm<VendorFormBody>(detail_data, setValue, isOpenEdit);
@@ -203,7 +213,6 @@ const EditVendor = () => {
                                         placeholder="City"
                                         right
                                         type="text"
-                                        required
                                         className="w-full gap-2"
                                         onKeyDown={handleInputKeyDown}
                                     />
@@ -222,7 +231,6 @@ const EditVendor = () => {
                                         placeholder="Postal Code"
                                         right
                                         type="text"
-                                        required
                                         className="w-full gap-2"
                                         onKeyDown={handleInputKeyDown}
                                     />
@@ -241,7 +249,6 @@ const EditVendor = () => {
                                         placeholder="Website"
                                         right
                                         type="text"
-                                        required
                                         className="w-full gap-2"
                                         onKeyDown={handleInputKeyDown}
                                     />

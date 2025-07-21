@@ -13,7 +13,7 @@ import { Card, CardContent } from "@components/ui/Card";
 import InputField from "@components/shared/InputField";
 import { IconDeviceFloppy } from "@tabler/icons-react";
 // import { useForm, SubmitHandler } from 'react-hook-form';
-import { citySchema } from "@constants/schemas/ConfigurationSchema/General";
+import { CitySchema } from "@constants/schemas/ConfigurationSchema/General";
 import {
     createCity,
     getProvince,
@@ -42,11 +42,11 @@ const CreateCity = () => {
         label: "City",
         queryKey: GET_CITY,
         mutationFn: createCity,
-        validationSchema: citySchema,
+        validationSchema: CitySchema,
         defaultValues: CityDefaultValues,
         type: "add",
-        ignoredFields: ["ring_area", "location"],
         requireAllFields: true,
+        ignoredFields: ["ring_area", "location"],
     });
 
     return (
@@ -123,6 +123,7 @@ const CreateCity = () => {
                                     <Combobox
                                         label="Province"
                                         placeholder="Select Province"
+                                        required
                                         queryKey={[GET_PROVINCE]}
                                         queryFn={getProvince}
                                         dataLabel="province_name"

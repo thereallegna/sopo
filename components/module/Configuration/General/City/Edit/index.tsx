@@ -14,7 +14,7 @@ import InputField from "@components/shared/InputField";
 import { useDrawerStore } from "@stores/useDrawerStore";
 import { IconDeviceFloppy } from "@tabler/icons-react";
 import { useForm } from "@hooks/useForm";
-import { citySchema } from "@constants/schemas/ConfigurationSchema/General";
+import { CitySchema } from "@constants/schemas/ConfigurationSchema/General";
 import { editCity, getProvince } from "@services/fetcher/configuration/general";
 import { GET_CITY, GET_PROVINCE } from "@constants/queryKey";
 import Combobox from "@components/shared/Combobox";
@@ -43,7 +43,7 @@ const EditCity = () => {
         label: "City",
         queryKey: GET_CITY,
         mutationFn: editCity,
-        validationSchema: citySchema,
+        validationSchema: CitySchema,
         defaultValues: detail_data,
         type: "edit",
         requireAllFields: true,
@@ -123,6 +123,7 @@ const EditCity = () => {
                                     <Combobox
                                         label="Province"
                                         placeholder="Select Province"
+                                        required
                                         queryKey={[GET_PROVINCE]}
                                         queryFn={() => getProvince()}
                                         dataLabel="province_name"

@@ -27,7 +27,7 @@ const getInitialStock = async (option?: FetcherOptions) => {
         console.error("Error getting initial stock:", error);
         throw error;
     }
-};
+}; // Add parseISO import
 
 const createInitialStock = async (body: InitialStockFormBody, params?: any) => {
     try {
@@ -111,24 +111,24 @@ const createStockAdjustment = async (
     }
 };
 
-const editStockAdjustment = async (
-    body: StockAdjustmentFormBody,
-    params?: any
-) => {
-    try {
-        const res = await axios.put(
-            `${PATH_STOCK_ADJUSTMENT}/${body.document_number}`,
-            body,
-            {
-                params,
-            }
-        );
-        return res.data;
-    } catch (error) {
-        console.error("Error editing stock adjustment:", error);
-        throw error;
-    }
-};
+// const editStockAdjustment = async (
+//     body: StockAdjustmentFormBody,
+//     params?: any
+// ) => {
+//     try {
+//         const res = await axios.put(
+//             `${PATH_STOCK_ADJUSTMENT}/${body.document_number}`,
+//             body,
+//             {
+//                 params,
+//             }
+//         );
+//         return res.data;
+//     } catch (error) {
+//         console.error("Error editing stock adjustment:", error);
+//         throw error;
+//     }
+// };
 
 const getStockMutation = async (option?: FetcherOptions) => {
     try {
@@ -190,6 +190,6 @@ export {
     editStockMutation,
     getStockAdjustment,
     createStockAdjustment,
-    editStockAdjustment,
+    // editStockAdjustment,
     getItemStockAdjustment,
 };

@@ -12,9 +12,9 @@ import {
 import { Card, CardContent } from "@components/ui/Card";
 import InputField from "@components/shared/InputField";
 import { IconDeviceFloppy } from "@tabler/icons-react";
-// import { Checkbox } from "@components/ui/Checkbox";
+import { Checkbox } from "@components/ui/Checkbox";
 import { useForm } from "@hooks/useForm";
-import { siteSchema } from "@constants/schemas/ConfigurationSchema/General";
+import { SiteSchema } from "@constants/schemas/ConfigurationSchema/General";
 import { createSite } from "@services/fetcher/configuration/general";
 import { SiteDefaultValues } from "@constants/defaultValues";
 import { GET_SITE } from "@constants/queryKey";
@@ -30,17 +30,18 @@ const CreateSite = () => {
         isOpen,
         canSave,
         errors,
+        setValue,
         register,
         // watch,
-        // setValue,
     } = useForm({
         label: "Site",
         queryKey: GET_SITE,
         mutationFn: createSite,
-        validationSchema: siteSchema,
+        validationSchema: SiteSchema,
         defaultValues: SiteDefaultValues,
         type: "add",
         requireAllFields: true,
+        ignoredFields: ["address", "remark"],
     });
     return (
         <Drawer onClose={handleCloseDrawer} open={isOpen}>
@@ -91,12 +92,6 @@ const CreateSite = () => {
                                         className="w-full gap-2"
                                         onKeyDown={handleInputKeyDown}
                                     />
-                                    {/* <Checkbox 
-                                        label="Active"
-                                        checked={watch("active")}
-                                        onCheckedChange={(val: boolean) => setValue && setValue("active", val)}
-                                        disabled={false}
-                                    /> */}
                                     <InputField
                                         {...register("site_name")}
                                         message={
@@ -154,6 +149,32 @@ const CreateSite = () => {
                                         textarea
                                         className="w-full gap-2"
                                         onKeyDown={handleInputKeyDown}
+                                    />
+                                </div>
+                                <div className="flex items-start gap-2 ml-[10px] mt-[8px]">
+                                    <label
+                                        htmlFor="active"
+                                        className="cursor-pointer text-base font-semibold"
+                                    >
+                                        Active
+                                    </label>
+                                    <Checkbox
+                                        {...register("active")}
+                                        message={
+                                            errors.active
+                                                ? {
+                                                      text: errors.active
+                                                          .message!,
+                                                      type: "danger",
+                                                  }
+                                                : undefined
+                                        }
+                                        label=""
+                                        checked={SiteDefaultValues.active}
+                                        disabled
+                                        onCheckedChange={(checked) =>
+                                            setValue("active", !!checked)
+                                        }
                                     />
                                 </div>
                             </CardContent>

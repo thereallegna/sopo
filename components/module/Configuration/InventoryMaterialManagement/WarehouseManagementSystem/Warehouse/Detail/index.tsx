@@ -68,7 +68,6 @@ const DetailWarehouse = () => {
                                     placeholder="Warehouse Code"
                                     right
                                     type="text"
-                                    required
                                     className="w-full gap-2"
                                     disabled
                                     {...register("warehouse_code")}
@@ -79,7 +78,6 @@ const DetailWarehouse = () => {
                                     placeholder="Warehouse Name"
                                     right
                                     type="text"
-                                    required
                                     className="w-full gap-2"
                                     disabled
                                     {...register("warehouse_name")}
@@ -92,7 +90,6 @@ const DetailWarehouse = () => {
                                     placeholder="Warehouse Category"
                                     right
                                     type="text"
-                                    required
                                     className="w-full gap-2"
                                     disabled
                                     {...register("warehouse_category")}

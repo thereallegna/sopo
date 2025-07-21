@@ -13,9 +13,9 @@ import { Card, CardContent } from "@components/ui/Card";
 import InputField from "@components/shared/InputField";
 import { useDrawerStore } from "@stores/useDrawerStore";
 import { IconDeviceFloppy } from "@tabler/icons-react";
-// import { Checkbox } from "@components/ui/Checkbox";
+import { Checkbox } from "@components/ui/Checkbox";
 import { useForm } from "@hooks/useForm";
-import { siteSchema } from "@constants/schemas/ConfigurationSchema/General";
+import { SiteSchema } from "@constants/schemas/ConfigurationSchema/General";
 import { editSite } from "@services/fetcher/configuration/general";
 import { GET_SITE } from "@constants/queryKey";
 import { useSetValueForm } from "@hooks/useSetValueForm";
@@ -35,18 +35,18 @@ const EditSite = () => {
         isOpenEdit,
         canSave,
         errors,
-        // setError,
-        // watch,
         setValue,
         register,
+        watch,
     } = useForm({
         label: "Site",
         queryKey: GET_SITE,
         mutationFn: editSite,
-        validationSchema: siteSchema,
+        validationSchema: SiteSchema,
         defaultValues: detail_data,
         type: "edit",
         requireAllFields: true,
+        ignoredFields: ["address", "remark"],
     });
 
     useSetValueForm<SiteFormBody>(detail_data, setValue, isOpenEdit);
@@ -120,12 +120,6 @@ const EditSite = () => {
                                         className="w-full gap-2"
                                         onKeyDown={handleInputKeyDown}
                                     />
-                                    {/* <Checkbox 
-                                        label="Active"
-                                        checked={watch("active")}
-                                        onCheckedChange={(val: boolean) => setValue && setValue("active", val)}
-                                        disabled={false}
-                                    /> */}
                                 </div>
                                 <div className="flex flex-col gap-[14px] flex-1 h-full justify-between">
                                     <InputField
@@ -163,6 +157,31 @@ const EditSite = () => {
                                         type="text"
                                         className="w-full gap-2"
                                         onKeyDown={handleInputKeyDown}
+                                    />
+                                </div>
+                                <div className="flex items-start gap-2 ml-[10px] mt-[8px]">
+                                    <label
+                                        htmlFor="active"
+                                        className="cursor-pointer text-base font-semibold"
+                                    >
+                                        Active
+                                    </label>
+                                    <Checkbox
+                                        checked={watch("active")}
+                                        {...register("active")}
+                                        message={
+                                            errors.active
+                                                ? {
+                                                      text: errors.active
+                                                          .message!,
+                                                      type: "danger",
+                                                  }
+                                                : undefined
+                                        }
+                                        label=""
+                                        onCheckedChange={(checked) =>
+                                            setValue("active", checked)
+                                        }
                                     />
                                 </div>
                             </CardContent>

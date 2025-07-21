@@ -14,7 +14,7 @@ import InputField from "@components/shared/InputField";
 import { useDrawerStore } from "@stores/useDrawerStore";
 import { IconDeviceFloppy } from "@tabler/icons-react";
 import { useForm } from "@hooks/useForm";
-import { taxSchema } from "@constants/schemas/ConfigurationSchema/FinancialManagement";
+import { TaxSchema } from "@constants/schemas/ConfigurationSchema/FinancialManagement";
 import {
     editTax,
     getTaxGroup,
@@ -46,7 +46,7 @@ const EditTax = () => {
         label: "Tax",
         queryKey: GET_TAX,
         mutationFn: editTax,
-        validationSchema: taxSchema,
+        validationSchema: TaxSchema,
         defaultValues: detail_data,
         type: "edit",
     });

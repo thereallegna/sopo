@@ -14,7 +14,7 @@ import InputField from "@components/shared/InputField";
 import { useDrawerStore } from "@stores/useDrawerStore";
 import { IconDeviceFloppy } from "@tabler/icons-react";
 import { useForm } from "@hooks/useForm";
-import { taxGroupSchema } from "@constants/schemas/ConfigurationSchema/FinancialManagement";
+import { TaxGroupSchema } from "@constants/schemas/ConfigurationSchema/FinancialManagement";
 import { useSetValueForm } from "@hooks/useSetValueForm";
 import { GET_TAX_GROUP } from "@constants/queryKey";
 import { editTaxGroup } from "@services/fetcher/configuration/financial-management";
@@ -40,7 +40,7 @@ const EditTaxGroup = () => {
         label: "Tax Group",
         queryKey: GET_TAX_GROUP,
         mutationFn: editTaxGroup,
-        validationSchema: taxGroupSchema,
+        validationSchema: TaxGroupSchema,
         defaultValues: detail_data,
         type: "edit",
     });

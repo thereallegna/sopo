@@ -15,7 +15,7 @@ import { useForm } from "@hooks/useForm";
 import { IconDeviceFloppy } from "@tabler/icons-react";
 import { GET_VENDOR_CATEGORY } from "@constants/queryKey";
 import { createVendorCategory } from "@services/fetcher/configuration/procurement-management";
-import { vendorCategorySchema } from "@constants/schemas/ConfigurationSchema/ProcurementManagement";
+import { VendorCategorySchema } from "@constants/schemas/ConfigurationSchema/ProcurementManagement";
 import { VendorCategoryDefaultValues } from "@constants/defaultValues";
 
 const CreateVendorCategory = () => {
@@ -34,7 +34,7 @@ const CreateVendorCategory = () => {
         label: "Vendor Category",
         queryKey: GET_VENDOR_CATEGORY,
         mutationFn: createVendorCategory,
-        validationSchema: vendorCategorySchema,
+        validationSchema: VendorCategorySchema,
         defaultValues: VendorCategoryDefaultValues,
         type: "add",
         requireAllFields: true,

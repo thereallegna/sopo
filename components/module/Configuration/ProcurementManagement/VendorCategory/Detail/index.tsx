@@ -106,7 +106,7 @@ const DetailVendorCategory = () => {
                         onClick={() =>
                             openHistoryLogDrawer({
                                 code: detail_data?.vendor_category_code,
-                                category: "Vendor Category",
+                                category: "VendorCategory",
                             })
                         }
                     />

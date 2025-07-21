@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 
-export const vendorCategorySchema = Yup.object().shape({
+export const VendorCategorySchema = Yup.object().shape({
     vendor_category_code: Yup.string().required(
         "Vendor category code is required"
     ),
@@ -9,7 +9,7 @@ export const vendorCategorySchema = Yup.object().shape({
     ),
 });
 
-export const vendorSchema = Yup.object().shape({
+export const VendorSchema = Yup.object().shape({
     vendor_code: Yup.string().required("Vendor code is required"),
     vendor_name: Yup.string().required("Vendor name is required"),
     vendor_category: Yup.string().required("Vendor category is required"),

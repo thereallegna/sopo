@@ -12,7 +12,7 @@ import {
 import { Card, CardContent } from "@components/ui/Card";
 import InputField from "@components/shared/InputField";
 import { IconDeviceFloppy } from "@tabler/icons-react";
-import { warehouseSchema } from "@constants/schemas/ConfigurationSchema/InventoryMaterialManagement";
+import { WarehouseSchema } from "@constants/schemas/ConfigurationSchema/InventoryMaterialManagement";
 import { getCity } from "@services/fetcher/configuration/general";
 import {
     editWarehouse,
@@ -53,7 +53,7 @@ const EditWarehouse = () => {
         label: "Warehouse",
         queryKey: GET_WAREHOUSE,
         mutationFn: editWarehouse,
-        validationSchema: warehouseSchema,
+        validationSchema: WarehouseSchema,
         defaultValues: detail_data,
         type: "edit",
     });

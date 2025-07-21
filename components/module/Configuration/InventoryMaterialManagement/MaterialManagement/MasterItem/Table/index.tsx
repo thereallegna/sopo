@@ -24,24 +24,8 @@ export const MasterItemColumns = {
             header: "Item Name",
         },
         {
-            accessor: "local_code",
-            header: "Local Code",
-        },
-        {
-            accessor: "foreign_name",
-            header: "Foreign Name",
-        },
-        {
-            accessor: "old_code",
-            header: "Old Code",
-        },
-        {
             accessor: "category_name",
             header: "Category Name",
-        },
-        {
-            accessor: "spesification",
-            header: "Specification",
         },
         {
             accessor: "active",

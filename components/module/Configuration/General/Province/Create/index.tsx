@@ -13,7 +13,7 @@ import { Card, CardContent } from "@components/ui/Card";
 import InputField from "@components/shared/InputField";
 import { IconDeviceFloppy } from "@tabler/icons-react";
 import { useForm } from "@hooks/useForm";
-import { provinceSchema } from "@constants/schemas/ConfigurationSchema/General";
+import { ProvinceSchema } from "@constants/schemas/ConfigurationSchema/General";
 import {
     createProvince,
     getCountry,
@@ -41,7 +41,7 @@ const CreateCity = () => {
         label: "Province",
         queryKey: GET_PROVINCE,
         mutationFn: createProvince,
-        validationSchema: provinceSchema,
+        validationSchema: ProvinceSchema,
         defaultValues: ProvinceDefaultValues,
         type: "add",
         requireAllFields: true,
@@ -121,6 +121,7 @@ const CreateCity = () => {
                                         className="flex-1"
                                         label="Country"
                                         placeholder="Select Country"
+                                        required
                                         queryKey={[GET_COUNTRY]}
                                         queryFn={() =>
                                             getCountry({ all: true })

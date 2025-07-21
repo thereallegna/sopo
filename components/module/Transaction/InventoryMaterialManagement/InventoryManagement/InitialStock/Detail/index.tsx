@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { Button } from "@components/ui/Button";
 import {
     Drawer,
@@ -14,6 +14,7 @@ import { IconHistory, IconPencil } from "@tabler/icons-react";
 import { useDrawerStore } from "@stores/useDrawerStore";
 import { useSetValueForm } from "@hooks/useSetValueForm";
 import { useForm } from "react-hook-form";
+import { parse, format, isValid } from "date-fns";
 import InitialStockHeaderForm from "../Form/HeaderForm";
 import InitialStockDetailForm from "../Form/DetailForm";
 
@@ -32,7 +33,48 @@ const DetailInitialStock = () => {
 
     useSetValueForm<InitialStockFormBody>(detail_data, setValue);
 
+    // Convert date format for HTML date input
+    useEffect(() => {
+        if (detail_data?.document_date) {
+            try {
+                let formattedDate = "";
+                const dateStr = detail_data.document_date.toString();
+
+                // Check if date is in YYYYMMDD format (e.g., "20250605")
+                if (/^\d{8}$/.test(dateStr)) {
+                    const year = dateStr.substring(0, 4);
+                    const month = dateStr.substring(4, 6);
+                    const day = dateStr.substring(6, 8);
+                    formattedDate = `${year}-${month}-${day}`;
+                }
+                // Check if date is in dd/MMM/yyyy format (e.g., "21/Jan/2025")
+                else if (/^\d{2}\/\w{3}\/\d{4}$/.test(dateStr)) {
+                    const parsedDate = parse(
+                        dateStr,
+                        "dd/MMM/yyyy",
+                        new Date()
+                    );
+                    if (isValid(parsedDate)) {
+                        formattedDate = format(parsedDate, "yyyy-MM-dd");
+                    }
+                }
+                // Check if date is in YYYY-MM-DD format (already correct)
+                else if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
+                    formattedDate = dateStr;
+                }
+
+                if (formattedDate) {
+                    setValue("document_date", formattedDate);
+                }
+            } catch (error) {
+                console.error("Error parsing date:", error);
+            }
+        }
+    }, [detail_data?.document_date, setValue]);
+
     console.log("detail_data", detail_data);
+    console.log("document_date raw:", detail_data?.document_date);
+    console.log("document_date type:", typeof detail_data?.document_date);
 
     return (
         <Drawer onClose={closeDetailDrawer} open={isOpenDetail}>
@@ -85,7 +127,7 @@ const DetailInitialStock = () => {
                         onClick={() => {
                             openHistoryLogDrawer({
                                 code: detail_data?.document_number,
-                                category: "StockInitial",
+                                category: "InitialStock",
                             });
                         }}
                     />

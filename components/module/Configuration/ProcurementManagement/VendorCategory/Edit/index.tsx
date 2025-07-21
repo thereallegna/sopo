@@ -14,7 +14,7 @@ import InputField from "@components/shared/InputField";
 import { useDrawerStore } from "@stores/useDrawerStore";
 import { IconDeviceFloppy } from "@tabler/icons-react";
 import { useForm } from "@hooks/useForm";
-import { vendorCategorySchema } from "@constants/schemas/ConfigurationSchema/ProcurementManagement";
+import { VendorCategorySchema } from "@constants/schemas/ConfigurationSchema/ProcurementManagement";
 import { useSetValueForm } from "@hooks/useSetValueForm";
 import { GET_VENDOR_CATEGORY } from "@constants/queryKey";
 import { editVendorCategory } from "@services/fetcher/configuration/procurement-management";
@@ -40,7 +40,7 @@ const EditVendorCategory = () => {
         label: "Vendor Category",
         queryKey: GET_VENDOR_CATEGORY,
         mutationFn: editVendorCategory,
-        validationSchema: vendorCategorySchema,
+        validationSchema: VendorCategorySchema,
         defaultValues: detail_data,
         type: "edit",
     });

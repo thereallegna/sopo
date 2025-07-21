@@ -1,18 +1,18 @@
 import * as Yup from "yup";
 
-export const countrySchema = Yup.object().shape({
+export const CountrySchema = Yup.object().shape({
     country_code: Yup.string().required("Country code is required"), // Corrected typo here
     country_name: Yup.string().required("Country name is required"),
 });
 
-export const provinceSchema = Yup.object().shape({
+export const ProvinceSchema = Yup.object().shape({
     province_code: Yup.string().required("Province code is required"),
     province_name: Yup.string().required("Province name is required"),
     country: Yup.string().required("Country is required"),
     country_code: Yup.string().required("Country is required"),
 });
 
-export const citySchema = Yup.object().shape({
+export const CitySchema = Yup.object().shape({
     city_code: Yup.string().required("City code is required"),
     city_name: Yup.string().required("City name is required"),
     province: Yup.string().required("Province is required"),
@@ -23,7 +23,7 @@ export const citySchema = Yup.object().shape({
         .nullable(),
 });
 
-export const siteSchema = Yup.object().shape({
+export const SiteSchema = Yup.object().shape({
     site_code: Yup.string().required("Site code is required"),
     site_name: Yup.string().required("Site name is required"),
     address: Yup.string().optional().nullable(),

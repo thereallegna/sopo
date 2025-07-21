@@ -16,22 +16,16 @@ const ExportButton: React.FC<ExportButtonProps> = ({ data, columns }) => {
             return;
         }
 
-        const headers = [
-            ...columns.map((col) => col.header || col.accessorKey),
-        ];
-
-        const exportData = data.map((item) => [
-            ...columns.map((col) => item[col.accessorKey]),
-        ]);
-
-        const ws = XLSX.utils.json_to_sheet(exportData, { skipHeader: true });
-
-        headers.forEach((header, index) => {
-            ws[XLSX.utils.encode_cell({ r: 0, c: index })] = {
-                v: header,
-                t: "s",
-            };
+        const exportData = data.map((item) => {
+            const row: Record<string, any> = {};
+            columns.forEach((col) => {
+                const key = col.header || col.accessorKey;
+                row[key] = item[col.accessorKey];
+            });
+            return row;
         });
+
+        const ws = XLSX.utils.json_to_sheet(exportData);
 
         const wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, "Exported Data");

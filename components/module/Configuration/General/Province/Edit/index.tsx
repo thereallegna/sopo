@@ -14,7 +14,7 @@ import InputField from "@components/shared/InputField";
 import { useDrawerStore } from "@stores/useDrawerStore";
 import { IconDeviceFloppy } from "@tabler/icons-react";
 import { useForm } from "@hooks/useForm";
-import { provinceSchema } from "@constants/schemas/ConfigurationSchema/General";
+import { ProvinceSchema } from "@constants/schemas/ConfigurationSchema/General";
 import {
     editProvince,
     getCountry,
@@ -46,7 +46,7 @@ const EditProvince = () => {
         label: "Province",
         queryKey: GET_PROVINCE,
         mutationFn: editProvince,
-        validationSchema: provinceSchema,
+        validationSchema: ProvinceSchema,
         defaultValues: detail_data,
         type: "edit",
     });
@@ -126,6 +126,7 @@ const EditProvince = () => {
                                         className="flex-1"
                                         label="Country"
                                         placeholder="Select Country"
+                                        required
                                         queryKey={[GET_COUNTRY]}
                                         queryFn={() => getCountry()}
                                         dataLabel="country_name"

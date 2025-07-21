@@ -15,7 +15,7 @@ import { useForm } from "@hooks/useForm";
 import { IconDeviceFloppy } from "@tabler/icons-react";
 import { GET_CURRENCY } from "@constants/queryKey";
 import { createCurrency } from "@services/fetcher/configuration/financial-management";
-import { currencySchema } from "@constants/schemas/ConfigurationSchema/FinancialManagement";
+import { CurrencySchema } from "@constants/schemas/ConfigurationSchema/FinancialManagement";
 import { CurrencyDefaultValues } from "@constants/defaultValues";
 
 const CreateCurrency = () => {
@@ -34,7 +34,7 @@ const CreateCurrency = () => {
         label: "Currency",
         queryKey: GET_CURRENCY,
         mutationFn: createCurrency,
-        validationSchema: currencySchema,
+        validationSchema: CurrencySchema,
         defaultValues: CurrencyDefaultValues,
         type: "add",
         requireAllFields: true,
@@ -82,6 +82,7 @@ const CreateCurrency = () => {
                                     placeholder="Currency Code"
                                     right
                                     type="text"
+                                    required
                                     className="flex-1 gap-2"
                                     onKeyDown={handleInputKeyDown}
                                 />
@@ -100,6 +101,7 @@ const CreateCurrency = () => {
                                     placeholder="Currency Name"
                                     right
                                     type="text"
+                                    required
                                     className="flex-1 gap-2"
                                     onKeyDown={handleInputKeyDown}
                                 />

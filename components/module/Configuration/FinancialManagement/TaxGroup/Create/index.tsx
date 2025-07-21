@@ -15,7 +15,7 @@ import { useForm } from "@hooks/useForm";
 import { IconDeviceFloppy } from "@tabler/icons-react";
 import { GET_TAX_GROUP } from "@constants/queryKey";
 import { createTaxGroup } from "@services/fetcher/configuration/financial-management";
-import { taxGroupSchema } from "@constants/schemas/ConfigurationSchema/FinancialManagement";
+import { TaxGroupSchema } from "@constants/schemas/ConfigurationSchema/FinancialManagement";
 import { TaxGroupDefaultValues } from "@constants/defaultValues";
 
 const CreateTaxGroup = () => {
@@ -34,7 +34,7 @@ const CreateTaxGroup = () => {
         label: "Tax Group",
         queryKey: GET_TAX_GROUP,
         mutationFn: createTaxGroup,
-        validationSchema: taxGroupSchema,
+        validationSchema: TaxGroupSchema,
         defaultValues: TaxGroupDefaultValues,
         type: "add",
         requireAllFields: true,

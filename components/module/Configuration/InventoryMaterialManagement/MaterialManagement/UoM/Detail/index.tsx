@@ -59,8 +59,8 @@ const DetailUOM = () => {
                         <CardContent className="flex-wrap flex flex-row gap-6 items-center">
                             <InputField
                                 value={detail_data?.uom_code || ""}
-                                label="Country Code"
-                                placeholder="Country Code"
+                                label="UoM Code"
+                                placeholder="UoM Code"
                                 right
                                 type="text"
                                 className="flex-1 gap-2"
@@ -69,8 +69,8 @@ const DetailUOM = () => {
                             />
                             <InputField
                                 value={detail_data?.uom_name || ""}
-                                label="Country Name"
-                                placeholder="Country Name"
+                                label="UoM Name"
+                                placeholder="UoM Name"
                                 right
                                 type="text"
                                 className="flex-1 gap-2"

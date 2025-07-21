@@ -14,7 +14,7 @@ import InputField from "@components/shared/InputField";
 import { useDrawerStore } from "@stores/useDrawerStore";
 import { IconDeviceFloppy } from "@tabler/icons-react";
 import { useForm } from "@hooks/useForm";
-import { currencySchema } from "@constants/schemas/ConfigurationSchema/FinancialManagement";
+import { CurrencySchema } from "@constants/schemas/ConfigurationSchema/FinancialManagement";
 import { useSetValueForm } from "@hooks/useSetValueForm";
 import { GET_CURRENCY } from "@constants/queryKey";
 import { editCurrency } from "@services/fetcher/configuration/financial-management";
@@ -40,7 +40,7 @@ const EditCurrency = () => {
         label: "Master item",
         queryKey: GET_CURRENCY,
         mutationFn: editCurrency,
-        validationSchema: currencySchema,
+        validationSchema: CurrencySchema,
         defaultValues: detail_data,
         type: "edit",
     });
@@ -90,6 +90,7 @@ const EditCurrency = () => {
                                     type="text"
                                     className="flex-1 gap-2"
                                     disabled
+                                    required
                                     onKeyDown={handleInputKeyDown}
                                 />
                                 <InputField
@@ -107,6 +108,7 @@ const EditCurrency = () => {
                                     placeholder="Currency Name"
                                     right
                                     type="text"
+                                    required
                                     className="flex-1 gap-2"
                                     onKeyDown={handleInputKeyDown}
                                 />

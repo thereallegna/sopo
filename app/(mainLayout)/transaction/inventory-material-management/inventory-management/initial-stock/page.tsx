@@ -84,12 +84,12 @@ const InitialStock = () => {
                             header: "Document",
                         },
                         {
-                            accessor: "document_date",
-                            header: "Date",
-                        },
-                        {
                             accessor: "warehouse_name",
                             header: "Warehouse",
+                        },
+                        {
+                            accessor: "remark",
+                            header: "Remark",
                         },
                     ],
                 }}

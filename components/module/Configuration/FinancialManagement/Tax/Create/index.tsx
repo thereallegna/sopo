@@ -13,7 +13,7 @@ import { Card, CardContent } from "@components/ui/Card";
 import InputField from "@components/shared/InputField";
 import { IconDeviceFloppy } from "@tabler/icons-react";
 import { useForm } from "@hooks/useForm";
-import { taxSchema } from "@constants/schemas/ConfigurationSchema/FinancialManagement";
+import { TaxSchema } from "@constants/schemas/ConfigurationSchema/FinancialManagement";
 import {
     createTax,
     getTaxGroup,
@@ -41,7 +41,7 @@ const CreateTax = () => {
         label: "Tax",
         queryKey: GET_TAX,
         mutationFn: createTax,
-        validationSchema: taxSchema,
+        validationSchema: TaxSchema,
         defaultValues: TaxDefaultValues,
         type: "add",
     });

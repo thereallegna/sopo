@@ -82,6 +82,7 @@ const CreateUOM = () => {
                                     placeholder="UoM Code"
                                     right
                                     type="text"
+                                    required
                                     className="flex-1 gap-2"
                                     onKeyDown={handleInputKeyDown}
                                 />
@@ -100,6 +101,7 @@ const CreateUOM = () => {
                                     placeholder="UoM Name"
                                     right
                                     type="text"
+                                    required
                                     className="flex-1 gap-2"
                                     onKeyDown={handleInputKeyDown}
                                 />

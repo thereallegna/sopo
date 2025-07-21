@@ -111,8 +111,8 @@ const DetailForm = ({
                                       }
                                     : undefined
                             }
-                            label="Spesification"
-                            placeholder="Text here.."
+                            label="Specification"
+                            placeholder="Specification"
                             right
                             type="text"
                             className="w-full gap-2"
@@ -133,7 +133,7 @@ const DetailForm = ({
                                     : undefined
                             }
                             label="HS Code"
-                            placeholder="Text here.."
+                            placeholder="HS Code"
                             right
                             type="text"
                             className="w-full gap-2"
@@ -151,7 +151,7 @@ const DetailForm = ({
                                     : undefined
                             }
                             label="Remark"
-                            placeholder="Text here.."
+                            placeholder="Remark"
                             right
                             type="text"
                             className="w-full gap-2"

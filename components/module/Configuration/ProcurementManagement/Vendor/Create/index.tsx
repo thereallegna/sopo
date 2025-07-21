@@ -13,7 +13,7 @@ import { Card, CardContent } from "@components/ui/Card";
 import InputField from "@components/shared/InputField";
 import { IconDeviceFloppy } from "@tabler/icons-react";
 import { useForm } from "@hooks/useForm";
-import { vendorSchema } from "@constants/schemas/ConfigurationSchema/ProcurementManagement";
+import { VendorSchema } from "@constants/schemas/ConfigurationSchema/ProcurementManagement";
 import {
     createVendor,
     getVendorCategory,
@@ -41,7 +41,7 @@ const CreateVendor = () => {
         label: "Vendor",
         queryKey: GET_VENDOR,
         mutationFn: createVendor,
-        validationSchema: vendorSchema,
+        validationSchema: VendorSchema,
         defaultValues: VendorDefaultValues,
         type: "add",
         ignoredFields: [
@@ -187,6 +187,7 @@ const CreateVendor = () => {
                                         placeholder="Address"
                                         right
                                         type="text"
+                                        required
                                         className="flex-1 gap-2"
                                         onKeyDown={handleInputKeyDown}
                                     />

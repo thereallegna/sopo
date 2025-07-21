@@ -13,7 +13,7 @@ import { Card, CardContent } from "@components/ui/Card";
 import InputField from "@components/shared/InputField";
 import { IconDeviceFloppy } from "@tabler/icons-react";
 import { useForm } from "@hooks/useForm";
-import { countrySchema } from "@constants/schemas/ConfigurationSchema/General";
+import { CountrySchema } from "@constants/schemas/ConfigurationSchema/General";
 import { createCountry } from "@services/fetcher/configuration/general";
 import { CountryDefaultValues } from "@constants/defaultValues";
 import { GET_COUNTRY } from "@constants/queryKey";
@@ -34,7 +34,7 @@ const CreateCountry = () => {
         label: "Country",
         queryKey: GET_COUNTRY,
         mutationFn: createCountry,
-        validationSchema: countrySchema,
+        validationSchema: CountrySchema,
         defaultValues: CountryDefaultValues,
         type: "add",
         requireAllFields: true,

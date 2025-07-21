@@ -13,7 +13,7 @@ import { Card, CardContent } from "@components/ui/Card";
 import InputField from "@components/shared/InputField";
 import { IconDeviceFloppy } from "@tabler/icons-react";
 import { useForm } from "@hooks/useForm";
-import { warehouseSchema } from "@constants/schemas/ConfigurationSchema/InventoryMaterialManagement";
+import { WarehouseSchema } from "@constants/schemas/ConfigurationSchema/InventoryMaterialManagement";
 import {
     createWarehouse,
     getWarehouseCategory,
@@ -46,7 +46,7 @@ const CreateWarehouse = () => {
         label: "Warehouse",
         queryKey: GET_WAREHOUSE,
         mutationFn: createWarehouse,
-        validationSchema: warehouseSchema,
+        validationSchema: WarehouseSchema,
         defaultValues: WarehouseDefaultValues,
         type: "add",
         ignoredFields: [

@@ -96,7 +96,7 @@ export const WarehouseCategorySchema = Yup.object().shape({
 //         ),
 // });
 
-export const warehouseSchema = Yup.object().shape({
+export const WarehouseSchema = Yup.object().shape({
     warehouse_code: Yup.string().required("Warehouse code is required"),
     warehouse_name: Yup.string().required("Warehouse name is required"),
     warehouse_category: Yup.string().required("Warehouse category is required"),
