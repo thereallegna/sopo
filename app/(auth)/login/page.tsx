@@ -100,17 +100,17 @@ const LoginPage = () => {
             <Card size="login">
                 <CardHeader className="items-center">
                     <Image
-                        src="/images/logo-runsystem.png"
+                        src="/images/logo-trackwise.png"
                         alt="Run System Logo"
-                        className="max-w-[130px] h-auto"
-                        width={200}
-                        height={200}
+                        className="h-auto"
+                        width={250}
+                        height={250}
                         layout="responsive"
                         quality={100}
                     />
                 </CardHeader>
                 <CardTitle className="text-lg font-bold mt-5">
-                    Welcome to RUN System
+                    Welcome to TrackWise IMM
                 </CardTitle>
                 <CardDescription className="text-[11px] mt-1">
                     Enter your credentials to access your account
@@ -166,7 +166,7 @@ const LoginPage = () => {
                             <Link
                                 onClick={() => console.log("clicked")}
                                 href="/forgot-password"
-                                className="text-blue-500 font-normal text-[11px] justify-end"
+                                className="text-[#475569] font-normal text-[11px] justify-end"
                             >
                                 Forgot Password?
                             </Link>

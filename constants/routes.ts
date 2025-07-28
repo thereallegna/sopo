@@ -92,12 +92,12 @@ export const PATH_STOCK_MUTATION = `${PATH_TRANSACTION_INVENTORY_MATERIAL_MANAGE
 export const PATH_STOCK_MUTATION_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/stock-mutation`;
 
 // direct purchase receive
-export const PATH_DIRECT_PURCHASE_RECEIVE = `${PATH_TRANSACTION_INVENTORY_MATERIAL_MANAGEMENT}/material-management/direct-purchase-receive`;
-export const PATH_DIRECT_PURCHASE_RECEIVE_BE = `${PATH_TRANSACTION_INVENTORY_MATERIAL_MANAGEMENT}/direct-purchase-receive`;
+export const PATH_DIRECT_PURCHASE_RECEIVE = `${PATH_TRANSACTION_INVENTORY_MATERIAL_MANAGEMENT}/material-management/inbound-material-management/direct-purchase-receive`;
+export const PATH_DIRECT_PURCHASE_RECEIVE_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/direct-purchase-receive`;
 
-// direct sales delivery
-export const PATH_DIRECT_SALES_DELIVERY = `${PATH_TRANSACTION_INVENTORY_MATERIAL_MANAGEMENT}/material-management/direct-sales-delivery`;
-export const PATH_DIRECT_SALES_DELIVERY_BE = `${PATH_TRANSACTION_INVENTORY_MATERIAL_MANAGEMENT}/direct-sales-delivery`;
+// // direct sales delivery
+// export const PATH_DIRECT_SALES_DELIVERY = `${PATH_TRANSACTION_INVENTORY_MATERIAL_MANAGEMENT}/material-management/direct-sales-delivery`;
+// export const PATH_DIRECT_SALES_DELIVERY_BE = `${PATH_TRANSACTION_INVENTORY_MATERIAL_MANAGEMENT}/direct-sales-delivery`;
 
 /* ======================= Inventory Material Management Start ==================== */
 

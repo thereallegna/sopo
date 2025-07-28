@@ -29,6 +29,26 @@ const getInitialStock = async (option?: FetcherOptions) => {
     }
 }; // Add parseISO import
 
+const getInitialStockDetail = async (
+    documentNumber: string,
+    option?: FetcherOptions
+) => {
+    try {
+        const res = await axios.get(
+            `${PATH_INITIAL_STOCK}/${documentNumber}/detail`,
+            {
+                params: {
+                    ...option?.query,
+                },
+            }
+        );
+        return res.data;
+    } catch (error) {
+        console.error("Error fetching initial stock detail:", error);
+        throw error;
+    }
+};
+
 const createInitialStock = async (body: InitialStockFormBody, params?: any) => {
     try {
         const res = await axios.post(PATH_INITIAL_STOCK, body, { params });
@@ -111,25 +131,6 @@ const createStockAdjustment = async (
     }
 };
 
-// const editStockAdjustment = async (
-//     body: StockAdjustmentFormBody,
-//     params?: any
-// ) => {
-//     try {
-//         const res = await axios.put(
-//             `${PATH_STOCK_ADJUSTMENT}/${body.document_number}`,
-//             body,
-//             {
-//                 params,
-//             }
-//         );
-//         return res.data;
-//     } catch (error) {
-//         console.error("Error editing stock adjustment:", error);
-//         throw error;
-//     }
-// };
-
 const getStockMutation = async (option?: FetcherOptions) => {
     try {
         const res = await axios.get(`${PATH_STOCK_MUTATION}`, {
@@ -151,16 +152,37 @@ const getStockMutation = async (option?: FetcherOptions) => {
     }
 };
 
+const getItemStockMutation = async (option?: FetcherOptions) => {
+    try {
+        const res = await axios.get(`${PATH_GET_ITEM}`, {
+            params: {
+                page_size: !option?.all
+                    ? option?.pagination?.pageSize
+                    : undefined,
+                current_page: !option?.all
+                    ? option?.pagination?.pageIndex
+                    : undefined,
+                search: option?.search,
+                ...option?.query,
+            },
+        });
+
+        return res;
+    } catch (error) {
+        console.error("Error fetching stock mutation:", error);
+        throw error;
+    }
+};
+
 const createStockMutation = async (
     body: StockMutationFormBody,
     params?: any
 ) => {
     try {
-        console.log("Cek Data => ", body);
         const res = await axios.post(PATH_STOCK_MUTATION, body, { params });
         return res.data;
     } catch (error) {
-        console.error("Error creating item category:", error);
+        console.error("Error creating stock mutation:", error);
         throw error;
     }
 };
@@ -168,7 +190,7 @@ const createStockMutation = async (
 const editStockMutation = async (body: StockMutationFormBody, params?: any) => {
     try {
         const res = await axios.put(
-            `${PATH_STOCK_MUTATION}/${body.document}`,
+            `${PATH_STOCK_MUTATION}/${body.document_number}`,
             body,
             {
                 params,
@@ -183,6 +205,7 @@ const editStockMutation = async (body: StockMutationFormBody, params?: any) => {
 
 export {
     getInitialStock,
+    getInitialStockDetail,
     createInitialStock,
     editInitialStock,
     getStockMutation,
@@ -192,4 +215,5 @@ export {
     createStockAdjustment,
     // editStockAdjustment,
     getItemStockAdjustment,
+    getItemStockMutation,
 };

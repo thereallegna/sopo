@@ -9,7 +9,7 @@ const AuthBackground = ({
 }: Readonly<{
     children: React.ReactNode;
 }>) => {
-    const [version, setVersion] = useState<string>("");
+    const [, setVersion] = useState<string>("");
     React.useEffect(() => {
         getVersion()
             .then((res) => {
@@ -32,10 +32,6 @@ const AuthBackground = ({
             <div className="flex-grow flex items-center justify-center w-full max-h-[calc(100vh-64px)]">
                 {children}
             </div>
-
-            <footer className="w-full p-4 text-[12px] text-white text-center">
-                <p>RUN System Inc. Version {version}</p>
-            </footer>
         </main>
     );
 };

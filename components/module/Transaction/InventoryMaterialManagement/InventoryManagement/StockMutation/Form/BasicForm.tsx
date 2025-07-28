@@ -24,30 +24,36 @@ const BasicForm = ({
         <CardContent className="flex-wrap flex flex-row gap-6 items-center">
             <div className="flex flex-col gap-[14px] flex-1">
                 <InputField
-                    {...register("document")}
+                    {...register("document_number")}
                     message={
-                        errors?.document
-                            ? { text: errors.document.message!, type: "danger" }
+                        errors?.document_number
+                            ? {
+                                  text: errors.document_number.message!,
+                                  type: "danger",
+                              }
                             : undefined
                     }
-                    label="Document"
-                    placeholder="Text here.."
+                    label="Document Number"
+                    placeholder="Document Number"
                     type="text"
                     required
                     right
-                    disabled={disableAll} // Disabled berdasarkan disableAll
+                    disabled
                     className="w-full gap-2"
                     onKeyDown={handleInputKeyDown}
                 />
                 <InputField
-                    {...register("date")}
+                    {...register("document_date")}
                     message={
-                        errors?.date
-                            ? { text: errors.date.message!, type: "danger" }
+                        errors?.document_date
+                            ? {
+                                  text: errors.document_date.message!,
+                                  type: "danger",
+                              }
                             : undefined
                     }
                     label="Date"
-                    placeholder="Text here.."
+                    placeholder="Date"
                     type="date"
                     right
                     required
@@ -57,22 +63,6 @@ const BasicForm = ({
                 />
             </div>
             <div className="flex flex-col gap-[14px] flex-1 h-full justify-between">
-                {/* <InputField
-          {...register('warehouse')}
-          message={
-            errors?.warehouse
-              ? { text: errors.warehouse.message!, type: 'danger' }
-              : undefined
-          }
-          label="Warehouse"
-          placeholder="Text here.."
-          type="text"
-          right
-          required
-          disabled={disableAll} // Disabled berdasarkan disableAll
-          className="w-full gap-2"
-          onKeyDown={handleInputKeyDown}
-        /> */}
                 <Combobox
                     label="Warehouse"
                     placeholder="Select Warehouse"
@@ -130,7 +120,7 @@ const BasicForm = ({
                             : undefined
                     }
                     label="Reason for Cancellation"
-                    placeholder="Text here.."
+                    placeholder="Reason for Cancellation"
                     type="text"
                     right
                     disabled={disableAll} // Disabled berdasarkan disableAll
@@ -145,7 +135,7 @@ const BasicForm = ({
                             : undefined
                     }
                     label="Remark"
-                    placeholder="Text here.."
+                    placeholder="Remark"
                     type="text"
                     right
                     disabled={disableAll} // Disabled berdasarkan disableAll

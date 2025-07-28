@@ -39,7 +39,7 @@ export async function POST(req: Request) {
     try {
         const session = await getServerSideSession();
 
-        const body = (await req.json()) as InitialStockFormBody;
+        const body = (await req.json()) as StockAdjustmentFormBody;
 
         const response = await axios.post(PATH_STOCK_ADJUSTMENT_BE, body, {
             headers: {

@@ -1,10 +1,10 @@
 import React, { useMemo, useState } from "react";
 import { Card, CardContent } from "@components/ui/Card";
 import TableForm from "@components/shared/TableForm";
-import { GET_INITIAL_STOCK } from "@constants/queryKey";
+import { GET_MASTER_ITEM_MATERIAL_MANAGEMENT } from "@constants/queryKey";
 // import { convertStockMutationForm } from '@utils/converter';
-import { getInitialStock } from "@services/fetcher/transaction/inventory-material-management/inventory-management";
 import { FieldPath } from "react-hook-form";
+import { getItem } from "@services/fetcher/configuration/inventory-management";
 import { GenerateColumnsOption } from "../../../../../../../types/client/table";
 import { FormType } from "../../../../../../../types/form";
 
@@ -19,8 +19,8 @@ const MutateToForm = ({
 }: FormType<StockMutationFormBody> & { type?: "add" | "edit" | "detail" }) => {
     const [showModal, setShowModal] = useState<boolean>(false);
     const columns = useMemo(() => {
-        const mutateFromColumn: GenerateColumnsOption = {
-            key: "mutated_from",
+        const mutateToColumn: GenerateColumnsOption = {
+            key: "mutated_to",
             columns: [
                 {
                     accessor: "item_name",
@@ -83,13 +83,13 @@ const MutateToForm = ({
             hasAction: false,
         };
 
-        return mutateFromColumn;
+        return mutateToColumn;
     }, [handleInputKeyDown]);
     return (
         <Card size="drawer" className="border border-Neutral-200 shadow-none">
             <CardContent className="flex-wrap flex flex-row gap-6 items-center w-full">
                 <TableForm
-                    title="Mutate From"
+                    title="Mutate To"
                     data={watch("mutated_to")}
                     columns={columns}
                     errors={errors}
@@ -119,9 +119,9 @@ const MutateToForm = ({
                     onShowGetDataModal={() => setShowModal(true)}
                     getDataModalProps={{
                         isOpen: showModal,
-                        title: "Select Initial Stock",
-                        queryKey: GET_INITIAL_STOCK,
-                        queryFn: getInitialStock,
+                        title: "Select Item",
+                        queryKey: GET_MASTER_ITEM_MATERIAL_MANAGEMENT,
+                        queryFn: getItem,
                         onClose: (val) => setShowModal(val),
                         columns: {
                             columns: [
@@ -132,25 +132,25 @@ const MutateToForm = ({
                                     size: 50,
                                 },
                                 {
-                                    accessor: "document_number",
-                                    header: "Document",
+                                    accessor: "item_code",
+                                    header: "Item's Code",
                                 },
                                 {
-                                    accessor: "document_date",
-                                    header: "Date",
+                                    accessor: "item_name",
+                                    header: "Item's Name",
                                 },
                                 {
-                                    accessor: "warehouse_name",
-                                    header: "Warehouse",
+                                    accessor: "local_code",
+                                    header: "Local Code",
                                 },
                             ],
                             hasAction: false,
                         },
                         multipleSelect: true,
                         idSelected: "selected",
-                        targetIdSelector: "document_number",
+                        targetIdSelector: "item_code",
                         valueSelected: watch("mutated_to")?.map(
-                            (item) => item.document_number
+                            (item) => item.item_code
                         ),
                         onSelectRow: (data: any) => {
                             if (setValue) {
@@ -158,15 +158,14 @@ const MutateToForm = ({
                                 const prevData = watch("mutated_to") || [];
                                 const itemExists = prevData.some(
                                     (item) =>
-                                        item.document_number ===
-                                        convertData.document_number
+                                        item.item_code === convertData.item_code
                                 );
                                 let updatedData;
                                 if (itemExists) {
                                     updatedData = prevData.filter(
                                         (item) =>
-                                            item.document_number !==
-                                            convertData.document_number
+                                            item.item_code !==
+                                            convertData.item_code
                                     );
                                 } else {
                                     updatedData = [...prevData, convertData];

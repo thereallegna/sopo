@@ -43,14 +43,12 @@ const SidebarItems: React.FC<SidebarItemsProps> = ({ items }) => {
                                     type="button"
                                     iconClassName={cn(
                                         isActive
-                                            ? "text-blue-500 font-bold"
+                                            ? "text-[#475569] font-bold"
                                             : ""
                                     )}
                                     className={cn(
                                         "flex items-center justify-between p-2",
-                                        isActive
-                                            ? "bg-blue-50 text-blue-500"
-                                            : ""
+                                        isActive ? "text-[#475569]" : ""
                                     )}
                                     variant="sidebar"
                                     icon={item.icon}

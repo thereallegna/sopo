@@ -62,7 +62,7 @@ const CreateMasterItem = () => {
             "sales_item",
             "service_item",
             "purchase_item",
-            "spesification",
+            "specification",
             "remark",
         ],
     });
@@ -156,7 +156,7 @@ const CreateMasterItem = () => {
                             header: "Category Name",
                         },
                         {
-                            accessor: "spesification",
+                            accessor: "specification",
                             header: "Specification",
                         },
                         {

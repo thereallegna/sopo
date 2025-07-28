@@ -38,7 +38,7 @@ const StockSummaryHeaderForm = () => {
                 <div className="flex flex-col gap-[14px] flex-1">
                     <Combobox
                         label="Item's Category"
-                        placeholder="Selecy Item's Category"
+                        placeholder="Select Item's Category"
                         queryKey={[GET_CATEGORY_MATERIAL_MANAGEMENT]}
                         queryFn={getItemCategory}
                         dataLabel="item_category_name"

@@ -49,7 +49,7 @@ export const StockMovementSchema = Yup.object().shape({
             uom: Yup.string().required("UOM is required"),
             remark: Yup.string().required("Remark is required"),
             created_by: Yup.string().required("Created By is required"),
-            spesification: Yup.string().required("Spesification is required"),
+            specification: Yup.string().required("Specification is required"),
         })
     ),
 });

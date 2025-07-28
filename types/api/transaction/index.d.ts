@@ -64,9 +64,20 @@ type StockMutatedFormBody = {
     unit_price: string;
 };
 
+// type StockMutatedFormBody  = {
+//     d_no: string;
+//     item_name: string;
+//     item_code: string;
+//     batch: string;
+//     source: string;
+//     stock: number;
+//     quantity: string;
+//     uom: string;
+// };
+
 type StockMutationFormBody = {
-    document: string;
-    date: string;
+    document_number: string;
+    document_date: string;
     warehouse: string;
     warehouse_code: string;
     cancel: boolean;
@@ -83,13 +94,15 @@ type ItemsQuery = {
 };
 
 type DirectPurchaseReceiveDetailFormBody = {
+    d_no: string;
     item_name: string;
     item_code: string;
+    local_code?: string;
     batch: string;
-    price?: number;
     quantity?: number;
+    uom_name: string;
+    price: number;
     discount?: number;
-    remark: string;
     expired?: string;
     cancel: boolean;
     cancel_reason: string;
@@ -97,8 +110,7 @@ type DirectPurchaseReceiveDetailFormBody = {
 
 type DirectPurchaseReceiveFormBody = {
     document_number: string;
-    date: string;
-    local_code?: string;
+    document_date: string;
     department?: string;
     warehouse_name: string;
     warehouse_code: string;

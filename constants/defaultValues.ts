@@ -56,7 +56,7 @@ export const MasterItemDefaultValues: MasterItemFormBody = {
     local_code: "",
     foreign_name: "",
     old_code: "",
-    spesification: "",
+    specification: "",
     hs_code: "",
     remark: "",
     source: undefined,
@@ -115,8 +115,8 @@ export const StockAdjustmentDefaultValues: StockAdjustmentFormBody = {
 };
 
 export const StockMutationDefaultValues: StockMutationFormBody = {
-    document: "",
-    date: "",
+    document_number: "",
+    document_date: "",
     warehouse: "",
     warehouse_code: "",
     cancel: false,
@@ -129,8 +129,7 @@ export const StockMutationDefaultValues: StockMutationFormBody = {
 export const DirectPurchaseReceiveDefaultValues: DirectPurchaseReceiveFormBody =
     {
         document_number: "",
-        date: "",
-        local_code: "",
+        document_date: "",
         department: "",
         warehouse_name: "",
         warehouse_code: "",

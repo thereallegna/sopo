@@ -13,7 +13,7 @@ import { Card, CardContent } from "@components/ui/Card";
 import InputField from "@components/shared/InputField";
 import { IconDeviceFloppy } from "@tabler/icons-react";
 import { useForm } from "@hooks/useForm";
-import { ProvinceSchema } from "@constants/schemas/ConfigurationSchema/General";
+import { ProvinceSchema } from "@constants/schemas/ConfigurationSchema/general";
 import {
     createProvince,
     getCountry,
@@ -21,8 +21,14 @@ import {
 import { ProvinceDefaultValues } from "@constants/defaultValues";
 import Combobox from "@components/shared/Combobox";
 import { GET_COUNTRY, GET_PROVINCE } from "@constants/queryKey";
+import { useTableStore } from "@stores/useTableStore";
 
 const CreateCity = () => {
+    const query = useTableStore(
+        (state) => state.options[GET_COUNTRY].query
+    ) as ProvinceFormBody;
+    const { setQuery } = useTableStore();
+
     const {
         handleCloseDrawer,
         handleInputKeyDown,
@@ -32,9 +38,6 @@ const CreateCity = () => {
         formRef,
         isOpen,
         canSave,
-        watch,
-        setValue,
-        setError,
         errors,
         register,
     } = useForm({
@@ -116,31 +119,23 @@ const CreateCity = () => {
                                         onKeyDown={handleInputKeyDown}
                                     />
                                 </div>
-                                <div className="flex flex-col gap-[14px] flex-1 self-start">
-                                    <Combobox
-                                        className="flex-1"
+                                <div className="flex flex-col gap-[14px] flex-1 h-full">
+                                    {/* <Combobox
                                         label="Country"
                                         placeholder="Select Country"
                                         required
                                         queryKey={[GET_COUNTRY]}
-                                        queryFn={() =>
-                                            getCountry({ all: true })
-                                        }
+                                        queryFn={getCountry}
                                         dataLabel="country_name"
                                         dataValue="country_code"
-                                        message={
-                                            errors.country
+                                        value={
+                                            query?.country_name && query?.country 
                                                 ? {
-                                                      text: errors.country
-                                                          .message!,
-                                                      type: "danger",
+                                                      label: query.country_name,
+                                                      value: query.country
                                                   }
                                                 : undefined
                                         }
-                                        value={{
-                                            label: watch("country"),
-                                            value: watch("country_code"),
-                                        }}
                                         onChange={(val) => {
                                             setValue("country", val.label, {
                                                 shouldDirty: true,
@@ -155,6 +150,41 @@ const CreateCity = () => {
                                             setError("country", {
                                                 type: "disabled",
                                             });
+                                        }}
+                                    /> */}
+                                    <Combobox
+                                        label="Country"
+                                        placeholder="Select Country"
+                                        queryKey={[GET_COUNTRY]}
+                                        queryFn={getCountry}
+                                        dataLabel="country_name"
+                                        dataValue="country_code"
+                                        value={
+                                            query?.country_code &&
+                                            query?.country
+                                                ? {
+                                                      label: query.country,
+                                                      value: query.country_code,
+                                                  }
+                                                : undefined
+                                        }
+                                        onChange={(val) => {
+                                            if (
+                                                !query.country_code ||
+                                                query.country_code !== val.value
+                                            ) {
+                                                setQuery(GET_PROVINCE, {
+                                                    ...query,
+                                                    country_code: val.value,
+                                                    country: val.label,
+                                                });
+                                            } else {
+                                                setQuery(GET_PROVINCE, {
+                                                    ...query,
+                                                    country_code: undefined,
+                                                    country: undefined,
+                                                });
+                                            }
                                         }}
                                     />
                                 </div>

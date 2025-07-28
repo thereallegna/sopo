@@ -126,7 +126,7 @@ export const MultiSelectCombobox = ({
                                 <IconComponent
                                     icon={IconSearch}
                                     size="small"
-                                    className="absolute right-4 text-neutral-500"
+                                    className="absolute right-7 text-neutral-500 "
                                 />
                             </div>
                             <CommandList>

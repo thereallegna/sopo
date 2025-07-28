@@ -14,7 +14,7 @@ import InputField from "@components/shared/InputField";
 import { IconDeviceFloppy } from "@tabler/icons-react";
 import { Checkbox } from "@components/ui/Checkbox";
 import { useForm } from "@hooks/useForm";
-import { SiteSchema } from "@constants/schemas/ConfigurationSchema/General";
+import { SiteSchema } from "@constants/schemas/ConfigurationSchema/general";
 import { createSite } from "@services/fetcher/configuration/general";
 import { SiteDefaultValues } from "@constants/defaultValues";
 import { GET_SITE } from "@constants/queryKey";

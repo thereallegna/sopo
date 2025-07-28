@@ -11,7 +11,7 @@ import { IconDeviceFloppy } from "@tabler/icons-react";
 import { GET_DIRECT_PURCHASE_RECEIVE } from "@constants/queryKey";
 import { useForm } from "@hooks/useForm";
 import { ConfirmationAlert } from "@components/shared/Alert";
-import { editDirectPurchaseReceive } from "@services/fetcher/transaction/inventory-material-management/material-management";
+import { editDirectPurchaseReceive } from "@services/fetcher/transaction/inventory-material-management/material-management/inbound-material-management";
 import { useSetValueForm } from "@hooks/useSetValueForm";
 import { useDrawerStore } from "@stores/useDrawerStore";
 import { CreateDirectPurchaseReceiveSchema } from "@constants/schemas/TransactionSchema/InventoryMaterialManagement";

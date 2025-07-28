@@ -21,6 +21,7 @@ import {
     GET_STOCK_ADJUSTMENT,
     GET_DETAIL_BY_WAREHOUSE_STOCK_ADJUSTMENT,
     GET_DETAIL_STOCK_MUTATION,
+    GET_DETAIL_BY_WAREHOUSE_STOCK_MUTATION,
     GET_DIRECT_PURCHASE_RECEIVE,
 } from "@constants/queryKey";
 import { create } from "zustand";
@@ -49,6 +50,7 @@ const initialTableState = {
         [GET_STOCK_MUTATION]: PaginationStateDefaultValue,
         [GET_STOCK_SUMMARY]: PaginationStateDefaultValue,
         [GET_DETAIL_BY_WAREHOUSE_STOCK_ADJUSTMENT]: PaginationStateDefaultValue,
+        [GET_DETAIL_BY_WAREHOUSE_STOCK_MUTATION]: PaginationStateDefaultValue,
         [GET_STOCK_MOVEMENT]: PaginationStateDefaultValue,
         [GET_DETAIL_STOCK_MUTATION]: PaginationStateDefaultValue,
         [GET_DIRECT_PURCHASE_RECEIVE]: PaginationStateDefaultValue,

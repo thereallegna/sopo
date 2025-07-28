@@ -3,6 +3,38 @@ import { getServerSideSession } from "@utils/session";
 import axios, { AxiosError } from "axios";
 import { PATH_DIRECT_PURCHASE_RECEIVE_BE } from "@constants/routes";
 
+// export async function GET(req: NextRequest) {
+//     try {
+//         const params = req.nextUrl.searchParams;
+
+//         const session = await getServerSideSession();
+
+//         const response = await axios.get(`${PATH_DIRECT_PURCHASE_RECEIVE_BE}`, {
+//             headers: {
+//                 Authorization: `Bearer ${session.user?.data?.authorization?.access_token}`,
+//             },
+//             params: {
+//                 page_size: params.get("page_size"),
+//                 page: params.get("current_page"),
+//                 search: params.get("search"),
+//             },
+//         });
+
+//         return NextResponse.json(response.data);
+//     } catch (error: any) {
+//         const axiosError = error as AxiosError;
+//         if (error?.response?.data) {
+//             return NextResponse.json(error?.response?.data, {
+//                 status: axiosError.response?.status,
+//             });
+//         }
+//         return NextResponse.json(
+//             { message: "Internal server error", error },
+//             { status: 500 }
+//         );
+//     }
+// }
+
 export async function GET(req: NextRequest) {
     try {
         const params = req.nextUrl.searchParams;
@@ -58,7 +90,7 @@ export async function POST(req: Request) {
             return NextResponse.json(error?.response?.data, { status: 400 });
         }
         return NextResponse.json(
-            { message: "Internal server error" },
+            { message: "Internal server error", error },
             { status: 500 }
         );
     }

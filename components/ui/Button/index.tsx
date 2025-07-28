@@ -11,18 +11,18 @@ const buttonVariants = cva(
     {
         variants: {
             variant: {
-                primary: "bg-Blue-500 text-Neutral-50 hover:bg-Blue-700",
+                primary: "bg-[#475569] text-Neutral-50 hover:bg-[#475569]/90",
                 secondary:
                     "border border-Neutral-200 bg-White text-Neutral-600",
                 outlined:
-                    "border border-Blue-700 text-Blue-600 bg-white hover:text-Blue-700",
+                    "border border-[#475569]  text-[#475569] bg-white hover:text-[#475569]/50",
                 danger: "bg-Red-500 text-white hover:bg-Red-700",
                 sidebar:
                     "rounded-sm bg-transparent shadow-none text-Neutral-600 hover:bg-Neutral-100 focus:ring-transparent ",
                 backDrawer:
                     "bg-White text-Neutral-600 hover:bg-Neutral-100 shadow-none px-2 py-1",
                 disabled:
-                    "bg-Blue-200 text-Neutral-50 pointer-events-none	 border border-solid border-Blue-300",
+                    "bg-[#94A3B8] text-Neutral-50 pointer-events-none	 border border-solid border-Blue-300",
                 navbarSettings:
                     "bg-transparent shadow-none border-none hover-none focus:ring-transparent",
                 ghost: "hover:bg-neutral-100 hover:text-neutral-900 dark:hover:bg-neutral-800 dark:hover:text-neutral-50",

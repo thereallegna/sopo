@@ -14,7 +14,7 @@ import { DirectPurchaseReceiveDefaultValues } from "@constants/defaultValues";
 import { GET_DIRECT_PURCHASE_RECEIVE } from "@constants/queryKey";
 import { CreateDirectPurchaseReceiveSchema } from "@constants/schemas/TransactionSchema/InventoryMaterialManagement";
 import { useForm } from "@hooks/useForm";
-import { createDirectPurchaseReceive } from "@services/fetcher/transaction/inventory-material-management/material-management";
+import { createDirectPurchaseReceive } from "@services/fetcher/transaction/inventory-material-management/material-management/inbound-material-management";
 import { ConfirmationAlert } from "@components/shared/Alert";
 import DirectPurchaseReceiveHeaderForm from "../Form/HeaderForm";
 import DirectPurchaseReceiveDetailForm from "../Form/DetailForm";
@@ -47,12 +47,12 @@ const CreateDirectPurchaseReceive = () => {
         mutationFn: createDirectPurchaseReceive,
         defaultValues: DirectPurchaseReceiveDefaultValues,
         validationSchema: CreateDirectPurchaseReceiveSchema,
-        ignoredFields: ["remark", "document_number"],
+        ignoredFields: ["remark", "document_number", "details"],
     });
 
-    React.useEffect(() => {
-        console.log("schema", errors);
-    }, [errors]);
+    // React.useEffect(() => {
+    //     console.log("schema", errors);
+    // }, [errors]);
 
     return (
         <Drawer onClose={handleCloseDrawer} open={isOpen}>
@@ -70,10 +70,13 @@ const CreateDirectPurchaseReceive = () => {
                                 color: "White",
                             }}
                             type="submit"
-                            onClick={handleSaveClick}
+                            onClick={() => {
+                                console.log("[DEBUG] Tombol Save diklik");
+                                handleSaveClick();
+                            }}
                             disabled={isLoading}
                         >
-                            {isLoading ? "Saving..." : "Save"}
+                            {isLoading ? "saving..." : "Save"}
                         </Button>
                     </DrawerEndHeader>
                 </DrawerHeader>

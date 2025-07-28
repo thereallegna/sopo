@@ -74,11 +74,11 @@ const ResetPasswordPage = ({ params }: { params: { token: string } }) => {
             <Card size="password">
                 <CardHeader className="items-center">
                     <Image
-                        src="/images/logo-runsystem.png"
-                        alt="Run System Logo"
-                        className="max-w-[93px] p-0 m-0"
-                        width={93}
-                        height={32}
+                        src="/images/logo-trackwise.png"
+                        alt="Trackwise Logo"
+                        className="h-auto"
+                        width={80}
+                        height={80}
                         layout="responsive"
                         quality={100}
                     />

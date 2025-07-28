@@ -81,7 +81,10 @@ const StockMovementHeaderForm = () => {
                         label="Type"
                         placeholder="Select Type"
                         data={[
-                            { label: "Initial Stock", value: "Initial Stock" },
+                            {
+                                label: "Initial Stock",
+                                value: "Initial Stock",
+                            },
                             {
                                 label: "Stock Adjustment",
                                 value: "Stock Adjustment",

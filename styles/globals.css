@@ -14,7 +14,7 @@ body {
         width: 4px;
     }
     .custom-scrollbar::-webkit-scrollbar-thumb {
-        background-color: #3b82f6;
+        background-color: #475569;
         border-radius: 4px;
     }
     .custom-scrollbar::-webkit-scrollbar-track {

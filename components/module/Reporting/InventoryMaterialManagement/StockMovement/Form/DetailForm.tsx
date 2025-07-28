@@ -62,7 +62,7 @@ const detailFormColumn: GenerateColumnsOption = {
         },
         {
             accessor: "item_specification",
-            header: "Spesification",
+            header: "Specification",
         },
     ],
     hasAction: false,

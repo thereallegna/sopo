@@ -42,7 +42,7 @@ export function replaceSlashes(input: string): string {
 //   item: InitialStockDetailFormBody
 // ): StockMutatedFormBody {
 //   return {
-//     document_number: stock.document,
+//     document_number: stock.document_number,
 //     item_code: item.item_code,
 //     item_name: item.item_name,
 //     batch: item.batch,
@@ -74,13 +74,15 @@ export function convertDirectPurchaseReceiveForm(
     item: MasterItemFormBody
 ): DirectPurchaseReceiveDetailFormBody {
     return {
+        d_no: item.item_code || "",
         item_code: item.item_code || "",
         item_name: item.item_name,
+        local_code: item.local_code,
+        uom_name: item.uom_name,
         batch: "",
         price: 0,
         quantity: 0,
         discount: 0,
-        remark: "",
         expired: "",
         cancel: false,
         cancel_reason: "",

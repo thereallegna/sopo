@@ -44,7 +44,7 @@ const DirectPurchaseReceiveHeaderForm = ({
                             : undefined
                     }
                     label="Document Number"
-                    placeholder="Text here..."
+                    placeholder="Document Number"
                     type="text"
                     required
                     right
@@ -53,10 +53,13 @@ const DirectPurchaseReceiveHeaderForm = ({
                     onKeyDown={handleInputKeyDown}
                 />
                 <InputField
-                    {...register("date")}
+                    {...register("document_date")}
                     message={
-                        errors?.date
-                            ? { text: errors.date.message!, type: "danger" }
+                        errors?.document_date
+                            ? {
+                                  text: errors.document_date.message!,
+                                  type: "danger",
+                              }
                             : undefined
                     }
                     label="Date"
@@ -67,9 +70,9 @@ const DirectPurchaseReceiveHeaderForm = ({
                     disabled={disableAll}
                     className="w-full gap-2"
                     onKeyDown={handleInputKeyDown}
-                    value={watch("date")}
+                    // value={watch("date")}
                 />
-                <InputField
+                {/* <InputField
                     {...register("local_code")}
                     message={
                         errors?.local_code
@@ -80,13 +83,13 @@ const DirectPurchaseReceiveHeaderForm = ({
                             : undefined
                     }
                     label="Local#"
-                    placeholder="Text here..."
+                    placeholder="Local#"
                     right
                     type="text"
                     disabled={disableAll}
                     className="w-full gap-2"
                     onKeyDown={handleInputKeyDown}
-                />
+                /> */}
                 <InputField
                     {...register("department")}
                     message={
@@ -98,7 +101,7 @@ const DirectPurchaseReceiveHeaderForm = ({
                             : undefined
                     }
                     label="Department"
-                    placeholder="Text here..."
+                    placeholder="Department"
                     right
                     required
                     type="text"
@@ -212,7 +215,7 @@ const DirectPurchaseReceiveHeaderForm = ({
                             : undefined
                     }
                     label="Term of Payment"
-                    placeholder="Text here..."
+                    placeholder="Term of Payment"
                     right
                     required
                     type="text"
@@ -290,7 +293,7 @@ const DirectPurchaseReceiveHeaderForm = ({
                             : undefined
                     }
                     label="Remark"
-                    placeholder="Text here..."
+                    placeholder="Remark"
                     type="text"
                     right
                     textarea

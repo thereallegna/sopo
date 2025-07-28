@@ -13,9 +13,8 @@ const Command = React.forwardRef<
 >(({ className, ...props }, ref) => (
     <CommandPrimitive
         ref={ref}
-        // shouldFilter={false}
         className={cn(
-            "flex h-full w-full flex-col overflow-hidden rounded-sm bg-white text-neutral-950 dark:bg-neutral-950 dark:text-neutral-50",
+            "flex h-full w-full flex-col overflow-hidden rounded-md bg-white text-neutral-950 dark:bg-neutral-950 dark:text-neutral-50",
             className
         )}
         {...props}
@@ -23,9 +22,7 @@ const Command = React.forwardRef<
 ));
 Command.displayName = CommandPrimitive.displayName;
 
-interface CommandDialogProps extends DialogProps {}
-
-const CommandDialog = ({ children, ...props }: CommandDialogProps) => (
+const CommandDialog = ({ children, ...props }: DialogProps) => (
     <Dialog {...props}>
         <DialogContent className="overflow-hidden p-0 shadow-lg">
             <Command className="[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-neutral-500 [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5 dark:[&_[cmdk-group-heading]]:text-neutral-400">
@@ -37,32 +34,20 @@ const CommandDialog = ({ children, ...props }: CommandDialogProps) => (
 
 const CommandInput = React.forwardRef<
     React.ElementRef<typeof CommandPrimitive.Input>,
-    React.ComponentPropsWithoutRef<typeof CommandPrimitive.Input> & {
-        onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    }
->(({ className, onChange, ...props }, ref) => (
-    <div className="flex items-center">
+    React.ComponentPropsWithoutRef<typeof CommandPrimitive.Input>
+>(({ className, ...props }, ref) => (
+    <div className="flex items-center px-3">
+        {/* <Search className="mr-2 h-4 w-4 shrink-0 opacity-50" /> */}
         <CommandPrimitive.Input
             ref={ref}
             className={cn(
-                "flex bg-transparent text-base outline-none placeholder:text-neutral-500 disabled:cursor-not-allowed disabled:opacity-50 dark:placeholder:text-neutral-400",
+                "flex h-11 w-full rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-neutral-500 disabled:cursor-not-allowed disabled:opacity-50 dark:placeholder:text-neutral-400",
                 className
             )}
             {...props}
-            onValueChange={(value: any) => {
-                if (onChange) {
-                    onChange({
-                        target: { value },
-                    } as React.ChangeEvent<HTMLInputElement>);
-                }
-            }}
         />
     </div>
 ));
-
-CommandInput.displayName = CommandPrimitive.Input.displayName;
-
-export default CommandInput;
 
 CommandInput.displayName = CommandPrimitive.Input.displayName;
 
@@ -102,7 +87,7 @@ const CommandGroup = React.forwardRef<
     <CommandPrimitive.Group
         ref={ref}
         className={cn(
-            "overflow-hidden p-1 text-neutral-950 [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-base [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-neutral-500 dark:text-neutral-50 dark:[&_[cmdk-group-heading]]:text-neutral-400",
+            "overflow-hidden p-1 text-neutral-950 [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-xs [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-neutral-500 dark:text-neutral-50 dark:[&_[cmdk-group-heading]]:text-neutral-400",
             className
         )}
         {...props}

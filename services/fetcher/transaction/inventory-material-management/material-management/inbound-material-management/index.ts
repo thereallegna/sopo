@@ -1,7 +1,7 @@
 import { PATH_DIRECT_PURCHASE_RECEIVE } from "@constants/routes";
 import axios from "axios";
-// import { replaceSlashes } from '@utils/converter';
-import { FetcherOptions } from "../../../../../types/client/fetcher";
+import { replaceSlashes } from "@utils/converter";
+import { FetcherOptions } from "../../../../../../types/client/fetcher";
 
 const getDirectPurchaseReceive = async (option?: FetcherOptions) => {
     try {
@@ -45,7 +45,9 @@ const editDirectPurchaseReceive = async (
 ) => {
     try {
         const res = await axios.put(
-            `${PATH_DIRECT_PURCHASE_RECEIVE}/${body.document_number}`,
+            `${PATH_DIRECT_PURCHASE_RECEIVE}/${replaceSlashes(
+                body.document_number
+            )}`,
             body,
             {
                 params,

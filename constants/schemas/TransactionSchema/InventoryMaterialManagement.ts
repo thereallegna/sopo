@@ -78,29 +78,34 @@ export const CreateStockMutationSchema = Yup.object().shape({
 });
 
 export const CreateDirectPurchaseReceiveSchema = Yup.object().shape({
-    date: Yup.string().required("Date is required"),
-    department: Yup.string().required("Department is required"),
-    warehouse_name: Yup.string().required("Warehouse Name is required"),
-    warehouse_code: Yup.string().required("Warehouse Code is required"),
-    vendor: Yup.string().required("Vendor is required"),
-    term_of_peyment: Yup.string().required("Term of Payment is required"),
-    currency_name: Yup.string().required("Currency Name is required"),
-    currency_code: Yup.string().required("Currency Code is required"),
+    document_date: Yup.string().optional(),
+    department: Yup.string().optional(),
+    warehouse_name: Yup.string().optional(),
+    warehouse_code: Yup.string().optional(),
+    vendor_name: Yup.string().optional(),
+    vendor_code: Yup.string().optional(),
+    site_code: Yup.string().optional(),
+    site_name: Yup.string().optional(),
+    term_of_payment: Yup.string().optional(),
+    currency_name: Yup.string().optional(),
+    currency_code: Yup.string().optional(),
+    tax_name: Yup.string().optional(),
+    tax_code: Yup.string().optional(),
     details: Yup.array(
         Yup.object().shape({
-            item_name: Yup.string().required("Item Name is required"),
-            local_code: Yup.string().required("Local Code is required"),
-            batch: Yup.string().required("Batch is required"),
-            uom: Yup.string().required("UOM is required"),
+            item_name: Yup.string().optional(),
+            local_code: Yup.string().optional(),
+            batch: Yup.string().optional(),
+            uom: Yup.string().optional(),
             total: Yup.number()
                 .nullable()
                 .transform((value, originalValue) =>
                     originalValue === "" ? null : Number(originalValue)
                 )
-                .required("Total is required"),
-            remark: Yup.string().required("Remark is required"),
+                .optional(),
+            remark: Yup.string().optional(),
         })
-    ).required("Details is required"),
+    ).optional(),
 });
 
 export const EditDirectPurchaseReceiveSchema = Yup.object().shape({

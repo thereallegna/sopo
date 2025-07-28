@@ -32,7 +32,9 @@ const DetailMasterItemMM = () => {
     const { isLoading } = useQuery({
         queryKey: [GET_DETAIL_STOCK_MUTATION, detail_data],
         queryFn: async () => {
-            const res = await getDetailItem(detail_data.document as string);
+            const res = await getDetailItem(
+                detail_data.document_number as string
+            );
             setDetailData(Object.assign(detail_data, res.data.data));
             return res.data.data;
         },

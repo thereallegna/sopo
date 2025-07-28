@@ -15,10 +15,10 @@ const Navbar = () => {
         <nav className="w-full px-3 py-2 flex justify-between border-b border-neutral-200">
             <div className="hidden md:flex items-center">
                 <Image
-                    src="/images/logo-runsystem.png"
+                    src="/images/logo-trackwise.png"
                     alt=""
-                    width={88}
-                    height={32}
+                    width={150}
+                    height={150}
                     quality={100}
                 />
             </div>

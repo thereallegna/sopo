@@ -8,7 +8,7 @@ import Image from "next/image";
 import { useDrawerStore } from "@stores/useDrawerStore";
 import { GET_DIRECT_PURCHASE_RECEIVE } from "@constants/queryKey";
 import dynamic from "next/dynamic";
-import { getDirectPurchaseReceive } from "@services/fetcher/transaction/inventory-material-management/material-management";
+import { getDirectPurchaseReceive } from "@services/fetcher/transaction/inventory-material-management/material-management/inbound-material-management";
 
 const TableDrawer = dynamic(
     () => import("@components/shared/Drawer/Table/TableDrawer"),
@@ -81,55 +81,21 @@ const DirectPurchaseReceive = () => {
                         {
                             accessor: "number",
                             header: "#",
-                            size: 65,
                         },
                         {
-                            accessor: "item_name",
-                            header: "Item's Name",
+                            accessor: "document_number",
+                            header: "Document Number",
                         },
                         {
-                            accessor: "local_code",
-                            header: "Local Code",
+                            accessor: "warehouse_name",
+                            header: "Warehouse",
                         },
                         {
-                            accessor: "batch",
-                            header: "Batch#",
-                        },
-                        {
-                            accessor: "price",
-                            header: "Price",
-                        },
-                        {
-                            accessor: "quantity",
-                            header: "Quantity (Inventory)",
-                        },
-                        {
-                            accessor: "uom",
-                            header: "UOM (Inventory)",
-                        },
-                        {
-                            accessor: "discount",
-                            header: "Discount%",
-                        },
-                        {
-                            accessor: "rounding",
-                            header: "Rounding",
-                        },
-                        {
-                            accessor: "total",
-                            header: "Total",
-                        },
-                        {
-                            accessor: "remark",
-                            header: "Remark",
-                        },
-                        {
-                            accessor: "expired",
-                            header: "Expired",
+                            accessor: "vendor_name",
+                            header: "Vendor",
                         },
                     ],
                 }}
-                pinnedColumns={["number", "item_name"]}
                 queryFn={getDirectPurchaseReceive}
             />
             <CreateDirectPurchaseReceive />

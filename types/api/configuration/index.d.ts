@@ -65,7 +65,7 @@ type MasterItemFormBody = {
     local_code?: string;
     foreign_name?: string;
     old_code?: string;
-    spesification?: string;
+    specification?: string;
     item_request?: string;
     hs_code?: string;
     remark?: string;

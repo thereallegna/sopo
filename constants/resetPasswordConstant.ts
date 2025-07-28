@@ -3,13 +3,13 @@ import { IconLock } from "@tabler/icons-react";
 export const resetPasswordConstant = {
     inputFields: [
         {
-            label: "New Password",
+            label: "New Pass",
             placeholder: "Input your new password",
             start_icon: { icon: IconLock },
             type: "password",
         },
         {
-            label: "Confirm Password",
+            label: "Confirm Pass",
             placeholder: "Confirm your new password",
             start_icon: { icon: IconLock },
             type: "password",

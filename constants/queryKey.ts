@@ -30,16 +30,21 @@ export const GET_VENDOR = "getVendor";
 // CONFIGURATION PROCUREMENT MANAGEMENT END
 
 // TRANSACTION - INVENTORY MANAGEMENT (START)
-export const GET_STOCK_MUTATION = "getStockMutation";
-export const GET_DETAIL_STOCK_MUTATION = "getDetailStockMutation";
 export const GET_INITIAL_STOCK = "getInitialStock";
 export const GET_DETAIL_INITIAL_STOCK = "getDetailInitialStock";
 export const GET_DETAIL_BY_WAREHOUSE_INITIAL_STOCK =
     "getDetailByWarehouseInitialStock";
+
 export const GET_STOCK_ADJUSTMENT = "getStockAdjustment";
 export const GET_DETAIL_STOCK_ADJUSTMENT = "getDetailStockAdjustment";
 export const GET_DETAIL_BY_WAREHOUSE_STOCK_ADJUSTMENT =
     "getDetailByWarehouseStockAdjustment";
+
+export const GET_STOCK_MUTATION = "getStockMutation";
+export const GET_DETAIL_STOCK_MUTATION = "getDetailStockMutation";
+export const GET_DETAIL_BY_WAREHOUSE_STOCK_MUTATION =
+    "getDetailByWarehouseStockMutation";
+
 // TRANSACTION - INVENTORY MANAGEMENT (END)
 
 // TRANSACTION - MATERIAL MANAGEMENT (START)
