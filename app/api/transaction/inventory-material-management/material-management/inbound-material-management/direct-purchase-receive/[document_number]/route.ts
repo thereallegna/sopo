@@ -9,7 +9,7 @@ export async function PUT(
 ) {
     try {
         const session = await getServerSideSession();
-        const body = (await req.json()) as DirectPurchaseReceiveFormBody;
+        const body = (await req.json()) as DirectPurchaseReceiveDetailFormBody;
 
         // Decode the document_number from URL params
         const documentNumber = decodeURIComponent(params.document_number);

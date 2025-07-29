@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect } from "react";
 import { Button } from "@components/ui/Button";
 import {
@@ -15,6 +17,7 @@ import { editDirectPurchaseReceive } from "@services/fetcher/transaction/invento
 import { useSetValueForm } from "@hooks/useSetValueForm";
 import { useDrawerStore } from "@stores/useDrawerStore";
 import { CreateDirectPurchaseReceiveSchema } from "@constants/schemas/TransactionSchema/InventoryMaterialManagement";
+import { parse, format, isValid } from "date-fns";
 import DirectPurchaseReceiveHeaderForm from "../Form/HeaderForm";
 import DirectPurchaseReceiveDetailForm from "../Form/DetailForm";
 
@@ -24,6 +27,7 @@ const EditDirectPurchaseReceive = () => {
     ) as DirectPurchaseReceiveFormBody;
 
     const {
+        handleCloseDrawerEdit,
         handleInputKeyDown,
         handleSaveClick,
         handleSubmit,
@@ -60,10 +64,62 @@ const EditDirectPurchaseReceive = () => {
         isOpenEdit
     );
 
+    // Convert date format for HTML date input (same as Detail page)
+    useEffect(() => {
+        if (detail_data?.document_date) {
+            try {
+                let formattedDate = "";
+                const dateStr = detail_data.document_date.toString();
+
+                // Check if date is in YYYYMMDD format (e.g., "20250605")
+                if (/^\d{8}$/.test(dateStr)) {
+                    const year = dateStr.substring(0, 4);
+                    const month = dateStr.substring(4, 6);
+                    const day = dateStr.substring(6, 8);
+                    formattedDate = `${year}-${month}-${day}`;
+                }
+                // Check if date is in dd/MMM/yyyy format (e.g., "21/Jan/2025")
+                else if (/^\d{2}\/\w{3}\/\d{4}$/.test(dateStr)) {
+                    const parsedDate = parse(
+                        dateStr,
+                        "dd/MMM/yyyy",
+                        new Date()
+                    );
+                    if (isValid(parsedDate)) {
+                        formattedDate = format(parsedDate, "yyyy-MM-dd");
+                    }
+                }
+                // Check if date is in YYYY-MM-DD format (already correct)
+                else if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
+                    formattedDate = dateStr;
+                }
+
+                if (formattedDate) {
+                    setValue("document_date", formattedDate);
+                }
+
+                console.log(
+                    "Edit - document_date raw:",
+                    detail_data?.document_date
+                );
+                console.log(
+                    "Edit - document_date type:",
+                    typeof detail_data?.document_date
+                );
+                console.log("Edit - formatted date:", formattedDate);
+            } catch (error) {
+                console.error("Error parsing date in edit:", error);
+            }
+        }
+    }, [detail_data?.document_date, setValue]);
+
     return (
-        <Drawer>
+        <Drawer onClose={handleCloseDrawerEdit} open={isOpenEdit}>
             <DrawerContent>
-                <DrawerHeader>
+                <DrawerHeader
+                    onClick={handleCloseDrawerEdit}
+                    drawerTitle="Edit Direct Purchase Receive"
+                >
                     <DrawerEndHeader>
                         <Button
                             variant={!canSave ? "disabled" : "primary"}

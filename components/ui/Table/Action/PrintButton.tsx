@@ -21,19 +21,19 @@ const PrintButton: React.FC<PrintButtonProps> = ({ data, columns }) => {
         const padding = 10;
         const titleY = 30;
 
-        const imageUrl = "/images/logo-r1.png";
-        const imgWidth = 30;
-        const imgHeight = 30;
+        const imageUrl = "/images/logo-trackwise.png";
+        const imgWidth = 55;
+        const imgHeight = 10;
         const imgX = padding;
-        const imgY = titleY - 10;
+        const imgY = titleY - 5; // tambah top padding 5px
 
         doc.addImage(imageUrl, "PNG", imgX, imgY, imgWidth, imgHeight);
         doc.setFontSize(16);
-        doc.text("RUN System", imgX + imgWidth + 10, titleY - 3);
+        doc.text("TrackwiseIMM", imgX + imgWidth + 10, titleY - 3);
         doc.setFontSize(10);
 
         const addressText =
-            "Jl. Wahid Hasyim No. 06, Condongcatur, Depok, Sleman, Yogyakarta, Daerah Istimewa Yogyakarta 55283.";
+            "Jl. XYZ No. 10, Yogyakarta, Daerah Istimewa Yogyakarta 12345.";
         const wrappedAddressText = doc.splitTextToSize(addressText, 100);
 
         doc.text(wrappedAddressText, imgX + imgWidth + 10, titleY + 5);

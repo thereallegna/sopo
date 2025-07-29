@@ -171,7 +171,7 @@ const getSite = async (option?: FetcherOptions) => {
 
         return res;
     } catch (error) {
-        console.error("Error fetching log history:", error);
+        console.error("Error fetching site:", error);
         throw error;
     }
 };

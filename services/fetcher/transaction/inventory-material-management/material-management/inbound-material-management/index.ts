@@ -55,7 +55,7 @@ const editDirectPurchaseReceive = async (
         );
         return res.data;
     } catch (error) {
-        console.error("Error editing direct purchase receive:", error);
+        console.error("Error editing initial stock:", error);
         throw error;
     }
 };

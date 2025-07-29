@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect } from "react";
+import { Button } from "@components/ui/Button";
 import {
     Drawer,
     DrawerBody,
@@ -9,12 +10,11 @@ import {
     DrawerFooter,
     DrawerHeader,
 } from "@components/ui/Drawer";
+import { IconHistory, IconPencil } from "@tabler/icons-react";
 import { useDrawerStore } from "@stores/useDrawerStore";
 import { useSetValueForm } from "@hooks/useSetValueForm";
 import { useForm } from "react-hook-form";
 import { parse, format, isValid } from "date-fns";
-import { IconHistory, IconPencil } from "@tabler/icons-react";
-import { Button } from "@components/ui/Button";
 import DirectPurchaseReceiveHeaderForm from "../Form/HeaderForm";
 import DirectPurchaseReceiveDetailForm from "../Form/DetailForm";
 
@@ -34,6 +34,7 @@ const DetailDirectPurchaseReceive = () => {
 
     useSetValueForm<DirectPurchaseReceiveFormBody>(detail_data, setValue);
 
+    // Convert date format for HTML date input
     useEffect(() => {
         if (detail_data?.document_date) {
             try {
@@ -126,7 +127,7 @@ const DetailDirectPurchaseReceive = () => {
                         type="submit"
                         onClick={() => {
                             openHistoryLogDrawer({
-                                code: detail_data?.document_number || "",
+                                code: detail_data?.document_number,
                                 category: "DirectPurchaseReceive",
                             });
                         }}
