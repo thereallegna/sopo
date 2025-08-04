@@ -59,6 +59,7 @@ const InitialStockHeaderForm = ({
             setValue("document_date", e.target.value);
         }
     };
+
     return (
         <Card size="drawer" className="border border-Neutral-200 shadow-none">
             <CardContent className="flex-wrap flex flex-row gap-6 items-center">

@@ -34,3 +34,28 @@ export async function GET(req: NextRequest) {
         );
     }
 }
+
+export async function POST(req: Request) {
+    try {
+        const session = await getServerSideSession();
+
+        const body = (await req.json()) as StockMutationFormBody;
+
+        const response = await axios.post(PATH_STOCK_MUTATION_BE, body, {
+            headers: {
+                Authorization: `Bearer ${session.user?.data?.authorization?.access_token}`,
+            },
+        });
+
+        return NextResponse.json(response.data);
+    } catch (error: any) {
+        const axiosError = error as AxiosError;
+        if (axiosError.response?.data) {
+            return NextResponse.json(error?.response?.data, { status: 400 });
+        }
+        return NextResponse.json(
+            { message: "Internal server error", error },
+            { status: 500 }
+        );
+    }
+}

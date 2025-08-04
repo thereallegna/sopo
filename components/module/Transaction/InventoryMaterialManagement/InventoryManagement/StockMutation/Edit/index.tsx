@@ -21,7 +21,7 @@ import BasicForm from "../Form/BasicForm";
 import MutateFromForm from "../Form/MutateFromForm";
 import MutateToForm from "../Form/MutateToForm";
 
-const EditMasterItemMM = () => {
+const EditStockMutation = () => {
     const detail_data = useDrawerStore(
         (state) => state.detail_data
     ) as StockMutationFormBody;
@@ -89,6 +89,7 @@ const EditMasterItemMM = () => {
                             register={register}
                             handleInputKeyDown={handleInputKeyDown}
                             setError={setError}
+                            type="edit"
                         />
                         <MutateFromForm
                             errors={errors}
@@ -121,4 +122,4 @@ const EditMasterItemMM = () => {
     );
 };
 
-export default EditMasterItemMM;
+export default EditStockMutation;

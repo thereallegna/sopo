@@ -47,32 +47,25 @@ export const StockAdjustmentSchema = Yup.object().shape({
 });
 
 export const CreateStockMutationSchema = Yup.object().shape({
-    document: Yup.string().required("Document is required"),
-    date: Yup.date().required("Date is required"),
-    warehouse: Yup.string().required("Warehouse is required"),
-    warehouse_code: Yup.string().required("Warehouse is required"),
+    document: Yup.string().optional(),
+    date: Yup.date().optional(),
+    warehouse: Yup.string().optional(),
+    warehouse_code: Yup.string().optional(),
     mutated_from: Yup.array(
         Yup.object().shape({
-            document_number: Yup.string().required("Document is required"),
-            item_code: Yup.string().required("Item code is required"),
-            item_name: Yup.string().required("Item name is required"),
-            batch: Yup.string().required("Batch is required"),
-            stock: Yup.number().required("Stock is required"),
-            quantity: Yup.number().required("Quantity is required"),
-            currency: Yup.string().required("Currency is required"),
-            unit_price: Yup.string().required("Price is required"),
+            item_name: Yup.string().optional(),
+            batch: Yup.string().optional(),
+            stock: Yup.number().optional(),
+            quantity: Yup.number().optional(),
+            uom: Yup.string().optional(),
         })
     ).optional(),
     mutated_to: Yup.array(
         Yup.object().shape({
-            document_number: Yup.string().required("Document is required"),
-            item_code: Yup.string().required("Item code is required"),
-            item_name: Yup.string().required("Item name is required"),
-            batch: Yup.string().required("Batch is required"),
-            stock: Yup.number().required("Stock is required"),
-            quantity: Yup.number().required("Quantity is required"),
-            currency: Yup.string().required("Currency is required"),
-            unit_price: Yup.string().required("Price is required"),
+            item_name: Yup.string().optional(),
+            batch: Yup.string().optional(),
+            quantity: Yup.number().optional(),
+            uom: Yup.string().optional(),
         })
     ).optional(),
 });

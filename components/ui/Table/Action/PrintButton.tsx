@@ -47,7 +47,7 @@ const PrintButton: React.FC<PrintButtonProps> = ({ data, columns }) => {
             ...columns.map((col) => col.header || col.accessorKey),
         ];
         const tableData = data.map((item) => [
-            ...columns.map((col) => item[col.accessorKey]),
+            ...columns.map((col) => item[col.accessor || col.accessorKey]),
         ]);
 
         autoTable(doc, {

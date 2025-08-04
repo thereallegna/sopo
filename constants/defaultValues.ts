@@ -116,14 +116,16 @@ export const StockAdjustmentDefaultValues: StockAdjustmentFormBody = {
 
 export const StockMutationDefaultValues: StockMutationFormBody = {
     document_number: "",
-    document_date: "",
+    date: "",
     warehouse: "",
     warehouse_code: "",
+    batch: "",
+    source: "",
     cancel: false,
     reason_for_cancellation: "",
     remark: "",
-    mutated_from: [],
-    mutated_to: [],
+    from_array: [],
+    to_array: [],
 };
 
 export const DirectPurchaseReceiveDefaultValues: DirectPurchaseReceiveFormBody =

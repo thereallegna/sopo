@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import { Card, CardContent } from "@components/ui/Card";
 import TableForm from "@components/shared/TableForm";
 import { GET_DETAIL_BY_WAREHOUSE_STOCK_ADJUSTMENT } from "@constants/queryKey";
@@ -20,6 +20,21 @@ const StockAdjustmentDetailForm = ({
     formType?: "add" | "edit" | "detail";
 }) => {
     const [showModal, setShowModal] = useState<boolean>(false);
+    const [isWarehouseEmpty, setIsWarehouseEmpty] = useState<boolean>(true);
+
+    // Tambahkan useEffect untuk menutup modal saat formType bukan add
+    useEffect(() => {
+        if (formType !== "add") {
+            setShowModal(false);
+        }
+    }, [formType]);
+
+    // Tambahkan useEffect untuk warehouse
+    useEffect(() => {
+        const warehouseCode = watch("warehouse_code");
+        setIsWarehouseEmpty(!warehouseCode);
+    }, [watch("warehouse_code")]);
+
     const columns = useMemo((): GenerateColumnsOption => {
         const options: GenerateColumnsOption = {
             columns: [
@@ -125,14 +140,31 @@ const StockAdjustmentDetailForm = ({
                     showButtonDeleteRow={formType === "add"}
                     showButtonDataModal={formType === "add"}
                     getDataButtonProps={{
-                        disabled: !watch("warehouse_code"),
-                        variant: !watch("warehouse_code")
-                            ? "disabled"
+                        disabled: isWarehouseEmpty || formType !== "add",
+                        variant:
+                            isWarehouseEmpty || formType !== "add"
+                                ? "disabled"
+                                : undefined,
+                        title: isWarehouseEmpty
+                            ? "Please select warehouse first"
                             : undefined,
                     }}
                     onShowGetDataModal={() => {
-                        if (watch("warehouse_code")) {
+                        if (!isWarehouseEmpty && formType === "add") {
+                            console.log(
+                                "[MutateFromForm] Opening modal with warehouse:",
+                                watch("warehouse_code")
+                            );
                             setShowModal(true);
+                        } else {
+                            console.warn(
+                                "[MutateFromForm] Cannot open modal: ",
+                                {
+                                    isWarehouseEmpty,
+                                    formType,
+                                    warehouseCode: watch("warehouse_code"),
+                                }
+                            );
                         }
                     }}
                     onChangeData={(rowIndex, columnId, value, type) => {
@@ -182,12 +214,30 @@ const StockAdjustmentDetailForm = ({
                     }}
                     // onShowGetDataModal={() => setShowModal(true)}
                     getDataModalProps={{
-                        isOpen: showModal,
+                        isOpen:
+                            formType === "add" &&
+                            showModal &&
+                            !isWarehouseEmpty,
                         title: "Select Item",
                         queryKey: GET_DETAIL_BY_WAREHOUSE_STOCK_ADJUSTMENT,
-                        queryFn: getItemStockAdjustment,
-                        onClose: (val) => setShowModal(val),
-                        // pinnedColumns:
+                        queryFn: (params) => {
+                            if (formType === "add") {
+                                return getItemStockAdjustment({
+                                    ...params,
+                                    query: {
+                                        ...params?.query,
+                                        warehouse_code: watch("warehouse_code"),
+                                    },
+                                });
+                            }
+                            // Return a resolved promise or handle as needed when not "add"
+                            return Promise.resolve({} as any);
+                        },
+                        onClose: () => {
+                            if (formType === "add") {
+                                setShowModal(false);
+                            }
+                        },
                         columns: {
                             columns: [
                                 {

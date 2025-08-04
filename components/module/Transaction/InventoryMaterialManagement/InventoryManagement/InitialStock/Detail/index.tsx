@@ -72,10 +72,6 @@ const DetailInitialStock = () => {
         }
     }, [detail_data?.document_date, setValue]);
 
-    console.log("detail_data", detail_data);
-    console.log("document_date raw:", detail_data?.document_date);
-    console.log("document_date type:", typeof detail_data?.document_date);
-
     return (
         <Drawer onClose={closeDetailDrawer} open={isOpenDetail}>
             <DrawerContent>

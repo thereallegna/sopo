@@ -17,6 +17,8 @@ type StockSummaryFormBody = {
     item_category_name: string;
     item_code: string;
     item_name: string;
+    batch: string;
+    uom_name: string;
     date: string;
     details: StockSummaryDetailFormBody[];
 };

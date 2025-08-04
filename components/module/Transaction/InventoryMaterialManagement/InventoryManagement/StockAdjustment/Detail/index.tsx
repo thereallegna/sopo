@@ -16,7 +16,7 @@ import { Button } from "@components/ui/Button";
 import InitialStockHeaderForm from "../Form/HeaderForm";
 import InitialStockBodyForm from "../Form/DetailForm";
 
-const DetailInitialStock = () => {
+const DetailStockAdjustment = () => {
     const { isOpenDetail, closeDetailDrawer, openHistoryLogDrawer } =
         useDrawerStore();
     const detail_data = useDrawerStore(
@@ -26,8 +26,6 @@ const DetailInitialStock = () => {
     const { setValue, watch, register } = useForm<StockAdjustmentFormBody>();
 
     useSetValueForm<StockAdjustmentFormBody>(detail_data, setValue);
-
-    console.log("detail_data", detail_data);
 
     return (
         <Drawer onClose={closeDetailDrawer} open={isOpenDetail}>
@@ -75,4 +73,4 @@ const DetailInitialStock = () => {
     );
 };
 
-export default DetailInitialStock;
+export default DetailStockAdjustment;

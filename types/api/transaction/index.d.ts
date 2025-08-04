@@ -51,40 +51,39 @@ type TransactionItem = {
     uom_name: string;
 };
 
-type StockMutatedFormBody = {
-    document_number: string;
+type StockMutatedFromFormBody = {
     item_code: string;
     item_name: string;
-    batch: string;
+    batch?: string;
     stock: number;
-    quantity: string;
+    quantity: number;
     uom: string;
-    currency_code: string;
-    currency: string;
-    unit_price: string;
+    source?: string;
+    remark?: string;
 };
 
-// type StockMutatedFormBody  = {
-//     d_no: string;
-//     item_name: string;
-//     item_code: string;
-//     batch: string;
-//     source: string;
-//     stock: number;
-//     quantity: string;
-//     uom: string;
-// };
+type StockMutatedToFormBody = {
+    item_code: string;
+    item_name: string;
+    batch?: string;
+    quantity: number;
+    uom: string;
+    source?: string;
+    remark?: string;
+};
 
 type StockMutationFormBody = {
     document_number: string;
-    document_date: string;
+    date: string;
     warehouse: string;
     warehouse_code: string;
+    batch: string;
+    source: string;
     cancel: boolean;
     reason_for_cancellation?: string;
     remark?: string;
-    mutated_from: StockMutatedFormBody[];
-    mutated_to: StockMutatedFormBody[];
+    from_array: StockMutatedFromFormBody[];
+    to_array: StockMutatedToFormBody[];
 };
 
 type ItemsQuery = {

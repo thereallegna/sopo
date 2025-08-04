@@ -177,7 +177,6 @@ FormType<InitialStockFormBody> & { formType?: "add" | "edit" | "detail" }) => {
                         queryKey: GET_MASTER_ITEM_MATERIAL_MANAGEMENT,
                         queryFn: getItem,
                         onClose: (val) => setShowModal(val),
-                        // pinnedColumns:
                         columns: {
                             columns: [
                                 {

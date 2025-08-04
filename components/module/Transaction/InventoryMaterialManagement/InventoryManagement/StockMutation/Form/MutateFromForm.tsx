@@ -1,10 +1,10 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import { Card, CardContent } from "@components/ui/Card";
 import TableForm from "@components/shared/TableForm";
 import { FieldPath } from "react-hook-form";
-import { GET_INITIAL_STOCK } from "@constants/queryKey";
-// import { convertStockMutationForm } from '@utils/converter';
-import { getInitialStock } from "@services/fetcher/transaction/inventory-material-management/inventory-management";
+import { GET_DETAIL_BY_WAREHOUSE_STOCK_MUTATION } from "@constants/queryKey";
+import { getItemStockMutation } from "@services/fetcher/transaction/inventory-material-management/inventory-management";
+import { convertStockMutationFromForm } from "@utils/converter";
 import { GenerateColumnsOption } from "../../../../../../../types/client/table";
 import { FormType } from "../../../../../../../types/form";
 
@@ -13,19 +13,32 @@ const MutateFromForm = ({
     watch,
     setValue,
     setError,
-    type = "add",
     handleInputKeyDown,
     disableAll,
-}: FormType<StockMutationFormBody> & { type?: "add" | "edit" | "detail" }) => {
+    formType = "add",
+}: FormType<StockMutationFormBody> & {
+    formType?: "add" | "edit" | "detail";
+}) => {
     const [showModal, setShowModal] = useState<boolean>(false);
+    const [isWarehouseEmpty, setIsWarehouseEmpty] = useState<boolean>(true);
 
-    const columns = useMemo(() => {
-        const mutateFromColumn: GenerateColumnsOption = {
-            key: "mutated_from",
+    useEffect(() => {
+        if (formType !== "add") {
+            setShowModal(false);
+        }
+    }, [formType]);
+
+    useEffect(() => {
+        const warehouseCode = watch("warehouse_code");
+        setIsWarehouseEmpty(!warehouseCode);
+    }, [watch("warehouse_code")]);
+
+    const columns = useMemo((): GenerateColumnsOption => {
+        const options: GenerateColumnsOption = {
             columns: [
                 {
                     accessor: "item_name",
-                    header: "Name",
+                    header: "Item's Name",
                     type: "input",
                     inputProps: {
                         disabled: true,
@@ -52,8 +65,8 @@ const MutateFromForm = ({
                     header: "Quantity",
                     type: "input",
                     inputProps: {
-                        onKeyDown: handleInputKeyDown,
-                        disabled: type === "detail" || disableAll,
+                        type: "number",
+                        disabled: formType !== "add",
                     },
                 },
                 {
@@ -64,137 +77,203 @@ const MutateFromForm = ({
                         disabled: true,
                     },
                 },
-                {
-                    accessor: "currency",
-                    header: "Currency",
-                    type: "input",
-                    inputProps: {
-                        disabled: true,
-                    },
-                },
-                {
-                    accessor: "unit_price",
-                    header: "Unit Price",
-                    type: "input",
-                    inputProps: {
-                        disabled: true,
-                    },
-                },
             ],
-            hasAction: false,
+            hasAction: formType === "add",
         };
 
-        return mutateFromColumn;
+        return options;
     }, [handleInputKeyDown]);
+
+    const total = useMemo(() => {
+        const details = watch("from_array");
+        if (details) {
+            return watch("from_array")
+                .map((detail) => Number(detail.quantity))
+                .reduce(
+                    (accumulator, currentValue) => accumulator + currentValue,
+                    0
+                );
+        }
+        return 0;
+    }, [watch]);
+
+    useEffect(() => {
+        const fromArray = watch("from_array");
+        console.log("MutateFromForm data:", fromArray);
+    }, [watch]);
 
     return (
         <Card size="drawer" className="border border-Neutral-200 shadow-none">
             <CardContent className="flex-wrap flex flex-row gap-6 items-center w-full">
                 <TableForm
                     title="Mutate From"
-                    errors={errors}
-                    data={watch("mutated_from")}
+                    data={watch("from_array") || []}
                     columns={columns}
-                    disableAll={type === "detail"}
-                    onChangeData={(
+                    errors={errors}
+                    disableAll={disableAll}
+                    showButtonDeleteRow={formType === "add"}
+                    showButtonDataModal={formType === "add"}
+                    getDataButtonProps={{
+                        disabled: isWarehouseEmpty || formType !== "add",
+                        variant:
+                            isWarehouseEmpty || formType !== "add"
+                                ? "disabled"
+                                : undefined,
+                        title: isWarehouseEmpty
+                            ? "Please select warehouse first"
+                            : undefined,
+                    }}
+                    onShowGetDataModal={() => {
+                        if (!isWarehouseEmpty && formType === "add") {
+                            console.log(
+                                "[MutateFromForm] Opening modal with warehouse:",
+                                watch("warehouse_code")
+                            );
+                            setShowModal(true);
+                        } else {
+                            console.warn(
+                                "[MutateFromForm] Cannot open modal: ",
+                                {
+                                    isWarehouseEmpty,
+                                    formType,
+                                    warehouseCode: watch("warehouse_code"),
+                                }
+                            );
+                        }
+                    }}
+                    onChangeData={(rowIndex, columnId, value, type) => {
+                        const prevData = watch("from_array");
+                        let data: string | number = value;
+                        if (type === "number") {
+                            data = Number(data);
+                        }
+                        prevData[rowIndex] = {
+                            ...prevData[rowIndex],
+                            [columnId]: data,
+                        };
+                        setValue?.("from_array", prevData);
+                        if (setError) {
+                            setError(
+                                `from_array.${rowIndex}.${columnId}` as FieldPath<StockMutationFormBody>,
+                                { type: "daisabled" }
+                            );
+                        }
+                    }}
+                    onCheckedChange={(
                         rowIndex: number,
                         columnId: string,
-                        value: string
+                        value: boolean
                     ) => {
-                        const prevData = watch("mutated_from");
+                        const prevData = watch("from_array");
                         prevData[rowIndex] = {
                             ...prevData[rowIndex],
                             [columnId]: value,
                         };
-                        setValue?.("mutated_from", prevData);
+                        setValue?.("from_array", prevData);
                         if (setError) {
                             setError(
-                                `mutated_from.${rowIndex}.${columnId}` as FieldPath<StockMutationFormBody>,
+                                `from_array.${rowIndex}.${columnId}` as FieldPath<StockMutationFormBody>,
                                 { type: "disabled" }
                             );
                         }
                     }}
-                    onShowGetDataModal={() => {
-                        if (watch("warehouse_code")) {
-                            setShowModal(true);
-                        }
-                    }}
                     onDeleteRow={(index) => {
-                        const data = watch("mutated_from");
+                        const data = watch("from_array");
                         if (index >= 0) {
                             const filteredData = data.filter(
                                 (_, idx) => idx !== Number(index)
                             );
-                            setValue?.("mutated_from", filteredData);
+                            setValue?.("from_array", filteredData);
                         }
                     }}
-                    getDataButtonProps={{
-                        disabled: !watch("warehouse_code"),
-                        variant: !watch("warehouse_code")
-                            ? "disabled"
-                            : undefined,
-                    }}
                     getDataModalProps={{
-                        isOpen: showModal,
-                        title: "Select Initial Stock",
-                        queryKey: GET_INITIAL_STOCK,
-                        queryFn: getInitialStock,
-                        onClose: (val) => setShowModal(val),
-                        // pinnedColumns: ['selected', 'number', 'document_number'],
+                        isOpen:
+                            formType === "add" &&
+                            showModal &&
+                            !isWarehouseEmpty,
+                        title: "Select Item",
+                        queryKey: GET_DETAIL_BY_WAREHOUSE_STOCK_MUTATION,
+                        queryFn: (params) => {
+                            if (formType === "add") {
+                                return getItemStockMutation({
+                                    ...params,
+                                    query: {
+                                        ...params?.query,
+                                        warehouse_code: watch("warehouse_code"),
+                                    },
+                                });
+                            }
+                            // Return a resolved promise or handle as needed when not "add"
+                            return Promise.resolve({} as any);
+                        },
+                        onClose: () => {
+                            if (formType === "add") {
+                                setShowModal(false);
+                            }
+                        },
                         columns: {
                             columns: [
                                 {
                                     accessor: "selected",
-                                    header: "#",
+                                    header: "",
                                     type: "checkbox",
                                     size: 50,
                                 },
                                 {
-                                    accessor: "document_number",
-                                    header: "Document",
+                                    accessor: "item_code",
+                                    header: "Item's Code",
                                 },
                                 {
-                                    accessor: "document_date",
-                                    header: "Date",
+                                    accessor: "item_name",
+                                    header: "Item's Name",
                                 },
                                 {
-                                    accessor: "warehouse_name",
-                                    header: "Warehouse",
+                                    accessor: "batch",
+                                    header: "Batch",
+                                },
+                                {
+                                    accessor: "stock",
+                                    header: "Stock",
+                                },
+                                {
+                                    accessor: "uom_name",
+                                    header: "UOM",
                                 },
                             ],
                             hasAction: false,
                         },
                         multipleSelect: true,
                         idSelected: "selected",
-                        targetIdSelector: "document_number",
-                        valueSelected: watch("mutated_from")?.map(
-                            (item) => item.document_number
+                        targetIdSelector: "item_code",
+                        valueSelected: watch("from_array")?.map(
+                            (item) => item.item_code
                         ),
                         onSelectRow: (data: any) => {
                             if (setValue) {
-                                // Fetch Detail Initial Stock
-
-                                const convertData = data;
-                                const prevData = watch("mutated_from") || []; // Default ke array kosong jika undefined
+                                const convertData =
+                                    convertStockMutationFromForm(
+                                        data as TransactionItem
+                                    );
+                                const prevData = watch("from_array") || [];
                                 const itemExists = prevData.some(
                                     (item) =>
-                                        item.document_number ===
-                                        convertData.document_number
+                                        item.item_code === convertData.item_code
                                 );
                                 let updatedData;
                                 if (itemExists) {
                                     updatedData = prevData.filter(
                                         (item) =>
-                                            item.document_number !==
-                                            convertData.document_number
+                                            item.item_code !==
+                                            convertData.item_code
                                     );
                                 } else {
                                     updatedData = [...prevData, convertData];
                                 }
-                                setValue("mutated_from", updatedData);
+                                setValue("from_array", updatedData);
                             }
                         },
                     }}
+                    total={`${total} Quantity`}
                 />
             </CardContent>
         </Card>

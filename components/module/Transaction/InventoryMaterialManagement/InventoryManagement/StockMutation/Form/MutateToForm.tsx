@@ -1,8 +1,8 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import { Card, CardContent } from "@components/ui/Card";
 import TableForm from "@components/shared/TableForm";
 import { GET_MASTER_ITEM_MATERIAL_MANAGEMENT } from "@constants/queryKey";
-// import { convertStockMutationForm } from '@utils/converter';
+import { convertStockMutationToForm } from "@utils/converter";
 import { FieldPath } from "react-hook-form";
 import { getItem } from "@services/fetcher/configuration/inventory-management";
 import { GenerateColumnsOption } from "../../../../../../../types/client/table";
@@ -13,18 +13,19 @@ const MutateToForm = ({
     watch,
     setValue,
     setError,
-    type = "add",
-    disableAll,
     handleInputKeyDown,
-}: FormType<StockMutationFormBody> & { type?: "add" | "edit" | "detail" }) => {
+    disableAll,
+    formType = "add",
+}: FormType<StockMutationFormBody> & {
+    formType?: "add" | "edit" | "detail";
+}) => {
     const [showModal, setShowModal] = useState<boolean>(false);
-    const columns = useMemo(() => {
-        const mutateToColumn: GenerateColumnsOption = {
-            key: "mutated_to",
+    const columns = useMemo((): GenerateColumnsOption => {
+        const options: GenerateColumnsOption = {
             columns: [
                 {
                     accessor: "item_name",
-                    header: "Name",
+                    header: "Item's Name",
                     type: "input",
                     inputProps: {
                         disabled: true,
@@ -35,15 +36,7 @@ const MutateToForm = ({
                     header: "Batch",
                     type: "input",
                     inputProps: {
-                        disabled: true,
-                    },
-                },
-                {
-                    accessor: "stock",
-                    header: "Stock",
-                    type: "input",
-                    inputProps: {
-                        disabled: true,
+                        disabled: formType !== "add",
                     },
                 },
                 {
@@ -51,8 +44,8 @@ const MutateToForm = ({
                     header: "Quantity",
                     type: "input",
                     inputProps: {
-                        onKeyDown: handleInputKeyDown,
-                        disabled: type === "detail" || disableAll,
+                        type: "number",
+                        disabled: formType !== "add",
                     },
                 },
                 {
@@ -63,57 +56,85 @@ const MutateToForm = ({
                         disabled: true,
                     },
                 },
-                {
-                    accessor: "currency",
-                    header: "Currency",
-                    type: "input",
-                    inputProps: {
-                        disabled: true,
-                    },
-                },
-                {
-                    accessor: "unit_price",
-                    header: "Unit Price",
-                    type: "input",
-                    inputProps: {
-                        disabled: true,
-                    },
-                },
             ],
             hasAction: false,
         };
 
-        return mutateToColumn;
+        return options;
     }, [handleInputKeyDown]);
+
+    const total = useMemo(() => {
+        const details = watch("to_array");
+        if (details) {
+            return watch("to_array")
+                .map((detail) => Number(detail.quantity))
+                .reduce(
+                    (accumulator, currentValue) => accumulator + currentValue,
+                    0
+                );
+        }
+        return 0;
+    }, [watch("to_array")]);
+
+    useEffect(() => {
+        const toArray = watch("to_array");
+        console.log("MutateToForm data:", toArray);
+    }, [watch]);
+
     return (
         <Card size="drawer" className="border border-Neutral-200 shadow-none">
             <CardContent className="flex-wrap flex flex-row gap-6 items-center w-full">
                 <TableForm
                     title="Mutate To"
-                    data={watch("mutated_to")}
+                    data={watch("to_array") || []}
                     columns={columns}
                     errors={errors}
-                    onChangeData={(rowIndex, columnId, value) => {
-                        const prevData = watch("mutated_to");
+                    disableAll={disableAll}
+                    showButtonDeleteRow={formType === "add"}
+                    showButtonDataModal={formType === "add"}
+                    onChangeData={(rowIndex, columnId, value, type) => {
+                        const prevData = watch("to_array");
+                        let data: string | number = value;
+                        if (type === "number") {
+                            data = Number(data);
+                        }
+                        prevData[rowIndex] = {
+                            ...prevData[rowIndex],
+                            [columnId]: data,
+                        };
+                        setValue?.("to_array", prevData);
+                        if (setError) {
+                            setError(
+                                `details.${rowIndex}.${columnId}` as FieldPath<StockMutationFormBody>,
+                                { type: "disabled" }
+                            );
+                        }
+                    }}
+                    onCheckedChange={(
+                        rowIndex: number,
+                        columnId: string,
+                        value: boolean
+                    ) => {
+                        const prevData = watch("to_array");
                         prevData[rowIndex] = {
                             ...prevData[rowIndex],
                             [columnId]: value,
                         };
-                        setValue?.("mutated_to", prevData);
+                        setValue?.("to_array", prevData);
                         if (setError) {
                             setError(
-                                `mutated_from.${rowIndex}.${columnId}` as FieldPath<StockMutationFormBody>,
+                                `details.${rowIndex}.${columnId}` as FieldPath<StockMutationFormBody>,
                                 { type: "disabled" }
                             );
                         }
                     }}
                     onDeleteRow={(index) => {
-                        const data = watch("mutated_to");
+                        const data = watch("to_array");
                         if (index >= 0) {
                             const filteredData = data.filter(
                                 (_, idx) => idx !== Number(index)
                             );
-                            setValue?.("mutated_to", filteredData);
+                            setValue?.("to_array", filteredData);
                         }
                     }}
                     onShowGetDataModal={() => setShowModal(true)}
@@ -140,8 +161,8 @@ const MutateToForm = ({
                                     header: "Item's Name",
                                 },
                                 {
-                                    accessor: "local_code",
-                                    header: "Local Code",
+                                    accessor: "uom_name",
+                                    header: "UOM",
                                 },
                             ],
                             hasAction: false,
@@ -149,13 +170,15 @@ const MutateToForm = ({
                         multipleSelect: true,
                         idSelected: "selected",
                         targetIdSelector: "item_code",
-                        valueSelected: watch("mutated_to")?.map(
+                        valueSelected: watch("to_array")?.map(
                             (item) => item.item_code
                         ),
                         onSelectRow: (data: any) => {
                             if (setValue) {
-                                const convertData = data;
-                                const prevData = watch("mutated_to") || [];
+                                const convertData = convertStockMutationToForm(
+                                    data as MasterItemFormBody
+                                );
+                                const prevData = watch("to_array") || [];
                                 const itemExists = prevData.some(
                                     (item) =>
                                         item.item_code === convertData.item_code
@@ -170,10 +193,11 @@ const MutateToForm = ({
                                 } else {
                                     updatedData = [...prevData, convertData];
                                 }
-                                setValue("mutated_to", updatedData);
+                                setValue("to_array", updatedData);
                             }
                         },
                     }}
+                    total={`${total} Quantity`}
                 />
             </CardContent>
         </Card>
