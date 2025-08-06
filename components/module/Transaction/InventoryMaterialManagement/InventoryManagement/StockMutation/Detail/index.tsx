@@ -14,6 +14,7 @@ import { IconPencil, IconHistory } from "@tabler/icons-react";
 import { useDrawerStore } from "@stores/useDrawerStore";
 import { useSetValueForm } from "@hooks/useSetValueForm";
 import { useForm } from "react-hook-form";
+import { getStockMutationDetail } from "@services/fetcher/transaction/inventory-material-management/inventory-management";
 import BasicForm from "../Form/BasicForm";
 import MutateFromForm from "../Form/MutateFromForm";
 import MutateToForm from "../Form/MutateToForm";
@@ -38,6 +39,35 @@ const DetailStockMutation = () => {
             setValue("warehouse_code", detail_data.warehouse_code);
         }
     }, [detail_data?.warehouse_code, setValue]);
+
+    useEffect(() => {
+        const fetchDetail = async () => {
+            if (detail_data?.document_number) {
+                try {
+                    const result = await getStockMutationDetail(
+                        detail_data.document_number
+                    );
+
+                    const resultTyped = result as StockMutationFormBody;
+                    Object.entries(resultTyped).forEach(([key, value]) => {
+                        setValue(
+                            key as keyof StockMutationFormBody,
+                            value as any
+                        );
+                    });
+                } catch (error) {
+                    console.error(
+                        "Failed to fetch detail stock mutation:",
+                        error
+                    );
+                }
+            }
+        };
+
+        if (isOpenDetail) {
+            fetchDetail();
+        }
+    }, [isOpenDetail, detail_data?.document_number, setValue]);
 
     return (
         <Drawer onClose={closeDetailDrawer} open={isOpenDetail}>

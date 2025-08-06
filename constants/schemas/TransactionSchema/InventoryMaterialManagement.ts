@@ -70,6 +70,15 @@ export const CreateStockMutationSchema = Yup.object().shape({
     ).optional(),
 });
 
+export const EditStockMutationSchema = Yup.object().shape({
+    details: Yup.array(
+        Yup.object().shape({
+            cancel: Yup.boolean().required("Cancel is required"),
+            cancel_reason: Yup.boolean().required("Cancel Reason is required"),
+        })
+    ),
+});
+
 export const CreateDirectPurchaseReceiveSchema = Yup.object().shape({
     document_date: Yup.string().optional(),
     department: Yup.string().optional(),

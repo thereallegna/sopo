@@ -152,6 +152,17 @@ const getStockMutation = async (option?: FetcherOptions) => {
     }
 };
 
+export const getStockMutationDetail = async (document_number: string) => {
+    try {
+        const docNum = replaceSlashes(document_number);
+        const res = await axios.get(`${PATH_STOCK_MUTATION}/${docNum}`);
+        return res.data.data;
+    } catch (error) {
+        console.error("Error fetching stock mutation detail:", error);
+        throw error;
+    }
+};
+
 const getItemStockMutation = async (option?: FetcherOptions) => {
     try {
         const res = await axios.get(`${PATH_GET_ITEM}`, {
@@ -189,8 +200,9 @@ const createStockMutation = async (
 
 const editStockMutation = async (body: StockMutationFormBody, params?: any) => {
     try {
+        const docNum = replaceSlashes(body.document_number); // Tambahkan ini
         const res = await axios.put(
-            `${PATH_STOCK_MUTATION}/${body.document_number}`,
+            `${PATH_STOCK_MUTATION}/${docNum}`, // Gunakan docNum yang sudah di-replace
             body,
             {
                 params,
@@ -198,7 +210,7 @@ const editStockMutation = async (body: StockMutationFormBody, params?: any) => {
         );
         return res.data;
     } catch (error) {
-        console.error("Error editing item category:", error);
+        console.error("Error editing stock mutation:", error);
         throw error;
     }
 };
