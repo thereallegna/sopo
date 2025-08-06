@@ -6,7 +6,7 @@ type Props = {
 };
 
 export const metadata: Metadata = {
-    title: "Direct Purchase Receive - RUN System R1",
+    title: "Direct Purchase Receive - TrackwiseIMM",
     description: "Direct Purchase Receive page",
 };
 

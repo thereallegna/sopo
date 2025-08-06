@@ -3,6 +3,7 @@ export const PATH_BACKEND_URL = process.env.BACKEND_URL;
 export const PATH_BACKEND_URL_VERSION = "/v1";
 
 // initial start
+export const PATH_CONFIGURATION_DASHBOARD = `${PATH_API}/configuration/dashboard`;
 export const PATH_CONFIGURATION_GENERAL = `${PATH_API}/configuration/general`;
 export const PATH_CONFIGURATION_INVENTORY_MANAGEMENT = `${PATH_API}/configuration/inventory-management`;
 export const PATH_TRANSACTION_INVENTORY_MATERIAL_MANAGEMENT = `${PATH_API}/transaction/inventory-material-management`;
@@ -27,7 +28,14 @@ export const PATH_AUTH_FORGOT_PASSWORD_BE = `${PATH_BACKEND_URL}/forgot-password
 // reset password
 export const PATH_AUTH_RESET_PASSWORD = `${PATH_API}/reset-password`;
 export const PATH_AUTH_RESET_PASSWORD_BE = `${PATH_BACKEND_URL}/reset-password`;
+
 /* ======================= Auth End ==================== */
+
+/* ======================= Dashboard Start ==================== */
+// dashboard
+export const PATH_DASHBOARD = `${PATH_API}/dashboard`;
+export const PATH_DASHBOARD_BE = `${PATH_BACKEND_URL}${PATH_BACKEND_URL_VERSION}/dashboard`;
+/* ======================= Dashboard End ==================== */
 
 /* ======================= General Start ==================== */
 // country

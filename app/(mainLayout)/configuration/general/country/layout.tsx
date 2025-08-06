@@ -6,7 +6,7 @@ type Props = {
 };
 
 export const metadata: Metadata = {
-    title: "Country - RUN System R1",
+    title: "Country - TrackwiseIMM",
     description: "Country page.",
 };
 

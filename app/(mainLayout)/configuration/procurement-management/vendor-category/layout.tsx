@@ -6,7 +6,7 @@ type Props = {
 };
 
 export const metadata: Metadata = {
-    title: "Vendor Category - RUN System R1",
+    title: "Vendor Category - TrackwiseIMM",
     description: "Vendor Category page.",
 };
 

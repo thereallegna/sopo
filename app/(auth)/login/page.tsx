@@ -101,7 +101,7 @@ const LoginPage = () => {
                 <CardHeader className="items-center">
                     <Image
                         src="/images/logo-trackwise.png"
-                        alt="Run System Logo"
+                        alt="TrackwiseIMM Logo"
                         className="h-auto"
                         width={250}
                         height={250}

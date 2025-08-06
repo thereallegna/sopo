@@ -55,7 +55,11 @@ const StockSummaryDetailForm = () => {
     return (
         <Card size="drawer" className="border border-Neutral-200 shadow-none">
             <CardContent className="flex-wrap flex flex-row gap-6 items-center w-full">
-                <TableContent {...tableProps} />
+                <TableContent
+                    {...tableProps}
+                    showPrint={false}
+                    showExport={false}
+                />
             </CardContent>
         </Card>
     );

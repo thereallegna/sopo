@@ -78,7 +78,7 @@ const MutateFromForm = ({
                     },
                 },
             ],
-            hasAction: formType === "add",
+            hasAction: false,
         };
 
         return options;
