@@ -190,7 +190,15 @@ const createStockMutation = async (
     params?: any
 ) => {
     try {
-        const res = await axios.post(PATH_STOCK_MUTATION, body, { params });
+        const formattedBody = {
+            ...body,
+            date: body.date
+                ? new Date(body.date).toISOString().slice(0, 10)
+                : body.date,
+        };
+        const res = await axios.post(PATH_STOCK_MUTATION, formattedBody, {
+            params,
+        });
         return res.data;
     } catch (error) {
         console.error("Error creating stock mutation:", error);
@@ -200,13 +208,17 @@ const createStockMutation = async (
 
 const editStockMutation = async (body: StockMutationFormBody, params?: any) => {
     try {
-        const docNum = replaceSlashes(body.document_number); // Tambahkan ini
+        const docNum = replaceSlashes(body.document_number);
+        const formattedBody = {
+            ...body,
+            date: body.date
+                ? new Date(body.date).toISOString().slice(0, 10)
+                : body.date,
+        };
         const res = await axios.put(
-            `${PATH_STOCK_MUTATION}/${docNum}`, // Gunakan docNum yang sudah di-replace
-            body,
-            {
-                params,
-            }
+            `${PATH_STOCK_MUTATION}/${docNum}`,
+            formattedBody,
+            { params }
         );
         return res.data;
     } catch (error) {
@@ -225,7 +237,6 @@ export {
     editStockMutation,
     getStockAdjustment,
     createStockAdjustment,
-    // editStockAdjustment,
     getItemStockAdjustment,
     getItemStockMutation,
 };

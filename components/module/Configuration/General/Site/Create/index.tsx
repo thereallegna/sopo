@@ -128,6 +128,7 @@ const CreateSite = () => {
                                         placeholder="Address"
                                         right
                                         type="text"
+                                        required
                                         className="w-full gap-2"
                                         onKeyDown={handleInputKeyDown}
                                     />

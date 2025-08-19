@@ -5,6 +5,8 @@ type LoginFormBody = {
     keepUserId?: boolean;
 };
 
+type UserRole = "ADMIN" | "PROCUREMENT" | "WAREHOUSE";
+
 type ForgotPasswordBody = {
     email: string;
 };

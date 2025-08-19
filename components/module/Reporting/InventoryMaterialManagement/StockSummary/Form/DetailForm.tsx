@@ -29,10 +29,6 @@ const detailFormColumn: GenerateColumnsOption = {
             header: "Item's Name",
         },
         {
-            accessor: "active",
-            header: "Active",
-        },
-        {
             accessor: "quantity",
             header: "Quantity",
         },

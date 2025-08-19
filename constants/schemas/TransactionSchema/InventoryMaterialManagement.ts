@@ -93,6 +93,7 @@ export const CreateDirectPurchaseReceiveSchema = Yup.object().shape({
     currency_code: Yup.string().optional(),
     tax_name: Yup.string().optional(),
     tax_code: Yup.string().optional(),
+    remark: Yup.string().optional(),
     details: Yup.array(
         Yup.object().shape({
             item_name: Yup.string().optional(),
@@ -105,7 +106,6 @@ export const CreateDirectPurchaseReceiveSchema = Yup.object().shape({
                     originalValue === "" ? null : Number(originalValue)
                 )
                 .optional(),
-            remark: Yup.string().optional(),
         })
     ).optional(),
 });

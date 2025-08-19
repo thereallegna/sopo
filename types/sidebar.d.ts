@@ -5,4 +5,5 @@ type SidebarItem = {
     path?: string;
     icon?: IconProps;
     children?: SidebarItem[];
+    roles?: string[];
 };

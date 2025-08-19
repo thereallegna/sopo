@@ -13,7 +13,7 @@ import { Card, CardContent } from "@components/ui/Card";
 import InputField from "@components/shared/InputField";
 import { IconDeviceFloppy } from "@tabler/icons-react";
 import { useForm } from "@hooks/useForm";
-import { CountrySchema } from "@constants/schemas/ConfigurationSchema/General";
+import { CountrySchema } from "@constants/schemas/ConfigurationSchema/general";
 import { editCountry } from "@services/fetcher/configuration/general";
 import { GET_COUNTRY } from "@constants/queryKey";
 import { useSetValueForm } from "@hooks/useSetValueForm";

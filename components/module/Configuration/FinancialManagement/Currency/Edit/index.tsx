@@ -37,7 +37,7 @@ const EditCurrency = () => {
         setValue,
         register,
     } = useForm({
-        label: "Master item",
+        label: "Currency",
         queryKey: GET_CURRENCY,
         mutationFn: editCurrency,
         validationSchema: CurrencySchema,

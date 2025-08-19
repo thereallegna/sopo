@@ -63,18 +63,18 @@ const MutateToForm = ({
         return options;
     }, [handleInputKeyDown]);
 
-    const total = useMemo(() => {
-        const details = watch("to_array");
-        if (details) {
-            return watch("to_array")
-                .map((detail) => Number(detail.quantity))
-                .reduce(
-                    (accumulator, currentValue) => accumulator + currentValue,
-                    0
-                );
-        }
-        return 0;
-    }, [watch("to_array")]);
+    // const total = useMemo(() => {
+    //     const details = watch("to_array");
+    //     if (details) {
+    //         return watch("to_array")
+    //             .map((detail) => Number(detail.quantity))
+    //             .reduce(
+    //                 (accumulator, currentValue) => accumulator + currentValue,
+    //                 0
+    //             );
+    //     }
+    //     return 0;
+    // }, [watch("to_array")]);
 
     useEffect(() => {
         const toArray = watch("to_array");
@@ -197,7 +197,7 @@ const MutateToForm = ({
                             }
                         },
                     }}
-                    total={`${total} Quantity`}
+                    // total={`${total} Quantity`}
                 />
             </CardContent>
         </Card>

@@ -132,7 +132,7 @@ const StockAdjustmentDetailForm = ({
         <Card size="drawer" className="border border-Neutral-200 shadow-none">
             <CardContent className="flex-wrap flex flex-row gap-6 items-center w-full">
                 <TableForm
-                    title="Detail Item"
+                    title="Detail"
                     data={watch("details") || []}
                     columns={columns}
                     errors={errors}
@@ -221,16 +221,17 @@ const StockAdjustmentDetailForm = ({
                         title: "Select Item",
                         queryKey: GET_DETAIL_BY_WAREHOUSE_STOCK_ADJUSTMENT,
                         queryFn: (params) => {
-                            if (formType === "add") {
+                            const warehouseCode = watch("warehouse_code");
+                            if (formType === "add" && warehouseCode) {
                                 return getItemStockAdjustment({
                                     ...params,
                                     query: {
                                         ...params?.query,
-                                        warehouse_code: watch("warehouse_code"),
+                                        warehouse_code: warehouseCode,
                                     },
                                 });
                             }
-                            // Return a resolved promise or handle as needed when not "add"
+                            // Jangan kirim request jika warehouse_code kosong
                             return Promise.resolve({} as any);
                         },
                         onClose: () => {

@@ -84,19 +84,6 @@ const MutateFromForm = ({
         return options;
     }, [handleInputKeyDown]);
 
-    const total = useMemo(() => {
-        const details = watch("from_array");
-        if (details) {
-            return watch("from_array")
-                .map((detail) => Number(detail.quantity))
-                .reduce(
-                    (accumulator, currentValue) => accumulator + currentValue,
-                    0
-                );
-        }
-        return 0;
-    }, [watch]);
-
     useEffect(() => {
         const fromArray = watch("from_array");
         console.log("MutateFromForm data:", fromArray);
@@ -194,16 +181,17 @@ const MutateFromForm = ({
                         title: "Select Item",
                         queryKey: GET_DETAIL_BY_WAREHOUSE_STOCK_MUTATION,
                         queryFn: (params) => {
-                            if (formType === "add") {
+                            const warehouseCode = watch("warehouse_code");
+                            if (formType === "add" && warehouseCode) {
                                 return getItemStockMutation({
                                     ...params,
                                     query: {
                                         ...params?.query,
-                                        warehouse_code: watch("warehouse_code"),
+                                        warehouse_code: warehouseCode,
                                     },
                                 });
                             }
-                            // Return a resolved promise or handle as needed when not "add"
+                            // Jangan kirim request jika warehouse_code kosong
                             return Promise.resolve({} as any);
                         },
                         onClose: () => {
@@ -273,7 +261,6 @@ const MutateFromForm = ({
                             }
                         },
                     }}
-                    total={`${total} Quantity`}
                 />
             </CardContent>
         </Card>

@@ -21,13 +21,12 @@ import {
 import { ProvinceDefaultValues } from "@constants/defaultValues";
 import Combobox from "@components/shared/Combobox";
 import { GET_COUNTRY, GET_PROVINCE } from "@constants/queryKey";
-import { useTableStore } from "@stores/useTableStore";
 
 const CreateCity = () => {
-    const query = useTableStore(
-        (state) => state.options[GET_COUNTRY].query
-    ) as ProvinceFormBody;
-    const { setQuery } = useTableStore();
+    // const query = useTableStore(
+    //     (state) => state.options[GET_COUNTRY].query
+    // ) as ProvinceFormBody;
+    // const { setQuery } = useTableStore();
 
     const {
         handleCloseDrawer,
@@ -39,7 +38,10 @@ const CreateCity = () => {
         isOpen,
         canSave,
         errors,
+        setError,
+        setValue,
         register,
+        watch,
     } = useForm({
         label: "Province",
         queryKey: GET_PROVINCE,
@@ -155,36 +157,30 @@ const CreateCity = () => {
                                     <Combobox
                                         label="Country"
                                         placeholder="Select Country"
+                                        required
                                         queryKey={[GET_COUNTRY]}
                                         queryFn={getCountry}
                                         dataLabel="country_name"
                                         dataValue="country_code"
-                                        value={
-                                            query?.country_code &&
-                                            query?.country
+                                        message={
+                                            errors.country
                                                 ? {
-                                                      label: query.country,
-                                                      value: query.country_code,
+                                                      text: errors.country
+                                                          .message!,
+                                                      type: "danger",
                                                   }
                                                 : undefined
                                         }
+                                        value={{
+                                            label: watch("country"),
+                                            value: watch("country_code"),
+                                        }}
                                         onChange={(val) => {
-                                            if (
-                                                !query.country_code ||
-                                                query.country_code !== val.value
-                                            ) {
-                                                setQuery(GET_PROVINCE, {
-                                                    ...query,
-                                                    country_code: val.value,
-                                                    country: val.label,
-                                                });
-                                            } else {
-                                                setQuery(GET_PROVINCE, {
-                                                    ...query,
-                                                    country_code: undefined,
-                                                    country: undefined,
-                                                });
-                                            }
+                                            setValue("country", val.label);
+                                            setValue("country_code", val.value);
+                                            setError("country", {
+                                                type: "disabled",
+                                            });
                                         }}
                                     />
                                 </div>

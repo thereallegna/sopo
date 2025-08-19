@@ -49,6 +49,10 @@ const detailFormColumn: GenerateColumnsOption = {
             header: "Quantity",
         },
         {
+            accessor: "stock_actual",
+            header: "Stock Actual",
+        },
+        {
             accessor: "uom_name",
             header: "UOM",
         },

@@ -66,7 +66,7 @@ const EditMasterItem = () => {
             "sales_item",
             "service_item",
             "purchase_item",
-            "spesification",
+            "specification",
             "remark",
             "category_code",
             "category_name",

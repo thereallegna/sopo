@@ -131,7 +131,7 @@ FormType<DirectPurchaseReceiveFormBody> & {
         <Card size="drawer" className="border border-Neutral-200 shadow-none">
             <CardContent className="flex-wrap flex flex-row gap-6 items-center w-full">
                 <TableForm
-                    title="Detail Item"
+                    title="Detail"
                     data={watch("details") || []}
                     columns={columns}
                     errors={errors}

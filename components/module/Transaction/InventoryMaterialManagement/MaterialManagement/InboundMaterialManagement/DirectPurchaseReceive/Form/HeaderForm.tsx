@@ -70,26 +70,8 @@ const DirectPurchaseReceiveHeaderForm = ({
                     disabled={disableAll}
                     className="w-full gap-2"
                     onKeyDown={handleInputKeyDown}
-                    // value={watch("date")}
                 />
-                {/* <InputField
-                    {...register("local_code")}
-                    message={
-                        errors?.local_code
-                            ? {
-                                  text: errors.local_code.message!,
-                                  type: "danger",
-                              }
-                            : undefined
-                    }
-                    label="Local#"
-                    placeholder="Local#"
-                    right
-                    type="text"
-                    disabled={disableAll}
-                    className="w-full gap-2"
-                    onKeyDown={handleInputKeyDown}
-                /> */}
+
                 <InputField
                     {...register("department")}
                     message={

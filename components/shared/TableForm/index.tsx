@@ -252,10 +252,14 @@ const TableForm = <T,>({
                     ))}
                 </TableBody>
             </Table>
-            <hr />
-            <div className="w-full flex justify-end mt-[10px]">
-                <p className="text-base font-bold">Total {total}</p>
-            </div>
+            {total !== undefined && total !== null && (
+                <>
+                    <hr />
+                    <div className="w-full flex justify-end mt-[10px]">
+                        <p className="text-base font-bold">Total {total}</p>
+                    </div>
+                </>
+            )}
             {getDataModalProps && <SelectableModal {...getDataModalProps} />}
         </div>
     );

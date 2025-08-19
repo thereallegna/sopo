@@ -8,7 +8,6 @@ import {
     getUOM,
 } from "@services/fetcher/configuration/inventory-management";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@components/ui/Tabs";
-import { Checkbox } from "@components/ui/Checkbox";
 import { FormType } from "../../../../../../../types/form";
 
 const DetailForm = ({
@@ -102,11 +101,11 @@ const DetailForm = ({
                             disabled={disableAll || type === "edit"} // Disabled berdasarkan disableAll
                         />
                         <InputField
-                            {...register("spesification")}
+                            {...register("specification")}
                             message={
-                                errors?.spesification
+                                errors?.specification
                                     ? {
-                                          text: errors.spesification.message!,
+                                          text: errors.specification.message!,
                                           type: "danger",
                                       }
                                     : undefined
@@ -159,7 +158,7 @@ const DetailForm = ({
                             onKeyDown={handleInputKeyDown}
                             disabled={disableAll} // Disabled berdasarkan disableAll
                         />
-                        <Checkbox
+                        {/* <Checkbox
                             label="Tax Liable"
                             checked={watch("tax_liable")}
                             onCheckedChange={(val) =>
@@ -168,7 +167,7 @@ const DetailForm = ({
                                 setValue("tax_liable", val)
                             }
                             disabled={disableAll} // Disabled berdasarkan disableAll
-                        />
+                        /> */}
                     </div>
                 </TabsContent>
             </Tabs>

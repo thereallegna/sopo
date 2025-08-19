@@ -184,6 +184,7 @@ export const VendorDefaultValues: VendorFormBody = {
     vendor_category_code: "",
     vendor_category: "",
     address: "",
+    city_code: "",
     city: "",
     postal_code: "",
     website: "",

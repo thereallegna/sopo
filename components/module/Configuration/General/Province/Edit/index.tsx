@@ -14,7 +14,7 @@ import InputField from "@components/shared/InputField";
 import { useDrawerStore } from "@stores/useDrawerStore";
 import { IconDeviceFloppy } from "@tabler/icons-react";
 import { useForm } from "@hooks/useForm";
-import { ProvinceSchema } from "@constants/schemas/ConfigurationSchema/General";
+import { ProvinceSchema } from "@constants/schemas/ConfigurationSchema/general";
 import {
     editProvince,
     getCountry,

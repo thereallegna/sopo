@@ -7,8 +7,10 @@ import {
     GET_WAREHOUSE,
     GET_CATEGORY_MATERIAL_MANAGEMENT,
     GET_STOCK_MOVEMENT,
+    GET_MASTER_ITEM_MATERIAL_MANAGEMENT,
 } from "@constants/queryKey";
 import {
+    getItem,
     getItemCategory,
     getWarehouse,
 } from "@services/fetcher/configuration/inventory-management";
@@ -166,14 +168,38 @@ const StockMovementHeaderForm = () => {
                             handleAddFilter("item_code", e.target.value);
                         }}
                     />
-                    <InputField
+                    <Combobox
                         label="Item's Name"
-                        placeholder="Enter Item's Name"
-                        type="text"
-                        right
-                        className="w-full gap-2"
-                        onChange={(e) => {
-                            handleAddFilter("item_name", e.target.value);
+                        placeholder="Select Item's Name"
+                        queryKey={[GET_MASTER_ITEM_MATERIAL_MANAGEMENT]}
+                        queryFn={getItem}
+                        dataLabel="item_name"
+                        dataValue="item_code"
+                        value={
+                            query?.item_code && query?.item_name
+                                ? {
+                                      label: query.item_name,
+                                      value: query.item_code,
+                                  }
+                                : undefined
+                        }
+                        onChange={(val) => {
+                            if (
+                                !query.item_code ||
+                                query.item_code !== val.value
+                            ) {
+                                setQuery(GET_STOCK_MOVEMENT, {
+                                    ...query,
+                                    item_code: val.value,
+                                    item_name: val.label,
+                                });
+                            } else {
+                                setQuery(GET_STOCK_MOVEMENT, {
+                                    ...query,
+                                    item_code: undefined,
+                                    item_name: undefined,
+                                });
+                            }
                         }}
                     />
                 </div>

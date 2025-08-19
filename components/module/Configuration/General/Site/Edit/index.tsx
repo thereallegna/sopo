@@ -15,7 +15,7 @@ import { useDrawerStore } from "@stores/useDrawerStore";
 import { IconDeviceFloppy } from "@tabler/icons-react";
 import { Checkbox } from "@components/ui/Checkbox";
 import { useForm } from "@hooks/useForm";
-import { SiteSchema } from "@constants/schemas/ConfigurationSchema/General";
+import { SiteSchema } from "@constants/schemas/ConfigurationSchema/general";
 import { editSite } from "@services/fetcher/configuration/general";
 import { GET_SITE } from "@constants/queryKey";
 import { useSetValueForm } from "@hooks/useSetValueForm";
@@ -137,6 +137,7 @@ const EditSite = () => {
                                         placeholder="Address"
                                         right
                                         type="text"
+                                        required
                                         className="w-full gap-2"
                                         onKeyDown={handleInputKeyDown}
                                     />

@@ -14,7 +14,7 @@ import InputField from "@components/shared/InputField";
 import { useDrawerStore } from "@stores/useDrawerStore";
 import { IconDeviceFloppy } from "@tabler/icons-react";
 import { useForm } from "@hooks/useForm";
-import { CitySchema } from "@constants/schemas/ConfigurationSchema/General";
+import { CitySchema } from "@constants/schemas/ConfigurationSchema/general";
 import { editCity, getProvince } from "@services/fetcher/configuration/general";
 import { GET_CITY, GET_PROVINCE } from "@constants/queryKey";
 import Combobox from "@components/shared/Combobox";

@@ -134,7 +134,8 @@ type VendorFormBody = {
     vendor_category_code: string;
     vendor_category: string;
     address?: string;
-    city?: string;
+    city_code: string;
+    city: string;
     postal_code?: string;
     website?: string;
     head_office?: string;

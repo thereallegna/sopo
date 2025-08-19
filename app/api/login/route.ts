@@ -24,6 +24,7 @@ export async function POST(req: Request) {
                 companyId: body.companyId,
                 usercode: body.user_code,
                 authorization: responseData.data,
+                role: responseData.data.role,
             },
         };
 

@@ -13,7 +13,7 @@ import { Card, CardContent } from "@components/ui/Card";
 import InputField from "@components/shared/InputField";
 import { IconDeviceFloppy } from "@tabler/icons-react";
 // import { useForm, SubmitHandler } from 'react-hook-form';
-import { CitySchema } from "@constants/schemas/ConfigurationSchema/General";
+import { CitySchema } from "@constants/schemas/ConfigurationSchema/general";
 import {
     createCity,
     getProvince,

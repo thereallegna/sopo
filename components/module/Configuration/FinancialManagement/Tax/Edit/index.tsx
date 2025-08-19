@@ -148,6 +148,7 @@ const EditTax = () => {
                                         label="Tax Group"
                                         placeholder="Select Tax Group"
                                         required
+                                        disabled
                                         queryKey={[GET_TAX_GROUP]}
                                         queryFn={getTaxGroup}
                                         dataLabel="tax_group_name"

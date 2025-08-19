@@ -18,9 +18,10 @@ import {
     createVendor,
     getVendorCategory,
 } from "@services/fetcher/configuration/procurement-management";
+import { getCity } from "@services/fetcher/configuration/general";
 import { VendorDefaultValues } from "@constants/defaultValues";
 import Combobox from "@components/shared/Combobox";
-import { GET_VENDOR_CATEGORY, GET_VENDOR } from "@constants/queryKey";
+import { GET_VENDOR_CATEGORY, GET_VENDOR, GET_CITY } from "@constants/queryKey";
 
 const CreateVendor = () => {
     const {
@@ -193,8 +194,15 @@ const CreateVendor = () => {
                                     />
                                 </div>
                                 <div className="flex flex-col gap-[14px] flex-1 h-full justify-between">
-                                    <InputField
-                                        {...register("city")}
+                                    <Combobox
+                                        className="flex-1"
+                                        label="City"
+                                        required
+                                        placeholder="Select City"
+                                        queryKey={[GET_CITY]}
+                                        queryFn={() => getCity({ all: true })}
+                                        dataLabel="city_name"
+                                        dataValue="city_code"
                                         message={
                                             errors.city
                                                 ? {
@@ -204,12 +212,21 @@ const CreateVendor = () => {
                                                   }
                                                 : undefined
                                         }
-                                        label="City"
-                                        placeholder="City"
-                                        right
-                                        type="text"
-                                        className="flex-1 gap-2"
-                                        onKeyDown={handleInputKeyDown}
+                                        value={{
+                                            label: watch("city"),
+                                            value: watch("city_code"),
+                                        }}
+                                        onChange={(val) => {
+                                            setValue("city", val.label, {
+                                                shouldDirty: true,
+                                            });
+                                            setValue("city_code", val.value, {
+                                                shouldDirty: true,
+                                            });
+                                            setError("city", {
+                                                type: "disabled",
+                                            });
+                                        }}
                                     />
                                     <InputField
                                         {...register("postal_code")}

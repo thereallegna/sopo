@@ -50,6 +50,7 @@ const CreateWarehouse = () => {
         defaultValues: WarehouseDefaultValues,
         type: "add",
         ignoredFields: [
+            "city",
             "postal_cd",
             "phone",
             "fax",
@@ -193,6 +194,7 @@ const CreateWarehouse = () => {
                                         placeholder="Address"
                                         right
                                         type="text"
+                                        required
                                         className="flex-1 gap-2"
                                         onKeyDown={handleInputKeyDown}
                                     />
@@ -201,8 +203,8 @@ const CreateWarehouse = () => {
                                     <Combobox
                                         className="flex-1 gap-2"
                                         label="City"
-                                        required
                                         placeholder="Select City"
+                                        required
                                         queryKey={[GET_CITY]}
                                         queryFn={() => getCity({ all: true })}
                                         dataLabel="city_name"

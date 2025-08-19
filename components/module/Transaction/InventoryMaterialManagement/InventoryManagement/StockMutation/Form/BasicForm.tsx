@@ -25,6 +25,7 @@ const BasicForm = ({
 }: FormType<StockMutationFormBody> & {
     type?: "add" | "edit";
 }) => {
+    // Function to convert date format for display
     const convertDateForDisplay = (dateValue: string | undefined) => {
         if (!dateValue) return "";
 
@@ -57,6 +58,7 @@ const BasicForm = ({
         }
     };
 
+    // Handle date change
     const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (setValue) {
             setValue("date", e.target.value);

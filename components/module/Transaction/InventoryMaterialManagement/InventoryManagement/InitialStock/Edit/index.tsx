@@ -34,7 +34,6 @@ const EditInitialStock = () => {
         isLoading,
         formRef,
         isOpenEdit,
-        canSave,
         errors,
         setError,
         setValue,
@@ -118,7 +117,7 @@ const EditInitialStock = () => {
                 >
                     <DrawerEndHeader>
                         <Button
-                            variant={!canSave ? "disabled" : "primary"}
+                            variant="primary"
                             icon={{
                                 size: "large",
                                 icon: IconDeviceFloppy,
@@ -128,7 +127,7 @@ const EditInitialStock = () => {
                             onClick={handleSaveClick}
                             disabled={isLoading}
                         >
-                            {isLoading ? "Saving..." : "Save"}
+                            {isLoading ? "saving..." : "save"}
                         </Button>
                     </DrawerEndHeader>
                 </DrawerHeader>
