@@ -94,24 +94,21 @@ const DetailInitialStock = () => {
                         </Button>
                     </DrawerEndHeader>
                 </DrawerHeader>
-                <div className="flex-1 overflow-y-auto">
-                    <form>
-                        <DrawerBody className="min-h-0 flex-1 overflow-y-auto">
-                            <InitialStockHeaderForm
-                                watch={watch}
-                                register={register}
-                                disableAll
-                            />
-                            <InitialStockDetailForm
-                                watch={watch}
-                                register={register}
-                                formType="detail"
-                                disableAll
-                            />
-                        </DrawerBody>
-                    </form>
-                </div>
-
+                <form>
+                    <DrawerBody>
+                        <InitialStockHeaderForm
+                            watch={watch}
+                            register={register}
+                            disableAll
+                        />
+                        <InitialStockDetailForm
+                            watch={watch}
+                            register={register}
+                            formType="detail"
+                            disableAll
+                        />
+                    </DrawerBody>
+                </form>
                 <DrawerFooter>
                     <Button
                         variant="backDrawer"

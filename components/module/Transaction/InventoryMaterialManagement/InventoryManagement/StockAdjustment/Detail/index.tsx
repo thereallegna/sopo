@@ -13,8 +13,8 @@ import { useSetValueForm } from "@hooks/useSetValueForm";
 import { useForm } from "react-hook-form";
 import { IconHistory } from "@tabler/icons-react";
 import { Button } from "@components/ui/Button";
-import InitialStockHeaderForm from "../Form/HeaderForm";
-import InitialStockBodyForm from "../Form/DetailForm";
+import StockAdjustmentHeaderForm from "../Form/HeaderForm";
+import StockAdjustmentBodyForm from "../Form/DetailForm";
 
 const DetailStockAdjustment = () => {
     const { isOpenDetail, closeDetailDrawer, openHistoryLogDrawer } =
@@ -36,12 +36,12 @@ const DetailStockAdjustment = () => {
                 />
                 <form>
                     <DrawerBody>
-                        <InitialStockHeaderForm
+                        <StockAdjustmentHeaderForm
                             watch={watch}
                             register={register}
                             disableAll
                         />
-                        <InitialStockBodyForm
+                        <StockAdjustmentBodyForm
                             watch={watch}
                             register={register}
                             formType="detail"

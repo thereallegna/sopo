@@ -80,7 +80,7 @@ type StockMutationFormBody = {
     batch: string;
     source: string;
     cancel: boolean;
-    reason_for_cancellation?: string;
+    cancel_reason?: string;
     remark?: string;
     from_array: StockMutatedFromFormBody[];
     to_array: StockMutatedToFormBody[];

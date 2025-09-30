@@ -122,7 +122,7 @@ export const StockMutationDefaultValues: StockMutationFormBody = {
     batch: "",
     source: "",
     cancel: false,
-    reason_for_cancellation: "",
+    cancel_reason: "",
     remark: "",
     from_array: [],
     to_array: [],

@@ -47,7 +47,7 @@ const CreateStockMutation = () => {
         validationSchema: CreateStockMutationSchema,
         defaultValues: StockMutationDefaultValues,
         type: "add",
-        ignoredFields: ["cancel", "reason_for_cancellation", "remark"],
+        ignoredFields: ["cancel", "cancel_reason", "remark"],
     });
 
     return (

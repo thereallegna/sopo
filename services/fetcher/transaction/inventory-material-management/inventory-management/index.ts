@@ -6,6 +6,7 @@ import {
 } from "@constants/routes";
 import axios from "axios";
 import { replaceSlashes } from "@utils/converter";
+import { isValid, parseISO } from "date-fns";
 import { FetcherOptions } from "../../../../../types/client/fetcher";
 
 const getInitialStock = async (option?: FetcherOptions) => {
@@ -209,11 +210,21 @@ const createStockMutation = async (
 const editStockMutation = async (body: StockMutationFormBody, params?: any) => {
     try {
         const docNum = replaceSlashes(body.document_number);
+        let formattedDate = body.date;
+        if (body.date) {
+            const dateObj =
+                typeof body.date === "string"
+                    ? parseISO(body.date)
+                    : new Date(body.date);
+            if (isValid(dateObj)) {
+                formattedDate = dateObj.toISOString().slice(0, 10);
+            } else {
+                formattedDate = body.date; // atau bisa dikosongkan jika ingin aman: ""
+            }
+        }
         const formattedBody = {
             ...body,
-            date: body.date
-                ? new Date(body.date).toISOString().slice(0, 10)
-                : body.date,
+            date: formattedDate,
         };
         const res = await axios.put(
             `${PATH_STOCK_MUTATION}/${docNum}`,

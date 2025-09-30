@@ -171,12 +171,11 @@ const BasicForm = ({
                 </div>
                 <div className="flex flex-col gap-[14px] flex-1">
                     <InputField
-                        {...register("reason_for_cancellation")}
+                        {...register("cancel_reason")}
                         message={
-                            errors?.reason_for_cancellation
+                            errors?.cancel_reason
                                 ? {
-                                      text: errors.reason_for_cancellation
-                                          .message!,
+                                      text: errors.cancel_reason.message!,
                                       type: "danger",
                                   }
                                 : undefined
